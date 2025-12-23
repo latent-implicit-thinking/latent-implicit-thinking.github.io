@@ -1,4 +1,4 @@
-# The Third Deep Learning for Code (DL4C) Workshop at ICLR'25 (Singapore)
+# Latent & Implicit Thinking – Going Beyond CoT Reasoning (LIT) Workshop at ICLR 2026
 
-https://dl4c.github.io/
+https://latent-implicit-thinking.github.io/
 
