@@ -6,7 +6,7 @@ permalink: /papers/
 
 ## Accepted Papers
 
-Accepted papers will be listed here after the notification deadline (February 25, 2026).
+Accepted papers will be listed here after the notification deadline (March 1, 2026, 11:59pm AoE).
 
 ## Oral Presentations
 

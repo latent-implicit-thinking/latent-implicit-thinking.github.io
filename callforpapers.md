@@ -51,16 +51,18 @@ All accepted papers will be presented as posters. We will select around 3 papers
 
 ## Important Dates
 
-- **Workshop website, schedule, and call for papers release**: TBA, 2026
-- **Submission deadline**: TBA, 2026
-- **Reviewing period**: TBA, 2026
-- **Notification of acceptance**: TBA, 2026
-- **Camera-ready deadline**: TBA, 2026
-- **Workshop date**: TBA
+- **Workshop website, schedule, and call for papers release**: December 2025
+- **Submission deadline**: January 30, 2026
+- **Reviewing period**: January 30 - February 28, 2026
+- **Notification of acceptance**: March 1, 2026, 11:59pm AoE
+- **Camera-ready deadline**: March 10, 2026
+- **Workshop date**: April/May 2026 (TBA - during ICLR 2026 main conference week)
 
 ## Submission Site
 
 Submissions will be accepted through OpenReview. The submission link will be available soon.
+
+**Note**: The OpenReview venue will be created by end of December 2025. Once available, the submission link will be updated here.
 
 ## LLM Usage Policy
 

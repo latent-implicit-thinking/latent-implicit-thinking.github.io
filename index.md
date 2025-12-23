@@ -13,11 +13,11 @@ The proposed workshop, **Latent & Implicit Thinking – Going Beyond CoT Reasoni
 
 #### News
 
-**TBA, 2026** The workshop [schedule](https://latent-implicit-thinking.github.io/schedule/) is now available!
+**December 2025** Workshop website, schedule, and call for papers released.
 
-**TBA, 2026** The [call for papers](https://latent-implicit-thinking.github.io/callforpapers/) is out! 
+**December 2025** The [call for papers](https://latent-implicit-thinking.github.io/callforpapers/) is out! 
 
-**TBA, 2026** Workshop website, schedule, and call for papers released.
+**TBA** The workshop [schedule](https://latent-implicit-thinking.github.io/schedule/) will be available soon.
 
 ## Topics of Interest
 
@@ -34,10 +34,10 @@ We invite original submissions on, but not limited to, the following themes:
 
 ## Important Dates
 
-- **Workshop website, schedule, and call for papers release**: TBA
-- **Submission deadline**: TBA
-- **Reviewing period**: TBA
-- **Notification of acceptance**: TBA
-- **Camera-ready deadline**: TBA
-- **Workshop date**: TBA
+- **Workshop website, schedule, and call for papers release**: December 2025
+- **Submission deadline**: January 30, 2026
+- **Reviewing period**: January 30 - February 28, 2026
+- **Notification of acceptance**: March 1, 2026, 11:59pm AoE
+- **Camera-ready deadline**: March 10, 2026
+- **Workshop date**: April/May 2026 (TBA - during ICLR 2026 main conference week)
 
