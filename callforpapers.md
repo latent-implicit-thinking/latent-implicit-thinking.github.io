@@ -6,7 +6,7 @@ permalink: /callforpapers/
 
 **CFP: Latent & Implicit Thinking – Going Beyond CoT Reasoning (LIT) Workshop at ICLR 2026**
 
-We invite original research paper submissions on latent and implicit reasoning in neural networks. The workshop seeks to unify diverse yet complementary research directions exploring alternative forms of intermediate reasoning beyond explicit Chain-of-Thought (CoT) reasoning.
+We invite original research paper submissions on latent and implicit reasoning in vision and language models. The workshop seeks to unify diverse yet complementary research directions exploring alternative forms of intermediate reasoning beyond explicit Chain-of-Thought (CoT) reasoning.
 
 ## Topics of Interest
 
