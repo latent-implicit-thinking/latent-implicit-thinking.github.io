@@ -76,3 +76,58 @@
   }
 }
 
+/* Organizers grid layout */
+.list-of-people {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+  justify-items: center;
+}
+
+.person {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.person img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #e0e0e0;
+  transition: transform 0.3s ease;
+}
+
+.person img:hover {
+  transform: scale(1.05);
+}
+
+.person a {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #008AFF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.person a:hover {
+  color: #0085A1;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .list-of-people {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .person img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
