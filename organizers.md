@@ -37,4 +37,20 @@ permalink: /organizers/
     <td style="border: none;"><img src="/assets/img/organizers/avatar.png" width="200px" alt="Zhiyuan Li"></td>
     <td style="border: none;"><a href="mailto:zhiyuanli@ttic.edu">Zhiyuan Li</a><br>Assistant professor in the Toyota Technological Institute at Chicago (TTIC) and an affiliated faculty at Uchicago CS. He is currently a visiting faculty at Google Research. He obtained his Ph.D. in computer science at Princeton University in 2022 and spent one year for postdoc at Stanford CS. His research focuses on machine learning theory. He is a recipient of Microsoft Research PhD Fellowship. He is the leading organizer of the first and second workshop for Mathematics in Modern Machine Learning (M3L) at NeurIPS 2023 and 2024.</td>
   </tr>
+  <tr>
+    <td style="border: none;"><img src="/assets/img/organizers/avatar.png" width="200px" alt="Wenhao Huang"></td>
+    <td style="border: none;"><a href="mailto:huangwenhao.1@bytedance.com">Wenhao Huang</a><br>Researcher at ByteDance. He was a co-founder of 01.AI, responsible for pre-training and multimodal models. He holds a Ph.D. from Peking University. In recent years, he mainly focused on research on large language models and multimodal models, overseeing the training and release of 01.AI's large model Yi-large, as well as open-source models such as Yi-34B, achieving excellent results on platforms like LMSYS and Hugging Face's LLM leaderboard.</td>
+  </tr>
+  <tr>
+    <td style="border: none;"><img src="/assets/img/organizers/avatar.png" width="200px" alt="Sashank J. Reddi"></td>
+    <td style="border: none;"><a href="mailto:sashank@google.com">Sashank J. Reddi</a><br>Senior Staff Research Scientist at Google. He is broadly interested in theory and applications of large ML foundation models and Gen AI, particularly in the intersection of deep learning, optimization, reasoning and efficiency. He won several awards including Neurips best student paper award, ICLR best paper award and ICBS Frontier of Science award. He received a PhD in Computer Science from Carnegie Mellon University and a bachelors in Computer Science from the Indian Institute of Technology Bombay. He was the primary organizer for OPT workshop at NeurIPS for several years.</td>
+  </tr>
+  <tr>
+    <td style="border: none;"><img src="/assets/img/organizers/avatar.png" width="200px" alt="Chongxuan Li"></td>
+    <td style="border: none;"><a href="mailto:chongxuanli@ruc.edu.cn">Chongxuan Li</a><br>Associate professor at Renmin University of China. He holds both a Bachelor's and a Ph.D. degree from Tsinghua University. His research interests include generative models, deep learning, and foundation models. His work was recognized with the Outstanding Paper Award at ICLR 2022. Recently, his group developed LLaDA, a large language diffusion model.</td>
+  </tr>
+  <tr>
+    <td style="border: none;"><img src="/assets/img/organizers/avatar.png" width="200px" alt="Sanjiv Kumar"></td>
+    <td style="border: none;"><a href="mailto:sanjivk@google.com">Sanjiv Kumar</a><br>Google Fellow and VP at Google Research, where he is leading a team on theory and applications of large ML Foundation Models and Generative AI. His recent research interests include rethinking existing modeling and compute paradigms in LLMs with a focus on developing alternative techniques that allow fast training and inference. Sanjiv has published more than 125 papers in the field of machine learning, computer vision and robotics, and holds 60+ patents. His work on convergence of Adam received the best paper award in ICLR, 2018. He is an action editor of JMLR and holds a PhD (2005) from the School of Computer Science at Carnegie Mellon University.</td>
+  </tr>
 </table>
