@@ -12,29 +12,32 @@ We invite original research paper submissions on latent and implicit reasoning i
 
 We welcome submissions on, but not limited to, the following themes:
 
-### Special Thinking Tokens
-Explicit CoT compressed to special tokens (e.g., continuous thought tokens, VQ-VAE codes, gist tokens). CoT augmentation via filler or planning tokens.
+### Training Strategy for Implicit Reasoning
+e.g., curriculum learning, distillation, reinforcement learning, and pretraining from scratch.
 
 ### Looped Architectures
 Recurrence mechanisms (loop unrolling, dynamic halting). Training curricula and stability for deep iterative models.
 
-### Stateful Reasoning
-Leveraging key/value caches for multi-step inference. Comparisons between pure activation vs. cache-augmented loops.
+### Mechanical Interpretability of Implicit Reasoning
+Layer-wise specialization and attribution of reasoning functions. Causal interventions on intermediate representations.
 
-### Parallel Reasoning
-Diffusion models for bidirectional, iterative denoising-based reasoning. Fractal generative frameworks and next-block prediction. Parallel CoTs generation.
+### Special Thinking Tokens
+Text CoT compressed to special tokens (e.g., continuous thought tokens, VQ-VAE codes, gist tokens). CoT augmentation via filler or planning tokens.
 
-### Training Strategies
-Training strategies to enable neural networks to reason in latent space or extract their latent thoughts. Examples include curriculum learning, distillation, reinforcement learning in the latent space or for extracting latent CoTs, and pretraining from scratch.
+### KV-Cache and Hybrid Stateful Reasoning
+Leveraging key/value caches for multi-step latent inference. Comparisons between pure activation vs. cache-augmented loops.
 
-### Theoretical Analysis
-Theory or analysis on advantages of reasoning in the latent space. Examples include reasoning by superposition, theoretical bounds on reasoning depth vs. layer count, and layer-wise or head-wise specialization and attribution of reasoning functions.
+### Inference Paradigms Beyond Autoregression
+Text diffusion for bidirectional, iterative denoising-based reasoning. Fractal generative frameworks and next-block prediction.
+
+### Theoretical Results on Depth, Scaling, and Efficiency
+Theoretical bounds on reasoning depth vs. layer count. Parameter- and compute-efficient designs for implicit reasoning.
 
 ### Evaluation and Benchmarks
-Metrics for latent vs. explicit CoT capabilities. Datasets and tasks that stress ultra-deep or multi-hop latent reasoning.
+Metrics and probes for implicit vs. explicit CoT capabilities. Datasets and tasks that stress ultra-deep or multi-hop latent reasoning.
 
 ### Limitations and Safety
-Understanding pros and cons of latent and explicit CoT, and interpretability & faithfulness of reasoning from a safety and alignment perspective.
+Understanding pros and cons of implicit and explicit CoT, and interpretability & faithfulness of reasoning from a safety and alignment perspective.
 
 ## Submission Guidelines
 
