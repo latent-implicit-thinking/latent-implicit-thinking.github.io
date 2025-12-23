@@ -4,8 +4,6 @@ title: Organizers
 permalink: /organizers/
 ---
 
-# Organizers
-
 <div class="list-of-people">
     <div class="person">
         <img src="/assets/img/organizers/xinyi.jpg" alt="Xinyi Wang">
@@ -56,10 +54,3 @@ permalink: /organizers/
         <a href="https://www.sanjivk.com/" target="_blank">Sanjiv Kumar</a>
     </div>
 </div>
-
-<script>
-  var ul = document.querySelector('div.list-of-people');
-  for (var i = ul.children.length; i >= 0; i--) {
-      ul.appendChild(ul.children[Math.random() * i | 0]);
-  }
-</script>
