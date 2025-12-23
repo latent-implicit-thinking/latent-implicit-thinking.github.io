@@ -6,4 +6,4 @@ permalink: /sponsors/
 
 ## Sponsors
 
-Sponsor information will be updated here. If you are interested in sponsoring the Latent & Implicit Thinking workshop, please contact the organizers.
+Sponsor information will be updated here. If you are interested in sponsoring the Latent & Implicit Thinking workshop, please contact the organizers at [latent-implicit-thinking@googlegroups.com](mailto:latent-implicit-thinking@googlegroups.com).
