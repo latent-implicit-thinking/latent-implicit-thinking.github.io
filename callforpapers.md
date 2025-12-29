@@ -12,7 +12,9 @@ We invite original research paper submissions on latent and implicit reasoning i
 
 **[Submit via OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)**
 
-**Submission deadline**: January 30, 2026
+**Submission deadline**: February 5, 2026
+
+**Note for new OpenReview users**: New profiles created without an institutional email will go through a moderation process that can take up to two weeks. New profiles created with an institutional email will be activated automatically. Please create your OpenReview account well in advance of the submission deadline to avoid delays.
 
 ## Topics of Interest
 
@@ -45,8 +47,8 @@ All accepted papers will be presented as posters. We will select around 3 papers
 
 ## Important Dates
 
-- **Submission deadline**: January 30, 2026
-- **Reviewing period**: January 30 - February 28, 2026
+- **Submission deadline**: February 5, 2026
+- **Reviewing period**: February 5 - February 26, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
 - **Camera-ready deadline**: March 10, 2026
 - **Workshop date**: April 26-27, 2026 (Rio de Janeiro, following the ICLR 2026 main conference)
@@ -54,6 +56,8 @@ All accepted papers will be presented as posters. We will select around 3 papers
 ## Submission Site
 
 Submissions will be accepted through OpenReview at: [https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)
+
+**Important**: New OpenReview profiles created without an institutional email will go through a moderation process that can take up to two weeks. New profiles created with an institutional email will be activated automatically. Please create your OpenReview account well in advance of the submission deadline to avoid any delays.
 
 ## LLM Usage Policy
 
