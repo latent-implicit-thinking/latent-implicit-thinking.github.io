@@ -40,5 +40,5 @@ We invite original submissions on, but not limited to, the following themes:
 - **Reviewing period**: January 30 - February 28, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
 - **Camera-ready deadline**: March 10, 2026
-- **Workshop date**: April/May 2026 (TBA - during ICLR 2026 main conference week)
+- **Workshop date**: April 26-27, 2026 (Rio de Janeiro, following the ICLR 2026 main conference)
 

@@ -45,8 +45,10 @@ The workshop will accept papers from preliminary research results and visionary 
 
 Submissions should follow the ICLR proceedings format and choose the suitable categories as follows:
 
-- **Tiny and Short Paper**: 2 to 4 pages + references and appendix.
+- **Tiny and Short Paper**: 3-5 pages in ICLR format + references and appendix.
 - **Regular Paper**: up to 9 pages + references and appendix.
+
+**Tiny Papers Track**: Since 2025, ICLR has discontinued the separate "Tiny Papers" track, and is instead requiring each workshop to accept short (3–5 pages in ICLR format, exact page length to be determined by each workshop) paper submissions, with an eye towards inclusion; see [https://iclr.cc/Conferences/2025/CallForTinyPapers](https://iclr.cc/Conferences/2025/CallForTinyPapers) for a history of the ICLR tiny papers initiative. Authors of these papers will be earmarked for potential funding from ICLR, but need to submit a separate application for Financial Assistance that evaluates their eligibility. This application for Financial Assistance to attend ICLR 2026 will become available on [https://iclr.cc/Conferences/2026/](https://iclr.cc/Conferences/2026/) at the beginning of February and close early March.
 
 For novelty, the workshop does not accept submissions that have previously been published at ICLR or other machine learning or related venues. For openness, we encourage submissions with sufficient open-source resources (e.g., checkpoint, code, data, training details). We do not allow AI as primary authors for workshop submissions.
 
@@ -54,22 +56,19 @@ All accepted papers will be presented as posters. We will select around 3 papers
 
 ## Important Dates
 
-- **Workshop website, schedule, and call for papers release**: December 2025
 - **Submission deadline**: January 30, 2026
 - **Reviewing period**: January 30 - February 28, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
 - **Camera-ready deadline**: March 10, 2026
-- **Workshop date**: April/May 2026 (TBA - during ICLR 2026 main conference week)
+- **Workshop date**: April 26-27, 2026 (Rio de Janeiro, following the ICLR 2026 main conference)
 
 ## Submission Site
 
-Submissions will be accepted through OpenReview. The submission link will be available soon.
-
-**Note**: The OpenReview venue will be created by end of December 2025. Once available, the submission link will be updated here.
+Submissions will be accepted through OpenReview at: [https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)
 
 ## LLM Usage Policy
 
-In alignment with the ICLR 2026 Policies on Large Language Model Usage, our workshop will clearly distinguish between AI-assisted and AI-generated content. We will explicitly prohibit AI-generated submissions in the tiny and short paper tracks, while allowing limited, transparent AI assistance (e.g., for grammar correction or rephrasing) as long as the intellectual contribution and analysis remain primarily human-authored. During the review process, LLMs will not be allowed for automated reviewing or decision-making; all evaluations will be conducted by human reviewers. The organizers may use LLMs only for logistical purposes, such as drafting website descriptions or formatting templates, with full human oversight. Any substantial use of AI tools by authors, reviewers, or organizers must be disclosed in submission metadata or acknowledgments.
+In alignment with the ICLR 2026 Policies on Large Language Model Usage ([https://blog.iclr.cc/2025/08/26/policies-on-large-language-model-usage-at-iclr-2026/](https://blog.iclr.cc/2025/08/26/policies-on-large-language-model-usage-at-iclr-2026/)), our workshop will clearly distinguish between AI-assisted and AI-generated content. **AI-generated papers are not permitted in the tiny or short paper tracks.** We will explicitly prohibit AI-generated submissions in the tiny and short paper tracks, while allowing limited, transparent AI assistance (e.g., for grammar correction or rephrasing) as long as the intellectual contribution and analysis remain primarily human-authored. During the review process, LLMs will not be allowed for automated reviewing or decision-making; all evaluations will be conducted by human reviewers. The organizers may use LLMs only for logistical purposes, such as drafting website descriptions or formatting templates, with full human oversight. Any substantial use of AI tools by authors, reviewers, or organizers must be disclosed in submission metadata or acknowledgments.
 
 ## FAQ
 
