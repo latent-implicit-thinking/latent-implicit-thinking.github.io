@@ -13,8 +13,6 @@ The proposed workshop, **Latent & Implicit Thinking – Going Beyond CoT Reasoni
 
 #### News
 
-**December 2025** Workshop website, schedule, and call for papers released.
-
 **December 2025** The [call for papers](https://latent-implicit-thinking.github.io/callforpapers/) is out! 
 
 **TBA** The workshop [schedule](https://latent-implicit-thinking.github.io/schedule/) will be available soon.
