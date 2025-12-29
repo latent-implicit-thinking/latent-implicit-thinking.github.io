@@ -8,6 +8,12 @@ permalink: /callforpapers/
 
 We invite original research paper submissions on latent and implicit reasoning in vision and language models. The workshop seeks to unify diverse yet complementary research directions exploring alternative forms of intermediate reasoning beyond explicit Chain-of-Thought (CoT) reasoning.
 
+## Submit Your Paper
+
+**[Submit via OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)**
+
+**Submission deadline**: January 30, 2026
+
 ## Topics of Interest
 
 We welcome submissions on, but not limited to, the following themes:
