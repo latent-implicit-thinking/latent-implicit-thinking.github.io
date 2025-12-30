@@ -24,9 +24,3 @@ permalink: /schedule/
 | **16:00–16:30** | Coffee Break              |
 | **16:30–17:20** | Poster Session 2          |
 | **17:20–17:30** | Award Announcement and Closing Remarks |
-
-## Format
-
-To encourage meaningful dialogue, each keynote and contributed talk will be followed by a moderated Q&A period (5-10 min), with discussion questions collected both in-person and online. Dedicated poster sessions and a final panel discussion will provide structured venues for audience engagement. Additionally, we will organize an open "lightning round" after lunch, where participants can share 1-minute research ideas, encouraging spontaneous and inclusive participation.
-
-While the workshop is in-person, all talks and poster abstracts will be made publicly available via our website and YouTube channel within two weeks after the event. We will also host a moderated discussion board for remote participants to post comments and questions. This ensures that researchers facing visa or financial barriers can still meaningfully engage.
