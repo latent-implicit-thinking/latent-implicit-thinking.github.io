@@ -15,7 +15,6 @@ We welcome submissions on topics including training strategies for implicit reas
 
 ## Important Dates
 
-- **Call for Papers released**: January 5, 2026
 - **Submission deadline**: February 5, 2026
 - **Reviewing period**: February 5 - February 26, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
