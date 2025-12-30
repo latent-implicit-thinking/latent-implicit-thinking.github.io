@@ -16,8 +16,7 @@ We welcome submissions on topics including training strategies for implicit reas
 ## Important Dates
 
 - **Submission deadline**: February 5, 2026
-- **Reviewing period**: February 5 - February 26, 2026
+- **Reviewing period**: February 6 - February 26, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
 - **Camera-ready deadline**: March 10, 2026
 - **Workshop date**: April 26-27, 2026 (Rio de Janeiro, following the ICLR 2026 main conference)
-
