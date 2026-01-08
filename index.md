@@ -7,7 +7,7 @@ We are pleased to announce the **Latent & Implicit Thinking – Going Beyond CoT
 
 ## Submit Your Paper
 
-**[Submit via OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)** | **[Call for Papers →](https://latent-implicit-thinking.github.io/callforpapers/)**
+**[Submit via OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)** | **[Call for Papers →](https://latent-implicit-thinking.github.io/callforpapers/)** | **[Call for Reviewers →](https://forms.gle/ZevZZXi29WKSuAhQ7)**
 
 **Submission deadline**: February 5, 2026
 
