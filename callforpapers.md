@@ -34,12 +34,14 @@ We welcome submissions on, but not limited to, the following themes:
 
 The workshop will accept papers from preliminary research results and visionary papers to full-length papers. We will host a **Tiny and Short Paper Track** in alignment with ICLR's initiative, explicitly welcoming late-breaking results, replication studies, and conceptual explorations that may not yet have full-paper maturity. Review criteria will emphasize clarity, originality, and potential impact rather than extensive experiments.
 
-Submissions should follow the ICLR proceedings format and choose the suitable categories as follows:
+Submissions should follow [the ICLR proceedings format](https://github.com/ICLR/Master-Template/raw/master/iclr2026.zip) and choose the suitable categories as follows:
 
 - **Tiny and Short Paper**: 3-5 pages in ICLR format + references and appendix.
-- **Regular Paper**: up to 9 pages + references and appendix.
+- **Regular Paper**: up to 10 pages + references and appendix.
 
 **Tiny Papers Track**: Since 2025, ICLR has discontinued the separate "Tiny Papers" track, and is instead requiring each workshop to accept short (3–5 pages in ICLR format, exact page length to be determined by each workshop) paper submissions, with an eye towards inclusion; see [https://iclr.cc/Conferences/2025/CallForTinyPapers](https://iclr.cc/Conferences/2025/CallForTinyPapers) for a history of the ICLR tiny papers initiative. Authors of these papers will be earmarked for potential funding from ICLR, but need to submit a separate application for Financial Assistance that evaluates their eligibility. This application for Financial Assistance to attend ICLR 2026 will become available on [https://iclr.cc/Conferences/2026/](https://iclr.cc/Conferences/2026/) at the beginning of February and close early March.
+
+A workshop specific template will be provided for camera-ready.
 
 For novelty, the workshop does not accept submissions that have previously been published at ICLR or other machine learning or related venues. For openness, we encourage submissions with sufficient open-source resources (e.g., checkpoint, code, data, training details). We do not allow AI as primary authors for workshop submissions.
 
