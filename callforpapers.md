@@ -49,7 +49,7 @@ All accepted papers will be presented as posters. We will select around 3 papers
 
 ## Important Dates
 
-- **Submission deadline**: February 5, 2026 (AOE) (extended to Feb 8 AOE, but strongly encourage to submit before Feb 5)
+- **Submission deadline**: <span style="color: red;">~~February 5, 2026 (AOE)~~ extended to Feb 8 AOE, but strongly encourage to submit before Feb 5 AOE</span>
 - **Reviewing period**: February 6 - February 26, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm (AoE)
 - **Camera-ready deadline**: March 10, 2026
