@@ -9,14 +9,14 @@ We are pleased to announce the **Latent & Implicit Thinking – Going Beyond CoT
 
 **[Submit via OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)** | **[Call for Papers →](https://latent-implicit-thinking.github.io/callforpapers/)** | **[Call for Reviewers →](https://forms.gle/ZevZZXi29WKSuAhQ7)**
 
-**Submission deadline**: February 5, 2026
+**Submission deadline**: <span style="color: red;">~~February 5, 2026 (AOE)~~ extended to Feb 8 AOE, but strongly encourage to submit before Feb 5 AOE</span>
 
 We welcome submissions on topics including training strategies for implicit reasoning, looped architectures, mechanical interpretability, special thinking tokens, KV-cache and hybrid stateful reasoning, inference paradigms beyond autoregression, theoretical results, evaluation and benchmarks, and limitations and safety. See the [Call for Papers](https://latent-implicit-thinking.github.io/callforpapers/) for a complete list of topics.
 
 ## Important Dates
 
 - **Submission deadline**: <span style="color: red;">~~February 5, 2026 (AOE)~~ extended to Feb 8 AOE, but strongly encourage to submit before Feb 5 AOE</span>
-- **Reviewing period**: February 6 - February 26, 2026
+- **Reviewing period**: February 8 - February 27, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
 - **Camera-ready deadline**: March 10, 2026
 - **Workshop date**: April 26-27, 2026 (Rio de Janeiro, following the ICLR 2026 main conference)
