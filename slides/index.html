@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>LIT Workshop · ICLR 2026 · Slides</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme" />
+
+  <style>
+    :root {
+      --lit-accent: #0085A1;
+      --lit-accent-2: #008AFF;
+      --lit-text: #2b2b2b;
+      --lit-muted: #6b6b6b;
+    }
+
+    .reveal {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--lit-text);
+    }
+    .reveal .slides { text-align: left; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      color: var(--lit-text);
+      text-transform: none;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+    }
+    .reveal h1 { font-size: 2.6em; line-height: 1.1; }
+    .reveal h2 { font-size: 1.8em; line-height: 1.15; }
+    .reveal h3 { font-size: 1.2em; color: var(--lit-accent); font-weight: 600; }
+    .reveal a { color: var(--lit-accent-2); text-decoration: none; }
+
+    .accent { color: var(--lit-accent); }
+    .muted { color: var(--lit-muted); }
+    .center { text-align: center !important; }
+
+    .lit-badge {
+      display: inline-block;
+      padding: 0.25em 0.75em;
+      border-radius: 999px;
+      background: var(--lit-accent);
+      color: #fff;
+      font-size: 0.42em;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Title slide */
+    .title-slide { text-align: center; }
+    .title-slide h1 { font-size: 2.8em; margin: 0.2em 0 0.1em; }
+    .title-slide .subtitle { font-size: 1.1em; color: var(--lit-muted); }
+    .title-slide .meta { font-size: 0.6em; color: var(--lit-muted); margin-top: 1.8em; }
+
+    /* Schedule table */
+    table.schedule {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+    table.schedule td {
+      padding: 0.55em 0.6em;
+      border-bottom: 1px solid #eee;
+    }
+    table.schedule td.time {
+      width: 28%;
+      font-variant-numeric: tabular-nums;
+      color: var(--lit-accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    table.schedule tr.highlight td { background: #f3fbfd; }
+    table.schedule tr.break td { color: var(--lit-muted); font-style: italic; }
+
+    /* Speaker layout */
+    .speaker-card {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 2.2em;
+      align-items: center;
+    }
+    .speaker-card img {
+      width: 340px;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.14);
+      margin: 0;
+    }
+    .speaker-card h2 { margin: 0 0 0.15em 0; font-size: 2em; }
+    .speaker-card .affil { color: var(--lit-muted); font-size: 0.95em; }
+
+    /* People grid (organizers) */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.2em 1.4em;
+      margin-top: 0.8em;
+    }
+    .people-grid .person { text-align: center; font-size: 0.5em; }
+    .people-grid .person img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 0 auto 0.4em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .people-grid .person .name { font-weight: 600; }
+
+    /* Oral list */
+    .oral-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5em 0 0;
+    }
+    .oral-list li {
+      display: grid;
+      grid-template-columns: 5em 1fr;
+      gap: 1em;
+      align-items: baseline;
+      padding: 0.7em 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.65em;
+      line-height: 1.35;
+    }
+    .oral-list li .time {
+      color: var(--lit-accent);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .oral-list li .title { font-weight: 600; }
+
+    .big-time {
+      font-size: 5.2em;
+      font-weight: 700;
+      color: var(--lit-accent);
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-top: 0.3em;
+    }
+
+    .question {
+      font-size: 1.05em;
+      line-height: 1.45;
+      padding: 1em 1.2em;
+      border-left: 4px solid var(--lit-accent);
+      background: #f7fcfd;
+      border-radius: 4px;
+      margin-top: 0.8em;
+    }
+
+    .award-paper { margin-top: 1em; }
+    .award-paper .title {
+      font-size: 1.15em;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--lit-text);
+    }
+    .award-paper .authors {
+      font-size: 0.55em;
+      line-height: 1.5;
+      color: var(--lit-muted);
+      margin-top: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. TITLE -->
+      <section class="title-slide">
+        <span class="lit-badge">ICLR 2026 · Workshop</span>
+        <h1>Latent &amp; Implicit Thinking</h1>
+        <div class="subtitle">Going Beyond CoT Reasoning</div>
+        <div class="meta">April 27, 2026 &nbsp;·&nbsp; Rio de Janeiro</div>
+      </section>
+
+      <!-- 2. WELCOME -->
+      <section class="title-slide">
+        <h1>Welcome</h1>
+        <p class="subtitle muted" style="margin-top: 0.6em;">Beyond chain-of-thought:<br/>continuous, recurrent, and diffusion-based reasoning.</p>
+      </section>
+
+      <!-- 3. SCHEDULE — MORNING -->
+      <section>
+        <h2>Schedule <span class="muted" style="font-size: 0.6em;">— Morning</span></h2>
+        <table class="schedule">
+          <tbody>
+            <tr><td class="time">09:00–09:10</td><td>Opening Remarks</td></tr>
+            <tr class="highlight"><td class="time">09:10–09:40</td><td><strong>Keynote 1:</strong> Lingpeng Kong</td></tr>
+            <tr class="highlight"><td class="time">09:40–10:10</td><td><strong>Keynote 2:</strong> Tom Goldstein</td></tr>
+            <tr class="break"><td class="time">10:10–10:30</td><td>Coffee Break</td></tr>
+            <tr><td class="time">10:30–11:10</td><td>Oral Presentations</td></tr>
+            <tr class="highlight"><td class="time">11:10–11:40</td><td><strong>Keynote 3:</strong> Samy Bengio</td></tr>
+            <tr><td class="time">11:40–12:30</td><td>Poster Session 1</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 4. SCHEDULE — AFTERNOON -->
+      <section>
+        <h2>Schedule <span class="muted" style="font-size: 0.6em;">— Afternoon</span></h2>
+        <table class="schedule">
+          <tbody>
+            <tr class="break"><td class="time">12:30–13:30</td><td>Lunch</td></tr>
+            <tr class="highlight"><td class="time">13:30–14:00</td><td><strong>Keynote 4:</strong> Beidi Chen</td></tr>
+            <tr class="highlight"><td class="time">14:00–14:30</td><td><strong>Keynote 5:</strong> Lisa Li</td></tr>
+            <tr class="highlight"><td class="time">14:30–15:00</td><td><strong>Keynote 6:</strong> Yuandong Tian</td></tr>
+            <tr class="break"><td class="time">15:00–15:30</td><td>Coffee Break</td></tr>
+            <tr><td class="time">15:30–16:00</td><td>Panel Discussion</td></tr>
+            <tr><td class="time">16:00–16:50</td><td>Poster Session 2</td></tr>
+            <tr><td class="time">16:50–17:00</td><td>Award &amp; Closing</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 5. ORGANIZERS -->
+      <section>
+        <h2>Organizers</h2>
+        <div class="people-grid">
+          <div class="person"><img src="../assets/img/organizers/xinyi.jpg" alt=""/><div class="name">Xinyi Wang</div></div>
+          <div class="person"><img src="../assets/img/organizers/nikunj.png" alt=""/><div class="name">Nikunj Saunshi</div></div>
+          <div class="person"><img src="../assets/img/organizers/ruijie.jpg" alt=""/><div class="name">Rui-Jie Zhu</div></div>
+          <div class="person"><img src="../assets/img/organizers/liu.jpg" alt=""/><div class="name">Liu Yang</div></div>
+          <div class="person"><img src="../assets/img/organizers/yuntian.jpg" alt=""/><div class="name">Yuntian Deng</div></div>
+          <div class="person"><img src="../assets/img/organizers/nishanth.jpg" alt=""/><div class="name">Nishanth Dikkala</div></div>
+          <div class="person"><img src="../assets/img/organizers/jiaheng.jpg" alt=""/><div class="name">Jiaheng Liu</div></div>
+          <div class="person"><img src="../assets/img/organizers/zhiyuan.webp" alt=""/><div class="name">Zhiyuan Li</div></div>
+          <div class="person"><img src="../assets/img/organizers/avatar.jpg" alt=""/><div class="name">Wenhao Huang</div></div>
+          <div class="person"><img src="../assets/img/organizers/avatar.jpg" alt=""/><div class="name">Sashank J. Reddi</div></div>
+          <div class="person"><img src="../assets/img/organizers/chongxuan.png" alt=""/><div class="name">Chongxuan Li</div></div>
+          <div class="person"><img src="../assets/img/organizers/sanjiv.jpg" alt=""/><div class="name">Sanjiv Kumar</div></div>
+        </div>
+      </section>
+
+      <!-- 6. KEYNOTE 1 -->
+      <section>
+        <span class="lit-badge">Keynote 1 · 09:10–09:40</span>
+        <div class="speaker-card" style="margin-top: 0.8em;">
+          <img src="../assets/img/speakers/lingpeng.jpeg" alt="Lingpeng Kong"/>
+          <div>
+            <h2>Lingpeng Kong</h2>
+            <div class="affil">The University of Hong Kong</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. KEYNOTE 2 -->
+      <section>
+        <span class="lit-badge">Keynote 2 · 09:40–10:10</span>
+        <div class="speaker-card" style="margin-top: 0.8em;">
+          <img src="../assets/img/speakers/tom.jpg" alt="Tom Goldstein"/>
+          <div>
+            <h2>Tom Goldstein</h2>
+            <div class="affil">University of Maryland</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. COFFEE BREAK -->
+      <section class="center">
+        <h1>Coffee Break</h1>
+        <div class="big-time">10:10 – 10:30</div>
+      </section>
+
+      <!-- 9. ORAL PRESENTATIONS -->
+      <section>
+        <h2>Oral Presentations <span class="muted" style="font-size: 0.55em;">10:30 – 11:10</span></h2>
+        <ol class="oral-list">
+          <li>
+            <span class="time">10:30</span>
+            <span class="title">Dynamic Large Concept Models: Latent Reasoning in an Adaptive Semantic Space</span>
+          </li>
+          <li>
+            <span class="time">10:40</span>
+            <span class="title">The Power of Power Law: Asymmetry Enables Compositional Reasoning</span>
+          </li>
+          <li>
+            <span class="time">10:50</span>
+            <span class="title">Think-at-Hard: Selective Latent Iterations to Improve Reasoning Language Models</span>
+          </li>
+          <li>
+            <span class="time">11:00</span>
+            <span class="title">When does Chain-of-Thought Help: A Markovian Perspective</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 10. KEYNOTE 3 -->
+      <section>
+        <span class="lit-badge">Keynote 3 · 11:10–11:40</span>
+        <div class="speaker-card" style="margin-top: 0.8em;">
+          <img src="../assets/img/speakers/samy.jpg" alt="Samy Bengio"/>
+          <div>
+            <h2>Samy Bengio</h2>
+            <div class="affil">Apple</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. POSTER SESSION 1 -->
+      <section class="center">
+        <h1>Poster Session 1</h1>
+        <div class="big-time">11:40 – 12:30</div>
+      </section>
+
+      <!-- 12. LUNCH -->
+      <section class="center">
+        <h1>Lunch</h1>
+        <div class="big-time">12:30 – 13:30</div>
+      </section>
+
+      <!-- 13. WELCOME BACK — AFTERNOON RECAP -->
+      <section>
+        <h2>Welcome Back <span class="muted" style="font-size: 0.6em;">— This Afternoon</span></h2>
+        <table class="schedule">
+          <tbody>
+            <tr class="highlight"><td class="time">13:30–14:00</td><td><strong>Keynote 4:</strong> Beidi Chen</td></tr>
+            <tr class="highlight"><td class="time">14:00–14:30</td><td><strong>Keynote 5:</strong> Lisa Li</td></tr>
+            <tr class="highlight"><td class="time">14:30–15:00</td><td><strong>Keynote 6:</strong> Yuandong Tian</td></tr>
+            <tr class="break"><td class="time">15:00–15:30</td><td>Coffee Break</td></tr>
+            <tr><td class="time">15:30–16:00</td><td>Panel Discussion</td></tr>
+            <tr><td class="time">16:00–16:50</td><td>Poster Session 2</td></tr>
+            <tr><td class="time">16:50–17:00</td><td>Award &amp; Closing</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 14. KEYNOTE 4 -->
+      <section>
+        <span class="lit-badge">Keynote 4 · 13:30–14:00</span>
+        <div class="speaker-card" style="margin-top: 0.8em;">
+          <img src="../assets/img/speakers/beidi.jpeg" alt="Beidi Chen"/>
+          <div>
+            <h2>Beidi Chen</h2>
+            <div class="affil">Carnegie Mellon University</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 14. KEYNOTE 5 -->
+      <section>
+        <span class="lit-badge">Keynote 5 · 14:00–14:30</span>
+        <div class="speaker-card" style="margin-top: 0.8em;">
+          <img src="../assets/img/speakers/lisa.jpeg" alt="Lisa Xiang Li"/>
+          <div>
+            <h2>Lisa Xiang Li</h2>
+            <div class="affil">Stanford University</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 15. KEYNOTE 6 -->
+      <section>
+        <span class="lit-badge">Keynote 6 · 14:30–15:00</span>
+        <div class="speaker-card" style="margin-top: 0.8em;">
+          <img src="../assets/img/speakers/yuandong.png" alt="Yuandong Tian"/>
+          <div>
+            <h2>Yuandong Tian</h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- 16. COFFEE BREAK 2 -->
+      <section class="center">
+        <h1>Coffee Break</h1>
+        <div class="big-time">15:00 – 15:30</div>
+      </section>
+
+      <!-- 17. PANEL -->
+      <section>
+        <span class="lit-badge">Panel · 15:30–16:00</span>
+        <h2 style="margin-top: 0.5em;">Panel Discussion</h2>
+        <div class="question">
+          What are the key challenges in enabling large language models to reason effectively in <strong class="accent">latent space</strong>?
+        </div>
+      </section>
+
+      <!-- 18. POSTER SESSION 2 -->
+      <section class="center">
+        <h1>Poster Session 2</h1>
+        <div class="big-time">16:00 – 16:50</div>
+      </section>
+
+      <!-- 19. BEST PAPER -->
+      <section>
+        <span class="lit-badge">Best Paper Award</span>
+        <div class="award-paper">
+          <div class="title">Dynamic Large Concept Models:<br/>Latent Reasoning in an Adaptive Semantic Space</div>
+          <div class="authors">
+            Xingwei Qu, Shaowen Wang, Zihao Huang, Kai Hua, Fan Yin, Rui-Jie Zhu, Jundong Zhou,
+            Qiyang Min, Zihao Wang, Yizhi Li, Tianyu Zhang, He Xing, Zheng Zhang, Yuxuan Song,
+            Tianyu Zheng, Zhiyuan Zeng, Chenghua Lin, Ge Zhang, Wenhao Huang
+          </div>
+        </div>
+      </section>
+
+      <!-- 20. THANK YOU -->
+      <section class="title-slide">
+        <h1>Thank you</h1>
+        <div class="meta" style="margin-top: 1.5em;">
+          <a href="https://latent-implicit-thinking.github.io/">latent-implicit-thinking.github.io</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      transition: 'fade',
+      controls: true,
+      progress: true,
+      center: true,
+      width: 1280,
+      height: 800,
+      margin: 0.06,
+      plugins: [ RevealNotes ],
+    });
+  </script>
+</body>
+</html>
