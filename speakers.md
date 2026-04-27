@@ -6,12 +6,12 @@ permalink: /speakers/
 
 <div class="list-of-people">
     <div class="person">
-        <a href="https://xiangli1999.github.io/" target="_blank"><img src="/assets/img/speakers/lisa.jpeg" alt="Lisa Xiang Li"></a>
-        <a href="https://xiangli1999.github.io/" target="_blank">Lisa Xiang Li</a>
+        <a href="https://scholar.google.com/citations?user=hty-MWIAAAAJ&hl=zh-CN" target="_blank"><img src="/assets/img/speakers/Xingwei.jpeg" alt="Xingwei Qu"></a>
+        <a href="https://scholar.google.com/citations?user=hty-MWIAAAAJ&hl=zh-CN" target="_blank">Xingwei Qu</a>
     </div>
     <div class="person">
-        <a href="https://www.andrew.cmu.edu/user/beidic/" target="_blank"><img src="/assets/img/speakers/beidi.jpeg" alt="Beidi Chen"></a>
-        <a href="https://www.andrew.cmu.edu/user/beidic/" target="_blank">Beidi Chen</a>
+        <a href="https://danfu.org/" target="_blank"><img src="/assets/img/speakers/DanFu.jpeg" alt="Dan Fu"></a>
+        <a href="https://danfu.org/" target="_blank">Dan Fu</a>
     </div>
     <div class="person">
         <a href="https://bengio.abracadoudou.com/" target="_blank"><img src="/assets/img/speakers/samy.jpg" alt="Samy Bengio"></a>
