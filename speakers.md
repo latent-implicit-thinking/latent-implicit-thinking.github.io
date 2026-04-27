@@ -6,8 +6,8 @@ permalink: /speakers/
 
 <div class="list-of-people">
     <div class="person">
-        <a href="https://scottqumu.github.io/Scott-CV/" target="_blank"><img src="/assets/img/speakers/Xingwei.jpg" alt="Xingwei Qu"></a>
-        <a href="https://scottqumu.github.io/Scott-CV/" target="_blank">Xingwei Qu</a>
+        <a href="https://xiangli1999.github.io/" target="_blank"><img src="/assets/img/speakers/lisa.jpeg" alt="Lisa Li"></a>
+        <a href="https://xiangli1999.github.io/" target="_blank">Lisa Li</a>
     </div>
     <div class="person">
         <a href="https://danfu.org/" target="_blank"><img src="/assets/img/speakers/DanFu.jpeg" alt="Dan Fu"></a>

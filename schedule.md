@@ -18,9 +18,9 @@ permalink: /schedule/
 | **11:40–12:30** | Poster Session 1          |
 | **12:30–13:30** | Lunch Break               |
 | **13:30–14:00** | **Keynote Talk 4:** Dan Fu, UCSD |
-| **14:00–14:30** | **Keynote Talk 5:** Xingwei Qu, University of Manchester |
+| **14:00–14:30** | **Keynote Talk 5:** Lisa Li, Stanford |
 | **14:30–15:00** | **Keynote Talk 6:** Yuandong Tian |
 | **15:00–15:30** | Coffee Break |
-| **15:30–16:00** | **Panel Discussion:** What are the key challenges in enabling large language models to reason effectively in latent space? (Yuandong Tian, Tom Goldstein)|
+| **15:30–16:00** | **Panel Discussion:** What are the key challenges in enabling large language models to reason effectively in latent space?  |
 | **16:00–16:50** | Poster Session 2          |
 | **16:50–17:00** | Award Announcement and Closing Remarks |
