@@ -2,11 +2,13 @@
 
 A reading list about reasoning without writing every intermediate step.
 
-- New to the field? Start with explanations and concrete examples.
-- Looking for papers? Search by author, title, method, or arXiv ID, and sort by publication date or when papers joined the list. Related background papers are listed separately.
-- Using a reference manager or research agent? Download BibTeX, CSL-JSON, Markdown, or JSON.
+[Visit the reading list](https://latent-implicit-thinking.github.io/).
 
-The original **Latent & Implicit Thinking – Going Beyond CoT Reasoning workshop at ICLR 2026** is preserved under `/workshop/2026/`.
+- New to the field? [Start with explanations and concrete examples](https://latent-implicit-thinking.github.io/topics/).
+- Looking for papers? [Browse the paper list](https://latent-implicit-thinking.github.io/papers/), search by author, title, method, or arXiv ID, and sort by publication date or when papers joined the list. Related background papers are listed separately.
+- Using a reference manager or research agent? [Download the list and citations](https://latent-implicit-thinking.github.io/data/) in BibTeX, CSL-JSON, Markdown, or JSON.
+
+The original [Latent & Implicit Thinking – Going Beyond CoT Reasoning workshop at ICLR 2026](https://latent-implicit-thinking.github.io/workshop/2026/) is preserved in the workshop archive.
 
 ## Papers and coverage
 
@@ -40,5 +42,3 @@ The site uses [Beautiful Jekyll](https://beautifuljekyll.com/) under its MIT lic
 ## License
 
 Our categories, summaries, and data are available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Original papers and third-party works keep their own terms. Site code and the Beautiful Jekyll theme are covered by [LICENSE](LICENSE).
-
-[Visit the reading list](https://latent-implicit-thinking.github.io/).
