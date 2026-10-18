@@ -1,0 +1,58 @@
+---
+layout: null
+permalink: /data/ontology.json
+---
+{
+  "name": "Implicit Chain-of-Thought research ontology",
+  "version": {{ site.data.meta.version | jsonify }},
+  "updated_at": {{ site.data.meta.updated_at | jsonify }},
+  "umbrella_term": {
+    "id": "implicit-chain-of-thought",
+    "label": "implicit chain-of-thought",
+    "short_label": "implicit CoT",
+    "definition": "Intermediate reasoning carried out without writing every step as natural language.",
+    "related_terms": ["latent chain-of-thought", "latent reasoning", "continuous thought", "hidden-state reasoning", "recurrent reasoning"],
+    "usage_note": "This guide uses implicit chain-of-thought as its umbrella term while preserving the terminology used by individual papers."
+  },
+  "scope": {
+    "core_rule": "Include work that studies intermediate computation which substitutes for, compresses, internalizes, or changes the schedule of an explicit reasoning trace; general representation learning alone is insufficient.",
+    "adjacent_rule": "Include a separately labeled precursor when it provides essential architectural or theoretical context without directly studying implicit chain-of-thought.",
+    "coverage_claim": "Curated broad coverage, not exhaustive coverage.",
+    "search_refreshed_at": {{ site.data.meta.search_refreshed_at | jsonify }},
+    "latest_included_first_public": {{ site.data.meta.latest_included_first_public | jsonify }}
+  },
+  "date_policy": {
+    "field": "first_public",
+    "definition": "Date of the earliest public version verified during curation, usually the arXiv v1 submission date, not an independently verified announcement timestamp. Earlier conference presentations carry a source note. citation_date separately dates the linked arXiv version used by citation exports.",
+    "sort_order": "ascending by first_public, then stable record identifier"
+  },
+  "research_lenses": [
+    {% for method in site.data.methods %}{"id": {{ method.id | jsonify }}, "label": {{ method.label | jsonify }}, "definition": {{ method.definition | jsonify }}, "guiding_question": {{ method.question | jsonify }}, "related_terms": {{ method.related_terms | jsonify }}, "url": {{ method.url | absolute_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}
+  ],
+  "axes": {
+    "representation": {
+      "definition": "The form that carries intermediate information.",
+      "values": ["cache-memory", "continuous-state", "discrete-token", "hidden-state", "multimodal-latent", "survey", "text-latent-hybrid"]
+    },
+    "computation": {
+      "definition": "How intermediate computation is scheduled or repeated.",
+      "values": ["depth-wise", "diffusion", "hierarchical", "parallel", "recurrent", "search", "stateful", "survey", "token-wise"]
+    },
+    "training": {
+      "definition": "The principal supervision, adaptation, or inference procedure used in the paper.",
+      "values": ["analysis-only", "curriculum", "distillation", "inference-only", "pretraining", "reinforcement-learning", "self-distillation", "self-training", "supervised", "test-time-optimization"]
+    },
+    "questions": {
+      "definition": "The research questions directly investigated.",
+      "values": ["architecture", "capability", "controllability", "efficiency", "evaluation", "generalization", "interpretability", "limitations", "scaling", "survey", "taxonomy", "theory"]
+    },
+    "evidence": {
+      "definition": "The type of support offered for the paper's claims.",
+      "values": ["boundary", "empirical", "formal", "mechanistic", "probing", "scaling", "survey"]
+    },
+    "modality": {
+      "definition": "The problem or data modality studied.",
+      "values": ["language", "multimodal", "symbolic", "vision"]
+    }
+  }
+}

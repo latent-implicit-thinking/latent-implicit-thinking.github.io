@@ -10,22 +10,31 @@
 ############################
 
 # Name of website
-title: Latent & Implicit Thinking
+title: Implicit Chain-of-Thought
 
-# Your name to show in the footer
-author: LIT Workshop Organizers
+# Canonical public URL used for metadata, feeds, and machine-readable exports
+url: "https://latent-implicit-thinking.github.io"
+
+# Stewardship label shown in the footer
+author: LIT research map
 
 ###############################################
 # --- List of links in the navigation bar --- #
 ###############################################
 
 navbar-links:
-  CFP: "callforpapers"
-  Organizers: "organizers"
-  Papers: "papers"
-  Schedule: "schedule"
-  Speakers: "speakers"
-  Sponsors: "sponsors"
+  Overview: "/"
+  Explore papers: "papers"
+  Concepts & scope: "topics"
+  Data: "data"
+  Contribute: "contribute"
+  Workshop archive:
+    - Overview: "workshop/2026"
+    - Schedule: "schedule"
+    - Speakers: "speakers"
+    - Organizers: "organizers"
+    - Sponsors: "sponsors"
+    - Call for Papers: "callforpapers"
   
 
 ################
@@ -35,6 +44,10 @@ navbar-links:
 # Image to show in the navigation bar - works best with a square image
 # Remove this parameter if you don't want an image in the navbar
 avatar: "/assets/img/avatar-icon.png"
+
+# Default Open Graph / social preview for the literature hub
+share-img: "/assets/img/og.png"
+share-img-alt: "Implicit Chain-of-Thought — papers, concepts, and an evolving research map"
 
 # By default, the image is cut into a circle. You can disable this behaviour by setting 'round-avatar: false'
 round-avatar: true
@@ -53,7 +66,7 @@ round-avatar: true
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
   twitter: LITWorkshop
-  email: "mailto:latent-implicit-thinking@googlegroups.com"
+  email: "latent-implicit-thinking@googlegroups.com"
 #  medium: yourname
 #  reddit: yourname or r/yoursubreddit
 #  linkedin: daattali
@@ -81,7 +94,7 @@ social-network-links:
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
-rss-description: Latent & Implicit Thinking – Going Beyond CoT Reasoning (LIT) is an ICLR 2026 workshop that explores alternative forms of reasoning such as implicit CoT, looped architectures, and diffusion models for reasoning.
+rss-description: Release updates for the Implicit Chain-of-Thought research map.
 
 ###########################
 # --- General options --- #
@@ -110,11 +123,11 @@ feed_show_excerpt: true
 # Whether or not to show a list of tags below each post preview in the feed page
 feed_show_tags: true
 
-# Add a search button to the navbar
-post_search: true
+# The paper explorer provides the site's primary search experience.
+post_search: false
 
-# Add a button in the footer to edit the current page. Only works if your website is hosted on GitHub
-edit_page_button: true
+# Contributions use dedicated issue forms with the required scholarly metadata.
+edit_page_button: false
 
 # Allow sub-menu items (second-level navigation menu items) to be longer than the top-level menu
 # If this setting is off, then long sub-menu words might get cut off
@@ -122,7 +135,7 @@ edit_page_button: true
 navbar-var-length: false
 
 # The keywords to associate with your website, for SEO purposes
-keywords: "implicit reasoning, latent reasoning, looped transformers, diffusion of thought, ICLR 2026 workshop"
+keywords: "implicit chain of thought, implicit reasoning, internalized reasoning, continuous thought, looped transformers, diffusion of thought, research papers, reading guide"
 
 ######################################
 # --- Colours / background image --- #
@@ -130,17 +143,17 @@ keywords: "implicit reasoning, latent reasoning, looped transformers, diffusion 
 
 # Personalize the colours in your website. Colour values can be any valid CSS colour
 
-page-col: "#FFFFFF"
-text-col: "#404040"
-link-col: "#008AFF"
-hover-col: "#0085A1"
-navbar-col: "#EAEAEA"
-navbar-text-col: "#404040"
-navbar-border-col: "#DDDDDD"
-footer-col: "#EAEAEA"
-footer-text-col: "#777777"
-footer-link-col: "#404040"
-footer-hover-col: "#0085A1"
+page-col: "#F7F6F1"
+text-col: "#172033"
+link-col: "#3559A6"
+hover-col: "#1E7367"
+navbar-col: "#F7F6F1"
+navbar-text-col: "#172033"
+navbar-border-col: "#D9DCD5"
+footer-col: "#ECEDE7"
+footer-text-col: "#5D6572"
+footer-link-col: "#172033"
+footer-hover-col: "#1E7367"
 
 # Alternatively, the navbar, footer, and page background can be set to an image
 # instead of colour
@@ -150,15 +163,15 @@ footer-hover-col: "#0085A1"
 #page-img: "/assets/img/bgimage.png"
 
 # Suggest a colour for mobile browsers to use as the browser's theme. This is only supported by a few mobile browsers.
-#mobile-theme-col: "#0085A1"
+mobile-theme-col: "#F7F6F1"
 
 # For any extra visual customization, you can include additional CSS files in every page on your site. List any custom CSS files here
 site-css:
   - "/assets/css/custom.css"
 
-# If you have common JavaScript files that should be included in every page, list them here
-#site-js:
-#  - "/assets/js/custom-script.js"
+# Lightweight, event-only measurement for downloads, paper links, and contributions.
+site-js:
+  - "/assets/js/lit-analytics.js"
 
 #################################
 # --- Web Analytics Section --- #
@@ -258,7 +271,6 @@ timezone: "America/Toronto"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
-paginate: 5
 
 kramdown:
   input: GFM
@@ -281,19 +293,25 @@ defaults:
 
 # Exclude these files from production site
 exclude:
-  - CHANGELOG.md
+  - Appraisals
   - CNAME
+  - CONTRIBUTING.md
   - Gemfile
   - Gemfile.lock
   - LICENSE
   - README.md
+  - beautiful-jekyll-theme.gemspec
+  - staticman.yml
   - screenshot.png
+  - scripts/
+  - assets/img/404-southpark.jpg
+  - assets/img/crepe.jpg
+  - assets/img/path.jpg
+  - assets/img/thumb.png
   - docs/
 
 plugins:
-  - jekyll-paginate
   - jekyll-sitemap
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189
-

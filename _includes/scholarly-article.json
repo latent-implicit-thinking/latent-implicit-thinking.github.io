@@ -1,0 +1,10 @@
+{%- assign author_names = include.paper.authors | split: ', ' -%}
+{
+  "@type": "ScholarlyArticle",
+  "@id": {{ include.paper.paper_url | jsonify }},
+  "name": {{ include.paper.title | jsonify }},
+  "url": {{ include.paper.paper_url | jsonify }},
+  "identifier": {"@type": "PropertyValue", "propertyID": "arXiv", "value": {{ include.paper.id | jsonify }}},
+  "author": [{% for name in author_names %}{"@type": "Person", "name": {{ name | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "description": {{ include.paper.summary | default: include.paper.connection | jsonify }}
+}

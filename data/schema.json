@@ -1,0 +1,141 @@
+---
+layout: null
+permalink: /data/schema.json
+---
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": {{ '/data/schema.json' | absolute_url | jsonify }},
+  "title": "Implicit Chain-of-Thought research map",
+  "description": "Schema for the versioned paper corpus and separately labeled precursor records.",
+  "type": "object",
+  "required": ["metadata", "papers", "precursors"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version", "updated_at", "search_refreshed_at", "latest_included_first_public", "core_record_count", "precursor_record_count", "scope_url", "contribute_url", "schema_url", "ontology_url", "repository_url", "citation_url", "license_name", "license_url", "license_scope", "record_url_prefix", "record_id_transform", "provenance_note"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "updated_at": {"type": "string", "format": "date"},
+        "search_refreshed_at": {"type": "string", "format": "date"},
+        "latest_included_first_public": {"type": "string", "format": "date"},
+        "core_record_count": {"type": "integer", "minimum": 0},
+        "precursor_record_count": {"type": "integer", "minimum": 0},
+        "scope_url": {"type": "string", "format": "uri"},
+        "contribute_url": {"type": "string", "format": "uri"},
+        "schema_url": {"type": "string", "format": "uri"},
+        "ontology_url": {"type": "string", "format": "uri"},
+        "repository_url": {"type": "string", "format": "uri"},
+        "citation_url": {"type": "string", "format": "uri-reference"},
+        "csl_url": {"type": "string", "format": "uri"},
+        "reading_list_url": {"type": "string", "format": "uri"},
+        "citation_policy": {"type": "string"},
+        "license_name": {"type": "string"},
+        "license_url": {"type": "string", "format": "uri"},
+        "license_scope": {"type": "string"},
+        "record_url_prefix": {"type": "string", "format": "uri-reference"},
+        "record_id_transform": {"type": "string"},
+        "provenance_note": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "papers": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/paper"}
+    },
+    "precursors": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/precursor"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "paper": {
+      "type": "object",
+      "required": ["id", "title", "authors", "first_public", "venue", "paper_url", "lens", "representation", "computation", "training", "questions", "evidence", "modality", "summary", "provenance"],
+      "properties": {
+        "id": {"type": "string", "description": "Stable record identifier; arXiv ID when available."},
+        "title": {"type": "string"},
+        "authors": {"type": "string"},
+        "author_names": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "record_url": {"type": "string", "format": "uri"},
+        "first_public": {"type": "string", "format": "date"},
+        "first_public_source": {"type": "string", "format": "uri"},
+        "first_public_note": {"type": "string"},
+        "citation_date": {"type": "string", "format": "date", "description": "ArXiv v1 submission date for the linked citation version, distinct from earlier conference history or later proceedings."},
+        "venue": {"type": "string"},
+        "arxiv": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"},
+        "paper_url": {"type": "string", "format": "uri"},
+        "code_url": {"type": "string", "format": "uri"},
+        "lens": {"$ref": "#/$defs/lensValues"},
+        "representation": {"$ref": "#/$defs/representationValues"},
+        "computation": {"$ref": "#/$defs/computationValues"},
+        "training": {"$ref": "#/$defs/trainingValues"},
+        "questions": {"$ref": "#/$defs/questionValues"},
+        "evidence": {"$ref": "#/$defs/evidenceValues"},
+        "modality": {"$ref": "#/$defs/modalityValues"},
+        "summary": {"type": "string"},
+        "provenance": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "precursor": {
+      "type": "object",
+      "required": ["id", "title", "authors", "first_public", "paper_url", "connection"],
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "authors": {"type": "string"},
+        "author_names": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "record_url": {"type": "string", "format": "uri"},
+        "first_public": {"type": "string", "format": "date"},
+        "citation_date": {"type": "string", "format": "date"},
+        "paper_url": {"type": "string", "format": "uri"},
+        "connection": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "lensValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["internalized", "learned-tokens", "continuous", "recurrent", "beyond-sequential", "analysis"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "representationValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["cache-memory", "continuous-state", "discrete-token", "hidden-state", "multimodal-latent", "survey", "text-latent-hybrid"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "computationValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["depth-wise", "diffusion", "hierarchical", "parallel", "recurrent", "search", "stateful", "survey", "token-wise"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "trainingValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["analysis-only", "curriculum", "distillation", "inference-only", "pretraining", "reinforcement-learning", "self-distillation", "self-training", "supervised", "test-time-optimization"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "questionValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["architecture", "capability", "controllability", "efficiency", "evaluation", "generalization", "interpretability", "limitations", "scaling", "survey", "taxonomy", "theory"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "evidenceValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["boundary", "empirical", "formal", "mechanistic", "probing", "scaling", "survey"]},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "modalityValues": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["language", "multimodal", "symbolic", "vision"]},
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  }
+}

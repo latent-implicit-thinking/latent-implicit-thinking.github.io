@@ -1,0 +1,69 @@
+name: Suggest a paper
+description: Propose a missing paper for the Implicit Chain-of-Thought research map.
+title: "[Paper] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping expand the map. Please use public scholarly sources and search the existing corpus before submitting.
+  - type: input
+    id: title
+    attributes:
+      label: Paper title
+      placeholder: Canonical title
+    validations:
+      required: true
+  - type: textarea
+    id: authors
+    attributes:
+      label: Authors
+      description: Use the order shown on the earliest public version.
+    validations:
+      required: true
+  - type: input
+    id: paper_url
+    attributes:
+      label: Paper URL
+      description: ArXiv, OpenReview, proceedings, or another canonical public source.
+      placeholder: https://arxiv.org/abs/...
+    validations:
+      required: true
+  - type: input
+    id: first_public
+    attributes:
+      label: Earliest public date
+      description: YYYY-MM-DD, with a source if it is not visible at the paper URL.
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: input
+    id: code_url
+    attributes:
+      label: Verified code or project URL
+      placeholder: https://github.com/...
+  - type: textarea
+    id: fit
+    attributes:
+      label: Why it belongs in the map
+      description: Explain the connection to implicit chain-of-thought in one or two sentences.
+    validations:
+      required: true
+  - type: dropdown
+    id: family
+    attributes:
+      label: Closest method family
+      options:
+        - Internalized reasoning
+        - Learned thinking tokens
+        - Continuous internal states
+        - Recurrent or stateful computation
+        - Alternative computation schedules
+        - Analysis, evaluation, or theory
+        - Unsure or spans several families
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context
+      description: Optional venue, related records, or classification notes.

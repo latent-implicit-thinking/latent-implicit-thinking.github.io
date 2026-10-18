@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the contribution guide
+    url: https://latent-implicit-thinking.github.io/contribute/
+    about: Review the scope and required evidence before opening an issue.

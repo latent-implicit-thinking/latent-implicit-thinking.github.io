@@ -1,8 +1,13 @@
 ---
 layout: page
 title: Schedule
+share-description: "Program archive for the Latent & Implicit Thinking workshop at ICLR 2026."
 permalink: /schedule/
+archive-note: "Program from the completed LIT workshop on April 27, 2026."
+last_modified_at: 2026-09-07
 ---
+
+{% include archive-banner.html %}
 
 ## Schedule
 

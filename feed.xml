@@ -12,17 +12,13 @@ layout: null
     {% endif %}
     <link>{{ '/' | absolute_url }}</link>
     <atom:link href="{{ 'feed.xml' | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% assign excerpt_length = site.excerpt_length | default: 50 %}
-    {% for post in site.posts limit:20 %}
+    {% for release in site.data.releases limit:20 %}
       <item>
-        <title>{{ post.title | strip_html | xml_escape }}</title>
-        <description>
-          {% if post.subtitle %}{{ post.subtitle | strip_html | xml_escape }} - {% endif %}
-          {{ post.content | strip_html | xml_escape | truncatewords: excerpt_length }}
-        </description>
-        <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>v{{ release.version }} · {{ release.title | xml_escape }}</title>
+        <description>{{ release.changes | join: " " | xml_escape }}</description>
+        <pubDate>{{ release.date | date_to_rfc822 }}</pubDate>
+        <link>{{ '/changelog/' | absolute_url }}#v{{ release.version | replace: '.', '-' }}</link>
+        <guid isPermaLink="true">{{ '/changelog/' | absolute_url }}#v{{ release.version | replace: '.', '-' }}</guid>
       </item>
     {% endfor %}
   </channel>

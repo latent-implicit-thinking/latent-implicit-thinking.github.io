@@ -1,0 +1,11 @@
+- version: "0.5.0"
+  date: "2026-10-18"
+  title: "First public research-map release"
+  changes:
+    - "Introduced a curated map of 108 core papers and eight separately labeled precursors, with six research guides and oldest-first chronologies."
+    - "Preserved the ICLR 2026 workshop program and event pages as an archive."
+    - "Added CSL-JSON citations, ordered author names, explicit record URLs, and a full Markdown reading list from the shared corpus."
+    - "Aligned BibTeX and CSL citations with arXiv preprints and initial submission dates, separately from chronology and later venues."
+    - "Added scholarly structured data for every core record and enabled exact arXiv-ID and venue searches."
+    - "Opened paper-suggestion and correction workflows, with CC BY 4.0 reuse terms for original curation and editorial material."
+    - "Acknowledged Awesome-Latent-CoT and retained per-record discovery provenance. Literature-search coverage is dated September 5, 2026."

@@ -27,9 +27,13 @@ common-js:
 <body>
   {% include gtm_body.html %}
 
+  <a class="lit-skip-link" href="#main-content">Skip to main content</a>
+
   {% include nav.html %}
 
-  {{ content }}
+  <div id="main-content" tabindex="-1">
+    {{ content }}
+  </div>
 
   {% include footer.html %}
 

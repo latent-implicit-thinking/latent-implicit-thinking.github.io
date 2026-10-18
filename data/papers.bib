@@ -1,0 +1,30 @@
+---
+layout: null
+permalink: /data/papers.bib
+---
+% Citations refer to arXiv preprints, using initial submission dates, not later proceedings.
+% Source URLs are not version-pinned.
+% Chronology dates and venue labels are available separately in papers.json.
+{% for paper in site.data.papers %}@misc{lit_{{ paper.id | replace: '.', '_' }},
+  title = { { {{- paper.title | replace: '&', '\&' | replace: '%', '\%' | replace: '_', '\_' | replace: '#', '\#' | replace: '$', '\$' -}} } },
+  author = { {{- paper.authors | replace: ', ', ' and ' -}} },
+  year = { {{- paper.citation_date | default: paper.first_public | slice: 0, 4 -}} },
+  note = {arXiv preprint},
+{% if paper.arxiv %}
+  eprint = { {{- paper.arxiv -}} },
+  archivePrefix = {arXiv},
+{% endif %}
+  url = { {{- paper.paper_url -}} }
+}
+
+{% endfor %}{% for paper in site.data.precursors %}@misc{lit_precursor_{{ paper.id | replace: '.', '_' }},
+  title = { { {{- paper.title | replace: '&', '\&' | replace: '%', '\%' | replace: '_', '\_' | replace: '#', '\#' | replace: '$', '\$' -}} } },
+  author = { {{- paper.authors | replace: ', ', ' and ' -}} },
+  year = { {{- paper.citation_date | default: paper.first_public | slice: 0, 4 -}} },
+  note = {arXiv preprint},
+  eprint = { {{- paper.id -}} },
+  archivePrefix = {arXiv},
+  url = { {{- paper.paper_url -}} }
+}
+
+{% endfor %}

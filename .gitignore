@@ -1,5 +1,7 @@
 # project
 _site
+.jekyll-cache/
+.bundle/
 .sass-cache
 .vagrant
 
@@ -7,7 +9,5 @@ _site
 .DS_Store
 Thumbs.db
 ehthumbs.db
-
-Gemfile.lock
 
 beautiful-jekyll-theme-*.gem

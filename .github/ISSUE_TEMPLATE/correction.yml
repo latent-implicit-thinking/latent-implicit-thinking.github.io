@@ -1,0 +1,44 @@
+name: Report a correction
+description: Correct metadata, dates, links, summaries, or classifications.
+title: "[Correction] "
+body:
+  - type: input
+    id: record
+    attributes:
+      label: Paper or record
+      description: Give the title, arXiv ID, or URL of the affected record.
+    validations:
+      required: true
+  - type: dropdown
+    id: correction_type
+    attributes:
+      label: What needs correction?
+      options:
+        - Title or authors
+        - Earliest public date
+        - Venue
+        - Paper or code link
+        - Summary
+        - Method-family or facet classification
+        - Scope or site text
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Proposed correction
+      description: State what is wrong and what it should say instead.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Supporting source
+      description: Link to an authoritative public source whenever possible.
+      placeholder: https://...
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Optional explanation, especially for disputed or multi-label classifications.

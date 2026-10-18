@@ -1,0 +1,22 @@
+{%- assign citation_date = include.paper.citation_date | default: include.paper.first_public -%}
+{%- assign citation_key = include.paper.id | replace: '.', '_' | prepend: include.key_prefix -%}
+{%- assign record_slug = include.paper.id | replace: '.', '-' -%}
+{%- assign record_path = '/papers/#' | append: include.record_prefix | append: record_slug -%}
+{%- assign author_names = include.paper.authors | split: ', ' -%}
+{
+  "id": {{ citation_key | jsonify }},
+  "type": "article",
+  "title": {{ include.paper.title | jsonify }},
+  "author": [{% for name in author_names %}{"literal": {{ name | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "issued": {"date-parts": [[{{ citation_date | date: '%Y' | plus: 0 }}, {{ citation_date | date: '%m' | plus: 0 }}, {{ citation_date | date: '%d' | plus: 0 }}]]},
+  "genre": "Preprint",
+  "archive": "arXiv",
+  "number": {{ include.paper.id | prepend: 'arXiv:' | jsonify }},
+  "URL": {{ include.paper.paper_url | jsonify }},
+  "custom": {
+    "collection": {{ include.collection | jsonify }},
+    "record_url": {{ record_path | absolute_url | jsonify }},
+    "first_public": {{ include.paper.first_public | jsonify }},
+    "citation_basis": "ArXiv preprint, using its initial submission date; source URL is not version-pinned."
+  }
+}

@@ -1,20 +1,25 @@
 ---
 layout: page
-title: Call for papers
+title: Call for Papers (archive)
+share-description: "Archived call for papers from the completed LIT workshop at ICLR 2026; submissions are closed."
 permalink: /callforpapers/
+archive-note: "Submissions are closed. This page preserves the original 2026 call for reference."
+last_modified_at: 2026-09-07
 ---
+
+{% include archive-banner.html %}
 
 **CFP: Latent & Implicit Thinking – Going Beyond CoT Reasoning (LIT) Workshop at ICLR 2026**
 
+The text below is the archived call as it appeared before the workshop.
+
 We invite original research paper submissions on latent and implicit reasoning in vision and language models. The workshop seeks to unify diverse yet complementary research directions exploring alternative forms of intermediate reasoning beyond explicit Chain-of-Thought (CoT) reasoning.
 
-## Submit Your Paper
+## Submission record
 
-**[Submit via OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)**
+**[View the workshop group on OpenReview →](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)**
 
 **Submission deadline**: ~~February 5, 2026 (AOE)~~ extended to Feb 8 AOE, but strongly encourage to submit before Feb 5 AOE
-
-**Note for new OpenReview users**: New profiles created without an institutional email will go through a moderation process that can take up to two weeks. New profiles created with an institutional email will be activated automatically. Please create your OpenReview account well in advance of the submission deadline to avoid delays.
 
 ## Topics of Interest
 
@@ -34,7 +39,7 @@ We welcome submissions on, but not limited to, the following themes:
 
 The workshop will accept papers from preliminary research results and visionary papers to full-length papers. We will host a **Tiny and Short Paper Track** in alignment with ICLR's initiative, explicitly welcoming late-breaking results, replication studies, and conceptual explorations that may not yet have full-paper maturity. Review criteria will emphasize clarity, originality, and potential impact rather than extensive experiments.
 
-Submissions should follow [the ICLR proceedings format](https://github.com/ICLR/Master-Template/raw/master/iclr2026.zip) and choose the suitable categories as follows:
+Submissions followed [the archived ICLR 2026 proceedings format]({{ '/assets/data/iclr2026.zip' | relative_url }}) and used the categories below:
 
 - **Tiny and Short Paper**: 3-5 pages in ICLR format + references and appendix.
 - **Regular Paper**: up to 10 pages + references and appendix.
@@ -52,14 +57,12 @@ All accepted papers will be presented as posters. We will select around 3 papers
 - **Submission deadline**: ~~February 5, 2026 (AOE)~~ extended to Feb 8 AOE, but strongly encourage to submit before Feb 5 AOE
 - **Reviewing period**: February 8 - February 27, 2026
 - **Notification of acceptance**: March 1, 2026, 11:59pm AoE
-- **Camera-ready deadline**: March 15, 2026, 11:59pm AoE ([Camera Ready Latex template](assets/data/iclr2026.zip))
+- **Camera-ready deadline**: March 15, 2026, 11:59pm AoE ([Camera-ready LaTeX template]({{ '/assets/data/iclr2026.zip' | relative_url }}))
 - **Workshop date**: April 27, 2026 (Rio de Janeiro, following the ICLR 2026 main conference)
 
-## Submission Site
+## Submission site
 
-Submissions will be accepted through OpenReview at: [https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT)
-
-**Important**: New OpenReview profiles created without an institutional email will go through a moderation process that can take up to two weeks. New profiles created with an institutional email will be activated automatically. Please create your OpenReview account well in advance of the submission deadline to avoid any delays.
+Submissions were handled through [the LIT workshop group on OpenReview](https://openreview.net/group?id=ICLR.cc/2026/Workshop/LIT). The submission period is closed.
 
 ## LLM Usage Policy
 

@@ -1,0 +1,32 @@
+name: Quick paper suggestion
+description: Drop a scholarly link when you do not have time to normalize all metadata.
+title: "[Quick paper] "
+labels: ["paper suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the map current. A curator can normalize the metadata; please provide enough context to check scope.
+  - type: input
+    id: url
+    attributes:
+      label: Scholarly URL
+      description: ArXiv, OpenReview, proceedings, or another official public source.
+      placeholder: https://arxiv.org/abs/...
+    validations:
+      required: true
+  - type: textarea
+    id: fit
+    attributes:
+      label: Why it may fit
+      description: One sentence is enough.
+      placeholder: This paper studies...
+    validations:
+      required: true
+  - type: checkboxes
+    id: duplicate
+    attributes:
+      label: Existing corpus
+      options:
+        - label: I searched the paper explorer and did not find this record.
+          required: true

@@ -1,0 +1,8 @@
+{%- assign record_slug = include.paper.id | replace: '.', '-' -%}
+{%- assign record_path = '/papers/#' | append: include.prefix | append: record_slug -%}
+{
+  {% for property in include.paper %}{% unless property[0] == 'citation_date' %}{{ property[0] | jsonify }}: {{ property[1] | jsonify }},{% endunless %}{% endfor %}
+  "author_names": {{ include.paper.authors | split: ', ' | jsonify }},
+  "record_url": {{ record_path | absolute_url | jsonify }},
+  "citation_date": {{ include.paper.citation_date | default: include.paper.first_public | jsonify }}
+}

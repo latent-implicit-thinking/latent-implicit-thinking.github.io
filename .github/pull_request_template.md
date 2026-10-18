@@ -1,5 +1,14 @@
-Please note that if you are trying to update **your** website, this is the wrong place to do so. Please carefully follow the Beautiful Jekyll instructions (found at https://github.com/daattali/beautiful-jekyll#readme) and make sure you submit changes to **your** version of the project.
+## What this changes
 
-If your intention is to submit a Pull Request, please describe what your pull request achieves.
+Describe the paper, correction, or site improvement.
 
-Thank you!
+## Source and verification
+
+Link the authoritative source used for factual metadata, dates, or corrections.
+
+## Checklist
+
+- [ ] I searched the existing corpus for duplicates.
+- [ ] I used the earliest verified public date for new paper records.
+- [ ] I kept factual metadata separate from editorial summaries and facets.
+- [ ] I ran `bundle exec jekyll build` and `bundle exec ruby scripts/validate_corpus.rb _site` locally, or I will rely on the pull-request check.
