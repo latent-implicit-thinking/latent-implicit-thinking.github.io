@@ -80,6 +80,17 @@ actual_paths = actual_files.map { |path| path.delete_prefix(site_root + "/") }.s
 (actual_paths - allowed_files).each { |path| errors << "Unexpected deployment file: #{path}" }
 (allowed_files - actual_paths).each { |path| errors << "Missing deployment file: #{path}" }
 
+allowed_files.grep(/\Agoogle[0-9a-f]+\.html\z/).each do |path|
+  source = File.join(repo_root, path)
+  deployed = File.join(site_root, path)
+  expected = "google-site-verification: #{path}"
+  errors << "Invalid Google verification file: #{path}" unless File.file?(source) && File.binread(source) == expected
+  errors << "Google verification file changed during build: #{path}" unless File.file?(deployed) && File.binread(deployed) == expected
+  errors << "Duplicate Google verification manifest entry: #{path}" unless allowed_files.count(path) == 1
+  sitemap = File.join(site_root, "sitemap.xml")
+  errors << "Google verification file appears in sitemap: #{path}" if File.file?(sitemap) && File.read(sitemap).include?(path)
+end
+
 papers = YAML.safe_load(File.read(File.join(repo_root, "_data/papers.yml")), permitted_classes: [Date], aliases: false)
 precursors = YAML.safe_load(File.read(File.join(repo_root, "_data/precursors.yml")), permitted_classes: [Date], aliases: false)
 meta = YAML.safe_load(File.read(File.join(repo_root, "_data/meta.yml")), permitted_classes: [Date], aliases: false)
