@@ -198,6 +198,34 @@ all_records.each_with_index do |paper, index|
 end
 
 methods = YAML.safe_load(File.read(File.join(repo_root, "_data/methods.yml")), aliases: false)
+home_html = File.read(File.join(site_root, "index.html"))
+topic_html = File.read(File.join(site_root, "topics/index.html"))
+home_routes = home_html[/<div class="lit-route-grid".*?<\/div>/m].to_s
+errors << "Homepage must have one set of topic links" unless home_html.scan('class="lit-route-grid"').length == 1 && home_routes.scan(/<a href=/).length == methods.length
+errors << "Beginner guide omits its concrete example" unless topic_html.include?('id="example-title"') && topic_html.include?("booking fee")
+errors << "Acknowledgment missing from homepage" unless home_html.include?("https://github.com/EIT-NLP/Awesome-Latent-CoT")
+advanced_html = paper_html[/<details id="paper-advanced".*?<\/details>/m].to_s
+%w[question evidence].each do |filter|
+  errors << "#{filter} must be inside More filters" unless advanced_html.include?("data-filter-set=\"#{filter}\"")
+end
+errors << "Approach filters must remain visible" if advanced_html.include?('data-filter-set="lens"')
+errors << "Advanced filter count is missing" unless advanced_html.include?('id="paper-advanced-count"')
+methods.each do |method|
+  method_html = File.read(File.join(site_root, method.fetch("url").sub(%r{\A/}, ""), "index.html"))
+  example_offset = method_html.index('class="lit-method-example"')
+  papers_offset = method_html.index('class="lit-paper-list lit-method-paper-list"')
+  errors << "#{method['id']}: example must precede papers" unless example_offset && papers_offset && example_offset < papers_offset
+  errors << "#{method['id']}: visible label missing from guide" unless method_html.include?("<h1>#{method['label']}</h1>")
+  errors << "#{method['id']}: abstract questions returned to the guide" if method_html.include?('class="lit-method-questions"')
+  errors << "#{method['id']}: homepage label differs" unless home_routes.include?(method.fetch("label"))
+  papers.select { |paper| paper.fetch("lens").include?(method.fetch("id")) }.each do |paper|
+    row = paper_html.match(/<article\s+id="paper-#{Regexp.escape(paper['id'].tr('.', '-'))}"(.*?)<\/article>/m)&.[](1).to_s
+    searchable = CGI.unescapeHTML(row[/data-search="([^"]*)"/, 1].to_s)
+    errors << "#{paper['id']}: visible category is not searchable" unless searchable.include?(method.fetch("label").downcase)
+  end
+end
+releases = JSON.parse(File.read(File.join(site_root, "data/changes.json")))
+errors << "Release history omits current version" unless JSON.generate(releases).include?(meta.fetch("version"))
 collection_pages = {"papers/index.html" => papers}
 methods.each do |method|
   collection_pages[File.join(method.fetch("url").sub(%r{\A/}, ""), "index.html")] = papers.select { |paper| paper.fetch("lens").include?(method.fetch("id")) }

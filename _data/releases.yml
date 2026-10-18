@@ -1,3 +1,12 @@
+- version: "0.6.0"
+  date: "2026-10-18"
+  title: "Clearer explanations and easier browsing"
+  changes:
+    - "Added concrete examples to the introduction and each topic guide, with one consistent set of categories across the site."
+    - "Made search and approach filters easier to reach; placed specialized filters under More filters while preserving shared search links."
+    - "Rewrote 27 paper summaries for clarity, including corrections to the descriptions of SoftCoT, Chain-of-Embedding, and Latent Language Modeling."
+    - "Simplified downloads, citation guidance, and paper suggestions. Kept structured files and paper identifiers compatible."
+    - "Literature-search coverage remains September 5, 2026; this release does not add new papers."
 - version: "0.5.0"
   date: "2026-10-18"
   title: "First public research-map release"

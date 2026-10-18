@@ -7,36 +7,18 @@ layout: base
 <main class="lit-method-page">
   <header class="lit-method-hero">
     <div class="lit-shell lit-narrow-shell">
-      <nav class="lit-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/topics/' | relative_url }}">Concepts &amp; scope</a><span aria-hidden="true">/</span><span>{{ method.label }}</span></nav>
-      <p class="lit-eyebrow">Research direction {{ method.number }} of 06 · {{ method_papers | size }} papers</p>
+      <nav class="lit-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/topics/' | relative_url }}">Start here</a><span aria-hidden="true">/</span><span>{{ method.label }}</span></nav>
       <h1>{{ method.label }}</h1>
       <p class="lit-method-definition">{{ method.definition }}</p>
-      <p class="lit-related-terms"><strong>Related terms:</strong> {{ method.related_terms | join: ", " }}.</p>
-      <div class="lit-actions">
-        <a class="lit-button lit-button-primary" href="{{ '/papers/?lens=' | append: method.id | relative_url }}">Open in paper explorer</a>
-        <a class="lit-button lit-button-secondary" href="{{ '/topics/' | relative_url }}">See all six directions</a>
-      </div>
+      <p class="lit-method-example"><strong>For example:</strong> {{ method.example }}</p>
     </div>
   </header>
 
-  <section class="lit-section lit-start" aria-labelledby="questions-title">
-    <div class="lit-shell lit-method-question-layout">
-      <div>
-        <p class="lit-eyebrow">Guiding question</p>
-        <h2 id="questions-title">{{ method.question }}</h2>
-      </div>
-      <ol class="lit-method-questions">
-        {% for question in method.questions %}<li>{{ question }}</li>{% endfor %}
-      </ol>
-    </div>
-  </section>
-
-  <section class="lit-section" aria-labelledby="method-papers-title">
+  <section class="lit-section lit-method-papers" aria-labelledby="method-papers-title">
     <div class="lit-shell">
-      <div class="lit-section-heading">
-        <p class="lit-eyebrow">Oldest first</p>
-        <h2 id="method-papers-title">The {{ method.label | downcase }} chronology</h2>
-        <p>Papers are ordered by the date of their earliest verified public version, usually arXiv v1. A paper can appear in more than one research direction. <a href="{{ '/data/#citation' | relative_url }}">Date and citation policy →</a></p>
+      <div class="lit-list-heading">
+        <h2 id="method-papers-title">{{ method_papers | size }} papers, oldest first</h2>
+        <p>Dates usually refer to the first arXiv submission. <a href="{{ '/papers/?lens=' | append: method.id | relative_url }}">Search or filter these papers →</a></p>
       </div>
       <div class="lit-paper-list lit-method-paper-list">
         {% for paper in method_papers %}
@@ -49,15 +31,15 @@ layout: base
             <h2><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h2>
             <p class="lit-paper-authors">{{ paper.authors }}</p>
             <p class="lit-paper-summary">{{ paper.summary }}</p>
-            {% if paper.first_public_note %}<p class="lit-paper-authors"><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p>{% endif %}
-            <div class="lit-paper-tags" aria-label="Paper facets">
-              {% for value in paper.lens %}<span>{% if value == 'internalized' %}internalized reasoning{% elsif value == 'learned-tokens' %}thinking tokens{% elsif value == 'beyond-sequential' %}alternative schedules{% else %}{{ value | replace: '-', ' ' }}{% endif %}</span>{% endfor %}
+            {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p></details>{% endif %}
+            <div class="lit-paper-tags" aria-label="Approaches">
+              {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}<span>{{ category.label }}</span>{% endfor %}
             </div>
           </div>
           <div class="lit-paper-actions">
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
-            <a href="{{ '/papers/#paper-' | relative_url }}{{ paper.id | replace: '.', '-' }}">Map record</a>
+            <a href="{{ '/papers/#paper-' | relative_url }}{{ paper.id | replace: '.', '-' }}">Link to this entry</a>
             {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% endif %}
           </div>
         </article>
@@ -69,12 +51,11 @@ layout: base
   <section class="lit-section lit-start" aria-labelledby="related-methods-title">
     <div class="lit-shell">
       <div class="lit-section-heading">
-        <p class="lit-eyebrow">Keep exploring</p>
-        <h2 id="related-methods-title">Other research directions</h2>
+        <h2 id="related-methods-title">Other approaches</h2>
       </div>
       <nav class="lit-route-grid" aria-label="Related research directions">
         {% for item in site.data.methods %}{% unless item.id == method.id %}
-        <a href="{{ item.url | relative_url }}"><span>{{ item.number }}</span><h3>{{ item.label }}</h3><p>{{ item.question }}</p></a>
+        <a href="{{ item.url | relative_url }}"><h3>{{ item.label }}</h3><p>{{ item.short_description }}</p></a>
         {% endunless %}{% endfor %}
       </nav>
     </div>

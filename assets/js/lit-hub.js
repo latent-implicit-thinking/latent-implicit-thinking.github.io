@@ -30,6 +30,7 @@
       return button.dataset.filterValue === requested;
     });
     state[name] = valid ? requested : "all";
+    if (advanced && advanced.contains(set) && state[name] !== "all") advanced.open = true;
   });
 
   filterSelects.forEach(function (select) {
@@ -85,6 +86,11 @@
     });
 
     count.textContent = "Showing " + visible + (visible === 1 ? " paper" : " papers");
+    var advancedCount = document.getElementById("paper-advanced-count");
+    if (advancedCount) {
+      var activeAdvanced = Object.keys(state).filter(function (name) { return name !== "lens" && state[name] !== "all"; }).length;
+      advancedCount.textContent = activeAdvanced ? " (" + activeAdvanced + " active)" : "";
+    }
     empty.hidden = visible !== 0;
     sortPapers();
     updateUrl();
@@ -159,7 +165,7 @@
 
   function confirmCopied() {
     var previous = share.textContent;
-    share.textContent = "Copied filtered view";
+    share.textContent = "Link copied";
     window.setTimeout(function () { share.textContent = previous; }, 1800);
     track("paper_view_copied", { visible_results: papers.filter(function (paper) { return !paper.hidden; }).length });
   }

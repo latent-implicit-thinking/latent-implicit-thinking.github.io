@@ -15,7 +15,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language]
-  summary: "Adds learned thinking tokens to language modeling so the network can use extra computational positions between observed tokens."
+  summary: "Gives a recurrent language model extra hidden-state updates by inserting special tokens after each word. Tests whether these updates improve next-word prediction."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2310.02226"
@@ -50,7 +50,7 @@
   questions: [capability, controllability]
   evidence: [empirical]
   modality: [language]
-  summary: "Adds learned planning tokens that separate higher-level planning from surface generation and guide subsequent reasoning."
+  summary: "Adds a learned planning token before each written reasoning step, then uses that token to guide the step."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2310.10845"
@@ -67,7 +67,7 @@
   questions: [capability, efficiency, controllability]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "Introduces a chain-of-thought-driven architecture whose inference computation can adapt to an available budget."
+  summary: "Runs shared transformer blocks repeatedly, keeping earlier passes available to attention. A learned router chooses how many passes each token receives."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2310.14491"
@@ -119,7 +119,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language]
-  summary: "Uses diffusion language models to refine reasoning trajectories non-autoregressively, opening a path beyond strictly left-to-right chain-of-thought generation."
+  summary: "Refines intermediate reasoning representations over several rounds of denoising. A multi-pass version can revisit earlier parts of the reasoning as it refines the solution."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2402.11917"
@@ -187,7 +187,7 @@
   questions: [capability]
   evidence: [empirical]
   modality: [language]
-  summary: "Trains language models to generate useful internal rationales before predicting future text, extending self-taught reasoning beyond question answering."
+  summary: "Trains on ordinary text by generating written rationales before predicting what comes next. Learns from how much those rationales improve subsequent token predictions."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2404.15758"
@@ -308,7 +308,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language]
-  summary: "Explores decoding and reusing hidden reasoning representations as an alternative to generating every intermediate chain-of-thought token."
+  summary: "Trains one model to compress written reasoning into special-token representations, then trains another to answer using those representations."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2409.14026"
@@ -359,7 +359,7 @@
   questions: [evaluation, efficiency]
   evidence: [empirical]
   modality: [language]
-  summary: "Constructs a chain of embeddings for self-evaluation without requiring the model to verbalize each intermediate judgment."
+  summary: "Uses the sequence of hidden states produced during inference to estimate whether an answer is correct, without extra training or labeled correctness examples."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2411.15862"
@@ -411,7 +411,7 @@
   questions: [capability]
   evidence: [empirical]
   modality: [multimodal]
-  summary: "Combines multimodal internal representations with next-token diffusion, broadening implicit computation beyond text-only autoregressive reasoning."
+  summary: "Encodes continuous data such as images as vectors, then generates those vectors with diffusion inside a causal transformer. This is related work on multimodal generation, rather than a method trained directly on reasoning steps."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2412.13171"
@@ -532,7 +532,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language]
-  summary: "Feeds soft distributions over vocabulary embeddings between reasoning steps instead of sampling a discrete token each time."
+  summary: "Uses a small assistant model to produce hidden-state thought tokens, then maps them into inputs for a main language model. Both models keep their weights fixed; only the mapping is trained."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2502.13842"
@@ -549,7 +549,7 @@
   questions: [capability, efficiency, controllability]
   evidence: [empirical]
   modality: [language]
-  summary: "Scales transformer depth dynamically so harder inputs can receive more internal computation before output."
+  summary: "Routes selected tokens through extra computation while reusing model parameters. Marks successive thinking steps so the model can distinguish one pass from the next."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2502.15589"
@@ -634,7 +634,7 @@
   questions: [evaluation, capability, limitations]
   evidence: [empirical, boundary]
   modality: [language]
-  summary: "Benchmarks reasoning that must be completed without access to an explicit generated chain of thought."
+  summary: "Encodes the answer in the language of the model's first response token, forcing a choice before any written explanation. Also tests whether successful answers could come from simple heuristics."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2504.14992"
@@ -651,7 +651,7 @@
   questions: [efficiency, scaling, architecture]
   evidence: [empirical, scaling]
   modality: [language]
-  summary: "Studies hidden decoding positions and cache management as a way to scale useful pretraining computation without matching visible sequence length."
+  summary: "Adds hidden decoding tokens during pretraining, then discards their key/value cache entries after use. Keeps the original tokens' entries to preserve longer-range context."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2505.11484"
@@ -668,7 +668,7 @@
   questions: [capability, efficiency, scaling]
   evidence: [empirical, scaling]
   modality: [language]
-  summary: "Extends soft chain-of-thought with test-time scaling strategies over continuous intermediate states."
+  summary: "Starts soft-thought sequences from different specialized tokens and trains the resulting representations to differ. This lets the model explore multiple reasoning paths at inference time."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2505.12514"
@@ -702,7 +702,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "Introduces nonlinguistic latent tokens that provide additional computational positions for transformer reasoning."
+  summary: "Adds trainable dummy tokens to a pretrained transformer so attention can use them for extra computation during decoding. The tokens can be inserted in different positions at inference time."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2505.13308"
@@ -736,7 +736,7 @@
   questions: [efficiency, architecture, limitations]
   evidence: [empirical, boundary]
   modality: [language, symbolic]
-  summary: "Measures how effectively language models use successive layers and whether repeated or adaptive depth improves computation."
+  summary: "Skips layers and compares shallow and deep models to examine what extra layers compute. In the models studied, later layers mostly make smaller refinements rather than adding new reasoning steps."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2505.14530"
@@ -1505,7 +1505,7 @@
   questions: [capability, efficiency, architecture, controllability]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "Builds deep looped transformers around stable fixed-point dynamics and adaptive internal stopping."
+  summary: "Stabilizes repeated transformer layers and stops looping when the hidden state converges, allowing the model to spend different amounts of computation on different problems."
   provenance: "Primary-source literature search, 2026-09-04"
 
 - id: "2606.20075"
@@ -1540,7 +1540,7 @@
   questions: [architecture, capability, generalization]
   evidence: [empirical, mechanistic, probing]
   modality: [language, symbolic]
-  summary: "Introduces a looped architecture that recurrently carries both a discrete embedding channel and continuous hidden states, motivated by an analysis of representation alignment in internalized two-hop reasoning."
+  summary: "Feeds both token embeddings and hidden states back through repeated transformer layers to connect successive steps of multi-hop reasoning."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2608.13570"
@@ -1575,7 +1575,7 @@
   questions: [interpretability, evaluation, limitations]
   evidence: [empirical, mechanistic, boundary]
   modality: [language, symbolic]
-  summary: "Tracks counterfactual responsiveness and intervention sensitivity throughout latent-reasoning training, showing that final-checkpoint accuracy can obscure changes in causal dependence on latent states."
+  summary: "Tests how answers respond to changed inputs and altered hidden reasoning states throughout training. These responses can change even while accuracy remains high."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2607.15178"
@@ -1627,7 +1627,7 @@
   questions: [capability, scaling, efficiency, controllability]
   evidence: [empirical, scaling]
   modality: [language, symbolic]
-  summary: "Defines a surrogate density over latent transitions for outcome-reward reinforcement learning and couples it with learned variable-horizon stopping."
+  summary: "Trains intermediate reasoning states with rewards for correct answers and learns when to stop."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2607.20952"
@@ -1644,7 +1644,7 @@
   questions: [interpretability, evaluation, limitations]
   evidence: [empirical, mechanistic, boundary]
   modality: [symbolic]
-  summary: "Uses before-and-after-RL causal interventions in latent chess reasoning and finds stronger evidence for parameter-level effects and disruption robustness than for active use of latent-thought content."
+  summary: "Tests a chess model by replacing or disrupting its hidden reasoning states before and after reinforcement learning. The results suggest improved robustness, not greater reliance on the states’ content."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2608.02585"
@@ -1661,7 +1661,7 @@
   questions: [capability, scaling, efficiency, interpretability]
   evidence: [empirical, probing]
   modality: [language, symbolic]
-  summary: "Optimizes instance-specific intermediate-layer latent states using sequence-level outcome gradients while keeping model parameters frozen, and analyzes which tokens and layers receive latent influence."
+  summary: "At test time, adjusts extra hidden states inside the transformer using feedback on generated answers, while keeping the model’s weights fixed."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2608.03624"
@@ -1678,7 +1678,7 @@
   questions: [architecture, capability, scaling]
   evidence: [empirical]
   modality: [language]
-  summary: "Supervises successive loop iterations by softly aligning their hidden states with increasingly distant future-token embeddings."
+  summary: "Trains each transformer loop to anticipate a different future token, using token embeddings to guide its hidden state."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2608.04928"
@@ -1712,7 +1712,7 @@
   questions: [theory, controllability, generalization, limitations]
   evidence: [formal, empirical, boundary]
   modality: [language, symbolic]
-  summary: "Relates finite-time recurrent dynamics to whether additional inference depth helps or harms, and gives a sufficient decoder-margin condition under which further iterations cannot change the answer."
+  summary: "Studies when extra transformer loops improve an answer or make it worse. Gives a condition under which further loops cannot change the answer, and trains models toward this stable behavior."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2608.18230"
@@ -1746,7 +1746,7 @@
   questions: [interpretability, evaluation, limitations]
   evidence: [empirical, mechanistic, boundary]
   modality: [language, symbolic]
-  summary: "Introduces a cache-interchange protocol for identifying which transformer objects causally carry latent computation and finds checkpoint- and task-dependent carrier regimes."
+  summary: "Swaps parts of the transformer’s key/value cache between related problems to test which stored states affect the answer. Finds that the relevant cache components differ by model and task."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2608.31069"
@@ -1797,7 +1797,7 @@
   questions: [interpretability, architecture, limitations]
   evidence: [empirical, mechanistic, probing]
   modality: [language]
-  summary: "Extends Jacobian-lens readout and causal interventions to looped and depth-recurrent transformers, finding different mechanisms for reconstructing or carrying workspace-like content across iterations."
+  summary: "Tracks information that can be decoded from, and altered within, repeated transformer layers. Finds that Ouro reconstructs this information each loop, while Huginn carries it forward."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2609.02049"
@@ -1814,7 +1814,7 @@
   questions: [theory, limitations]
   evidence: [formal, empirical, boundary]
   modality: [language]
-  summary: "Analyzes why weighted mixtures used as continuous thoughts tend to collapse or become indistinguishable under transformer transport, softmax readout, and autoregressive feedback."
+  summary: "Studies why mixtures of token embeddings fail to preserve several possible reasoning paths. Shows how transformer layers and repeated prediction can make one component dominate or make different mixtures indistinguishable."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2609.03090"
@@ -1831,7 +1831,7 @@
   questions: [interpretability, theory, limitations]
   evidence: [empirical, mechanistic, boundary]
   modality: [symbolic]
-  summary: "Tests whether the rank of matrix-valued continuous thoughts reflects parallel reasoning and finds rank-projection effects largely flat across several training regimes and readout designs."
+  summary: "Tests whether matrix rank measures parallel reasoning in Matrix-CODI. Reducing rank barely changes accuracy in the tested settings, and similar results in control models caution against treating rank as evidence of parallel reasoning."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2609.03379"

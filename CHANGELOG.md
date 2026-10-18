@@ -6,7 +6,7 @@ permalink: /changelog/
 last_modified_at: 2026-10-18
 ---
 
-The corpus, taxonomy, and editorial summaries evolve through public releases. The machine-readable history is available as [`changes.json`]({{ '/data/changes.json' | relative_url }}), and release updates are available through the [RSS feed]({{ '/feed.xml' | relative_url }}).
+Changes to the reading list and website are listed below. You can follow updates through the [RSS feed]({{ '/feed.xml' | relative_url }}) or download the history as [`changes.json`]({{ '/data/changes.json' | relative_url }}).
 
 {% for release in site.data.releases %}
 ## v{{ release.version }} · {{ release.date | date: "%B %-d, %Y" }} {#v{{ release.version | replace: '.', '-' }}}

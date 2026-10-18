@@ -1,8 +1,8 @@
 ---
 layout: method
-title: "Recurrent and stateful compute"
+title: "Recurrent reasoning"
 seo-title: "Recurrent Reasoning and Stateful Compute Papers"
-share-description: "A chronological guide to looped depth, adaptive computation, memory, recurrence, and stateful implicit reasoning."
+share-description: "How models reuse layers or memory to spend more computation on a problem, with an example and papers."
 permalink: /topics/recurrent-reasoning/
 method_id: recurrent
 show-avatar: false

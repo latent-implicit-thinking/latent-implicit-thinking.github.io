@@ -25,8 +25,8 @@ author: LIT research map
 navbar-links:
   Overview: "/"
   Explore papers: "papers"
-  Concepts & scope: "topics"
-  Data: "data"
+  Start here: "topics"
+  Downloads: "data"
   Contribute: "contribute"
   Workshop archive:
     - Overview: "workshop/2026"

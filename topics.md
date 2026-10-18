@@ -1,8 +1,8 @@
 ---
 layout: base
-title: "Concepts & scope"
-seo-title: "Implicit Chain-of-Thought: Concepts, Methods & Taxonomy"
-share-description: "The terminology, method families, and comparison axes used by the Implicit Chain-of-Thought research map."
+title: "Start here"
+seo-title: "What Is Implicit Chain-of-Thought? Approaches and Papers"
+share-description: "An introduction to reasoning without written steps: internalized reasoning, thinking tokens, continuous states, repeated computation, and how to test them."
 permalink: /topics/
 show-avatar: false
 nav-short: true
@@ -12,54 +12,49 @@ last_modified_at: 2026-10-18
 <main class="lit-topic-page">
   <header class="lit-index-hero">
     <div class="lit-shell lit-narrow-shell">
-      <p class="lit-eyebrow">Concepts and scope</p>
-      <h1>A practical map of implicit chain-of-thought</h1>
-      <p>Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language. Use these research directions and comparison axes to understand the field and find related work.</p>
-      <p class="lit-terminology-note">Across the literature, related work may be labeled latent chain-of-thought, latent reasoning, continuous thought, hidden-state reasoning, or recurrent reasoning. This guide uses <strong>implicit chain-of-thought</strong> as the umbrella term while preserving each paper's terminology.</p>
+      <h1>What is implicit chain-of-thought?</h1>
+      <p>In an explicit chain of thought, a language model writes intermediate steps before its answer. Implicit chain-of-thought methods try to carry out some or all of those steps without expressing them as words.</p>
+      <p>The aim is not simply to hide a written explanation from the user. Researchers change how a model is trained or how it computes, then test whether it can solve problems without generating the full explanation.</p>
     </div>
   </header>
 
-  <section class="lit-section lit-start">
-    <div class="lit-shell lit-taxonomy-grid">
-      <div class="lit-taxonomy-intro">
-        <p class="lit-eyebrow">For newcomers</p>
-        <h2>Six ways into the field</h2>
-        <p>These research lenses overlap: a continuous-state method might also use recurrence, distillation, reinforcement learning, and parallel computation.</p>
+  <section class="lit-section lit-intro-example" aria-labelledby="example-title">
+    <div class="lit-shell lit-narrow-shell">
+      <h2 id="example-title">A simple example</h2>
+      <p>Suppose the question is: “Three tickets cost $8 each, plus a $2 booking fee for the order. What is the total?”</p>
+      <div class="lit-example-pair">
+        <div><h3>With written steps</h3><p class="lit-example-output">“3 × 8 = 24 for the tickets. Adding the $2 fee gives $26.”</p></div>
+        <div><h3>Without written steps</h3><p class="lit-example-output">“The total is $26.”</p></div>
+      </div>
+      <p>The shorter answer does not prove that the model reasoned internally. It could also have memorized the answer or used a shortcut. The papers below study ways to train and run models, and ways to test what actually happens inside them.</p>
+    </div>
+  </section>
+
+  <section class="lit-section lit-start" aria-labelledby="approaches-title">
+    <div class="lit-shell lit-narrow-shell">
+      <div class="lit-section-heading">
+        <h2 id="approaches-title">The main approaches</h2>
+        <p>Start with any explanation that interests you. Each link leads to papers in date order.</p>
       </div>
       <div class="lit-taxonomy-items">
         {% for method in site.data.methods %}
-        <article><span>{{ method.number }}</span><div><h3>{{ method.label }}</h3><p>{{ method.definition }}</p><a href="{{ method.url | relative_url }}">Open the {{ method.label | downcase }} guide →</a></div></article>
+        <article><span>{{ method.number }}</span><div><h3>{{ method.label }}</h3><p>{{ method.definition }}</p><a href="{{ method.url | relative_url }}">Example and papers →</a></div></article>
         {% endfor %}
       </div>
+      <p class="lit-guide-note">A model might learn to replace written steps with vectors, then update those vectors by running the same layers several times. That paper can appear under internalized reasoning, continuous-state reasoning, and recurrent reasoning.</p>
     </div>
   </section>
 
-  <section class="lit-section">
-    <div class="lit-shell">
-      <div class="lit-section-heading">
-        <p class="lit-eyebrow">For systematic comparison</p>
-        <h2>Six independent facets describe each paper</h2>
-        <p>The taxonomy records what a paper studies and what kind of evidence it provides; it does not score the paper or presume that an implicit process is faithful.</p>
-      </div>
-      <div class="lit-facet-grid lit-facet-grid-six">
-        <article><h3>Representation</h3><p>Hidden state · continuous state · learned discrete token · cache or memory · text–internal hybrid · multimodal state</p></article>
-        <article><h3>Computation</h3><p>Depth-wise · token-wise · recurrent · stateful · hierarchical · parallel · diffusion · search</p></article>
-        <article><h3>Training or adaptation</h3><p>Distillation · curriculum · supervised learning · reinforcement learning · self-training · pretraining · test-time optimization · inference-only</p></article>
-        <article><h3>Research question</h3><p>Capability · efficiency · scaling · controllability · interpretability · theory · evaluation · limitations</p></article>
-        <article><h3>Evidence</h3><p>Empirical result · probing · causal or mechanistic analysis · scaling result · formal result · boundary result · synthesis</p></article>
-        <article><h3>Modality</h3><p>Language · symbolic or algorithmic · vision · multimodal</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="lit-section lit-start">
-    <div class="lit-shell lit-about-grid">
-      <div><p class="lit-eyebrow">Scope boundaries</p><h2>Broad enough to connect; precise enough to be useful</h2></div>
-      <div>
-        <p>A paper belongs in the core map when it studies intermediate computation that substitutes for, compresses, internalizes, or changes the schedule of an explicit reasoning trace. General representation learning alone is not sufficient.</p>
-        <p>Adjacent work is included in a separately labeled precursor section when it provides essential architectural or theoretical context. Ambiguous core records can carry several research lenses, and material corrections are recorded in the changelog.</p>
-        <p><a class="lit-text-link" href="{{ '/contribute/' | relative_url }}">Read the inclusion policy or challenge a classification →</a></p>
-      </div>
+  <section class="lit-section" aria-labelledby="reading-title">
+    <div class="lit-shell lit-narrow-shell lit-reading-advice">
+      <h2 id="reading-title">What to look for when reading a paper</h2>
+      <ul>
+        <li><strong>What changes?</strong> Look for the change to training or to the steps the model runs when answering. All neural networks have hidden states; using them does not by itself establish a new reasoning method.</li>
+        <li><strong>What does it cost?</strong> Fewer output tokens can still mean more computation. Check for extra model passes, repeated layers, and changes in accuracy as well as speed.</li>
+        <li><strong>What does the evidence show?</strong> Correct answers alone do not establish how a model solves a problem. Tests on new problems and experiments that alter internal states can help distinguish reasoning from shortcuts.</li>
+      </ul>
+      <p>The list includes work often described as latent reasoning or continuous chain-of-thought, along with related generation methods and earlier background papers. Paper titles retain the authors' terminology.</p>
+      <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">Browse all {{ site.data.papers | size }} papers</a>
     </div>
   </section>
 </main>
@@ -68,8 +63,8 @@ last_modified_at: 2026-10-18
 {
   "@context": "https://schema.org",
   "@type": "DefinedTermSet",
-  "name": "Implicit Chain-of-Thought method taxonomy",
-  "description": "Six overlapping research directions used to organize research on implicit chain-of-thought.",
+  "name": "Implicit Chain-of-Thought approaches",
+  "description": "Explanations of approaches to implicit chain-of-thought and related research.",
   "url": {{ page.url | absolute_url | jsonify }},
   "hasDefinedTerm": [
     {% for method in site.data.methods %}{"@type": "DefinedTerm", "name": {{ method.label | jsonify }}, "description": {{ method.definition | jsonify }}, "url": {{ method.url | absolute_url | jsonify }}, "inDefinedTermSet": {{ page.url | absolute_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}

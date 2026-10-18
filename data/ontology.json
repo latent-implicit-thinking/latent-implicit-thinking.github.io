@@ -12,7 +12,7 @@ permalink: /data/ontology.json
     "short_label": "implicit CoT",
     "definition": "Intermediate reasoning carried out without writing every step as natural language.",
     "related_terms": ["latent chain-of-thought", "latent reasoning", "continuous thought", "hidden-state reasoning", "recurrent reasoning"],
-    "usage_note": "This guide uses implicit chain-of-thought as its umbrella term while preserving the terminology used by individual papers."
+    "usage_note": "Related terms are not necessarily synonyms. Individual papers retain their original titles and terminology."
   },
   "scope": {
     "core_rule": "Include work that studies intermediate computation which substitutes for, compresses, internalizes, or changes the schedule of an explicit reasoning trace; general representation learning alone is insufficient.",

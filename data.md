@@ -1,8 +1,8 @@
 ---
 layout: base
-title: "Data access"
+title: "Downloads"
 seo-title: "Implicit Chain-of-Thought Dataset, Citations & Schema"
-share-description: "Machine-readable papers, terminology, schema, citation exports, and provenance for the Implicit Chain-of-Thought research map."
+share-description: "Download the paper list in JSON or Markdown and citations in BibTeX or CSL-JSON."
 permalink: /data/
 show-avatar: false
 nav-short: true
@@ -12,61 +12,52 @@ last_modified_at: 2026-10-18
 <main class="lit-data-page">
   <header class="lit-index-hero">
     <div class="lit-shell lit-narrow-shell">
-      <p class="lit-eyebrow">For researchers and research agents</p>
-      <h1>Use the implicit CoT map without scraping it</h1>
-      <p>The human pages and machine-readable files share one corpus and one research ontology. Stable identifiers, definitions, provenance, search dates, and versioned changes are part of the resource.</p>
+      <h1>Download the reading list</h1>
+      <p>Get citations for your reference manager, a text copy to read, or JSON for research tools and agents. Every download uses the same paper list as the website.</p>
     </div>
   </header>
 
   <section class="lit-section">
     <div class="lit-shell lit-data-layout">
       <div>
-        <p class="lit-eyebrow">Current release</p>
+        <p class="lit-eyebrow">Version</p>
         <div class="lit-release-number">v{{ site.data.meta.version }}</div>
-        <p>{{ site.data.papers | size }} core papers + {{ site.data.precursors | size }} precursors<br>Search refreshed {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}<br>Newest included record {{ site.data.meta.latest_included_first_public | date: "%B %-d, %Y" }}</p>
+        <p>{{ site.data.papers | size }} papers + {{ site.data.precursors | size }} background papers<br>Last literature search: {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</p>
       </div>
       <div class="lit-download-list">
-        <a href="{{ '/data/papers.json' | relative_url }}"><span><strong>papers.json</strong><small>Versioned corpus, metadata, and precursors</small></span><span>JSON ↗</span></a>
-        <a href="{{ '/data/ontology.json' | relative_url }}"><span><strong>ontology.json</strong><small>Concept definitions, scope, and comparison axes</small></span><span>JSON ↗</span></a>
-        <a href="{{ '/data/papers.bib' | relative_url }}"><span><strong>papers.bib</strong><small>Core-paper and precursor citation import</small></span><span>BibTeX ↗</span></a>
-        <a href="{{ '/data/papers.csl.json' | relative_url }}"><span><strong>papers.csl.json</strong><small>Preprint citations with ordered author names and initial submission dates</small></span><span>CSL-JSON ↗</span></a>
-        <a href="{{ '/data/reading-list.md' | relative_url }}"><span><strong>reading-list.md</strong><small>Plain-text guide, research directions, and full chronological list</small></span><span>Markdown ↗</span></a>
-        <a href="{{ '/data/schema.json' | relative_url }}"><span><strong>schema.json</strong><small>Field definitions and constraints</small></span><span>JSON Schema ↗</span></a>
-        <a href="{{ '/data/changes.json' | relative_url }}"><span><strong>changes.json</strong><small>Release-level change history</small></span><span>JSON ↗</span></a>
-        <a href="{{ '/feed.xml' | relative_url }}"><span><strong>Release feed</strong><small>Subscribe to corpus and taxonomy updates</small></span><span>RSS ↗</span></a>
-        <a href="{{ '/changelog/' | relative_url }}"><span><strong>Changelog</strong><small>Human-readable release notes</small></span><span>HTML ↗</span></a>
-        <a href="{{ '/license/' | relative_url }}"><span><strong>Content and data license</strong><small>Reuse terms for curation metadata and editorial material</small></span><span>CC BY 4.0 ↗</span></a>
+        <a href="{{ '/data/papers.bib' | relative_url }}"><span><strong>Citations for LaTeX and reference managers</strong><small>papers.bib · Includes all papers and background papers</small></span><span>BibTeX ↗</span></a>
+        <a href="{{ '/data/papers.csl.json' | relative_url }}"><span><strong>Citations in CSL-JSON</strong><small>papers.csl.json · For Zotero and other compatible tools</small></span><span>CSL-JSON ↗</span></a>
+        <a href="{{ '/data/reading-list.md' | relative_url }}"><span><strong>The complete reading list as text</strong><small>reading-list.md · Explanations, summaries, authors, and links</small></span><span>Markdown ↗</span></a>
+        <a href="{{ '/data/papers.json' | relative_url }}"><span><strong>Paper details for scripts and agents</strong><small>papers.json · Titles, authors, dates, categories, summaries, and links</small></span><span>JSON ↗</span></a>
       </div>
     </div>
   </section>
 
-  <section class="lit-section lit-start">
-    <div class="lit-shell">
-      <div class="lit-section-heading">
-        <p class="lit-eyebrow">Data contract</p>
-        <h2>Facts and editorial judgments stay distinguishable</h2>
-        <p>Identity and date fields point back to scholarly sources. Curated summaries and facets are editorial annotations created for this map. Every core paper record includes discovery provenance, evidence type, and modality.</p>
-      </div>
-      <div class="lit-facet-grid">
-        <article><h3>Identity</h3><p><code>id</code>, exact title, ordered <code>author_names</code>, venue, arXiv identifier, original paper URL, and a stable <code>record_url</code> in this map.</p></article>
-        <article><h3>Time</h3><p><code>first_public</code> dates the earliest public version verified during curation, usually using the arXiv v1 submission date. <code>citation_date</code> is the preprint's initial arXiv submission date; earlier conference history is recorded separately.</p></article>
-        <article><h3>Facets</h3><p>Method family, representation, computation, training signal, research question, evidence, and modality are multi-valued.</p></article>
-        <article><h3>Editorial layer</h3><p>The one-sentence summary is a neutral description written for this guide, not copied from the abstract.</p></article>
-        <article><h3>Concepts</h3><p><code>ontology.json</code> gives agents definitions, scope rules, date policy, research lenses, and allowed axis values.</p></article>
-        <article><h3>Provenance</h3><p><code>provenance</code> records the bibliography or source through which a candidate entered the reconciliation process.</p></article>
-      </div>
+  <section class="lit-section lit-start lit-download-details">
+    <div class="lit-shell lit-narrow-shell">
+      <details class="lit-file-details">
+        <summary>Using the JSON files in a script or agent</summary>
+        <p>Start with <a href="{{ '/data/papers.json' | relative_url }}">papers.json</a>. It contains <code>papers</code>, <code>precursors</code> (the background papers), and <code>metadata</code>. The <a href="{{ '/llms.txt' | relative_url }}">agent guide</a> links to every file.</p>
+        <dl>
+          <dt>Paper details</dt><dd><code>id</code> is a stable identifier. <code>author_names</code> preserves author order. <code>paper_url</code> links to the source; <code>record_url</code> links to this site's entry.</dd>
+          <dt>Dates</dt><dd><code>first_public</code> is the earliest dated public version we found, usually the first arXiv submission. <code>citation_date</code> is the initial arXiv submission date used in citation exports. Earlier conference presentations have a separate source note.</dd>
+          <dt>Categories and summaries</dt><dd><code>lens</code> lists approaches. Other fields describe training, computation, research questions, evidence, and modality. A paper can have several labels. Summaries and labels are written for this list; they are not the authors' abstracts.</dd>
+          <dt>Sources</dt><dd><code>provenance</code> records where we found the paper. Use <code>paper_url</code> to check the paper itself.</dd>
+        </dl>
+        <p><a href="{{ '/data/ontology.json' | relative_url }}">Category definitions (ontology.json)</a> · <a href="{{ '/data/schema.json' | relative_url }}">Field types and allowed values (JSON Schema)</a> · <a href="{{ '/data/changes.json' | relative_url }}">Version history (JSON)</a></p>
+      </details>
+      <p class="lit-guide-note">To follow updates, <a href="{{ '/feed.xml' | relative_url }}">subscribe to the RSS feed</a> or <a href="{{ '/changelog/' | relative_url }}">read what changed</a>.</p>
     </div>
   </section>
 
   <section class="lit-section" id="citation">
     <div class="lit-shell lit-about-grid">
-      <div><p class="lit-eyebrow">Citation and acknowledgment</p><h2>Credit papers and resources precisely</h2></div>
+      <div><h2>Citing and reusing the list</h2></div>
       <div>
-        <p>For scientific claims, cite the original papers. The BibTeX and CSL-JSON files cite <strong>arXiv preprints using their initial submission dates</strong>, not later proceedings. Source URLs are not version-pinned; check the original source when citing a specific version or result. Ordered author names are preserved in full; the CSL export does not guess how to split given and family names.</p>
-        <p>Chronology uses dated source records, usually arXiv v1 submission dates. These are not independently verified public-announcement timestamps. Earlier conference presentations carry a separate source note.</p>
-        <p>When the curation, taxonomy, or normalized metadata is itself used, cite: <strong><em>Implicit Chain-of-Thought Research Map</em>, version {{ site.data.meta.version }} ({{ site.data.meta.updated_at | date: "%Y" }}), {{ site.data.meta.canonical_url }}</strong>, with your access date.</p>
-        <p>Original curation metadata, taxonomy, and editorial material are available under <a href="{{ '/license/' | relative_url }}">CC BY 4.0</a>; underlying papers, code, and third-party materials remain under their own terms.</p>
-        <p>Initial discovery and reconciliation draw substantially on the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> maintained by the authors of <a href="https://arxiv.org/abs/2505.16782"><em>Reasoning Beyond Language</em></a>. We gratefully acknowledge that work in the site, corpus provenance, and release notes.</p>
+        <p>Cite the original papers for research claims. Our BibTeX and CSL-JSON downloads cite <strong>arXiv preprints, not later conference publications</strong>. Check the source if you need a particular version or result.</p>
+        <p>If you reuse our categories, summaries, or data, credit <em>Implicit Chain-of-Thought</em>, version {{ site.data.meta.version }} ({{ site.data.meta.updated_at | date: "%Y" }}), {{ site.data.meta.canonical_url }}, with your access date. Our original text and annotations are available under <a href="{{ '/license/' | relative_url }}">CC BY 4.0</a>. Papers, code, and other third-party material keep their own licenses.</p>
+        <details class="lit-file-details"><summary>Date and citation-format details</summary><p>Dates usually refer to the first arXiv submission, not the public-announcement time or conference year. Where an earlier presentation is documented, its date is shown separately from the linked arXiv submission date.</p><p>Source links are not pinned to an arXiv revision. Author names are kept in full and in order. CSL-JSON stores each name as a literal string rather than guessing which parts are given and family names.</p></details>
+        <p>Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey, <a href="https://arxiv.org/abs/2505.16782"><em>Reasoning Beyond Language</em></a>, which helped us find many of these papers.</p>
         <p><a class="lit-text-link" href="{{ '/contribute/' | relative_url }}">Suggest a paper or report a correction →</a></p>
       </div>
     </div>

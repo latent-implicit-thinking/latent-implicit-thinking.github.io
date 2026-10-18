@@ -1,16 +1,16 @@
-name: Suggest a paper
-description: Propose a missing paper for the Implicit Chain-of-Thought research map.
+name: Detailed paper suggestion
+description: Suggest a paper with its authors, dates, and other details.
 title: "[Paper] "
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping expand the map. Please use public scholarly sources and search the existing corpus before submitting.
+        Thanks for suggesting a paper. This form is for detailed submissions; the Quick paper suggestion form needs only a link and a sentence.
   - type: input
     id: title
     attributes:
       label: Paper title
-      placeholder: Canonical title
+      placeholder: Title as shown on the paper
     validations:
       required: true
   - type: textarea
@@ -44,24 +44,22 @@ body:
   - type: textarea
     id: fit
     attributes:
-      label: Why it belongs in the map
+      label: Why it belongs on the list
       description: Explain the connection to implicit chain-of-thought in one or two sentences.
     validations:
       required: true
   - type: dropdown
     id: family
     attributes:
-      label: Closest method family
+      label: Closest category (optional)
       options:
         - Internalized reasoning
-        - Learned thinking tokens
-        - Continuous internal states
-        - Recurrent or stateful computation
-        - Alternative computation schedules
-        - Analysis, evaluation, or theory
-        - Unsure or spans several families
-    validations:
-      required: true
+        - Thinking tokens
+        - Continuous-state reasoning
+        - Recurrent reasoning
+        - Alternative generation methods
+        - Analysis and evaluation
+        - Unsure or spans several categories
   - type: textarea
     id: notes
     attributes:

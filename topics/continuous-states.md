@@ -1,8 +1,8 @@
 ---
 layout: method
-title: "Continuous states"
+title: "Continuous-state reasoning"
 seo-title: "Continuous Chain-of-Thought and State Papers"
-share-description: "A chronological guide to continuous thoughts, hidden-state reasoning, soft tokens, and dense intermediate representations."
+share-description: "How models pass vectors between reasoning steps instead of selecting a text token at every step, with an example and papers."
 permalink: /topics/continuous-states/
 method_id: continuous
 show-avatar: false

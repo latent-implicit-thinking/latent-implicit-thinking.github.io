@@ -4,53 +4,54 @@ permalink: /llms.txt
 ---
 # Implicit Chain-of-Thought
 
-> A living literature guide and structured research map for intermediate reasoning that is not fully written as natural language.
+> A reading list about reasoning without writing every intermediate step, with explanations, paper summaries, and downloadable citations.
 
 Version: {{ site.data.meta.version }}
-Updated: {{ site.data.meta.updated_at }}
-Primary-source search refreshed: {{ site.data.meta.search_refreshed_at }}
-Core records: {{ site.data.papers | size }}
-Separately labeled precursors: {{ site.data.precursors | size }}
+Website updated: {{ site.data.meta.updated_at }}
+Last literature search: {{ site.data.meta.search_refreshed_at }}
+Papers: {{ site.data.papers | size }}
+Related background papers: {{ site.data.precursors | size }}
 
-## Start here
+## Read and search
 
-- [Field map and reading guide]({{ '/' | absolute_url }})
-- [Concepts, scope, and taxonomy]({{ '/topics/' | absolute_url }})
-- [Searchable paper chronology]({{ '/papers/' | absolute_url }})
-- [Data documentation]({{ '/data/' | absolute_url }})
-- [Complete Markdown reading list]({{ '/data/reading-list.md' | absolute_url }}): definitions, all core papers, author names, source links, and separately labeled precursors
+- [Overview]({{ '/' | absolute_url }})
+- [Start here]({{ '/topics/' | absolute_url }}): explanations and examples
+- [Browse papers]({{ '/papers/' | absolute_url }}): search, filters, and date order
+- [Complete Markdown reading list]({{ '/data/reading-list.md' | absolute_url }}): all papers, authors, summaries, and source links
+- [Downloads]({{ '/data/' | absolute_url }}): citation files and JSON documentation
 
-## Research directions
+## Topics
 
 {% for method in site.data.methods %}- [{{ method.label }}]({{ method.url | absolute_url }}): {{ method.definition }}
 {% endfor %}
 
-## Machine-readable resources
+## Files for scripts and research agents
 
-- [Versioned corpus]({{ '/data/papers.json' | absolute_url }}): papers, metadata, and separately labeled precursors
-- [Ontology]({{ '/data/ontology.json' | absolute_url }}): terminology, inclusion rules, lenses, and facet values
+- [JSON paper list]({{ '/data/papers.json' | absolute_url }}): metadata, papers, and a separate background collection
+- [Category definitions]({{ '/data/ontology.json' | absolute_url }}): category IDs, descriptions, and allowed filter values
 - [JSON Schema]({{ '/data/schema.json' | absolute_url }}): field types and constraints
-- [BibTeX]({{ '/data/papers.bib' | absolute_url }}): citation-manager import
-- [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }}): ordered author names, preprint citations, and stable map-record URLs
-- [Changes]({{ '/data/changes.json' | absolute_url }}): release history
-- [RSS feed]({{ '/feed.xml' | absolute_url }}): release updates
-- [Citation guidance]({{ '/data/#citation' | absolute_url }}): how to credit the map and original papers
-- [Source repository]({{ site.data.meta.repository_url }}): canonical source and public issue forms
-- [Content and data license]({{ '/license/' | absolute_url }}): CC BY 4.0 terms for original curation metadata and editorial material
+- [BibTeX]({{ '/data/papers.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }}): citations for all papers, including background
+- [Changes]({{ '/data/changes.json' | absolute_url }}) and [RSS feed]({{ '/feed.xml' | absolute_url }}): website and reading-list updates
+- [Source repository]({{ site.data.meta.repository_url }})
 
-## Scope and use
+## Using the data
 
-The core corpus includes work on intermediate computation that substitutes for, compresses, internalizes, or changes the schedule of an explicit reasoning trace. Architectural context that does not itself study implicit chain-of-thought is kept in a separate precursor collection. Coverage is curated and broad, not claimed to be exhaustive.
+Use the original papers for scientific claims. Summaries and categories are written for this reading list, not copied abstracts. Papers can belong to several categories. Coverage includes related generation methods and is not exhaustive.
 
-Use original papers as the authority for scientific claims. Facets and one-sentence summaries are editorial annotations. Every core record includes a canonical scholarly URL, ordered author_names, a stable record_url, and discovery provenance. first_public dates the earliest public version verified during curation, usually using the arXiv v1 submission date; it is not a verified public-announcement timestamp. citation_date is the preprint's initial arXiv submission date. Citation exports describe arXiv preprints, not later proceedings, and source URLs are not version-pinned. Related terms in the ontology are not necessarily synonyms.
+- `id` identifies a paper; `paper_url` links to the original source; `record_url` links to its entry on this site.
+- `author_names` preserves the authors' names and order.
+- `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note. It is not an independently verified announcement date.
+- `citation_date` is the initial submission date of the linked arXiv preprint. BibTeX and CSL-JSON describe that preprint, not a later proceedings version. Source URLs may serve revised versions.
+- `provenance` says where we first found a paper.
+- Category IDs and filter values are defined in the category file; related terms are not necessarily synonyms.
 
-Across the literature, related work may be labeled latent chain-of-thought, latent reasoning, continuous thought, hidden-state reasoning, or recurrent reasoning. This guide uses implicit chain-of-thought as the umbrella term while preserving each paper's terminology.
-
-## Contribute
+## Corrections and credit
 
 - [Suggest a paper or correction]({{ '/contribute/' | absolute_url }})
-- [Human-readable changelog]({{ '/changelog/' | absolute_url }})
+- [Changelog]({{ '/changelog/' | absolute_url }})
+- [Citation and reuse guidance]({{ '/data/#citation' | absolute_url }})
+- [CC BY 4.0]({{ '/license/' | absolute_url }}): applies to our categories, summaries, and data; original papers and code keep their own terms
 
 ## Acknowledgment
 
-Initial discovery and reconciliation draw substantially on the independently maintained [Awesome-Latent-CoT bibliography](https://github.com/EIT-NLP/Awesome-Latent-CoT) and its associated survey. The corpus is checked and maintained separately against primary scholarly sources.
+Thanks to the [Awesome-Latent-CoT bibliography](https://github.com/EIT-NLP/Awesome-Latent-CoT) and its associated survey, which helped us find many of these papers.

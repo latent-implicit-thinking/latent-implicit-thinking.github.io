@@ -14,16 +14,15 @@ js:
 <main class="lit-index-page">
   <header class="lit-index-hero">
     <div class="lit-shell">
-      <p class="lit-eyebrow">Research index · v{{ site.data.meta.version | split: '.' | slice: 0, 2 | join: '.' }}</p>
       <div class="lit-index-title-row">
         <div>
-          <h1>Explore implicit chain-of-thought</h1>
-          <p>A curated corpus spanning internalized reasoning, learned thinking tokens, continuous states, recurrent and stateful computation, alternative schedules, and critical analysis.</p>
-          <p class="lit-index-freshness">Primary-source search refreshed {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper or correction</a></p>
+          <h1>Browse papers</h1>
+          <p>Search by title, author, or topic. Read from oldest to newest, or sort by newest papers.</p>
+          <p class="lit-index-freshness">Last literature search: {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper</a></p>
         </div>
         <div class="lit-corpus-stat" aria-label="Corpus size">
           <strong>{{ site.data.papers | size }}</strong>
-          <span>core papers</span>
+          <span>papers</span>
         </div>
       </div>
     </div>
@@ -46,19 +45,19 @@ js:
         </div>
       </div>
 
-      <div class="lit-filter-bar" aria-label="Filter papers">
+      <div class="lit-filter-bar lit-approach-filter" aria-label="Filter papers">
         <fieldset data-filter-set="lens">
           <legend>Approach</legend>
           <div class="lit-filter-options">
             <button type="button" class="lit-filter is-active" data-filter-value="all" aria-pressed="true">All</button>
-            <button type="button" class="lit-filter" data-filter-value="internalized" aria-pressed="false">Internalized reasoning</button>
-            <button type="button" class="lit-filter" data-filter-value="learned-tokens" aria-pressed="false">Thinking tokens</button>
-            <button type="button" class="lit-filter" data-filter-value="continuous" aria-pressed="false">Continuous states</button>
-            <button type="button" class="lit-filter" data-filter-value="recurrent" aria-pressed="false">Recurrent/stateful</button>
-            <button type="button" class="lit-filter" data-filter-value="beyond-sequential" aria-pressed="false">Alternative schedules</button>
-            <button type="button" class="lit-filter" data-filter-value="analysis" aria-pressed="false">Analysis</button>
+            {% for method in site.data.methods %}<button type="button" class="lit-filter" data-filter-value="{{ method.id }}" aria-pressed="false">{{ method.label }}</button>{% endfor %}
           </div>
         </fieldset>
+      </div>
+
+      <details id="paper-advanced" class="lit-advanced-filters">
+        <summary>More filters<span id="paper-advanced-count"></span></summary>
+        <div class="lit-filter-bar lit-extra-filter-bar">
         <fieldset data-filter-set="question">
           <legend>Research question</legend>
           <div class="lit-filter-options">
@@ -74,26 +73,24 @@ js:
             <button type="button" class="lit-filter" data-filter-value="architecture" aria-pressed="false">Architecture</button>
             <button type="button" class="lit-filter" data-filter-value="generalization" aria-pressed="false">Generalization</button>
             <button type="button" class="lit-filter" data-filter-value="survey" aria-pressed="false">Survey</button>
-            <button type="button" class="lit-filter" data-filter-value="taxonomy" aria-pressed="false">Taxonomy</button>
+            <button type="button" class="lit-filter" data-filter-value="taxonomy" aria-pressed="false">Classifications</button>
           </div>
         </fieldset>
         <fieldset data-filter-set="evidence">
-          <legend>Evidence</legend>
+          <legend>Type of study</legend>
           <div class="lit-filter-options">
             <button type="button" class="lit-filter is-active" data-filter-value="all" aria-pressed="true">All</button>
-            <button type="button" class="lit-filter" data-filter-value="empirical" aria-pressed="false">Empirical</button>
-            <button type="button" class="lit-filter" data-filter-value="formal" aria-pressed="false">Formal</button>
-            <button type="button" class="lit-filter" data-filter-value="mechanistic" aria-pressed="false">Mechanistic</button>
-            <button type="button" class="lit-filter" data-filter-value="boundary" aria-pressed="false">Boundary result</button>
-            <button type="button" class="lit-filter" data-filter-value="survey" aria-pressed="false">Synthesis</button>
-            <button type="button" class="lit-filter" data-filter-value="probing" aria-pressed="false">Probing</button>
-            <button type="button" class="lit-filter" data-filter-value="scaling" aria-pressed="false">Scaling</button>
+            <button type="button" class="lit-filter" data-filter-value="empirical" aria-pressed="false">Experiments</button>
+            <button type="button" class="lit-filter" data-filter-value="formal" aria-pressed="false">Proofs and theory</button>
+            <button type="button" class="lit-filter" data-filter-value="mechanistic" aria-pressed="false">Internal mechanisms</button>
+            <button type="button" class="lit-filter" data-filter-value="boundary" aria-pressed="false">Limits and counterexamples</button>
+            <button type="button" class="lit-filter" data-filter-value="survey" aria-pressed="false">Surveys</button>
+            <button type="button" class="lit-filter" data-filter-value="probing" aria-pressed="false">Hidden-state probes</button>
+            <button type="button" class="lit-filter" data-filter-value="scaling" aria-pressed="false">Scaling studies</button>
           </div>
         </fieldset>
-      </div>
-
-      <details id="paper-advanced" class="lit-advanced-filters">
-        <summary>More filters <span>representation, computation, training, and modality</span></summary>
+        </div>
+        <p class="lit-filter-help">“Internal mechanisms” covers experiments on how model components affect an answer. “Hidden-state probes” test what information can be read from internal states. Papers can have several labels.</p>
         <div class="lit-advanced-filter-grid">
           <label>Representation
             <select data-filter-select="representation">
@@ -150,13 +147,13 @@ js:
 
       <div class="lit-results-heading">
         <p id="paper-result-count" role="status" aria-live="polite">Showing {{ site.data.papers | size }} papers</p>
-        <div><button id="paper-share" class="lit-reset" type="button" aria-live="polite">Copy filtered view</button><a class="lit-reset" href="{{ '/contribute/' | relative_url }}">Suggest a paper</a><button id="paper-reset" class="lit-reset" type="button">Reset filters</button></div>
+        <div><a class="lit-reset" href="{{ '/data/' | relative_url }}">Download citations</a><button id="paper-share" class="lit-reset" type="button" aria-live="polite">Copy link to results</button><button id="paper-reset" class="lit-reset" type="button">Reset filters</button></div>
       </div>
 
       <div id="paper-list" class="lit-paper-list">
         {% for paper in site.data.papers %}
         {% capture lens_labels %}{% for value in paper.lens %}{% case value %}{% when 'internalized' %}internalized reasoning{% when 'learned-tokens' %}thinking tokens learned tokens{% when 'continuous' %}continuous states{% when 'recurrent' %}recurrent stateful{% when 'beyond-sequential' %}alternative schedules beyond sequential{% when 'analysis' %}analysis evaluation limits{% endcase %} {% endfor %}{% endcapture %}
-        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
+        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
         <article
           id="paper-{{ paper.id | replace: '.', '-' }}"
           class="lit-paper-row"
@@ -180,17 +177,15 @@ js:
             <h2><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h2>
             <p class="lit-paper-authors">{{ paper.authors }}</p>
             <p class="lit-paper-summary">{{ paper.summary }}</p>
-            {% if paper.first_public_note %}<p class="lit-paper-authors"><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p>{% endif %}
-            <div class="lit-paper-tags" aria-label="Paper facets">
-              {% for value in paper.lens %}<span>{% if value == 'internalized' %}internalized reasoning{% else %}{{ value | replace: '-', ' ' }}{% endif %}</span>{% endfor %}
-              {% for value in paper.training limit:1 %}<span>{{ value | replace: '-', ' ' }}</span>{% endfor %}
-              {% for value in paper.evidence limit:1 %}<span>{{ value | replace: '-', ' ' }}</span>{% endfor %}
+            {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p></details>{% endif %}
+            <div class="lit-paper-tags" aria-label="Approaches">
+              {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}<span>{{ category.label }}</span>{% endfor %}
             </div>
           </div>
           <div class="lit-paper-actions">
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
-            <a class="lit-record-link" href="#paper-{{ paper.id | replace: '.', '-' }}" aria-label="Permanent link to {{ paper.title }}">Permalink</a>
+            <a class="lit-record-link" href="#paper-{{ paper.id | replace: '.', '-' }}" aria-label="Permanent link to {{ paper.title }}">Link to this entry</a>
             {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% endif %}
           </div>
         </article>
@@ -199,24 +194,23 @@ js:
 
       <div id="paper-empty" class="lit-empty" hidden>
         <h2>No papers match these filters</h2>
-        <p>Try a broader term, reset a facet, or <a href="{{ '/contribute/' | relative_url }}">suggest a missing paper</a>.</p>
+        <p>Try another search, reset the filters, or <a href="{{ '/contribute/' | relative_url }}">suggest a missing paper</a>.</p>
       </div>
     </div>
   </section>
 
   <aside class="lit-source-note">
     <div class="lit-shell">
-      <p><strong>Citation exports:</strong> <a href="{{ '/data/papers.bib' | relative_url }}">BibTeX</a> · <a href="{{ '/data/papers.csl.json' | relative_url }}">CSL-JSON</a> · <a href="{{ '/data/reading-list.md' | relative_url }}">Markdown reading list</a>. Exports cite arXiv preprints using their initial submission dates; chronology dates and later venue labels are kept separate. <a href="{{ '/data/#citation' | relative_url }}">Date and citation policy →</a></p>
-      <p><strong>Coverage note.</strong> This is a curated map, not a claim that every relevant paper has been found. The primary-source search was refreshed on {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}; the newest verified first-public record found in that pass is dated {{ site.data.meta.latest_included_first_public | date: "%B %-d, %Y" }}. Initial discovery and reconciliation also draw substantially on the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a>. Inclusion, terminology, dates, and summaries are checked and maintained separately here.</p>
+      <p><strong>Download citations:</strong> <a href="{{ '/data/papers.bib' | relative_url }}">BibTeX</a> · <a href="{{ '/data/papers.csl.json' | relative_url }}">CSL-JSON</a>. These files cite the arXiv preprints. <a href="{{ '/data/#citation' | relative_url }}">Citation details →</a></p>
+      <p>This list may miss relevant work—<a href="{{ '/contribute/' | relative_url }}">suggest a paper or correction</a>. Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey for helping us find many of these papers.</p>
     </div>
   </aside>
 
   <section class="lit-section" aria-labelledby="precursor-title">
     <div class="lit-shell">
       <div class="lit-section-heading">
-        <p class="lit-eyebrow">Separate from the core corpus</p>
-        <h2 id="precursor-title">Precursors and architectural context</h2>
-        <p>These papers did not necessarily study implicit chain-of-thought directly. They developed recurrent depth, adaptive computation, fixed points, and algorithmic generalization that later work builds on.</p>
+        <h2 id="precursor-title">Related background papers</h2>
+        <p>Earlier work on repeated computation, deciding when to stop, and learning algorithms. These papers provide context; they do not necessarily study implicit chain-of-thought.</p>
       </div>
       <div class="lit-precursor-list">
         {% for paper in site.data.precursors %}

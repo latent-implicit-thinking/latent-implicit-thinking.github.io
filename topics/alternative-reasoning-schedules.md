@@ -1,8 +1,8 @@
 ---
 layout: method
-title: "Alternative reasoning schedules"
+title: "Alternative generation methods"
 seo-title: "Parallel, Diffusion, and Non-Autoregressive Reasoning Papers"
-share-description: "A chronological guide to parallel, diffusion-based, search-driven, and non-left-to-right reasoning schedules."
+share-description: "Explanations and papers on alternative ways to generate reasoning, including parallel updates, diffusion, and search."
 permalink: /topics/alternative-reasoning-schedules/
 method_id: beyond-sequential
 show-avatar: false

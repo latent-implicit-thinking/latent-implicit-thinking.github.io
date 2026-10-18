@@ -5,8 +5,8 @@ body:
   - type: input
     id: record
     attributes:
-      label: Paper or record
-      description: Give the title, arXiv ID, or URL of the affected record.
+      label: Paper or page
+      description: Give the title, arXiv ID, or link.
     validations:
       required: true
   - type: dropdown
@@ -19,7 +19,7 @@ body:
         - Venue
         - Paper or code link
         - Summary
-        - Method-family or facet classification
+        - Categories or filters
         - Scope or site text
         - Other
     validations:
@@ -41,4 +41,4 @@ body:
     id: context
     attributes:
       label: Additional context
-      description: Optional explanation, especially for disputed or multi-label classifications.
+      description: Anything else that would help us understand the correction (optional).

@@ -3,7 +3,9 @@
   label: "Internalized reasoning"
   slug: "internalized-reasoning"
   url: "/topics/internalized-reasoning/"
-  definition: "Methods that learn from readable chains of thought and then distill, compress, or progressively remove intermediate text so reasoning is carried by internal computation."
+  short_description: "Learn from worked solutions, then answer with fewer or no written intermediate steps."
+  definition: "Learn from worked solutions so that some or all of the reasoning can later happen without writing those steps. Training may use a separate teacher model or progressively remove written steps from the model being trained."
+  example: "A teacher model solves a problem in several written steps. A student model learns to produce the answer directly, using information from the teacher's intermediate reasoning during training."
   question: "How can an explicit chain of thought be distilled or progressively removed?"
   questions:
     - "What supervision transfers an explicit reasoning trace into hidden computation?"
@@ -19,7 +21,9 @@
   label: "Thinking tokens"
   slug: "thinking-tokens"
   url: "/topics/thinking-tokens/"
-  definition: "Methods that use pause, filler, planning, compressed, or learned discrete tokens as computational positions without requiring every token to express a human-readable step."
+  short_description: "Add pauses or special tokens that give the model more computation without spelling out a solution."
+  definition: "Give a model extra tokens for computation, such as pauses, filler symbols, or learned planning tokens. These tokens need not spell out the solution."
+  example: "A model processes several pause tokens before answering a math question. Those extra positions let it perform additional computation, even though they do not display a worked solution."
   question: "Can non-readable token positions provide useful computation or planning?"
   questions:
     - "What can a model compute in token positions that carry little or no readable content?"
@@ -33,10 +37,12 @@
 
 - id: "continuous"
   number: "03"
-  label: "Continuous states"
+  label: "Continuous-state reasoning"
   slug: "continuous-states"
   url: "/topics/continuous-states/"
-  definition: "Methods that carry intermediate computation through hidden activations, continuous thoughts, soft token mixtures, concepts, or other dense representations."
+  short_description: "Pass vectors between reasoning steps instead of choosing a text token at every step."
+  definition: "Use vectors—lists of numbers—to carry intermediate reasoning from one step to the next, instead of selecting a text token at every step. Some methods use the model's hidden states; others combine several candidate token representations."
+  example: "A model feeds its current hidden-state vector back as the next input. It repeats this several times before returning to text to produce an answer."
   question: "What changes when intermediate reasoning remains in a dense representation?"
   questions:
     - "Which continuous representation should carry intermediate information?"
@@ -50,10 +56,12 @@
 
 - id: "recurrent"
   number: "04"
-  label: "Recurrent and stateful compute"
+  label: "Recurrent reasoning"
   slug: "recurrent-reasoning"
   url: "/topics/recurrent-reasoning/"
-  definition: "Methods that spend additional computation through looped depth, dynamic halting, hierarchical recurrence, memory, key/value-cache state, or related stateful mechanisms."
+  short_description: "Reuse model layers or carry information in memory to spend more computation on a problem."
+  definition: "Repeat parts of the model or keep intermediate information in memory while working through a problem. Some methods also learn how many passes to run."
+  example: "A model runs the same layers several times, updating the information it keeps between passes. If it has learned a stopping rule, it can decide when to produce its answer."
   question: "Can a model adapt how much internal depth it spends on each problem?"
   questions:
     - "How should a model decide when to continue or halt internal computation?"
@@ -67,10 +75,12 @@
 
 - id: "beyond-sequential"
   number: "05"
-  label: "Alternative reasoning schedules"
+  label: "Alternative generation methods"
   slug: "alternative-reasoning-schedules"
   url: "/topics/alternative-reasoning-schedules/"
-  definition: "Methods that change the schedule of reasoning through diffusion, parallel refinement, search, hierarchy, next-block prediction, or other non-left-to-right processes."
+  short_description: "Change how steps are generated—for example, by refining several together. Some methods still use written reasoning."
+  definition: "Change how intermediate steps are generated, revised, or searched—for example, by refining several steps in parallel. These are related approaches: some still produce written chains of thought."
+  example: "A diffusion model refines representations of a solution over several rounds, rather than committing to each word in left-to-right order. The final reasoning can still be readable text."
   question: "What becomes possible beyond strictly left-to-right generation?"
   questions:
     - "Which reasoning steps can be computed or refined in parallel?"
@@ -84,10 +94,12 @@
 
 - id: "analysis"
   number: "06"
-  label: "Analysis, evaluation, and limits"
+  label: "Analysis and evaluation"
   slug: "implicit-reasoning-evaluation"
   url: "/topics/implicit-reasoning-evaluation/"
-  definition: "Work that tests whether internal computation is capable, efficient, faithful, interpretable, robust, and distinguishable from memorization or shortcuts."
+  short_description: "Test what these methods can do, how they work, and when they fail."
+  definition: "Measure how well these methods work, investigate what their internal computation does, and identify where they fail. This includes experiments, studies of model internals, and mathematical results."
+  example: "A researcher replaces an intermediate state with one taken from a different problem, then checks how the answer changes. This tests what information that state contributes to the solution."
   question: "What computation do these systems perform, and how can we tell?"
   questions:
     - "What evidence distinguishes internal reasoning from shortcuts or memorization?"

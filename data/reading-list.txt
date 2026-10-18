@@ -3,53 +3,52 @@ layout: null
 permalink: /data/reading-list.md
 sitemap: false
 ---
-# Implicit Chain-of-Thought research map
+# Implicit Chain-of-Thought reading list
 
 Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language.
 
-Version {{ site.data.meta.version }}. Resource updated {{ site.data.meta.updated_at }}; literature search refreshed {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} core papers and {{ site.data.precursors | size }} separately labeled precursors. Coverage is curated, not exhaustive.
+Version {{ site.data.meta.version }}. Website updated {{ site.data.meta.updated_at }}; last literature search {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers. The list is not exhaustive.
 
 ## Sources and citation
 
-Use original papers as the authority for scientific claims; the summaries and categories below are editorial annotations, not paper abstracts. Dates describe the earliest dated public version verified during curation, usually the arXiv v1 submission date, not a verified announcement timestamp. An earlier conference presentation can have a different date from the linked arXiv version.
+Cite the original papers for scientific claims. The summaries below are written for this list, not copied abstracts. Papers are ordered by their earliest verified public date, usually the first arXiv submission. Earlier conference presentations have a source note.
 
-- [Full corpus and metadata]({{ '/data/papers.json' | absolute_url }})
+- [JSON paper list]({{ '/data/papers.json' | absolute_url }})
 - [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): arXiv preprints using initial submission dates, not later proceedings; source URLs are not version-pinned
-- [Scope and terminology]({{ '/topics/' | absolute_url }})
-- [Data and date policy]({{ '/data/' | absolute_url }})
+- [Introduction and examples]({{ '/topics/' | absolute_url }})
+- [Downloads and file details]({{ '/data/' | absolute_url }})
 - [Corrections]({{ '/contribute/' | absolute_url }})
 
-## Research directions
+## Topics
 
-These directions overlap; their order is not a ranking. Each linked guide includes its own oldest-first chronology.
+Papers can belong to more than one category. Each linked guide explains an approach and lists its papers, oldest first.
 {% for method in site.data.methods %}
 ### [{{ method.label }}]({{ method.url | absolute_url }})
 
 {{ method.definition }}
 
-Guiding question: {{ method.question }}
-Related terms (not necessarily synonyms): {{ method.related_terms | join: ', ' }}.
+For example: {{ method.example }}
 {% endfor %}
-## Core papers — chronological
+## Papers — oldest first
 {% for paper in site.data.papers %}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Map record]({{ '/papers/#paper-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
-Research directions: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
-Editorial summary: {{ paper.summary }}
+Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry on this site]({{ '/papers/#paper-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
+Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
+Summary: {{ paper.summary }}
 {% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}). Linked arXiv version: {{ paper.citation_date }}.
 {% endif %}{% endfor %}
-## Precursors and architectural context — separate from the core
+## Related background papers
 {% for paper in site.data.precursors %}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [Original paper]({{ paper.paper_url }}). [Map record]({{ '/papers/#precursor-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).
-Editorial connection: {{ paper.connection }}
+Source: [Original paper]({{ paper.paper_url }}). [Entry on this site]({{ '/papers/#precursor-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).
+Why it is relevant: {{ paper.connection }}
 {% endfor %}
 ## Acknowledgment and reuse
 
-Initial discovery and reconciliation draw substantially on the [Awesome-Latent-CoT bibliography](https://github.com/EIT-NLP/Awesome-Latent-CoT) and its associated survey. This map is checked and maintained separately against primary scholarly sources.
+Thanks to the [Awesome-Latent-CoT bibliography](https://github.com/EIT-NLP/Awesome-Latent-CoT) and its associated survey, which helped us find many of these papers.
 
 Original curation metadata, taxonomy, and editorial material: [CC BY 4.0]({{ '/license/' | absolute_url }}). Underlying papers and code retain their own terms. [Citation guidance]({{ '/data/#citation' | absolute_url }}).
