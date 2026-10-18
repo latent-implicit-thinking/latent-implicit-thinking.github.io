@@ -23,7 +23,7 @@ Related background papers: {{ site.data.precursors | size }}
 
 ## Topics
 
-{% for method in site.data.methods %}- [{{ method.label }}]({{ method.url | absolute_url }}): {{ method.definition }}
+{% for method in site.data.methods %}- [{{ method.label }}]({{ method.url | absolute_url }}): {{ method.definition }} [Markdown]({{ '/data/topics/' | append: method.slug | append: '.md' | absolute_url }}) · [JSON]({{ '/data/topics/' | append: method.slug | append: '.json' | absolute_url }})
 {% endfor %}
 
 ## Files for scripts and research agents
@@ -32,6 +32,7 @@ Related background papers: {{ site.data.precursors | size }}
 - [Category definitions]({{ '/data/ontology.json' | absolute_url }}): category IDs, descriptions, and allowed filter values
 - [JSON Schema]({{ '/data/schema.json' | absolute_url }}): field types and constraints
 - [BibTeX]({{ '/data/papers.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }}): citations for all papers, including background
+- [Published-version BibTeX]({{ '/data/publications.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/publications.csl.json' | absolute_url }}): only the subset with verified publication records; not a replacement for the complete preprint files
 - [Changes]({{ '/data/changes.json' | absolute_url }}) and [RSS feed]({{ '/feed.xml' | absolute_url }}): website and reading-list updates
 - [Source repository]({{ site.data.meta.repository_url }})
 
@@ -39,13 +40,20 @@ Related background papers: {{ site.data.precursors | size }}
 
 Use the original papers for scientific claims. Summaries and categories are written for this reading list, not copied abstracts. Papers can belong to several categories. Coverage includes related generation methods and is not exhaustive.
 
-- `id` identifies a paper; `paper_url` links to the original source; `record_url` links to its entry on this site.
+- `id` identifies a paper; `paper_url` links to the original source; `record_url` links to an independently fetchable entry at `/papers/{id}/`. Earlier full-list anchors still work through `legacy_record_url`.
+- Each entry has `json_url`, `markdown_url`, `bibtex_url`, and `csl_url`. Use the topic downloads or individual entries when you do not need the complete list.
 - `author_names` preserves the authors' names and order.
 - `added_at` is when a paper was added to this list, not its publication date. Tracking began {{ site.data.meta.addition_tracking_started_at }}; initial-collection records omit this field. Release history lists `added_papers` IDs. A new addition may be an older paper.
 - `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note. It is not an independently verified announcement date.
 - `citation_date` is the initial submission date of the linked arXiv preprint. BibTeX and CSL-JSON describe that preprint, not a later proceedings version. Source URLs may serve revised versions.
+- Optional `publication` metadata describes a separately verified published version. Its own title, author list and year may differ; use `publication_bibtex_url` or `publication_csl_url` for that version. Absence means we have not verified a publication record, not that the paper is unpublished.
+- Release entries can list `updated_papers` (IDs and changed fields) and `removed_papers` (IDs). Refresh cached records using the current corpus; do not treat a historical release as the current membership list.
 - `provenance` says where we first found a paper.
 - Category IDs and filter values are defined in the category file; related terms are not necessarily synonyms.
+
+## Research workflow
+
+Choose the relevant topic, identify papers whose methods address the question, then read the original sources. The topic guides compare training and computation choices with source links. Verify the exact result, setting and limitations before citing it. Chronological order is not proof of influence, and citing a paper does not necessarily mean building on its method. Export a citation for the version actually used. This curated list is a starting point, not an exhaustive literature search.
 
 ## Corrections and credit
 

@@ -27,6 +27,7 @@ last_modified_at: 2026-10-18
       <div class="lit-download-list">
         <a href="{{ '/data/papers.bib' | relative_url }}"><span><strong>Citations for LaTeX and reference managers</strong><small>papers.bib · Includes all papers and background papers</small></span><span>BibTeX ↗</span></a>
         <a href="{{ '/data/papers.csl.json' | relative_url }}"><span><strong>Citations in CSL-JSON</strong><small>papers.csl.json · For Zotero and other compatible tools</small></span><span>CSL-JSON ↗</span></a>
+        <a href="{{ '/data/publications.bib' | relative_url }}"><span><strong>Verified published-version citations</strong><small>publications.bib · A subset with confirmed conference or journal records</small></span><span>BibTeX ↗</span></a>
         <a href="{{ '/data/reading-list.md' | relative_url }}"><span><strong>The complete reading list as text</strong><small>reading-list.md · Explanations, summaries, authors, and links</small></span><span>Markdown ↗</span></a>
         <a href="{{ '/data/papers.json' | relative_url }}"><span><strong>Paper details for scripts and agents</strong><small>papers.json · Titles, authors, dates, categories, summaries, and links</small></span><span>JSON ↗</span></a>
       </div>
@@ -39,14 +40,18 @@ last_modified_at: 2026-10-18
         <summary>Using the JSON files in a script or agent</summary>
         <p>Start with <a href="{{ '/data/papers.json' | relative_url }}">papers.json</a>. It contains <code>papers</code>, <code>precursors</code> (the background papers), and <code>metadata</code>. The <a href="{{ '/llms.txt' | relative_url }}">agent guide</a> links to every file.</p>
         <dl>
-          <dt>Paper details</dt><dd><code>id</code> is a stable identifier. <code>author_names</code> preserves author order. <code>paper_url</code> links to the source; <code>record_url</code> links to this site's entry.</dd>
+          <dt>Paper details</dt><dd><code>id</code> is a stable identifier. <code>author_names</code> preserves author order. <code>paper_url</code> links to the source; <code>record_url</code> links to an individual page with its own JSON, Markdown, BibTeX and CSL-JSON downloads. <code>legacy_record_url</code> preserves the earlier full-list anchor.</dd>
+          <dt>Published versions</dt><dd>Optional <code>publication</code> metadata gives a separately verified conference or journal version, with its own title, authors, year and citation links. Missing metadata means we have not verified that version, not that it does not exist.</dd>
           <dt>Dates</dt><dd><code>first_public</code> is the earliest dated public version we found, usually the first arXiv submission. <code>citation_date</code> is the initial arXiv submission date used in citation exports. Earlier conference presentations have a separate source note.</dd>
           <dt>Following additions</dt><dd><code>added_at</code> is when a paper joined this list, not when it was published. It is tracked for additions after the initial collection; initial records have no <code>added_at</code>. Filter this field to find new entries, including older papers we previously missed. Release history also lists <code>added_papers</code> by stable ID.</dd>
+          <dt>Keeping a local copy current</dt><dd>Release history can identify <code>updated_papers</code> with changed fields and <code>removed_papers</code> by ID. The current JSON file is the authority for which entries are on the list.</dd>
           <dt>Categories and summaries</dt><dd><code>lens</code> lists approaches. Other fields describe training, computation, research questions, evidence, and modality. A paper can have several labels. Summaries and labels are written for this list; they are not the authors' abstracts.</dd>
           <dt>Sources</dt><dd><code>provenance</code> records where we found the paper. Use <code>paper_url</code> to check the paper itself.</dd>
         </dl>
         <p><a href="{{ '/data/ontology.json' | relative_url }}">Category definitions (ontology.json)</a> · <a href="{{ '/data/schema.json' | relative_url }}">Field types and allowed values (JSON Schema)</a> · <a href="{{ '/data/changes.json' | relative_url }}">Version history (JSON)</a></p>
       </details>
+      <h2>Download one topic</h2>
+      <ul>{% for method in site.data.methods %}<li>{{ method.label }}: <a href="{{ '/data/topics/' | append: method.slug | append: '.md' | relative_url }}">Markdown</a> · <a href="{{ '/data/topics/' | append: method.slug | append: '.json' | relative_url }}">JSON</a></li>{% endfor %}</ul>
       <p class="lit-guide-note">To follow updates, see <a href="{{ '/recent/' | relative_url }}">recent additions</a>, <a href="{{ '/feed.xml' | relative_url }}">subscribe to the RSS feed</a>, or <a href="{{ '/changelog/' | relative_url }}">read what changed</a>.</p>
     </div>
   </section>
@@ -55,7 +60,7 @@ last_modified_at: 2026-10-18
     <div class="lit-shell lit-about-grid">
       <div><h2>Citing and reusing the list</h2></div>
       <div>
-        <p>Cite the original papers for research claims. Our BibTeX and CSL-JSON downloads cite <strong>arXiv preprints, not later conference publications</strong>. Check the source if you need a particular version or result.</p>
+        <p>Cite the original papers for research claims. The complete <code>papers.bib</code> and <code>papers.csl.json</code> downloads cite <strong>arXiv preprints</strong>. A separate <a href="{{ '/data/publications.bib' | relative_url }}">BibTeX file</a> and <a href="{{ '/data/publications.csl.json' | relative_url }}">CSL-JSON file</a> contain the subset with verified published-version records. Individual paper pages offer both choices where available. Check the source and cite the version you used.</p>
         <p>If you reuse our categories, summaries, or data, credit <em>Implicit Chain-of-Thought</em>, version {{ site.data.meta.version }} ({{ site.data.meta.updated_at | date: "%Y" }}), {{ site.data.meta.canonical_url }}, with your access date. Our original text and annotations are available under <a href="{{ '/license/' | relative_url }}">CC BY 4.0</a>. Papers, code, and other third-party material keep their own licenses.</p>
         <details class="lit-file-details"><summary>Date and citation-format details</summary><p>Dates usually refer to the first arXiv submission, not the public-announcement time or conference year. Where an earlier presentation is documented, its date is shown separately from the linked arXiv submission date.</p><p>Source links are not pinned to an arXiv revision. Author names are kept in full and in order. CSL-JSON stores each name as a literal string rather than guessing which parts are given and family names.</p></details>
         <p>Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey, <a href="https://arxiv.org/abs/2505.16782"><em>Reasoning Beyond Language</em></a>, which helped us find many of these papers.</p>

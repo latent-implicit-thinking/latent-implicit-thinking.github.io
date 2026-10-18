@@ -11,8 +11,20 @@ layout: base
       <h1>{{ method.label }}</h1>
       <p class="lit-method-definition">{{ method.definition }}</p>
       <p class="lit-method-example"><strong>For example:</strong> {{ method.example }}</p>
+      <p class="lit-guide-note">Download these papers: <a href="{{ '/data/topics/' | append: method.slug | append: '.md' | relative_url }}">Markdown</a> · <a href="{{ '/data/topics/' | append: method.slug | append: '.json' | relative_url }}">JSON</a></p>
     </div>
   </header>
+
+  {% assign comparisons = site.data.comparisons[method.id] %}{% if comparisons %}
+  <section class="lit-section lit-topic-comparisons">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>How these methods differ</h2>
+      {% for comparison in comparisons %}
+      <p>{{ comparison.text | escape }}</p>
+      <p class="lit-comparison-sources">Sources: {% for id in comparison.source_ids %}{% assign source = site.data.papers | where: 'id', id | first %}{% if source %}<a href="{{ '/papers/' | append: id | append: '/' | relative_url }}">{{ source.title | escape }}</a>{% unless forloop.last %} · {% endunless %}{% endif %}{% endfor %}. {% for url in comparison.source_urls %}<a href="{{ url }}">Original source {{ forloop.index }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
+      {% endfor %}
+    </div>
+  </section>{% endif %}
 
   <section class="lit-section lit-method-papers" aria-labelledby="method-papers-title">
     <div class="lit-shell">
@@ -39,7 +51,7 @@ layout: base
           <div class="lit-paper-actions">
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
-            <a href="{{ '/papers/#paper-' | relative_url }}{{ paper.id | replace: '.', '-' }}">Link to this entry</a>
+            <a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a>
             {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% endif %}
           </div>
         </article>

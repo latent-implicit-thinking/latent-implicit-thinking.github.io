@@ -1529,6 +1529,33 @@ a.lit-entry:focus {
   }
 }
 
+.lit-paper-detail h1 {
+  max-width: 950px;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  overflow-wrap: anywhere;
+}
+
+.lit-citation-choice {
+  margin: 1.5rem 0;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--lit-line);
+  overflow-wrap: anywhere;
+}
+
+.lit-citation-choice h3 {
+  font-size: 1.2rem;
+}
+
+.lit-detail-date,
+.lit-comparison-sources {
+  color: var(--lit-muted);
+  font-size: 0.9rem;
+}
+
+.lit-topic-comparisons {
+  padding-bottom: 0;
+}
+
 /* Speaker photos styling */
 .speakers-table img {
   width: 200px !important;

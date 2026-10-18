@@ -35,7 +35,7 @@ For example: {{ method.example }}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry on this site]({{ '/papers/#paper-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
+Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
 {% if paper.added_at %}Added to this list: {{ paper.added_at }}.
@@ -47,7 +47,7 @@ Summary: {{ paper.summary }}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [Original paper]({{ paper.paper_url }}). [Entry on this site]({{ '/papers/#precursor-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).
+Source: [Original paper]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).
 Why it is relevant: {{ paper.connection }}
 {% endfor %}
 ## Acknowledgment and reuse

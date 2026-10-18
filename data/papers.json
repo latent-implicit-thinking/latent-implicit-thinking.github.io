@@ -25,8 +25,8 @@ permalink: /data/papers.json
     "license_name": {{ site.data.meta.license_name | jsonify }},
     "license_url": {{ site.data.meta.license_url | jsonify }},
     "license_scope": "Original taxonomy, normalized curation metadata, summaries, and editorial material; third-party works remain under their own terms.",
-    "record_url_prefix": {{ '/papers/#paper-' | absolute_url | jsonify }},
-    "record_id_transform": "Replace periods in the record ID with hyphens, then append it to record_url_prefix.",
+    "record_url_prefix": {{ '/papers/' | absolute_url | jsonify }},
+    "record_id_transform": "Append the unchanged record ID and a trailing slash to record_url_prefix. legacy_record_url preserves the earlier full-list anchor.",
     "provenance_note": "Discovery draws substantially on Awesome-Latent-CoT and is reconciled against primary scholarly sources."
   },
   "papers": [{% for paper in site.data.papers %}{% include paper-record.json paper=paper prefix="paper-" %}{% unless forloop.last %},{% endunless %}{% endfor %}],

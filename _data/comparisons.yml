@@ -1,0 +1,80 @@
+internalized:
+  - text: >-
+      Knowledge distillation and stepwise internalization use different training
+      signals. Implicit CoT via Knowledge Distillation learns to predict a
+      teacher's intermediate hidden states, which help a student produce the
+      answer. Stepwise Internalization instead repeatedly shortens the written
+      solution and fine-tunes the same model on what remains. Both use worked
+      solutions during training; neither requires writing the removed steps at
+      inference. Their reported experiments focus on multiplication and
+      grade-school math, not a guarantee of general reasoning ability.
+    source_ids: ["2311.01460", "2405.14838"]
+    source_urls:
+      - "https://arxiv.org/html/2311.01460v1#S3"
+      - "https://arxiv.org/html/2405.14838v1#S3"
+
+learned-tokens:
+  - text: >-
+      Pause tokens add computation before the answer without choosing a different
+      plan token for each step. Planning tokens instead select a learned token
+      before generating each written reasoning step. The latter still produces
+      a textual chain of thought. In the pause-token experiments, the training
+      setup matters: gains were strongest when pauses were used in both
+      pretraining and fine-tuning, not simply inserted into an unchanged model.
+    source_ids: ["2310.02226", "2310.05707"]
+    source_urls:
+      - "https://proceedings.iclr.cc/paper_files/paper/2024/hash/76917808731dae9e6d62c2a7a6afb542-Abstract-Conference.html"
+      - "https://arxiv.org/html/2310.05707v3#S2"
+
+continuous:
+  - text: >-
+      Coconut and CODI both pass continuous states between reasoning steps, but
+      supervise them differently. Coconut gradually replaces written steps with
+      hidden-state inputs and trains on the remaining text. CODI jointly trains
+      explicit and implicit reasoning tasks, matching their hidden states at a
+      selected position before the answer. These models avoid decoding a word
+      at every intermediate step; they still perform successive model passes,
+      so fewer written tokens does not mean no reasoning-time computation.
+    source_ids: ["2412.06769", "2502.21074"]
+    source_urls:
+      - "https://arxiv.org/html/2412.06769v3#S3"
+      - "https://arxiv.org/html/2502.21074v3#S3"
+
+recurrent:
+  - text: >-
+      Recurrent depth and fixed-point models repeat computation in different
+      ways. Geiping and colleagues reuse a transformer block, allowing the
+      number of passes to change at inference. The implicit state-space models
+      studied by Schöne and colleagues instead iterate toward a fixed point,
+      with experiments testing when approximate convergence is sufficient. Both add
+      computation without adding a written reasoning trace, but their stopping
+      rules and training costs differ.
+    source_ids: ["2502.05171", "2502.07827"]
+    source_urls:
+      - "https://proceedings.neurips.cc/paper_files/paper/2025/hash/3b01972cf31e6fa0fe29e4b8b5c2a0a1-Abstract-Conference.html"
+      - "https://proceedings.mlr.press/v267/schone25a.html"
+
+beyond-sequential:
+  - text: >-
+      Diffusion of Thought changes how a chain of thought is generated: it
+      refines the solution through denoising rather than committing to words
+      strictly from left to right. This changes the generation schedule, not
+      necessarily the visibility of the reasoning. The resulting chain can
+      still be text, unlike methods that only emit the final answer.
+    source_ids: ["2402.07754", "2405.14838"]
+    source_urls:
+      - "https://proceedings.neurips.cc/paper_files/paper/2024/hash/be30024e7fa2c29cac7a6dafcbb8571f-Abstract-Conference.html"
+      - "https://arxiv.org/html/2405.14838v1#S3"
+
+analysis:
+  - text: >-
+      Recovering an intermediate answer from hidden states is different from
+      showing that the model uses it. The multi-hop study by Yang and
+      colleagues separates recall of a bridge entity from its contribution to
+      the final answer, including interventions on internal representations.
+      Evidence was stronger for the first hop than for the complete two-hop
+      computation and varied by relation type. That distinction matters when
+      interpreting claims that a model reasons internally.
+    source_ids: ["2402.16837"]
+    source_urls:
+      - "https://aclanthology.org/2024.acl-long.550/"

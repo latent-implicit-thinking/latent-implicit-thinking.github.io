@@ -1,6 +1,39 @@
+- version: "0.8.0"
+  date: "2026-10-18"
+  title: "Individual paper pages and citation choices"
+  changes:
+    - "Added permanent paper pages with individual JSON, Markdown, BibTeX and CSL-JSON downloads. Existing full-list links remain available."
+    - "Added source-linked method comparisons and topic-specific JSON and Markdown downloads."
+    - "Added separately verified published-version citations, preserving original preprint citations and chronology."
+    - "Updated the collection and added machine-readable record changes and removals for readers maintaining a local copy."
+  added_papers: []
+  removed_papers: ["2505.11484","2505.15778","2509.19170","2602.08220","2603.06222","2603.19714","2606.16360","2607.19691","2607.20952","2609.02049","2609.04645","2609.06746","2609.07406","2609.07821","2609.13747","2609.16070","2609.22228","2609.27058","2609.29457","2609.34079","2609.34407","2609.34563","2609.35643","2609.37818","2610.01560","2610.01917","2610.01947","2610.02626","2610.03839","2610.09418","2610.09788","2610.10563","2610.11111","2610.11472","2610.12090","2610.18304","2610.18861","2610.20352","2610.20642"]
+  updated_papers:
+    - id: "2310.02226"
+      fields: [publication]
+    - id: "2402.07754"
+      fields: [publication]
+    - id: "2402.16837"
+      fields: [publication]
+    - id: "2412.06769"
+      fields: [publication]
+    - id: "2502.05171"
+      fields: [publication]
+    - id: "2502.07827"
+      fields: [publication]
+    - id: "2502.21074"
+      fields: [publication]
+
 - version: "0.7.0"
   date: "2026-10-18"
   title: "Literature refresh and recent additions"
+  updated_papers:
+    - id: "2609.03807"
+      fields: [title, previous_titles]
+    - id: "2601.21358"
+      fields: [authors]
+    - id: "2603.19714"
+      fields: [authors]
   changes:
     - "Added 145 source-checked papers: 127 first submitted since September 5 and 18 older omissions. The reading list now contains 253 papers plus eight background papers."
     - "Checked the literature through October 18, 2026. The newest included paper was first submitted on October 15; coverage is not exhaustive."

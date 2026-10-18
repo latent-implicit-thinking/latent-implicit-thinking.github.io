@@ -70,6 +70,13 @@
   <link rel="alternate" type="text/markdown" title="Implicit CoT reading list" href="{{ '/data/reading-list.md' | absolute_url }}">
   <link rel="describedby" type="application/json" title="Implicit CoT research ontology" href="{{ '/data/ontology.json' | absolute_url }}">
   <link rel="describedby" type="text/markdown" title="Guide for language models and research agents" href="{{ '/llms.txt' | absolute_url }}">
+  {% if page.record %}
+  <link rel="alternate" type="application/json" title="This paper's record" href="{{ page.record.json_url }}">
+  <link rel="alternate" type="text/markdown" title="This paper as Markdown" href="{{ page.record.markdown_url }}">
+  <link rel="alternate" type="application/x-bibtex" title="Preprint citation" href="{{ page.record.bibtex_url }}">
+  <link rel="alternate" type="application/vnd.citationstyles.csl+json" title="Preprint citation" href="{{ page.record.csl_url }}">
+  {% if page.publication %}<link rel="alternate" type="application/x-bibtex" title="Published-version citation" href="{{ page.record.publication_bibtex_url }}">{% endif %}
+  {% endif %}
 
   {% include gtag.html %}
   {% include gtm_head.html %}

@@ -7,6 +7,10 @@ require "json"
 require "rexml/document"
 require "uri"
 require "yaml"
+require_relative "public_files"
+require_relative "test_agent_exports"
+require_relative "release_history"
+require_relative "test_release_history"
 
 def validate_against_schema(value, schema, root_schema, path, errors)
   if schema["$ref"]
@@ -69,7 +73,7 @@ repo_root = File.expand_path("..", __dir__)
 site_root = File.expand_path(ARGV.fetch(0, "_site"), repo_root)
 errors = []
 
-allowed_files = File.readlines(File.join(__dir__, "site-files.txt"), chomp: true).reject(&:empty?).sort
+allowed_files = PublicFiles.expected(repo_root).sort
 actual_files = Dir.glob(File.join(site_root, "**", "*"), File::FNM_DOTMATCH).select { |path| File.file?(path) || File.symlink?(path) }
 actual_files.each { |path| errors << "Deployment contains a symlink: #{path}" if File.symlink?(path) }
 actual_paths = actual_files.map { |path| path.delete_prefix(site_root + "/") }.sort
@@ -169,7 +173,8 @@ all_records.each_with_index do |paper, index|
   collection = index < papers.length ? "core" : "precursor"
   prefix = collection == "core" ? "paper-" : "precursor-"
   anchor = "#{prefix}#{paper.fetch('id').tr('.', '-')}"
-  expected_url = "#{meta.fetch('canonical_url')}papers/##{anchor}"
+  expected_url = "#{meta.fetch('canonical_url')}papers/#{paper.fetch('id')}/"
+  legacy_url = "#{meta.fetch('canonical_url')}papers/##{anchor}"
   authors = paper.fetch("authors").split(", ")
   citation_date = paper.fetch("citation_date", paper.fetch("first_public"))
   date_parts = citation_date.split("-").map(&:to_i)
@@ -181,6 +186,7 @@ all_records.each_with_index do |paper, index|
   paper.each { |field, value| errors << "#{key}: generated #{field} differs from source" unless generated[field] == value }
   errors << "#{key}: generated authors are not lossless and ordered" unless generated["author_names"] == authors
   errors << "#{key}: generated record URL is incorrect" unless generated["record_url"] == expected_url
+  errors << "#{key}: generated legacy record URL is incorrect" unless generated["legacy_record_url"] == legacy_url
   errors << "#{key}: generated citation date is incorrect" unless generated["citation_date"] == citation_date
   errors << "#{key}: map record anchor missing" unless paper_html.include?("id=\"#{anchor}\"")
   errors << "#{key}: Markdown reading list omits title, authors, source or record" unless [paper["title"], paper["authors"], paper["paper_url"], expected_url].all? { |value| reading_list.include?(value) }
@@ -243,12 +249,11 @@ releases = JSON.parse(File.read(File.join(site_root, "data/changes.json")))
 errors << "Release history omits current version" unless JSON.generate(releases).include?(meta.fetch("version"))
 release_entries = releases.fetch("releases")
 errors << "Newest release does not match current version" unless release_entries.first["version"] == meta["version"]
-added_ids = release_entries.flat_map { |release| Array(release["added_papers"]) }
-errors << "Release additions differ from tracked papers" unless added_ids.sort == tracked_papers.map { |paper| paper["id"] }.sort && added_ids.uniq == added_ids
+errors.concat(ReleaseHistory.validate(release_entries, papers))
+ReleaseHistoryTests.run
 release_entries.each do |release|
-  Array(release["added_papers"]).each do |id|
-    paper = tracked_papers.find { |entry| entry["id"] == id }
-    errors << "#{id}: release date differs from addition date" unless paper && paper["added_at"] == release["date"]
+  Array(release["updated_papers"]).each do |update|
+    errors << "Malformed updated-paper entry in #{release['version']}" unless update.is_a?(Hash) && update["id"].to_s.match?(/\A\d{4}\.\d{4,5}\z/) && update["fields"].is_a?(Array) && !update["fields"].empty? && update["fields"].all? { |field| field.is_a?(String) && !field.empty? }
   end
 end
 recent_html = File.read(File.join(site_root, "recent/index.html"))
@@ -265,7 +270,10 @@ methods.each do |method|
   collection_pages[File.join(method.fetch("url").sub(%r{\A/}, ""), "index.html")] = papers.select { |paper| paper.fetch("lens").include?(method.fetch("id")) }
 end
 
-REXML::Document.new(File.read(File.join(site_root, "feed.xml")))
+feed = REXML::Document.new(File.read(File.join(site_root, "feed.xml")))
+REXML::XPath.each(feed, "/rss/channel/item/description") do |description|
+  errors << "RSS contains an empty paper entry" if description.text.to_s.include?("()") || description.text.to_s.include?("Added papers: .")
+end
 
 Dir[File.join(site_root, "**", "*.html")].each do |html_file|
   html = File.read(html_file)
@@ -323,5 +331,6 @@ Dir[File.join(site_root, "**", "*.html")].each do |html_file|
   end
 end
 
+errors.concat(AgentExports.validate(repo_root, site_root))
 abort(errors.uniq.sort.join("\n")) unless errors.empty?
-puts "Validated #{papers.length} core papers, #{precursors.length} precursors, source/export parity, BibTeX and CSL citation contents, Markdown coverage, identifier search data, scholarly JSON-LD, schema, feed, ontology, and internal links."
+puts "Validated #{papers.length} core papers, #{precursors.length} precursors, source/export parity, preprint and publication citations, individual paper pages, topic exports, Markdown coverage, identifier search data, scholarly JSON-LD, schema, feed, ontology, and internal links."

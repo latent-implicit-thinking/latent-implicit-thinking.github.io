@@ -16,7 +16,9 @@ The current literature-check date appears on the website and in the JSON metadat
 
 New records carry an `added_at` date, distinct from `first_public`. Initial-collection records omit `added_at`. Release history identifies additions by stable paper ID, and the RSS feed includes their titles and source links.
 
-Citation downloads describe arXiv preprints using their initial submission dates. These can differ from the earliest public date shown in the reading list or a later conference publication.
+Every paper has a permanent page at `/papers/{arXiv-ID}/`, an individual JSON and Markdown record, and individual citation downloads. Earlier full-list anchors remain available. Topic-specific JSON and Markdown files provide smaller downloads with the same summaries and source-linked comparisons.
+
+The complete citation downloads describe arXiv preprints using their initial submission dates. Separately verified publication records in `_data/publications.yml` provide an additional citation choice, with their own title, ordered authors, year and DOI where available. The published-version downloads contain only this verified subset; an absent record does not mean the paper is unpublished. Release history records additions, metadata updates and removals by ID.
 
 ## Contributing
 

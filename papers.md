@@ -188,7 +188,7 @@ js:
           <div class="lit-paper-actions">
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
-            <a class="lit-record-link" href="#paper-{{ paper.id | replace: '.', '-' }}" aria-label="Permanent link to {{ paper.title }}">Link to this entry</a>
+            <a class="lit-record-link" href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}" aria-label="Details and citations for {{ paper.title | escape }}">Details &amp; citations</a>
             {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% endif %}
           </div>
         </article>
@@ -219,7 +219,7 @@ js:
         {% for paper in site.data.precursors %}
         <article id="precursor-{{ paper.id | replace: '.', '-' }}">
           <div><time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%Y" }}</time><span>Context</span></div>
-          <div><h3><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h3><p class="lit-paper-authors">{{ paper.authors }}</p><p>{{ paper.connection }}</p></div>
+          <div><h3><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h3><p class="lit-paper-authors">{{ paper.authors }}</p><p>{{ paper.connection }}</p><a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a></div>
         </article>
         {% endfor %}
       </div>

@@ -46,7 +46,7 @@ last_modified_at: 2026-10-18
           <div class="lit-paper-actions">
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
-            <a href="{{ '/papers/#paper-' | relative_url }}{{ paper.id | replace: '.', '-' }}">Entry in the full list</a>
+            <a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a>
             <span>arXiv:{{ paper.arxiv }}</span>
           </div>
         </article>

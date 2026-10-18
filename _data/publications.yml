@@ -1,0 +1,88 @@
+"2310.02226":
+  title: "Think before you speak: Training Language Models With Pause Tokens"
+  author_names: ["Sachin Goyal", "Ziwei Ji", "Ankit Singh Rawat", "Aditya Krishna Menon", "Sanjiv Kumar", "Vaishnavh Nagarajan"]
+  year: 2024
+  type: "paper-conference"
+  container_title: "International Conference on Learning Representations"
+  pages: "27896-27923"
+  volume: "2024"
+  url: "https://proceedings.iclr.cc/paper_files/paper/2024/hash/76917808731dae9e6d62c2a7a6afb542-Abstract-Conference.html"
+  source_url: "https://proceedings.iclr.cc/paper_files/paper/2024/hash/76917808731dae9e6d62c2a7a6afb542-Abstract-Conference.html"
+  verified_at: "2026-10-18"
+
+"2402.07754":
+  title: "Diffusion of Thought: Chain-of-Thought Reasoning in Diffusion Language Models"
+  author_names: ["Jiacheng Ye", "Shansan Gong", "Liheng Chen", "Lin Zheng", "Jiahui Gao", "Han Shi", "Chuan Wu", "Xin Jiang", "Zhenguo Li", "Wei Bi", "Lingpeng Kong"]
+  year: 2024
+  type: "paper-conference"
+  container_title: "Advances in Neural Information Processing Systems"
+  publisher: "Curran Associates, Inc."
+  doi: "10.52202/079017-3343"
+  pages: "105345-105374"
+  volume: "37"
+  url: "https://proceedings.neurips.cc/paper_files/paper/2024/hash/be30024e7fa2c29cac7a6dafcbb8571f-Abstract-Conference.html"
+  source_url: "https://proceedings.neurips.cc/paper_files/paper/2024/hash/be30024e7fa2c29cac7a6dafcbb8571f-Abstract-Conference.html"
+  verified_at: "2026-10-18"
+
+"2402.16837":
+  title: "Do Large Language Models Latently Perform Multi-Hop Reasoning?"
+  author_names: ["Sohee Yang", "Elena Gribovskaya", "Nora Kassner", "Mor Geva", "Sebastian Riedel"]
+  year: 2024
+  type: "paper-conference"
+  container_title: "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+  publisher: "Association for Computational Linguistics"
+  doi: "10.18653/v1/2024.acl-long.550"
+  pages: "10210-10229"
+  url: "https://aclanthology.org/2024.acl-long.550/"
+  source_url: "https://aclanthology.org/2024.acl-long.550/"
+  verified_at: "2026-10-18"
+
+"2412.06769":
+  title: "Training Large Language Models to Reason in a Continuous Latent Space"
+  author_names: ["Shibo Hao", "Sainbayar Sukhbaatar", "DiJia Su", "Xian Li", "Zhiting Hu", "Jason E Weston", "Yuandong Tian"]
+  year: 2025
+  type: "paper-conference"
+  container_title: "Conference on Language Modeling (COLM 2025)"
+  url: "https://openreview.net/forum?id=Itxz7S4Ip3"
+  source_url: "https://colmweb.org/2025/AcceptedPapers.html"
+  verified_at: "2026-10-18"
+
+"2502.05171":
+  title: "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach"
+  author_names: ["Jonas Geiping", "Sean McLeish", "Neel Jain", "John Kirchenbauer", "Siddharth Singh", "Brian Bartoldson", "Bhavya Kailkhura", "Abhinav Bhatele", "Tom Goldstein"]
+  year: 2025
+  type: "paper-conference"
+  container_title: "Advances in Neural Information Processing Systems"
+  publisher: "Curran Associates, Inc."
+  doi: "10.52202/085713-1380"
+  pages: "41340-41391"
+  volume: "38"
+  url: "https://proceedings.neurips.cc/paper_files/paper/2025/hash/3b01972cf31e6fa0fe29e4b8b5c2a0a1-Abstract-Conference.html"
+  source_url: "https://proceedings.neurips.cc/paper_files/paper/2025/hash/3b01972cf31e6fa0fe29e4b8b5c2a0a1-Abstract-Conference.html"
+  verified_at: "2026-10-18"
+
+"2502.07827":
+  title: "Implicit Language Models are RNNs: Balancing Parallelization and Expressivity"
+  author_names: ["Mark Schöne", "Babak Rahmani", "Heiner Kremer", "Fabian Falck", "Hitesh Ballani", "Jannes Gladrow"]
+  year: 2025
+  type: "paper-conference"
+  container_title: "Proceedings of the 42nd International Conference on Machine Learning"
+  publisher: "PMLR"
+  pages: "53439-53466"
+  volume: "267"
+  url: "https://proceedings.mlr.press/v267/schone25a.html"
+  source_url: "https://proceedings.mlr.press/v267/schone25a.html"
+  verified_at: "2026-10-18"
+
+"2502.21074":
+  title: "CODI: Compressing Chain-of-Thought into Continuous Space via Self-Distillation"
+  author_names: ["Zhenyi Shen", "Hanqi Yan", "Linhai Zhang", "Zhanghao Hu", "Yali Du", "Yulan He"]
+  year: 2025
+  type: "paper-conference"
+  container_title: "Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing"
+  publisher: "Association for Computational Linguistics"
+  doi: "10.18653/v1/2025.emnlp-main.36"
+  pages: "677-693"
+  url: "https://aclanthology.org/2025.emnlp-main.36/"
+  source_url: "https://aclanthology.org/2025.emnlp-main.36/"
+  verified_at: "2026-10-18"

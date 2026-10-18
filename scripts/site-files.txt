@@ -41,6 +41,8 @@ data/ontology.json
 data/papers.bib
 data/papers.csl.json
 data/papers.json
+data/publications.bib
+data/publications.csl.json
 data/reading-list.md
 data/schema.json
 feed.xml

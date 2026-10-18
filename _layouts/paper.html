@@ -1,0 +1,64 @@
+---
+layout: base
+---
+{% assign paper = page.paper %}{% assign record = page.record %}
+<main class="lit-paper-detail">
+  <header class="lit-method-hero">
+    <div class="lit-shell lit-narrow-shell">
+      <nav class="lit-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/papers/' | relative_url }}">Browse papers</a><span aria-hidden="true">/</span><span>Paper details</span></nav>
+      <h1>{{ paper.title | escape }}</h1>
+      <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
+      <p>{{ paper.summary | default: paper.connection | escape }}</p>
+      <p class="lit-detail-date">First public: <time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%B %-d, %Y" }}</time>{% if paper.added_at %} · Added to this list: {{ paper.added_at | date: "%B %-d, %Y" }}{% endif %}</p>
+      {% if paper.first_public_note %}<p class="lit-guide-note">{{ paper.first_public_note | escape }} <a href="{{ paper.first_public_source }}">Date source</a>. ArXiv initial submission: {{ record.citation_date }}.</p>{% endif %}
+      {% if paper.previous_titles %}<p>Earlier title: {{ paper.previous_titles | join: '; ' | escape }}.</p>{% endif %}
+      <div class="lit-actions"><a class="lit-button lit-button-primary" href="{{ paper.paper_url }}">Read the paper ↗</a>{% if paper.code_url %}<a class="lit-button lit-button-secondary" href="{{ paper.code_url }}">Code ↗</a>{% endif %}</div>
+    </div>
+  </header>
+
+  <section class="lit-section" id="citations">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>Cite this paper</h2>
+      {% if page.publication %}{% assign publication = page.publication %}
+      <div class="lit-citation-choice">
+        <h3>Published version</h3>
+        <p><a href="{{ publication.url }}">{{ publication.title | escape }}</a><br>{{ publication.author_names | join: ', ' | escape }}<br>{{ publication.container_title | escape }}, {{ publication.year }}{% if publication.pages %}, pp. {{ publication.pages | escape }}{% endif %}.</p>
+        {% if publication.doi %}<p>DOI: <a href="https://doi.org/{{ publication.doi | escape }}">{{ publication.doi | escape }}</a></p>{% endif %}
+        <p><a href="{{ record.publication_bibtex_url }}">BibTeX</a> · <a href="{{ record.publication_csl_url }}">CSL-JSON</a></p>
+        <p class="lit-guide-note">Checked {{ publication.verified_at }} against <a href="{{ publication.source_url }}">the publication record</a>. The published title, author list or year can differ from the preprint.</p>
+      </div>{% endif %}
+      <div class="lit-citation-choice">
+        <h3>ArXiv preprint</h3>
+        <p>arXiv:{{ paper.id }} · Initial submission: {{ record.citation_date }}</p>
+        <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a></p>
+        {% unless page.publication %}<p class="lit-guide-note">A published-version citation has not been verified for this entry. This does not mean the paper is unpublished.</p>{% endunless %}
+      </div>
+      <p class="lit-guide-note">Choose the version you used. The arXiv link may serve a revision; check the original paper for the exact result, assumptions and limitations you cite.</p>
+    </div>
+  </section>
+
+  {% if paper.lens %}<section class="lit-section lit-start">
+    <div class="lit-shell lit-narrow-shell"><h2>Explore this approach</h2>
+      {% for lens in paper.lens %}{% assign method = site.data.methods | where: 'id', lens | first %}<p><a href="{{ method.url | relative_url }}">{{ method.label }}</a> — {{ method.definition | escape }}</p>{% endfor %}
+    </div>
+  </section>{% endif %}
+
+  <section class="lit-section">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>Read or reuse this entry</h2>
+      <p><a href="{{ record.markdown_url }}">Plain-text Markdown</a> · <a href="{{ record.json_url }}">JSON record</a> · <a href="{{ record.legacy_record_url }}">Find in the full list</a></p>
+      <p>Our summary and categories are a reading aid, not the authors’ abstract. Use the original paper for research claims. <a href="{{ '/contribute/' | relative_url }}">Suggest a correction</a>.</p>
+    </div>
+  </section>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": {{ paper.title | jsonify }},
+  "url": {{ record.record_url | jsonify }},
+  "dateModified": {{ site.data.meta.updated_at | jsonify }},
+  "mainEntity": {% include scholarly-article.json paper=paper %}
+}
+</script>
