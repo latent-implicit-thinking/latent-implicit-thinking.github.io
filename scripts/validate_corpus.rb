@@ -234,7 +234,11 @@ Dir[File.join(site_root, "**", "*.html")].each do |html_file|
 
     path, fragment_separator, fragment = raw.partition("#")
     fragment = nil if fragment_separator.empty?
-    path = path.partition("?").first
+    path, _, query = path.partition("?")
+    if path.match?(/\.(?:css|js)\z/i)
+      version = URI.decode_www_form(query).to_h["v"]
+      errors << "#{relative_path}: unversioned or stale local asset #{raw}" unless version == meta.fetch("version")
+    end
     target = if path.empty?
                html_file
              elsif path.start_with?("/")
