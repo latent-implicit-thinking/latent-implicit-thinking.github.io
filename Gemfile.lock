@@ -68,7 +68,7 @@ GEM
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (5.1.1)
-    rake (12.3.3)
+    rake (13.4.2)
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
@@ -92,7 +92,7 @@ DEPENDENCIES
   appraisal (~> 2.5)
   beautiful-jekyll-theme!
   bundler (>= 1.16)
-  rake (~> 12.0)
+  rake (~> 13.0)
   tzinfo (>= 1.2.10)
   tzinfo-data
 
