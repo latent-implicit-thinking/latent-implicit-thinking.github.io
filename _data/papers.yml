@@ -518,23 +518,6 @@
   summary: "Interleaves continuous concept representations with text during pretraining so language models learn to compute over concepts as well as tokens."
   provenance: "Awesome-Latent-CoT"
 
-- id: "2502.12134"
-  title: "SoftCoT: Soft Chain-of-Thought for Efficient Reasoning with LLMs"
-  authors: "Yige Xu, Xu Guo, Zhiwei Zeng, Chunyan Miao"
-  first_public: "2025-02-17"
-  venue: "arXiv"
-  arxiv: "2502.12134"
-  paper_url: "https://arxiv.org/abs/2502.12134"
-  lens: [continuous]
-  representation: [continuous-state]
-  computation: [token-wise]
-  training: [inference-only]
-  questions: [capability, efficiency]
-  evidence: [empirical]
-  modality: [language]
-  summary: "Uses a small assistant model to produce hidden-state thought tokens, then maps them into inputs for a main language model. Both models keep their weights fixed; only the mapping is trained."
-  provenance: "Primary-source literature search, 2026-09-04"
-
 - id: "2502.13842"
   title: "Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking"
   authors: "Yilong Chen, Junyuan Shang, Zhenyu Zhang, Yanxi Xie, Jiawei Sheng, Tingwen Liu, Shuohuan Wang, Yu Sun, Hua Wu, Haifeng Wang"
@@ -653,23 +636,6 @@
   modality: [language]
   summary: "Adds hidden decoding tokens during pretraining, then discards their key/value cache entries after use. Keeps the original tokens' entries to preserve longer-range context."
   provenance: "Primary-source literature search, 2026-09-04"
-
-- id: "2505.12514"
-  title: "Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought"
-  authors: "Hanlin Zhu, Shibo Hao, Zhiting Hu, Jiantao Jiao, Stuart Russell, Yuandong Tian"
-  first_public: "2025-05-18"
-  venue: "arXiv"
-  arxiv: "2505.12514"
-  paper_url: "https://arxiv.org/abs/2505.12514"
-  lens: [analysis, continuous]
-  representation: [continuous-state]
-  computation: [parallel]
-  training: [analysis-only]
-  questions: [theory, capability]
-  evidence: [formal]
-  modality: [symbolic]
-  summary: "Develops a theoretical account of how continuous thoughts can superpose and propagate multiple candidate reasoning paths in parallel."
-  provenance: "Awesome-Latent-CoT"
 
 - id: "2505.12629"
   title: "Enhancing Latent Computation in Transformers with Latent Tokens"
@@ -1105,23 +1071,6 @@
   summary: "Trains continuous intermediate states with explicit supervision so reasoning can proceed without emitting a full textual trace."
   provenance: "Primary-source literature search, 2026-09-04"
 
-- id: "2509.23365"
-  title: "Emergence of Superposition: Unveiling the Training Dynamics of Chain of Continuous Thought"
-  authors: "Hanlin Zhu, Shibo Hao, Zhiting Hu, Jiantao Jiao, Stuart Russell, Yuandong Tian"
-  first_public: "2025-09-27"
-  venue: "arXiv"
-  arxiv: "2509.23365"
-  paper_url: "https://arxiv.org/abs/2509.23365"
-  lens: [analysis, continuous]
-  representation: [continuous-state]
-  computation: [parallel]
-  training: [analysis-only]
-  questions: [theory, capability]
-  evidence: [formal, empirical]
-  modality: [symbolic]
-  summary: "Studies how superposed candidate computations emerge during the training of continuous chain-of-thought models."
-  provenance: "Primary-source literature search, 2026-09-04"
-
 - id: "2510.04573"
   title: "LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning"
   authors: "Haoqiang Kang, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, Lianhui Qin"
@@ -1138,24 +1087,6 @@
   evidence: ["empirical"]
   modality: ["language","symbolic"]
   summary: "Uses a variational autoencoder to compress textual reasoning steps into blocks of continuous states. A diffusion model repeatedly revises each block before generating the next, then produces a textual answer; diversity guidance encourages alternative reasoning trajectories."
-  provenance: "Awesome-Latent-CoT; primary sources checked 2026-10-18"
-
-- id: "2510.07745"
-  title: "Parallel Test-Time Scaling for Latent Reasoning Models"
-  authors: "Runyang You, Yongqi Li, Meng Liu, Wenjie Wang, Liqiang Nie, Wenjie Li"
-  first_public: "2025-10-09"
-  added_at: "2026-10-18"
-  venue: "ACL 2026"
-  arxiv: "2510.07745"
-  paper_url: "https://arxiv.org/abs/2510.07745"
-  lens: ["continuous"]
-  representation: ["continuous-state"]
-  computation: ["token-wise","parallel","search"]
-  training: ["supervised"]
-  questions: ["scaling","capability","efficiency"]
-  evidence: ["empirical","scaling"]
-  modality: ["language","symbolic"]
-  summary: "Samples alternative latent reasoning trajectories with Monte Carlo dropout or Gaussian noise. Trains a stepwise latent reward model to rank those trajectories, supporting best-of-N selection and beam search as inference compute increases."
   provenance: "Awesome-Latent-CoT; primary sources checked 2026-10-18"
 
 - id: "2510.15522"
@@ -1738,23 +1669,6 @@
   summary: "Studies which transformer components should recur and introduces MixerLoop, which repeats the sequence mixer while applying the dense feed-forward component once."
   provenance: "Primary-source literature search, 2026-09-05"
 
-- id: "2608.27265"
-  title: "SCIT: Testing Causal Cache Carriers in Latent Chain-of-Thought Models"
-  authors: "Yi Ding, Lijun Huang, Menglin Yang"
-  first_public: "2026-08-27"
-  venue: "arXiv"
-  arxiv: "2608.27265"
-  paper_url: "https://arxiv.org/abs/2608.27265"
-  lens: [analysis, continuous]
-  representation: [cache-memory, continuous-state]
-  computation: [stateful, token-wise]
-  training: [analysis-only]
-  questions: [interpretability, evaluation, limitations]
-  evidence: [empirical, mechanistic, boundary]
-  modality: [language, symbolic]
-  summary: "Swaps parts of the transformer’s key/value cache between related problems to test which stored states affect the answer. Finds that the relevant cache components differ by model and task."
-  provenance: "Primary-source literature search, 2026-09-05"
-
 - id: "2608.29956"
   title: "Detecting Hidden Chain-of-Thought in Large Language Models with Linguistic, Behavioral, and Mechanistic Indicators"
   authors: "Armaan Singh, Ryan Trinh Le, Jasmine Kaur, Abdullah Sultan, Edward Lue Chee Lip, Kiran Nijjer, Adnan Ahmed, Vasu Sharma"
@@ -1790,23 +1704,6 @@
   modality: ["symbolic"]
   summary: "Uses state interventions, probes, and feature ablations to study how hierarchical recurrent models solve Sudoku, mazes, and ARC tasks. Compares hierarchical and single-state recurrence, and distinguishes information that can be read from a state from information that causally affects an answer."
   provenance: "Primary-source literature search, 2026-10-18"
-
-- id: "2608.31069"
-  title: "A Model with No Head and Many Thoughts"
-  authors: "Nikita Koriagin, Yaroslav Aksenov, George Bredis, Gleb Gerasimov, Nikita Balagansky, Daniil Gavrilov"
-  first_public: "2026-08-31"
-  venue: "arXiv"
-  arxiv: "2608.31069"
-  paper_url: "https://arxiv.org/abs/2608.31069"
-  lens: [continuous]
-  representation: [continuous-state]
-  computation: [token-wise]
-  training: [supervised]
-  questions: [capability, efficiency]
-  evidence: [empirical]
-  modality: [language, symbolic]
-  summary: "Replaces the vocabulary head during intermediate reasoning with a lightweight projector, allowing autoregressive reasoning steps to remain in embedding space."
-  provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2609.00874"
   title: "A Score Is Not a Policy: Measuring the Value of Adaptive Revision"
@@ -1894,23 +1791,6 @@
   evidence: [empirical, mechanistic, probing]
   modality: [language]
   summary: "Tracks information that can be decoded from, and altered within, repeated transformer layers. Finds that Ouro reconstructs this information each loop, while Huginn carries it forward."
-  provenance: "Primary-source literature search, 2026-09-05"
-
-- id: "2609.03090"
-  title: "The Gradient Does Not See Rank: Rank-Indifference in Matrix-CODI on ProsQA"
-  authors: "Samuel Larson"
-  first_public: "2026-09-02"
-  venue: "arXiv"
-  arxiv: "2609.03090"
-  paper_url: "https://arxiv.org/abs/2609.03090"
-  lens: [analysis, continuous]
-  representation: [continuous-state]
-  computation: [token-wise, parallel]
-  training: [analysis-only]
-  questions: [interpretability, theory, limitations]
-  evidence: [empirical, mechanistic, boundary]
-  modality: [symbolic]
-  summary: "Tests whether matrix rank measures parallel reasoning in Matrix-CODI. Reducing rank barely changes accuracy in the tested settings, and similar results in control models caution against treating rank as evidence of parallel reasoning."
   provenance: "Primary-source literature search, 2026-09-05"
 
 - id: "2609.03379"

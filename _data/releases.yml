@@ -1,3 +1,12 @@
+- version: "0.8.1"
+  date: "2026-10-18"
+  title: "Reading-list review"
+  changes:
+    - "Completed a full-text review of 16 papers, checking published versions where available. Retained nine and removed seven from the curated collection; no papers were added."
+    - "Updated the reading list, topic downloads and citation exports together. The collection now contains 207 papers plus eight background papers."
+  added_papers: []
+  removed_papers: ["2502.12134","2505.12514","2509.23365","2510.07745","2608.27265","2608.31069","2609.03090"]
+
 - version: "0.8.0"
   date: "2026-10-18"
   title: "Individual paper pages and citation choices"
