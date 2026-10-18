@@ -49,6 +49,7 @@ license/index.html
 llms.txt
 organizers/index.html
 papers/index.html
+recent/index.html
 robots.txt
 schedule/index.html
 sitemap.xml

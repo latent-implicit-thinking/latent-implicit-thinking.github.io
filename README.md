@@ -3,7 +3,7 @@
 A reading list about reasoning without writing every intermediate step.
 
 - New to the field? Start with explanations and concrete examples.
-- Looking for papers? Search 108 papers by author, title, method, or arXiv ID, and sort by date. Eight related background papers are listed separately.
+- Looking for papers? Search by author, title, method, or arXiv ID, and sort by publication date or when papers joined the list. Related background papers are listed separately.
 - Using a reference manager or research agent? Download BibTeX, CSL-JSON, Markdown, or JSON.
 
 The original **Latent & Implicit Thinking – Going Beyond CoT Reasoning workshop at ICLR 2026** is preserved under `/workshop/2026/`.
@@ -12,7 +12,9 @@ The original **Latent & Implicit Thinking – Going Beyond CoT Reasoning worksho
 
 Paper entries live in `_data/papers.yml`; background papers live in `_data/precursors.yml`. The website and downloads under `/data/` are generated from those files. Each topic guide explains the approach, gives an example, and lists its papers oldest first.
 
-Version 0.6.0 improves the explanations and browsing experience. The literature search was last refreshed on September 5, 2026; the newest paper found in that search is dated September 3, 2026. The list is not exhaustive.
+The current literature-check date appears on the website and in the JSON metadata. [Recent additions](https://latent-implicit-thinking.github.io/recent/) shows papers added after the initial collection, including older omissions. The list is not exhaustive.
+
+New records carry an `added_at` date, distinct from `first_public`. Initial-collection records omit `added_at`. Release history identifies additions by stable paper ID, and the RSS feed includes their titles and source links.
 
 Citation downloads describe arXiv preprints using their initial submission dates. These can differ from the earliest public date shown in the reading list or a later conference publication.
 

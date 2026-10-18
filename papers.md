@@ -18,7 +18,7 @@ js:
         <div>
           <h1>Browse papers</h1>
           <p>Search by title, author, or topic. Read from oldest to newest, or sort by newest papers.</p>
-          <p class="lit-index-freshness">Last literature search: {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper</a></p>
+          <p class="lit-index-freshness">Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/recent/' | relative_url }}">Recent additions</a> · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper</a></p>
         </div>
         <div class="lit-corpus-stat" aria-label="Corpus size">
           <strong>{{ site.data.papers | size }}</strong>
@@ -40,6 +40,7 @@ js:
           <select id="paper-sort" class="lit-sort">
             <option value="date-asc">First posted: oldest</option>
             <option value="date-desc">First posted: newest</option>
+            <option value="added-desc">Added to this list: newest</option>
             <option value="title">Title</option>
           </select>
         </div>
@@ -153,7 +154,7 @@ js:
       <div id="paper-list" class="lit-paper-list">
         {% for paper in site.data.papers %}
         {% capture lens_labels %}{% for value in paper.lens %}{% case value %}{% when 'internalized' %}internalized reasoning{% when 'learned-tokens' %}thinking tokens learned tokens{% when 'continuous' %}continuous states{% when 'recurrent' %}recurrent stateful{% when 'beyond-sequential' %}alternative schedules beyond sequential{% when 'analysis' %}analysis evaluation limits{% endcase %} {% endfor %}{% endcapture %}
-        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
+        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
         <article
           id="paper-{{ paper.id | replace: '.', '-' }}"
           class="lit-paper-row"
@@ -167,11 +168,13 @@ js:
           data-computation="{{ paper.computation | join: ' ' }}"
           data-training="{{ paper.training | join: ' ' }}"
           data-date="{{ paper.first_public }}"
+          data-added="{{ paper.added_at }}"
           data-title="{{ paper.title | downcase | escape }}"
         >
           <div class="lit-paper-meta">
             <time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%b %Y" }}</time>
             <span>{{ paper.venue }}</span>
+            {% if paper.added_at %}<span>Added {{ paper.added_at | date: "%b %-d, %Y" }}</span>{% endif %}
           </div>
           <div class="lit-paper-main">
             <h2><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h2>

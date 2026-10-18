@@ -65,6 +65,7 @@
       var stableIdOrder = a.dataset.paperId.localeCompare(b.dataset.paperId);
       if (mode === "date-asc") return a.dataset.date.localeCompare(b.dataset.date) || stableIdOrder;
       if (mode === "date-desc") return b.dataset.date.localeCompare(a.dataset.date) || stableIdOrder;
+      if (mode === "added-desc") return (b.dataset.added || "").localeCompare(a.dataset.added || "") || b.dataset.date.localeCompare(a.dataset.date) || stableIdOrder;
       if (mode === "title") return a.dataset.title.localeCompare(b.dataset.title) || stableIdOrder;
       return a.dataset.date.localeCompare(b.dataset.date) || stableIdOrder;
     });

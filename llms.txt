@@ -8,7 +8,7 @@ permalink: /llms.txt
 
 Version: {{ site.data.meta.version }}
 Website updated: {{ site.data.meta.updated_at }}
-Last literature search: {{ site.data.meta.search_refreshed_at }}
+Literature checked through: {{ site.data.meta.search_refreshed_at }}
 Papers: {{ site.data.papers | size }}
 Related background papers: {{ site.data.precursors | size }}
 
@@ -17,6 +17,7 @@ Related background papers: {{ site.data.precursors | size }}
 - [Overview]({{ '/' | absolute_url }})
 - [Start here]({{ '/topics/' | absolute_url }}): explanations and examples
 - [Browse papers]({{ '/papers/' | absolute_url }}): search, filters, and date order
+- [Recent additions]({{ '/recent/' | absolute_url }}): papers added after the initial collection, grouped by the date they joined this list
 - [Complete Markdown reading list]({{ '/data/reading-list.md' | absolute_url }}): all papers, authors, summaries, and source links
 - [Downloads]({{ '/data/' | absolute_url }}): citation files and JSON documentation
 
@@ -40,6 +41,7 @@ Use the original papers for scientific claims. Summaries and categories are writ
 
 - `id` identifies a paper; `paper_url` links to the original source; `record_url` links to its entry on this site.
 - `author_names` preserves the authors' names and order.
+- `added_at` is when a paper was added to this list, not its publication date. Tracking began {{ site.data.meta.addition_tracking_started_at }}; initial-collection records omit this field. Release history lists `added_papers` IDs. A new addition may be an older paper.
 - `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note. It is not an independently verified announcement date.
 - `citation_date` is the initial submission date of the linked arXiv preprint. BibTeX and CSL-JSON describe that preprint, not a later proceedings version. Source URLs may serve revised versions.
 - `provenance` says where we first found a paper.

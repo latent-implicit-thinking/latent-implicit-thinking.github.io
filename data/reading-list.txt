@@ -7,13 +7,14 @@ sitemap: false
 
 Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language.
 
-Version {{ site.data.meta.version }}. Website updated {{ site.data.meta.updated_at }}; last literature search {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers. The list is not exhaustive.
+Version {{ site.data.meta.version }}. Website updated {{ site.data.meta.updated_at }}; literature checked through {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers. The list is not exhaustive.
 
 ## Sources and citation
 
 Cite the original papers for scientific claims. The summaries below are written for this list, not copied abstracts. Papers are ordered by their earliest verified public date, usually the first arXiv submission. Earlier conference presentations have a source note.
 
 - [JSON paper list]({{ '/data/papers.json' | absolute_url }})
+- [Recent additions]({{ '/recent/' | absolute_url }}): additions since the initial collection, not necessarily newly published papers
 - [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): arXiv preprints using initial submission dates, not later proceedings; source URLs are not version-pinned
 - [Introduction and examples]({{ '/topics/' | absolute_url }})
 - [Downloads and file details]({{ '/data/' | absolute_url }})
@@ -37,6 +38,8 @@ Authors: {{ paper.authors }}.
 Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry on this site]({{ '/papers/#paper-' | absolute_url }}{{ paper.id | replace: '.', '-' }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
+{% if paper.added_at %}Added to this list: {{ paper.added_at }}.
+{% endif %}
 {% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}). Linked arXiv version: {{ paper.citation_date }}.
 {% endif %}{% endfor %}
 ## Related background papers

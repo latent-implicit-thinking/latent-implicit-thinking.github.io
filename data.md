@@ -22,7 +22,7 @@ last_modified_at: 2026-10-18
       <div>
         <p class="lit-eyebrow">Version</p>
         <div class="lit-release-number">v{{ site.data.meta.version }}</div>
-        <p>{{ site.data.papers | size }} papers + {{ site.data.precursors | size }} background papers<br>Last literature search: {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</p>
+        <p>{{ site.data.papers | size }} papers + {{ site.data.precursors | size }} background papers<br>Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</p>
       </div>
       <div class="lit-download-list">
         <a href="{{ '/data/papers.bib' | relative_url }}"><span><strong>Citations for LaTeX and reference managers</strong><small>papers.bib · Includes all papers and background papers</small></span><span>BibTeX ↗</span></a>
@@ -41,12 +41,13 @@ last_modified_at: 2026-10-18
         <dl>
           <dt>Paper details</dt><dd><code>id</code> is a stable identifier. <code>author_names</code> preserves author order. <code>paper_url</code> links to the source; <code>record_url</code> links to this site's entry.</dd>
           <dt>Dates</dt><dd><code>first_public</code> is the earliest dated public version we found, usually the first arXiv submission. <code>citation_date</code> is the initial arXiv submission date used in citation exports. Earlier conference presentations have a separate source note.</dd>
+          <dt>Following additions</dt><dd><code>added_at</code> is when a paper joined this list, not when it was published. It is tracked for additions after the initial collection; initial records have no <code>added_at</code>. Filter this field to find new entries, including older papers we previously missed. Release history also lists <code>added_papers</code> by stable ID.</dd>
           <dt>Categories and summaries</dt><dd><code>lens</code> lists approaches. Other fields describe training, computation, research questions, evidence, and modality. A paper can have several labels. Summaries and labels are written for this list; they are not the authors' abstracts.</dd>
           <dt>Sources</dt><dd><code>provenance</code> records where we found the paper. Use <code>paper_url</code> to check the paper itself.</dd>
         </dl>
         <p><a href="{{ '/data/ontology.json' | relative_url }}">Category definitions (ontology.json)</a> · <a href="{{ '/data/schema.json' | relative_url }}">Field types and allowed values (JSON Schema)</a> · <a href="{{ '/data/changes.json' | relative_url }}">Version history (JSON)</a></p>
       </details>
-      <p class="lit-guide-note">To follow updates, <a href="{{ '/feed.xml' | relative_url }}">subscribe to the RSS feed</a> or <a href="{{ '/changelog/' | relative_url }}">read what changed</a>.</p>
+      <p class="lit-guide-note">To follow updates, see <a href="{{ '/recent/' | relative_url }}">recent additions</a>, <a href="{{ '/feed.xml' | relative_url }}">subscribe to the RSS feed</a>, or <a href="{{ '/changelog/' | relative_url }}">read what changed</a>.</p>
     </div>
   </section>
 

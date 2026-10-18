@@ -1106,18 +1106,22 @@ a.lit-entry:focus {
   font: 600 0.7rem/1.35 var(--lit-sans);
 }
 
-.lit-paper-main h2 {
+.lit-paper-main h2,
+.lit-paper-main h3 {
   margin: -3px 0 6px;
   font: 700 1.23rem/1.35 var(--lit-display);
 }
 
-.lit-paper-main h2 a {
+.lit-paper-main h2 a,
+.lit-paper-main h3 a {
   color: var(--lit-ink);
   text-decoration: none;
 }
 
 .lit-paper-main h2 a:hover,
-.lit-paper-main h2 a:focus {
+.lit-paper-main h2 a:focus,
+.lit-paper-main h3 a:hover,
+.lit-paper-main h3 a:focus {
   color: var(--lit-blue);
   text-decoration: underline;
   text-decoration-thickness: 1px;

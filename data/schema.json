@@ -29,6 +29,8 @@ permalink: /data/schema.json
         "citation_url": {"type": "string", "format": "uri-reference"},
         "csl_url": {"type": "string", "format": "uri"},
         "reading_list_url": {"type": "string", "format": "uri"},
+        "recent_additions_url": {"type": "string", "format": "uri"},
+        "addition_tracking_started_at": {"type": "string", "format": "date"},
         "citation_policy": {"type": "string"},
         "license_name": {"type": "string"},
         "license_url": {"type": "string", "format": "uri"},
@@ -56,6 +58,8 @@ permalink: /data/schema.json
       "properties": {
         "id": {"type": "string", "description": "Stable record identifier; arXiv ID when available."},
         "title": {"type": "string"},
+        "previous_titles": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "added_at": {"type": "string", "format": "date", "description": "Date added to this reading list, not the paper's publication date. Tracked for additions after the initial collection; absent on initial-collection records."},
         "authors": {"type": "string"},
         "author_names": {"type": "array", "items": {"type": "string"}, "minItems": 1},
         "record_url": {"type": "string", "format": "uri"},

@@ -15,7 +15,7 @@ layout: null
     {% for release in site.data.releases limit:20 %}
       <item>
         <title>v{{ release.version }} · {{ release.title | xml_escape }}</title>
-        <description>{{ release.changes | join: " " | xml_escape }}</description>
+        <description>{{ release.changes | join: " " | xml_escape }}{% if release.added_papers %} Added papers: {% for id in release.added_papers %}{% assign paper = site.data.papers | where: "id", id | first %}{{ paper.title | xml_escape }} ({{ paper.paper_url | xml_escape }}){% unless forloop.last %}; {% endunless %}{% endfor %}.{% endif %}</description>
         <pubDate>{{ release.date | date_to_rfc822 }}</pubDate>
         <link>{{ '/changelog/' | absolute_url }}#v{{ release.version | replace: '.', '-' }}</link>
         <guid isPermaLink="true">{{ '/changelog/' | absolute_url }}#v{{ release.version | replace: '.', '-' }}</guid>

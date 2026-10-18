@@ -102,6 +102,17 @@ end
 
 latest_date = papers.map { |paper| paper["first_public"].to_s }.max
 errors << "latest_included_first_public should be #{latest_date}" unless meta["latest_included_first_public"].to_s == latest_date
+%w[updated_at search_refreshed_at addition_tracking_started_at].each do |field|
+  value = meta[field].to_s
+  errors << "#{field} must be an ISO date no later than today" unless value.match?(/\A\d{4}-\d{2}-\d{2}\z/) && value <= Date.today.iso8601
+end
+errors << "literature check is newer than the website update" if meta["search_refreshed_at"] > meta["updated_at"]
+errors << "newest paper is later than literature coverage" if latest_date > meta["search_refreshed_at"]
+tracked_papers = papers.select { |paper| paper.key?("added_at") }
+tracked_papers.each do |paper|
+  added = paper["added_at"].to_s
+  errors << "#{paper['id']}: invalid addition date" unless added.match?(/\A\d{4}-\d{2}-\d{2}\z/) && added >= meta["addition_tracking_started_at"] && added <= meta["updated_at"] && added >= paper["first_public"]
+end
 
 generated_corpus = JSON.parse(File.read(File.join(site_root, "data/papers.json")))
 ontology = JSON.parse(File.read(File.join(site_root, "data/ontology.json")))
@@ -195,6 +206,10 @@ all_records.each_with_index do |paper, index|
   [paper["id"], "arXiv:#{paper['arxiv']}", paper["venue"], paper["title"], paper["authors"]].each do |term|
     errors << "#{key}: search index omits #{term}" unless searchable.include?(term.downcase)
   end
+  Array(paper["previous_titles"]).each do |title|
+    errors << "#{key}: previous title is not searchable" unless searchable.include?(title.downcase)
+  end
+  errors << "#{key}: addition sort date differs from source" unless row.include?("data-added=\"#{paper['added_at']}\"")
 end
 
 methods = YAML.safe_load(File.read(File.join(repo_root, "_data/methods.yml")), aliases: false)
@@ -226,6 +241,25 @@ methods.each do |method|
 end
 releases = JSON.parse(File.read(File.join(site_root, "data/changes.json")))
 errors << "Release history omits current version" unless JSON.generate(releases).include?(meta.fetch("version"))
+release_entries = releases.fetch("releases")
+errors << "Newest release does not match current version" unless release_entries.first["version"] == meta["version"]
+added_ids = release_entries.flat_map { |release| Array(release["added_papers"]) }
+errors << "Release additions differ from tracked papers" unless added_ids.sort == tracked_papers.map { |paper| paper["id"] }.sort && added_ids.uniq == added_ids
+release_entries.each do |release|
+  Array(release["added_papers"]).each do |id|
+    paper = tracked_papers.find { |entry| entry["id"] == id }
+    errors << "#{id}: release date differs from addition date" unless paper && paper["added_at"] == release["date"]
+  end
+end
+recent_html = File.read(File.join(site_root, "recent/index.html"))
+recent_ids = recent_html.scan(/data-paper-id="([^"]+)"/).flatten
+expected_recent_ids = tracked_papers.sort_by { |paper| [paper["added_at"], paper["first_public"], paper["id"]] }.reverse.map { |paper| paper["id"] }
+errors << "Recent additions are missing, duplicated, or out of order" unless recent_ids == expected_recent_ids
+tracked_papers.each do |paper|
+  errors << "#{paper['id']}: recent addition omits title, summary or source" unless [CGI.escapeHTML(paper["title"]), CGI.escapeHTML(paper["summary"]), paper["paper_url"]].all? { |value| recent_html.include?(value) }
+end
+errors << "Recent additions view is not linked from homepage" unless home_html.include?('href="/recent/"')
+errors << "Recent additions sorting is missing" unless paper_html.include?('value="added-desc"')
 collection_pages = {"papers/index.html" => papers}
 methods.each do |method|
   collection_pages[File.join(method.fetch("url").sub(%r{\A/}, ""), "index.html")] = papers.select { |paper| paper.fetch("lens").include?(method.fetch("id")) }

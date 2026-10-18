@@ -3,7 +3,7 @@ layout: base
 title: "Implicit Chain-of-Thought"
 seo-title: "Implicit Chain-of-Thought Papers & Research Map"
 share-title: "Implicit Chain-of-Thought — Papers and Research Map"
-share-description: "108 papers on reasoning without written steps, with explanations of the main approaches and downloadable citations."
+share-description: "A growing reading list on reasoning without written steps, with explanations of the main approaches and downloadable citations."
 show-avatar: false
 nav-short: true
 last_modified_at: 2026-10-18
@@ -20,8 +20,8 @@ last_modified_at: 2026-10-18
         <a class="lit-button lit-button-secondary" href="{{ '/topics/' | relative_url }}">New here? Start here</a>
       </div>
       <div class="lit-status" aria-label="Resource status">
-        <span>Last literature search: {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</span>
-        <a href="{{ '/papers/?sort=date-desc' | relative_url }}">Newest papers</a>
+        <span>Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</span>
+        <a href="{{ '/recent/' | relative_url }}">Recent additions</a>
         <a href="{{ '/data/' | relative_url }}">Download the list and citations</a>
       </div>
     </div>
