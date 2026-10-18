@@ -68,6 +68,7 @@ permalink: /data/schema.json
         "markdown_url": {"type": "string", "format": "uri"},
         "bibtex_url": {"type": "string", "format": "uri"},
         "csl_url": {"type": "string", "format": "uri"},
+        "demos": {"type": "array", "items": {"$ref": "#/$defs/demo"}, "minItems": 1},
         "publication": {"$ref": "#/$defs/publication"},
         "publication_bibtex_url": {"type": "string", "format": "uri"},
         "publication_csl_url": {"type": "string", "format": "uri"},
@@ -105,6 +106,7 @@ permalink: /data/schema.json
         "markdown_url": {"type": "string", "format": "uri"},
         "bibtex_url": {"type": "string", "format": "uri"},
         "csl_url": {"type": "string", "format": "uri"},
+        "demos": {"type": "array", "items": {"$ref": "#/$defs/demo"}, "minItems": 1},
         "publication": {"$ref": "#/$defs/publication"},
         "publication_bibtex_url": {"type": "string", "format": "uri"},
         "publication_csl_url": {"type": "string", "format": "uri"},
@@ -112,6 +114,38 @@ permalink: /data/schema.json
         "citation_date": {"type": "string", "format": "date"},
         "paper_url": {"type": "string", "format": "uri"},
         "connection": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "demo": {
+      "type": "object",
+      "description": "An interactive example. An implementation uses a paper's method; a related_method example does not implement that paper. Demo outputs are not benchmark evidence.",
+      "required": ["id", "title", "label", "description", "limitations", "model", "url", "model_url", "topic_ids", "paper_relationships", "relationship"],
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "label": {"type": "string"},
+        "description": {"type": "string"},
+        "limitations": {"type": "string"},
+        "model": {"type": "string"},
+        "url": {"type": "string", "format": "uri"},
+        "model_url": {"type": "string", "format": "uri"},
+        "topic_ids": {"$ref": "#/$defs/lensValues"},
+        "relationship": {"type": "string", "enum": ["implementation", "related_method"], "description": "Relationship to the paper containing this demo record."},
+        "paper_relationships": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": ["paper_id", "relationship"],
+            "properties": {
+              "paper_id": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"},
+              "relationship": {"type": "string", "enum": ["implementation", "related_method"]}
+            },
+            "additionalProperties": false
+          }
+        }
       },
       "additionalProperties": false
     },

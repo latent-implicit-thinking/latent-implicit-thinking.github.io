@@ -1,0 +1,7 @@
+{% assign demo = include.demo %}
+<article class="lit-demo-card">
+  <h3><a href="{{ demo.url }}">{{ demo.title | escape }}</a></h3>
+  <p>{{ demo.description | escape }}</p>
+  <p class="lit-guide-note">{{ demo.limitations | escape }}</p>
+  <p class="lit-demo-links"><a href="{{ demo.url }}">Try demo ↗</a> · <a href="{{ demo.model_url }}">Model details</a>{% for link in demo.paper_relationships %}{% if link.relationship == 'implementation' %} · <a href="{{ '/papers/' | append: link.paper_id | append: '/' | relative_url }}">Method paper</a>{% endif %}{% endfor %}</p>
+</article>

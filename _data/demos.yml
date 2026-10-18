@@ -1,0 +1,29 @@
+- id: multiplication
+  title: "Multiplication without written steps"
+  label: "Multiplication"
+  description: "Compare GPT-2 models using implicit CoT, explicit CoT, or no CoT on two numbers of up to 20 digits each."
+  limitations: "The models can make mistakes, including on valid inputs. The implicit model writes answer digits, not intermediate steps."
+  model: "GPT-2"
+  url: "https://huggingface.co/spaces/yuntian-deng/gpt2-multiplication"
+  model_url: "https://huggingface.co/yuntian-deng/gpt2-implicit-cot-multiplication-20-digits"
+  topic_ids: [internalized]
+  paper_relationships:
+    - paper_id: "2405.14838"
+      relationship: implementation
+    - paper_id: "2311.01460"
+      relationship: related_method
+
+- id: math-word-problems
+  title: "Math word problems without written steps"
+  label: "Math word problems"
+  description: "Try a Mistral-7B model trained with stepwise internalization on grade-school math word problems."
+  limitations: "Answers can be wrong. This model is trained for grade-school math word problems, not general conversation. It still generates the answer token by token."
+  model: "Mistral-7B"
+  url: "https://huggingface.co/spaces/yuntian-deng/implicit-cot-math"
+  model_url: "https://huggingface.co/yuntian-deng/implicit-cot-math-mistral7b"
+  topic_ids: [internalized]
+  paper_relationships:
+    - paper_id: "2405.14838"
+      relationship: implementation
+    - paper_id: "2311.01460"
+      relationship: related_method

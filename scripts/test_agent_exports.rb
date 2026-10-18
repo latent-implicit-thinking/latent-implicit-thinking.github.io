@@ -106,6 +106,7 @@ module AgentExports
     meta = load_yaml(repo_root, "meta")
     publications = load_yaml(repo_root, "publications") || {}
     comparisons = load_yaml(repo_root, "comparisons") || {}
+    demos = load_yaml(repo_root, "demos") || []
     records = papers + precursors
     source_by_id = records.each_with_object({}) { |paper, hash| hash[paper.fetch("id")] = paper }
     canonical = meta.fetch("canonical_url")
@@ -132,6 +133,8 @@ module AgentExports
     assert((publications.keys - source_by_id.keys).empty?, "publication metadata contains unknown paper IDs", errors)
     assert(publication_csl.length == publications.length && publication_bib.length == publications.length, "aggregate publication citations do not cover exactly the verified subset", errors)
     assert((comparisons.keys - methods.map { |method| method["id"] }).empty?, "comparison notes contain unknown topics", errors)
+    validate_demo_sources(demos, source_by_id, methods, errors)
+    validate_demo_discovery(demos, site_root, canonical, errors)
 
     records.each_with_index do |paper, index|
       id = paper.fetch("id")
@@ -176,6 +179,26 @@ module AgentExports
       assert(csl.length == 1 && csl.first == aggregate_csl.find { |item| item["id"] == citation_key }, "#{id}: standalone preprint CSL differs from the aggregate citation", errors)
       entries = bib_entries(bib)
       assert(entries.keys == [citation_key] && entries[citation_key] == aggregate_bib[citation_key], "#{id}: standalone preprint BibTeX differs from aggregate citation", errors)
+      expected_demos = demos.each_with_object([]) do |demo, selected|
+        link = demo.fetch("paper_relationships").find { |item| item["paper_id"] == id }
+        selected << demo.merge("relationship" => link.fetch("relationship")) if link
+      end
+      assert(record.fetch("demos", []) == expected_demos, "#{id}: demo links or direct/related relationships differ from source", errors)
+      expected_demos.each do |demo|
+        label = demo["relationship"] == "implementation" ? "Demo" : "Related-method demo"
+        assert(visible.include?("#{label}: #{demo['title']}"), "#{id}: visible demo relationship differs from exported relationship", errors)
+        %w[url model_url].each do |field|
+          assert(linked?(html, demo.fetch(field), canonical) && markdown.include?(demo.fetch(field)), "#{id}: demo #{field} is not available in HTML and Markdown", errors)
+        end
+        assert(markdown.include?("#{label}: [#{demo['title']}]"), "#{id}: Markdown omits demo relationship", errors)
+        assert(markdown.include?(demo["description"]) && markdown.include?(demo["limitations"]), "#{id}: Markdown omits demo description or limitations", errors)
+        if demo["relationship"] == "related_method"
+          assert(visible.include?("Related-method demos are not implementations of this paper"), "#{id}: related demo could be mistaken for this paper's implementation", errors)
+        end
+      end
+      if expected_demos.empty?
+        assert(!record.key?("demos") && !html.include?('class="lit-paper-demos"') && !markdown.include?("## Demos"), "#{id}: unrelated paper received a default demo", errors)
+      end
 
       structured = json_ld(html, "#{path}/index.html", errors)
       page = structured.find { |item| item["@type"] == "WebPage" }
@@ -200,10 +223,63 @@ module AgentExports
     end
 
     methods.each do |method|
-      validate_topic(method, papers, generated_by_id, comparisons, meta, canonical, site_root, errors)
+      validate_topic(method, papers, generated_by_id, comparisons, demos, meta, canonical, site_root, errors)
     end
 
     errors
+  end
+
+  def validate_demo_sources(demos, source_by_id, methods, errors)
+    assert(demos.map { |demo| demo["id"] }.uniq.length == demos.length, "demo IDs are not unique", errors)
+    topic_ids = methods.map { |method| method["id"] }
+    demos.each do |demo|
+      id = demo["id"]
+      %w[id title label description limitations model url model_url].each do |field|
+        assert(demo[field].is_a?(String) && !demo[field].strip.empty?, "#{id}: demo lacks #{field}", errors)
+      end
+      %w[url model_url].each do |field|
+        assert(demo[field].to_s.match?(%r{\Ahttps://[^/]+/}), "#{id}: demo #{field} must be HTTPS", errors)
+      end
+      assert(!Array(demo["topic_ids"]).empty? && (Array(demo["topic_ids"]) - topic_ids).empty?, "#{id}: demo topics are missing or unknown", errors)
+      links = Array(demo["paper_relationships"])
+      assert(!links.empty? && links.map { |link| link["paper_id"] }.uniq.length == links.length, "#{id}: demo paper relationships are empty or duplicated", errors)
+      links.each do |link|
+        assert(source_by_id.key?(link["paper_id"]) && %w[implementation related_method].include?(link["relationship"]), "#{id}: demo paper relationship is unknown", errors)
+      end
+      assert(links.any? { |link| link["relationship"] == "implementation" }, "#{id}: demo must identify its implemented method", errors)
+    end
+    # These examples implement stepwise internalization, not the earlier
+    # knowledge-distillation method. Preserve that distinction across exports.
+    {"multiplication" => ["gpt2-multiplication", "gpt2-implicit-cot-multiplication-20-digits"],
+     "math-word-problems" => ["implicit-cot-math", "implicit-cot-math-mistral7b"]}.each do |id, paths|
+      demo = demos.find { |item| item["id"] == id }
+      assert(!demo.nil?, "expected demo #{id} is missing", errors)
+      next unless demo
+      expected_links = [{"paper_id" => "2405.14838", "relationship" => "implementation"},
+                        {"paper_id" => "2311.01460", "relationship" => "related_method"}]
+      assert(demo["paper_relationships"] == expected_links, "#{id}: stepwise internalization and related distillation relationships changed", errors)
+      assert(demo["url"] == "https://huggingface.co/spaces/yuntian-deng/#{paths[0]}" && demo["model_url"] == "https://huggingface.co/yuntian-deng/#{paths[1]}", "#{id}: demo and model links do not match", errors)
+    end
+  end
+
+  def validate_demo_discovery(demos, site_root, canonical, errors)
+    html = read_file(site_root, "index.html", errors)
+    shortcuts = html[/<p class="lit-demo-shortcuts">.*?<\/p>/m].to_s
+    assert(!shortcuts.empty? && html.index('class="lit-actions"').to_i < html.index(shortcuts).to_i && html.index(shortcuts).to_i < html.index('class="lit-status"').to_i, "homepage demo links must follow the main actions, before status", errors)
+    demos.each do |demo|
+      assert(linked?(shortcuts, demo["url"], canonical) && visible_text(shortcuts).include?(demo["label"]), "homepage omits demo #{demo['id']}", errors)
+    end
+    assert(!html.match?(/<iframe\b/i), "homepage must not automatically embed demo inference", errors)
+    guide = read_file(site_root, "llms.txt", errors)
+    %w[demos paper_relationships implementation related_method].each do |term|
+      assert(guide.include?("`#{term}`"), "agent guide omits demo field #{term}", errors)
+    end
+    reading_list = read_file(site_root, "data/reading-list.md", errors)
+    demos.each do |demo|
+      [demo["title"], demo["url"], demo["model_url"], demo["description"], demo["limitations"]].each do |text|
+        assert(reading_list.include?(text), "full Markdown list omits demo #{demo['id']} metadata", errors)
+      end
+    end
   end
 
   def validate_publication(id, publication, paper, html, markdown, path, site_root, aggregate_csl, aggregate_bib, canonical, errors)
@@ -245,7 +321,7 @@ module AgentExports
     assert(markdown.include?(publication["url"]) && markdown.include?(publication["container_title"]), "#{id}: Markdown omits verified publication version", errors)
   end
 
-  def validate_topic(method, papers, generated_by_id, comparisons, meta, canonical, site_root, errors)
+  def validate_topic(method, papers, generated_by_id, comparisons, demos, meta, canonical, site_root, errors)
     id = method.fetch("id")
     slug = method.fetch("slug")
     selected = papers.select { |paper| paper.fetch("lens").include?(id) }
@@ -254,6 +330,22 @@ module AgentExports
     markdown = read_file(site_root, "data/topics/#{slug}.md", errors)
     html = read_file(site_root, "#{method.fetch('url').sub(%r{\A/}, '')}index.html", errors)
     assert(json.is_a?(Hash) && json["papers"] == expected, "#{id}: topic export omits, duplicates, reorders or changes records", errors)
+    expected_demos = demos.select { |demo| demo.fetch("topic_ids").include?(id) }
+    assert(json.is_a?(Hash) && json["demos"] == expected_demos, "#{id}: topic demos differ from source", errors)
+    expected_demos.each do |demo|
+      [demo["title"], demo["description"], demo["limitations"]].each do |text|
+        assert(visible_text(html).include?(text) && markdown.include?(text), "#{id}: demo content differs between HTML and Markdown", errors)
+      end
+      %w[url model_url].each do |field|
+        assert(linked?(html, demo[field], canonical) && markdown.include?(demo[field]), "#{id}: demo link missing in HTML or Markdown", errors)
+      end
+    end
+    if expected_demos.empty?
+      assert(!html.include?('class="lit-demo-card"') && !markdown.include?("## Try it"), "#{id}: topic received unrelated demos", errors)
+    else
+      assert(html.include?('id="topic-demos-title"') && !html.match?(/<iframe\b/i), "#{id}: demos must be linked examples, not automatic embeds", errors)
+      assert(html.index('id="topic-demos-title"').to_i < html.index('class="lit-section lit-topic-comparisons"').to_i, "#{id}: demos should precede method comparisons", errors) unless Array(comparisons[id]).empty?
+    end
     if json.is_a?(Hash)
       metadata = json.fetch("metadata", {})
       assert(metadata["topic_id"] == id && metadata["name"] == method["label"] && metadata["definition"] == method["definition"], "#{id}: topic JSON metadata differs from the visible guide", errors)

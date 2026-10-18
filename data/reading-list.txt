@@ -38,6 +38,9 @@ Authors: {{ paper.authors }}.
 Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
+{% assign record = paper | lit_record %}{% for demo in record.demos %}
+{{ demo | lit_demo_markdown }}
+{% endfor %}
 {% if paper.added_at %}Added to this list: {{ paper.added_at }}.
 {% endif %}
 {% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}). Linked arXiv version: {{ paper.citation_date }}.

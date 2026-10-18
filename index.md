@@ -19,6 +19,7 @@ last_modified_at: 2026-10-18
         <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">Browse {{ site.data.papers | size }} papers</a>
         <a class="lit-button lit-button-secondary" href="{{ '/topics/' | relative_url }}">New here? Start here</a>
       </div>
+      <p class="lit-demo-shortcuts">Try an example: {% for demo in site.data.demos %}<a href="{{ demo.url }}">{{ demo.label | escape }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
       <div class="lit-status" aria-label="Resource status">
         <span>Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</span>
         <a href="{{ '/recent/' | relative_url }}">Recent additions</a>

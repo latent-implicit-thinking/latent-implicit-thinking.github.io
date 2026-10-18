@@ -1556,6 +1556,49 @@ a.lit-entry:focus {
   padding-bottom: 0;
 }
 
+.lit-demo-shortcuts {
+  margin: 16px 0 0;
+  color: var(--lit-muted);
+  font-size: 0.9rem;
+}
+
+.lit-topic-demos {
+  padding-bottom: 0;
+}
+
+.lit-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.lit-demo-card {
+  border-top: 1px solid var(--lit-line);
+  padding-top: 18px;
+}
+
+.lit-demo-card h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.lit-demo-card p,
+.lit-paper-demos p {
+  font-size: 0.9rem;
+}
+
+.lit-paper-demos {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .lit-demo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Speaker photos styling */
 .speakers-table img {
   width: 200px !important;

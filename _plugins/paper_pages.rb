@@ -29,7 +29,28 @@ module Literature
                     "publication_bibtex_url" => absolute(site, path + "publication.bib"),
                     "publication_csl_url" => absolute(site, path + "publication.csl.json"))
     end
+    demos = demos_for_paper(site, paper)
+    result["demos"] = demos unless demos.empty?
     result
+  end
+
+  def demos_for_paper(site, paper)
+    site.data.fetch("demos", []).each_with_object([]) do |demo, result|
+      link = demo.fetch("paper_relationships").find { |item| item.fetch("paper_id") == paper.fetch("id") }
+      result << demo.merge("relationship" => link.fetch("relationship")) if link
+    end
+  end
+
+  def demo_markdown(site, demo)
+    label = demo["relationship"] == "related_method" ? "Related-method demo" : "Demo"
+    lines = ["#{label}: [#{demo.fetch('title')}](#{demo.fetch('url')})", demo.fetch("description"),
+             demo.fetch("limitations"), "[Model details](#{demo.fetch('model_url')})"]
+    demo.fetch("paper_relationships").each do |link|
+      paper = (site.data.fetch("papers") + site.data.fetch("precursors")).find { |item| item.fetch("id") == link.fetch("paper_id") }
+      relationship = link.fetch("relationship") == "implementation" ? "Implements" : "Related method, not implemented by this demo"
+      lines << "#{relationship}: [#{paper.fetch('title')}](#{absolute(site, '/papers/' + paper.fetch('id') + '/')})."
+    end
+    lines.join("\n\n")
   end
 
   def key(site, paper)
@@ -92,6 +113,10 @@ module Literature
              "[Original paper](#{paper.fetch('paper_url')}) · [Reading-list entry](#{entry.fetch('record_url')})",
              "[Preprint BibTeX](#{entry.fetch('bibtex_url')}) · [Preprint CSL-JSON](#{entry.fetch('csl_url')}) · [JSON record](#{entry.fetch('json_url')})"]
     lines << "[Code](#{paper['code_url']})" if paper["code_url"]
+    unless entry.fetch("demos", []).empty?
+      lines += ["", "## Demos", ""]
+      entry.fetch("demos").each { |demo| lines += [demo_markdown(site, demo), ""] }
+    end
     lines << "\nDate note: #{paper['first_public_note']} [Source](#{paper['first_public_source']})." if paper["first_public_note"]
     if entry["publication"]
       pub = entry["publication"]
@@ -119,6 +144,10 @@ module Literature
 
     def lit_bib(paper)
       Literature.bib(@context.registers[:site], paper)
+    end
+
+    def lit_demo_markdown(demo)
+      Literature.demo_markdown(@context.registers[:site], demo)
     end
   end
 
@@ -172,11 +201,16 @@ module Literature
           "record_count" => papers.length, "topic_url" => Literature.absolute(site, method.fetch("url")),
           "source_url" => Literature.absolute(site, "/data/papers.json"))
         comparisons = site.data.fetch("comparisons", {}).fetch(method["id"], [])
-        data = {"metadata" => metadata, "comparisons" => comparisons, "papers" => papers.map { |paper| Literature.record(site, paper) }}
+        demos = site.data.fetch("demos", []).select { |demo| demo.fetch("topic_ids").include?(method.fetch("id")) }
+        data = {"metadata" => metadata, "comparisons" => comparisons, "demos" => demos, "papers" => papers.map { |paper| Literature.record(site, paper) }}
         text = ["# #{method['label']}", method.fetch("definition"), "Papers are ordered by first public date. Read the original sources before using a claim.",
                 "For example: #{method.fetch('example')}",
                 "Version #{metadata['version']}; literature checked through #{metadata['search_refreshed_at']}.",
                 "[Topic guide](#{metadata['topic_url']}) · [JSON](#{Literature.absolute(site, '/' + path + '.json')})"]
+        unless demos.empty?
+          text << "## Try it"
+          demos.each { |demo| text << Literature.demo_markdown(site, demo) }
+        end
         unless comparisons.empty?
           text << "## How these methods differ"
           comparisons.each do |comparison|
@@ -186,7 +220,7 @@ module Literature
           end
         end
         text << "## Papers — oldest first"
-        papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches)/, '### \1') }
+        papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches|Demos)/, '### \1') }
         site.pages << GeneratedPage.new(site, path + ".json", JSON.pretty_generate(data) + "\n")
         site.pages << GeneratedPage.new(site, path + ".md", text.join("\n\n") + "\n")
       end

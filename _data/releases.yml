@@ -1,3 +1,16 @@
+- version: "0.9.0"
+  date: "2026-10-18"
+  title: "Interactive examples"
+  changes:
+    - "Added multiplication and math-word-problem demos to the homepage, Internalized reasoning guide and associated paper pages, with model details and limitations."
+    - "Included demo links and their method relationships in JSON and Markdown downloads. Paper citations, collection membership and literature-check dates are unchanged."
+  added_papers: []
+  updated_papers:
+    - id: "2311.01460"
+      fields: [demos]
+    - id: "2405.14838"
+      fields: [demos]
+
 - version: "0.8.1"
   date: "2026-10-18"
   title: "Reading-list review"

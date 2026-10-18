@@ -13,6 +13,10 @@ layout: base
       {% if paper.first_public_note %}<p class="lit-guide-note">{{ paper.first_public_note | escape }} <a href="{{ paper.first_public_source }}">Date source</a>. ArXiv initial submission: {{ record.citation_date }}.</p>{% endif %}
       {% if paper.previous_titles %}<p>Earlier title: {{ paper.previous_titles | join: '; ' | escape }}.</p>{% endif %}
       <div class="lit-actions"><a class="lit-button lit-button-primary" href="{{ paper.paper_url }}">Read the paper ↗</a>{% if paper.code_url %}<a class="lit-button lit-button-secondary" href="{{ paper.code_url }}">Code ↗</a>{% endif %}</div>
+      {% if record.demos %}<div class="lit-paper-demos">
+        {% for demo in record.demos %}<p>{% if demo.relationship == 'implementation' %}Demo{% else %}Related-method demo{% endif %}: <a href="{{ demo.url }}">{{ demo.title | escape }}</a> · <a href="{{ demo.model_url }}">Model details</a></p>{% endfor %}
+        {% assign related_demos = record.demos | where: 'relationship', 'related_method' %}{% if related_demos.size > 0 %}<p class="lit-guide-note">Related-method demos are not implementations of this paper; see the model details for the method used.</p>{% endif %}
+      </div>{% endif %}
     </div>
   </header>
 

@@ -123,6 +123,7 @@ ontology = JSON.parse(File.read(File.join(site_root, "data/ontology.json")))
 schema = JSON.parse(File.read(File.join(site_root, "data/schema.json")))
 JSON.parse(File.read(File.join(site_root, "data/changes.json")))
 validate_against_schema(generated_corpus, schema, schema, "$", errors)
+errors << "Demo schema must distinguish implementations from related methods" unless schema.dig("$defs", "demo", "properties", "relationship", "enum") == %w[implementation related_method]
 
 errors << "generated core count does not match YAML" unless generated_corpus.dig("metadata", "core_record_count") == papers.length && generated_corpus["papers"].length == papers.length
 errors << "generated precursor count does not match YAML" unless generated_corpus.dig("metadata", "precursor_record_count") == precursors.length && generated_corpus["precursors"].length == precursors.length
