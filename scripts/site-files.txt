@@ -37,6 +37,7 @@ changelog/index.html
 contribute/index.html
 data/changes.json
 data/index.html
+data/navigation.json
 data/ontology.json
 data/papers.bib
 data/papers.csl.json
@@ -59,6 +60,7 @@ sitemap.xml
 slides/index.html
 speakers/index.html
 sponsors/index.html
+start-here/index.html
 submit.html
 topics/alternative-reasoning-schedules/index.html
 topics/continuous-states/index.html

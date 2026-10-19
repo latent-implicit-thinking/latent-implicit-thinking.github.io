@@ -10,6 +10,8 @@ Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning i
 - Looking for papers? [Browse the paper list](https://latent-implicit-thinking.github.io/papers/), search by author, title, method, or arXiv ID, and sort by publication date or when papers joined the list. Related background papers are listed separately.
 - Using a reference manager or research agent? [Download the list and citations](https://latent-implicit-thinking.github.io/data/) in BibTeX, CSL-JSON, Markdown, or JSON.
 
+The [agent guide](https://latent-implicit-thinking.github.io/llms.txt) explains the available files. The [JSON URL directory](https://latent-implicit-thinking.github.io/data/navigation.json) lists the site's pages, downloads, and topic-specific files with their exact URLs. The introduction's canonical URL is [`/topics/`](https://latent-implicit-thinking.github.io/topics/); [`/start-here/`](https://latent-implicit-thinking.github.io/start-here/) also serves the full introduction.
+
 The original [Latent & Implicit Thinking – Going Beyond CoT Reasoning workshop at ICLR 2026](https://latent-implicit-thinking.github.io/workshop/2026/) is preserved in the workshop archive.
 
 ## Papers and coverage

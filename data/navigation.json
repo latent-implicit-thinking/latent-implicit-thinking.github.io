@@ -1,0 +1,43 @@
+---
+layout: null
+permalink: /data/navigation.json
+---
+{
+  "schema_version": 1,
+  "name": {{ site.data.meta.name | jsonify }},
+  "version": {{ site.data.meta.version | jsonify }},
+  "updated_at": {{ site.data.meta.updated_at | jsonify }},
+  "canonical_url": {{ '/' | absolute_url | jsonify }},
+  "pages": {
+    "introduction": {
+      "url": {{ '/topics/' | absolute_url | jsonify }},
+      "aliases": [{{ '/start-here/' | absolute_url | jsonify }}]
+    },
+    "papers": {"url": {{ '/papers/' | absolute_url | jsonify }}},
+    "recent_additions": {"url": {{ '/recent/' | absolute_url | jsonify }}},
+    "downloads": {"url": {{ '/data/' | absolute_url | jsonify }}}
+  },
+  "files": {
+    "agent_guide": {{ '/llms.txt' | absolute_url | jsonify }},
+    "navigation": {{ '/data/navigation.json' | absolute_url | jsonify }},
+    "reading_list_markdown": {{ '/data/reading-list.md' | absolute_url | jsonify }},
+    "papers_json": {{ '/data/papers.json' | absolute_url | jsonify }},
+    "bibtex": {{ '/data/papers.bib' | absolute_url | jsonify }},
+    "csl_json": {{ '/data/papers.csl.json' | absolute_url | jsonify }},
+    "publications_bibtex": {{ '/data/publications.bib' | absolute_url | jsonify }},
+    "publications_csl_json": {{ '/data/publications.csl.json' | absolute_url | jsonify }},
+    "ontology_json": {{ '/data/ontology.json' | absolute_url | jsonify }},
+    "schema_json": {{ '/data/schema.json' | absolute_url | jsonify }},
+    "changes_json": {{ '/data/changes.json' | absolute_url | jsonify }},
+    "rss": {{ '/feed.xml' | absolute_url | jsonify }}
+  },
+  "topics": [
+    {% for method in site.data.methods %}{
+      "id": {{ method.id | jsonify }},
+      "label": {{ method.label | jsonify }},
+      "url": {{ method.url | absolute_url | jsonify }},
+      "markdown_url": {{ '/data/topics/' | append: method.slug | append: '.md' | absolute_url | jsonify }},
+      "json_url": {{ '/data/topics/' | append: method.slug | append: '.json' | absolute_url | jsonify }}
+    }{% unless forloop.last %},{% endunless %}{% endfor %}
+  ]
+}

@@ -1,3 +1,13 @@
+- version: "0.9.5"
+  date: "2026-10-18"
+  title: "Reading-list navigation"
+  changes:
+    - "Added /start-here/ as an alternate address for the introduction, preserving /topics/ as its canonical URL."
+    - "Added a JSON directory of pages and downloads, with exact URLs in the text guide and clearer links from the overview and downloads."
+    - "Clarified reading-list titles and descriptions and improved navigation from missing-page links."
+    - "Historical descriptions, paper records, collection membership, citations and literature-check dates are unchanged."
+  added_papers: []
+
 - version: "0.9.4"
   date: "2026-10-18"
   title: "Implicit CoT: proposal and implementation"

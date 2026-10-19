@@ -70,6 +70,7 @@
   <link rel="alternate" type="text/markdown" title="Implicit CoT reading list" href="{{ '/data/reading-list.md' | absolute_url }}">
   <link rel="describedby" type="application/json" title="Implicit CoT research ontology" href="{{ '/data/ontology.json' | absolute_url }}">
   <link rel="describedby" type="text/markdown" title="Guide for language models and research agents" href="{{ '/llms.txt' | absolute_url }}">
+  <link rel="describedby" type="application/json" title="Reading-list pages and downloads" href="{{ '/data/navigation.json' | absolute_url }}">
   {% if page.record %}
   <link rel="alternate" type="application/json" title="This paper's record" href="{{ page.record.json_url }}">
   <link rel="alternate" type="text/markdown" title="This paper as Markdown" href="{{ page.record.markdown_url }}">
@@ -152,18 +153,19 @@
   <meta property="og:image:alt" content="{{ page.share-img-alt | default: site.share-img-alt | default: title }}">
   {% endif %}
 
+  {% assign canonical_path = page.canonical_url | default: page.url %}
   {% if page.id %}
   <meta property="og:type" content="article">
   {% if author != "" %}
   <meta property="og:article:author" content="{{ author }}">
   {% endif %}
   <meta property="og:article:published_time" content="{{ page.date | date_to_xmlschema }}">
-  <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:url" content="{{ canonical_path | absolute_url }}">
+  <link rel="canonical" href="{{ canonical_path | absolute_url }}">
   {% else %}
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.url | absolute_url | strip_index }}">
-  <link rel="canonical" href="{{ page.url | absolute_url | strip_index }}">
+  <meta property="og:url" content="{{ canonical_path | absolute_url | strip_index }}">
+  <link rel="canonical" href="{{ canonical_path | absolute_url | strip_index }}">
   {% endif %}
 
   {% if img != "" and img != site.avatar %}

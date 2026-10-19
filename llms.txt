@@ -16,6 +16,10 @@ Literature checked through: {{ site.data.meta.search_refreshed_at }}
 Papers: {{ site.data.papers | size }}
 Related background papers: {{ site.data.precursors | size }}
 
+## Site URLs
+
+The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here/]({{ '/start-here/' | absolute_url }}) serves the same introduction as a compatibility alias; `/topics/` is the canonical URL. The [JSON URL directory at /data/navigation.json]({{ '/data/navigation.json' | absolute_url }}) lists this site's pages, downloads, and topic-specific files with their exact URLs.
+
 ## Read and search
 
 - [Overview]({{ '/' | absolute_url }})

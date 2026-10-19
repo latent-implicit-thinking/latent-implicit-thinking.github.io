@@ -1,9 +1,9 @@
 ---
 layout: base
 title: "Implicit Chain-of-Thought"
-seo-title: "Implicit Chain-of-Thought Papers & Research Map"
-share-title: "Implicit Chain-of-Thought — Papers and Research Map"
-share-description: "A reading list on implicit chain-of-thought and latent reasoning, with explanations of the main approaches and downloadable citations."
+seo-title: "Implicit Chain-of-Thought Reading List | Latent Reasoning"
+share-title: "Implicit Chain-of-Thought — Reading List and Research Guide"
+share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, source-backed comparisons, examples, and downloadable citations."
 show-avatar: false
 nav-short: true
 last_modified_at: 2026-10-18
@@ -52,6 +52,7 @@ last_modified_at: 2026-10-18
         <p>This reading list grew out of the <a href="{{ '/workshop/2026/' | relative_url }}">Latent &amp; Implicit Thinking workshop at ICLR 2026</a>. You can still find the workshop program and event information in the archive.</p>
         <p>Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey, which helped us find many of these papers.</p>
         <p>The list may miss relevant work. <a href="{{ '/contribute/' | relative_url }}">Suggest a paper or correction</a>.</p>
+        <p class="lit-guide-note">For text readers and research tools: <a href="{{ '/llms.txt' | absolute_url }}">/llms.txt</a> (reading guide) · <a href="{{ '/data/navigation.json' | absolute_url }}">/data/navigation.json</a> (page and download URLs).</p>
       </div>
     </div>
   </section>
@@ -63,14 +64,17 @@ last_modified_at: 2026-10-18
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Implicit Chain-of-Thought",
-  "alternateName": ["Implicit CoT Research Map", "Implicit Chain-of-Thought Papers"],
+  "alternateName": ["Implicit CoT Research Map", "Implicit Chain-of-Thought Reading List", "Latent Reasoning Reading List"],
   "url": {{ '/' | absolute_url | jsonify }},
-  "description": "A reading list with explanations, paper summaries, and citations for research on reasoning without written intermediate steps.",
+  "description": "A reading guide and bibliography for implicit chain-of-thought and latent reasoning, with explanations, paper summaries, and citations.",
   "inLanguage": "en",
   "about": {"@type": "Thing", "name": "Implicit chain-of-thought reasoning", "alternateName": ["Implicit CoT", "Latent reasoning", "Latent chain-of-thought", "Latent CoT"]},
   "hasPart": [
+    {"@type": "WebPage", "name": "Start here: implicit chain-of-thought and latent reasoning", "url": {{ '/topics/' | absolute_url | jsonify }}},
     {"@type": "CollectionPage", "name": "Implicit Chain-of-Thought paper index", "url": {{ '/papers/' | absolute_url | jsonify }}},
-    {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "url": {{ '/data/' | absolute_url | jsonify }}}
+    {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "url": {{ '/data/' | absolute_url | jsonify }}},
+    {"@type": "WebPage", "name": "Recent additions", "url": {{ '/recent/' | absolute_url | jsonify }}}{% for method in site.data.methods %},
+    {"@type": "CollectionPage", "name": {{ method.label | jsonify }}, "url": {{ method.url | absolute_url | jsonify }}}{% endfor %}
   ]
 }
 </script>

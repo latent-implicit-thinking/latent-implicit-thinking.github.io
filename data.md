@@ -39,6 +39,7 @@ last_modified_at: 2026-10-18
       <details class="lit-file-details">
         <summary>Using the JSON files in a script or agent</summary>
         <p>Start with <a href="{{ '/data/papers.json' | relative_url }}">papers.json</a>. It contains <code>papers</code>, <code>precursors</code> (the background papers), and <code>metadata</code>. The <a href="{{ '/llms.txt' | relative_url }}">agent guide</a> links to every file.</p>
+        <p>The <a href="{{ '/data/navigation.json' | relative_url }}">JSON URL directory</a> lists this site's pages, downloads, and topic-specific files with their exact URLs. It distinguishes canonical pages from compatibility aliases.</p>
         <dl>
           <dt>Paper details</dt><dd><code>id</code> is a stable identifier. <code>author_names</code> preserves author order. <code>paper_url</code> links to the source; <code>record_url</code> links to an individual page with its own JSON, Markdown, BibTeX and CSL-JSON downloads. <code>legacy_record_url</code> preserves the earlier full-list anchor.</dd>
           <dt>Published versions</dt><dd>Optional <code>publication</code> metadata gives a separately verified conference or journal version, with its own title, authors, year and citation links. Missing metadata means we have not verified that version, not that it does not exist.</dd>
@@ -86,6 +87,12 @@ last_modified_at: 2026-10-18
   "dateModified": {{ site.data.meta.updated_at | jsonify }},
   "version": {{ site.data.meta.version | jsonify }},
   "distribution": [
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "application/json",
+      "name": "Site URL directory",
+      "contentUrl": {{ '/data/navigation.json' | absolute_url | jsonify }}
+    },
     {
       "@type": "DataDownload",
       "encodingFormat": "application/json",
