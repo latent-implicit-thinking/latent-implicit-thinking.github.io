@@ -73,7 +73,7 @@ module Literature
              demo.fetch("limitations"), "[Model details](#{demo.fetch('model_url')})"]
     demo.fetch("paper_relationships").each do |link|
       paper = (site.data.fetch("papers") + site.data.fetch("precursors")).find { |item| item.fetch("id") == link.fetch("paper_id") }
-      relationship = link.fetch("relationship") == "implementation" ? "Implements" : "Related method, not implemented by this demo"
+      relationship = link.fetch("relationship") == "implementation" ? "Implements" : "Related method"
       lines << "#{relationship}: [#{paper.fetch('title')}](#{absolute(site, '/papers/' + paper.fetch('id') + '/')})."
     end
     lines.join("\n\n")
@@ -181,14 +181,13 @@ module Literature
       pub = entry["publication"]
       lines += ["", "## Published version", "", "#{pub['title']}. #{pub['author_names'].join(', ')}. #{pub['container_title']}, #{pub['year']}.",
                 "[Publication](#{pub['url']}) · [BibTeX](#{entry['publication_bibtex_url']}) · [CSL-JSON](#{entry['publication_csl_url']})",
-                "Metadata checked #{pub['verified_at']} against [the publication record](#{pub['source_url']})."]
+                "[Publication record](#{pub['source_url']})."]
     end
     methods = site.data.fetch("methods").select { |method| Array(paper["lens"]).include?(method["id"]) }
     unless methods.empty?
       lines += ["", "## Approaches", ""] + methods.map { |method| "- [#{method['label']}](#{absolute(site, method['url'])}): #{method['definition']}" }
     end
-    lines += ["", "Summary and categories are editorial. Read the original paper to verify claims and limitations. A citation to a paper does not, by itself, establish that a later method builds on it.",
-              "", "Reading-list version #{site.data.fetch('meta').fetch('version')}; literature checked through #{site.data.fetch('meta').fetch('search_refreshed_at')}.\n"]
+    lines += ["", "Reading-list version #{site.data.fetch('meta').fetch('version')}; literature checked through #{site.data.fetch('meta').fetch('search_refreshed_at')}.\n"]
     lines.join("\n")
   end
 
@@ -263,7 +262,7 @@ module Literature
         site.pages << GeneratedPage.new(site, dir + "publication.bib", bib)
         site.pages << GeneratedPage.new(site, dir + "publication.csl.json", JSON.pretty_generate([csl]) + "\n")
       end
-      site.pages << GeneratedPage.new(site, "data/publications.bib", "% Verified published versions only; this is a subset, not the full reading list.\n" + publication_bib.join("\n"))
+      site.pages << GeneratedPage.new(site, "data/publications.bib", "% Available conference and journal citations. For the complete reading list, use papers.bib.\n" + publication_bib.join("\n"))
       site.pages << GeneratedPage.new(site, "data/publications.csl.json", JSON.pretty_generate(publication_csl) + "\n")
       site.data.fetch("methods").each do |method|
         papers = site.data.fetch("papers").select { |paper| paper.fetch("lens").include?(method["id"]) }
@@ -275,7 +274,7 @@ module Literature
         comparisons = site.data.fetch("comparisons", {}).fetch(method["id"], [])
         demos = site.data.fetch("demos", []).select { |demo| demo.fetch("topic_ids").include?(method.fetch("id")) }
         data = {"metadata" => metadata, "comparisons" => comparisons, "demos" => demos, "papers" => papers.map { |paper| Literature.record(site, paper) }}
-        text = ["# #{method['label']}", method.fetch("definition"), "Papers are ordered by first public date. Read the original sources before using a claim.",
+        text = ["# #{method['label']}", method.fetch("definition"), "Papers are ordered by first public date.",
                 "For example: #{method.fetch('example')}",
                 "Version #{metadata['version']}; literature checked through #{metadata['search_refreshed_at']}.",
                 "[Topic guide](#{metadata['topic_url']}) · [JSON](#{Literature.absolute(site, '/' + path + '.json')})"]

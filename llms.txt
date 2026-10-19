@@ -40,32 +40,32 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 - [Category definitions]({{ '/data/ontology.json' | absolute_url }}): category IDs, descriptions, and allowed filter values
 - [JSON Schema]({{ '/data/schema.json' | absolute_url }}): field types and constraints
 - [BibTeX]({{ '/data/papers.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }}): citations for all papers, including background
-- [Published-version BibTeX]({{ '/data/publications.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/publications.csl.json' | absolute_url }}): only the subset with verified publication records; not a replacement for the complete citation files
+- [Published-version BibTeX]({{ '/data/publications.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/publications.csl.json' | absolute_url }}): the available conference and journal records
 - [Changes]({{ '/data/changes.json' | absolute_url }}) and [RSS feed]({{ '/feed.xml' | absolute_url }}): website and reading-list updates
 - [Source repository]({{ site.data.meta.repository_url }})
 
 ## Using the data
 
-Use the original papers for scientific claims. Summaries and categories are written for this reading list, not copied abstracts. Papers can belong to several categories. Coverage includes related generation methods and is not exhaustive.
+Summaries and categories are written for this reading list. Papers can belong to several categories. The list includes related generation methods.
 
 - `id` identifies a paper; `paper_url` links to the original source; `record_url` links to an independently fetchable entry at `/papers/{id}/`. Earlier full-list anchors still work through `legacy_record_url`.
 - For arXiv papers, `paper_url` is the abstract page and `pdf_url` is the full-text PDF. Optional `html_url` provides full-text HTML when we have checked that link. Citation URLs use the abstract page. Version-specific links in source notes and comparisons identify the exact passages being discussed.
 - Each entry has `json_url`, `markdown_url`, `bibtex_url`, and `csl_url`. Use the topic downloads or individual entries when you do not need the complete list.
 - `author_names` preserves the authors' names and order.
-- Optional `related_terms` provides editorial search terminology, such as latent reasoning or latent chain-of-thought. These terms are also visible on the paper's page; they do not replace its title or citation. Search them alongside the title and summary.
-- Optional `method_comparisons` contains the comparisons shown on a paper's page, with the papers discussed in `source_ids`, primary-source links in `source_urls`, and readable `source_labels`. Each comparison identifies its topic guide. A comparison may explain a difference or a documented influence; its presence is not itself an influence claim.
+- Optional `related_terms` provides editorial search terminology, such as latent reasoning or latent chain-of-thought. These terms appear on the paper's page and are searchable alongside its title and summary.
+- Optional `method_comparisons` contains the comparisons shown on a paper's page, with the papers discussed in `source_ids`, primary-source links in `source_urls`, and readable `source_labels`. Each comparison identifies its topic guide. Comparisons explain technical differences and connections between methods.
 - `added_at` is when a paper was added to this list, not its publication date. Tracking began {{ site.data.meta.addition_tracking_started_at }}; initial-collection records omit this field. Release history lists `added_papers` IDs. A new addition may be an older paper.
-- `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note. It is not an independently verified announcement date.
+- `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note.
 - `citation_date` is the date of the linked source: the initial submission for an arXiv preprint, or the publication date for a DOI-only entry. The complete BibTeX and CSL-JSON files cite that source. Source URLs may serve revised versions.
-- `publication` metadata describes a verified published version. For arXiv entries, its title, author list and year may differ; use `publication_bibtex_url` or `publication_csl_url` for that version. DOI-only entries use this metadata in their default citations too. Absence means we have not verified a publication record, not that the paper is unpublished.
-- Optional `demos` link to interactive examples and model details. Each demo's `paper_relationships` distinguishes `implementation` from `related_method`; `relationship` gives its connection to the current paper. A related-method demo does not implement that paper. Topic downloads also list the demos shown in the guide. Demo outputs are examples, not benchmark evidence; use the method paper for scientific claims and cite the model separately when you use it.
+- `publication` metadata describes a published version. For arXiv entries, its title, author list and year may differ; use `publication_bibtex_url` or `publication_csl_url` for that version. DOI-only entries use this metadata in their default citations too.
+- Optional `demos` link to interactive examples and model details. Each demo's `paper_relationships` distinguishes `implementation` from `related_method`; `relationship` gives its connection to the current paper. Topic downloads also list the demos shown in the guide.
 - Release entries can list `updated_papers` (IDs and changed fields) and `removed_papers` (IDs). Refresh cached records using the current corpus; do not treat a historical release as the current membership list.
 - `provenance` says where we first found a paper.
-- Category IDs and filter values are defined in the category file; related terms are not necessarily synonyms.
+- Category IDs and filter values are defined in the category file.
 
 ## Research workflow
 
-Choose the relevant topic, identify papers whose methods address the question, then read the original sources. The topic guides compare training and computation choices with source links. Verify the exact result, setting and limitations before citing it. Chronological order is not proof of influence, and citing a paper does not necessarily mean building on its method. Export a citation for the version actually used. This curated list is a starting point, not an exhaustive literature search.
+Choose a topic, find papers that address your question, and follow their source links. Topic guides compare training and computation choices. Export a citation for the version you use.
 
 ## Corrections and credit
 

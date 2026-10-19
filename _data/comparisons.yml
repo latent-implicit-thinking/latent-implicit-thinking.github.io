@@ -8,8 +8,8 @@ internalized:
       answer. Stepwise Internalization instead repeatedly shortens the written
       solution and fine-tunes the same model on what remains. Both use worked
       solutions during training; neither requires writing the removed steps at
-      inference. Their reported experiments focus on multiplication and
-      grade-school math, not a guarantee of general reasoning ability.
+      inference. Their experiments cover multiplication and
+      grade-school math.
     source_ids: ["2311.01460", "2405.14838"]
     source_urls:
       - "https://arxiv.org/html/2311.01460v1#S2.SS3"
@@ -37,9 +37,8 @@ learned-tokens:
       Pause tokens add computation before the answer without choosing a different
       plan token for each step. Planning tokens instead select a learned token
       before generating each written reasoning step. The latter still produces
-      a textual chain of thought. In the pause-token experiments, the training
-      setup matters: gains were strongest when pauses were used in both
-      pretraining and fine-tuning, not simply inserted into an unchanged model.
+      a textual chain of thought. Pause-token gains were strongest when pauses
+      were used in both pretraining and fine-tuning.
     source_ids: ["2310.02226", "2310.05707"]
     source_urls:
       - "https://proceedings.iclr.cc/paper_files/paper/2024/hash/76917808731dae9e6d62c2a7a6afb542-Abstract-Conference.html"
@@ -83,9 +82,8 @@ continuous:
       supervise them differently. Coconut gradually replaces written steps with
       hidden-state inputs and trains on the remaining text. CODI jointly trains
       explicit and implicit reasoning tasks, matching their hidden states at a
-      selected position before the answer. These models avoid decoding a word
-      at every intermediate step; they still perform successive model passes,
-      so fewer written tokens does not mean no reasoning-time computation.
+      selected position before the answer. Both perform successive model passes
+      without decoding a word at every intermediate step.
     source_ids: ["2412.06769", "2502.21074"]
     source_urls:
       - "https://arxiv.org/html/2412.06769v3#S3"
@@ -113,9 +111,8 @@ beyond-sequential:
     text: >-
       Diffusion of Thought changes how a chain of thought is generated: it
       refines the solution through denoising rather than committing to words
-      strictly from left to right. This changes the generation schedule, not
-      necessarily the visibility of the reasoning. The resulting chain can
-      still be text, unlike methods that only emit the final answer.
+      strictly from left to right. The resulting chain can be text. Stepwise
+      internalization instead trains the model to produce only the answer.
     source_ids: ["2402.07754", "2405.14838"]
     source_urls:
       - "https://proceedings.neurips.cc/paper_files/paper/2024/hash/be30024e7fa2c29cac7a6dafcbb8571f-Abstract-Conference.html"
@@ -130,8 +127,7 @@ analysis:
       colleagues separates recall of a bridge entity from its contribution to
       the final answer, including interventions on internal representations.
       Evidence was stronger for the first hop than for the complete two-hop
-      computation and varied by relation type. That distinction matters when
-      interpreting claims that a model reasons internally.
+      computation and varied by relation type.
     source_ids: ["2402.16837"]
     source_urls:
       - "https://aclanthology.org/2024.acl-long.550/"

@@ -16,7 +16,7 @@ layout: base
       <div class="lit-actions"><a class="lit-button lit-button-primary" href="{{ paper.paper_url }}">Read the paper ↗</a>{% if record.pdf_url %}<a class="lit-button lit-button-secondary" href="{{ record.pdf_url }}">PDF ↗</a>{% endif %}{% if record.html_url %}<a class="lit-button lit-button-secondary" href="{{ record.html_url }}">HTML ↗</a>{% endif %}{% if paper.code_url %}<a class="lit-button lit-button-secondary" href="{{ paper.code_url }}">Code ↗</a>{% endif %}</div>
       {% if record.demos %}<div class="lit-paper-demos">
         {% for demo in record.demos %}<p>{% if demo.relationship == 'implementation' %}Demo{% else %}Related-method demo{% endif %}: <a href="{{ demo.url }}">{{ demo.title | escape }}</a> · <a href="{{ demo.model_url }}">Model details</a></p>{% endfor %}
-        {% assign related_demos = record.demos | where: 'relationship', 'related_method' %}{% if related_demos.size > 0 %}<p class="lit-guide-note">Related-method demos are not implementations of this paper; see the model details for the method used.</p>{% endif %}
+        {% assign related_demos = record.demos | where: 'relationship', 'related_method' %}{% if related_demos.size > 0 %}<p class="lit-guide-note">These demos use <a href="{{ '/papers/2405.14838/' | relative_url }}">stepwise internalization</a>.</p>{% endif %}
       </div>{% endif %}
     </div>
   </header>
@@ -30,17 +30,14 @@ layout: base
         <p><a href="{{ publication.url }}">{{ publication.title | escape }}</a><br>{{ publication.author_names | join: ', ' | escape }}<br>{{ publication.container_title | escape }}, {{ publication.year }}{% unless arxiv_id %}{% if publication.volume %}, {{ publication.volume | escape }}{% if publication.issue %}({{ publication.issue | escape }}){% endif %}{% endif %}{% endunless %}{% if publication.pages %}, pp. {{ publication.pages | escape }}{% elsif publication.article_number %}, article {{ publication.article_number | escape }}{% endif %}.</p>
         {% if publication.doi %}<p>DOI: <a href="https://doi.org/{{ publication.doi | escape }}">{{ publication.doi | escape }}</a></p>{% endif %}
         <p><a href="{% if arxiv_id %}{{ record.publication_bibtex_url }}{% else %}{{ record.bibtex_url }}{% endif %}">BibTeX</a> · <a href="{% if arxiv_id %}{{ record.publication_csl_url }}{% else %}{{ record.csl_url }}{% endif %}">CSL-JSON</a></p>
-        <p class="lit-guide-note">Checked {{ publication.verified_at }} against <a href="{{ publication.source_url }}">the publication record</a>.{% if arxiv_id %} The published title, author list or year can differ from the preprint.{% endif %}</p>
       </div>{% endif %}
       {% if arxiv_id %}
       <div class="lit-citation-choice">
         <h3>ArXiv preprint</h3>
         <p>arXiv:{{ arxiv_id }} · Initial submission: {{ record.citation_date }}</p>
         <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a></p>
-        {% unless page.publication %}<p class="lit-guide-note">A published-version citation has not been verified for this entry. This does not mean the paper is unpublished.</p>{% endunless %}
       </div>
       {% endif %}
-      <p class="lit-guide-note">{% if arxiv_id %}Choose the version you used. The arXiv link may serve a revision; check{% else %}Check{% endif %} the original paper for the exact result, assumptions and limitations you cite.</p>
     </div>
   </section>
 
@@ -61,7 +58,7 @@ layout: base
     <div class="lit-shell lit-narrow-shell">
       <h2>Read or reuse this entry</h2>
       <p><a href="{{ record.markdown_url }}">Plain-text Markdown</a> · <a href="{{ record.json_url }}">JSON record</a> · <a href="{{ record.legacy_record_url }}">Find in the full list</a></p>
-      <p>Our summary and categories are a reading aid, not the authors’ abstract. Use the original paper for research claims. <a href="{{ '/contribute/' | relative_url }}">Suggest a correction</a>.</p>
+      <p><a href="{{ '/contribute/' | relative_url }}">Suggest a correction</a>.</p>
     </div>
   </section>
 </main>

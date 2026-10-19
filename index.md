@@ -3,7 +3,7 @@ layout: base
 title: "Implicit Chain-of-Thought"
 seo-title: "Implicit Chain-of-Thought Reading List | Latent Reasoning"
 share-title: "Implicit Chain-of-Thought — Reading List and Research Guide"
-share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, source-backed comparisons, examples, and downloadable citations."
+share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, method comparisons, examples, and downloadable citations."
 show-avatar: false
 nav-short: true
 last_modified_at: 2026-10-19
@@ -51,7 +51,7 @@ last_modified_at: 2026-10-19
       <div>
         <p>This reading list grew out of the <a href="{{ '/workshop/2026/' | relative_url }}">Latent &amp; Implicit Thinking workshop at ICLR 2026</a>. You can still find the workshop program and event information in the archive.</p>
         <p>Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey, which helped us find many of these papers.</p>
-        <p>The list may miss relevant work. <a href="{{ '/contribute/' | relative_url }}">Suggest a paper or correction</a>.</p>
+        <p><a href="{{ '/contribute/' | relative_url }}">Suggest a paper or correction</a>.</p>
         <p class="lit-guide-note">For text readers and research tools: <a href="{{ '/llms.txt' | absolute_url }}">/llms.txt</a> (reading guide) · <a href="{{ '/data/navigation.json' | absolute_url }}">/data/navigation.json</a> (page and download URLs).</p>
       </div>
     </div>
@@ -72,7 +72,7 @@ last_modified_at: 2026-10-19
   "hasPart": [
     {"@type": "WebPage", "name": "Start here: implicit chain-of-thought and latent reasoning", "url": {{ '/topics/' | absolute_url | jsonify }}},
     {"@type": "CollectionPage", "name": "Implicit Chain-of-Thought paper index", "url": {{ '/papers/' | absolute_url | jsonify }}},
-    {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "description": "A curated, structured corpus and reading guide for research on implicit chain-of-thought.", "creator": {% include dataset-creator.json %}, "license": {{ site.data.meta.license_url | jsonify }}, "url": {{ '/data/' | absolute_url | jsonify }}},
+    {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "description": "A bibliography and reading guide for implicit chain-of-thought research.", "creator": {% include dataset-creator.json %}, "license": {{ site.data.meta.license_url | jsonify }}, "url": {{ '/data/' | absolute_url | jsonify }}},
     {"@type": "WebPage", "name": "Recent additions", "url": {{ '/recent/' | absolute_url | jsonify }}}{% for method in site.data.methods %},
     {"@type": "CollectionPage", "name": {{ method.label | jsonify }}, "url": {{ method.url | absolute_url | jsonify }}}{% endfor %}
   ]

@@ -79,7 +79,7 @@
   slug: "alternative-reasoning-schedules"
   url: "/topics/alternative-reasoning-schedules/"
   short_description: "Change how steps are generated—for example, by refining several together. Some methods still use written reasoning."
-  definition: "Change how intermediate steps are generated, revised, or searched—for example, by refining several steps in parallel. These are related approaches: some still produce written chains of thought."
+  definition: "Change how intermediate steps are generated, revised, or searched—for example, by refining several steps in parallel. Some produce written chains of thought."
   example: "A diffusion model refines representations of a solution over several rounds, rather than committing to each word in left-to-right order. The final reasoning can still be readable text."
   question: "What becomes possible beyond strictly left-to-right generation?"
   questions:

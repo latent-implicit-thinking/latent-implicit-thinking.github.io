@@ -130,7 +130,7 @@ permalink: /data/schema.json
     },
     "methodComparison": {
       "type": "object",
-      "description": "A visible, source-backed comparison. Read its text to distinguish technical differences from documented influence; shared inclusion does not imply influence.",
+      "description": "A comparison of methods, with links to the papers and their topic guide.",
       "required": ["title", "text", "source_ids", "source_urls", "source_labels", "topic_id", "topic_label", "topic_url"],
       "properties": {
         "title": {"type": "string", "minLength": 1},

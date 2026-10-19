@@ -9,15 +9,15 @@ Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is 
 
 Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's [distillation method](https://arxiv.org/html/2311.01460v1#S3) is one implementation of that proposal. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
 
-Version {{ site.data.meta.version }}. Website updated {{ site.data.meta.updated_at }}; literature checked through {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers. The list is not exhaustive.
+Version {{ site.data.meta.version }}. Website updated {{ site.data.meta.updated_at }}; literature checked through {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers.
 
 ## Sources and citation
 
-Cite the original papers for scientific claims. The summaries below are written for this list, not copied abstracts. Papers are ordered by their earliest verified public date, usually the first arXiv submission. Earlier conference presentations have a source note.
+Papers are ordered by their earliest public date, usually the first arXiv submission. Earlier conference presentations have a source note.
 
 - [JSON paper list]({{ '/data/papers.json' | absolute_url }})
-- [Recent additions]({{ '/recent/' | absolute_url }}): additions since the initial collection, not necessarily newly published papers
-- [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): each entry's linked source—arXiv preprints using initial submission dates, or verified publications for entries without an arXiv version
+- [Recent additions]({{ '/recent/' | absolute_url }}): papers added since the initial collection
+- [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): each entry's linked source—arXiv preprints using initial submission dates, or publications for entries without an arXiv version
 - [Introduction and examples]({{ '/topics/' | absolute_url }})
 - [Downloads and file details]({{ '/data/' | absolute_url }})
 - [Corrections]({{ '/contribute/' | absolute_url }})

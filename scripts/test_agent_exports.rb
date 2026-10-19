@@ -625,7 +625,7 @@ module AgentExports
         assert(markdown.include?("#{label}: [#{demo['title']}]"), "#{id}: Markdown omits demo relationship", errors)
         assert(markdown.include?(demo["description"]) && markdown.include?(demo["limitations"]), "#{id}: Markdown omits demo description or limitations", errors)
         if demo["relationship"] == "related_method"
-          assert(visible.include?("Related-method demos are not implementations of this paper"), "#{id}: related demo could be mistaken for this paper's implementation", errors)
+          assert(visible.include?("These demos use stepwise internalization") && linked?(html, "#{canonical}papers/2405.14838/", canonical), "#{id}: related demo must name and link its implemented method", errors)
         end
       end
       if expected_demos.empty?

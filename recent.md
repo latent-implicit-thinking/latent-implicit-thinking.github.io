@@ -61,7 +61,7 @@ last_modified_at: 2026-10-19
   <aside class="lit-source-note">
     <div class="lit-shell">
       <p>Looking for a particular topic? <a href="{{ '/papers/?sort=added-desc' | relative_url }}">Search all papers, newest additions first</a>. For corrections and other changes, see the <a href="{{ '/changelog/' | relative_url }}">release history</a>.</p>
-      <p>The list is not exhaustive. <a href="{{ '/contribute/' | relative_url }}">Suggest a missing paper or correction</a>.</p>
+      <p><a href="{{ '/contribute/' | relative_url }}">Suggest a missing paper or correction</a>.</p>
     </div>
   </aside>
 </main>

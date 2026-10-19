@@ -3,7 +3,7 @@
   authors: "David Herel, Tomas Mikolov"
   first_public: "2023-09-04"
   first_public_source: "https://aitp-conference.org/2023/"
-  first_public_note: "AITP presentation date; the earlier public release date of the conference abstract is unverified."
+  first_public_note: "AITP presentation date."
   citation_date: "2024-05-14"
   venue: "AITP 2023"
   arxiv: "2405.08644"
@@ -415,7 +415,7 @@
   questions: [capability]
   evidence: [empirical]
   modality: [multimodal]
-  summary: "Encodes continuous data such as images as vectors, then generates those vectors with diffusion inside a causal transformer. This is related work on multimodal generation, rather than a method trained directly on reasoning steps."
+  summary: "Encodes continuous data such as images as vectors, then generates those vectors with diffusion inside a causal transformer."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2412.13171"
@@ -707,7 +707,7 @@
   questions: [interpretability]
   evidence: [empirical, probing]
   modality: [language]
-  summary: "Presents evidence that transformer layers schedule intermediate subtasks internally, offering a layer-wise view of implicit reasoning."
+  summary: "Presents evidence that transformer layers schedule intermediate subtasks internally."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2505.14827"
@@ -759,7 +759,7 @@
   questions: [survey, taxonomy]
   evidence: [survey]
   modality: [language, multimodal]
-  summary: "Surveys latent chain-of-thought methods and organizes a broad, continuously updated bibliography spanning token-wise, structural, representational, and analytical work."
+  summary: "Surveys latent chain-of-thought methods and maintains a bibliography of token-wise, structural, representational, and analytical work."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2505.17923"
@@ -1216,7 +1216,7 @@
   questions: ["interpretability","evaluation","limitations"]
   evidence: ["empirical","mechanistic","boundary"]
   modality: ["language"]
-  summary: "Tests COCONUT with latent-state interventions and deliberately biased examples on MMLU and HotpotQA. Finds weak sensitivity to steering and dependence on dataset shortcuts in the evaluated models, challenging whether their intermediate states faithfully carry the reasoning."
+  summary: "Tests COCONUT with latent-state interventions and deliberately biased examples on MMLU and HotpotQA. Finds weak sensitivity to latent-state steering and dependence on dataset shortcuts."
   provenance: "Awesome-Latent-CoT; primary sources checked 2026-10-18"
 
 - id: "2601.21358"
@@ -1687,7 +1687,7 @@
   questions: [evaluation, interpretability, limitations]
   evidence: [empirical, probing, boundary]
   modality: [language, symbolic]
-  summary: "Compares behavior under neutral, explicit-CoT, and no-CoT prompts using linguistic and internal-state measurements. Its score measures resemblance to CoT behavior, not direct evidence of a hidden reasoning trace; calibration controls expose important confounds."
+  summary: "Compares behavior under neutral, explicit-CoT, and no-CoT prompts using linguistic and internal-state measurements. Scores resemblance to CoT behavior and uses calibration controls to identify confounds."
   provenance: "Primary-source literature search, 2026-10-18"
   added_at: "2026-10-18"
 
@@ -2184,7 +2184,7 @@
   questions: ["capability","efficiency"]
   evidence: ["empirical"]
   modality: ["language"]
-  summary: "Triggers graph retrieval when new entities become identifiable in a partially denoised draft, then uses graph propagation to provide multi-hop evidence for subsequent updates. This combines retrieval with parallel textual reasoning rather than removing the text trace."
+  summary: "Triggers graph retrieval when new entities become identifiable in a partially denoised draft, then uses graph propagation to provide multi-hop evidence for subsequent updates. Combines retrieval with parallel textual reasoning."
   computation: ["diffusion","parallel"]
   venue: "arXiv"
   arxiv: "2609.24346"
@@ -2242,7 +2242,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "Extracts reasoning-guiding token chains and prioritizes them during diffusion-model training to improve denoising speed and accuracy. This is a related text-generating approach, not reasoning without a written trace."
+  summary: "Extracts token chains from written reasoning and prioritizes them during diffusion-model training to improve denoising speed and accuracy."
   provenance: "Primary-source literature search, 2026-10-18"
   added_at: "2026-10-18"
 
@@ -2850,7 +2850,7 @@
   questions: ["interpretability","evaluation"]
   evidence: ["formal","empirical"]
   modality: ["language","symbolic"]
-  summary: "Extends integrated-gradient attribution across layers and denoising steps to examine which inputs influence a diffusion model's developing response. Includes multi-hop graph reasoning; the authors present attribution as a complement to, not a replacement for, causal intervention."
+  summary: "Extends integrated-gradient attribution across layers and denoising steps to examine which inputs influence a diffusion model's developing response. Includes experiments on multi-hop graph reasoning."
   computation: ["diffusion"]
   venue: "arXiv"
   arxiv: "2610.01177"
@@ -3017,7 +3017,7 @@
   questions: [capability, efficiency, interpretability, evaluation]
   evidence: [empirical, probing]
   modality: [language, symbolic]
-  summary: "Compresses symbolic reasoning into latent codes and trains a flow model to refine a block of noise into a thought before decoding the answer. Studies training choices, self-training on verified thoughts, and tests of whether the answer actually uses those thoughts."
+  summary: "Compresses symbolic reasoning into latent codes and trains a flow model to refine a block of noise into a thought before decoding the answer. Studies training choices, self-training on verified thoughts, and whether those thoughts affect the answer."
   provenance: "Primary-source literature search, 2026-10-18"
 
 - id: "2610.06833"
@@ -3061,7 +3061,7 @@
   authors: "Ruian Lei, Yazhou Ren, Zenglin Xu"
   first_public: "2026-10-05"
   first_public_source: "https://mdpi-res.com/d_attachment/applsci/applsci-16-09857/article_deploy/applsci-16-09857.pdf"
-  first_public_note: "Journal publication date; no earlier preprint identified."
+  first_public_note: "Journal publication date."
   added_at: "2026-10-19"
   venue: "Applied Sciences 2026"
   doi: "10.3390/app16199857"
@@ -3486,7 +3486,7 @@
   questions: [interpretability, evaluation, limitations, architecture]
   evidence: [empirical, mechanistic]
   modality: [language]
-  summary: "Inspects eight looped language models for state convergence, token decisions, readout quality, attention behavior, and sensitivity to injected noise. Finds important differences between models that receive the prompt once and those that reintroduce it at each loop."
+  summary: "Inspects eight looped language models for state convergence, token decisions, readout quality, attention behavior, and sensitivity to injected noise. Finds differences between models that receive the prompt once and those that reintroduce it at each loop."
   provenance: "Primary-source literature search, 2026-10-18"
   added_at: "2026-10-18"
 

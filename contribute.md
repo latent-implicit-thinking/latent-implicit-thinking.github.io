@@ -26,7 +26,7 @@ nav-short: true
       <article>
         <h2>Which papers fit?</h2>
         <p>Methods for reasoning without writing every step, and studies that test or explain them. We also include related ways to generate reasoning, such as parallel or diffusion-based methods.</p>
-        <p>Earlier architectural and theoretical background is listed separately. Using hidden states, memory, or diffusion alone is not enough: explain the connection to reasoning.</p>
+        <p>For work on hidden states, memory, or diffusion, explain the connection to reasoning. Earlier architectural and theoretical background is listed separately.</p>
       </article>
       <article>
         <h2>What to send</h2>

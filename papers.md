@@ -209,7 +209,7 @@ js:
   <aside class="lit-source-note">
     <div class="lit-shell">
       <p><strong>Download citations:</strong> <a href="{{ '/data/papers.bib' | relative_url }}">BibTeX</a> · <a href="{{ '/data/papers.csl.json' | relative_url }}">CSL-JSON</a>. These files cite each entry’s linked source. <a href="{{ '/data/#citation' | relative_url }}">Citation details →</a></p>
-      <p>This list may miss relevant work—<a href="{{ '/contribute/' | relative_url }}">suggest a paper or correction</a>. Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey for helping us find many of these papers.</p>
+      <p><a href="{{ '/contribute/' | relative_url }}">Suggest a paper or correction</a>. Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey for helping us find many of these papers.</p>
     </div>
   </aside>
 
@@ -217,7 +217,7 @@ js:
     <div class="lit-shell">
       <div class="lit-section-heading">
         <h2 id="precursor-title">Related background papers</h2>
-        <p>Earlier work on repeated computation, deciding when to stop, and learning algorithms. These papers provide context; they do not necessarily study implicit chain-of-thought.</p>
+        <p>Earlier work on repeated computation, deciding when to stop, and learning algorithms.</p>
       </div>
       <div class="lit-precursor-list">
         {% for paper in site.data.precursors %}
