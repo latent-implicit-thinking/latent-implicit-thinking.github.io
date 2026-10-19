@@ -7,6 +7,7 @@ require "json"
 require "rexml/document"
 require "uri"
 require "yaml"
+require_relative "public_files"
 
 # Check rendered artifacts, not just the templates that produce them. This also
 # runs from validate_corpus.rb, so the deployment gate covers every paper page.
@@ -344,10 +345,55 @@ module AgentExports
     end
   end
 
+  def arxiv_source?(paper)
+    paper.key?("arxiv") || (paper.key?("connection") && paper["id"].to_s.match?(/\A\d{4}\.\d{4,5}\z/) && paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}")
+  end
+
+  def validate_canonical_source(paper, publication, errors)
+    id = paper.fetch("id")
+    assert(PublicFiles.safe_paper_id?(id), "#{id}: unsafe record identifier", errors)
+    if arxiv_source?(paper)
+      assert(paper["paper_url"] == "https://arxiv.org/abs/#{id}" && (!paper.key?("arxiv") || paper["arxiv"] == id), "#{id}: arXiv identifier and source URL must agree", errors)
+      return
+    end
+    validate_publication_source(id, publication, paper, errors)
+    return unless publication.is_a?(Hash)
+
+    assert(paper["doi"].to_s.match?(%r{\A10\.\d{4,9}/\S+\z}) && paper["doi"] == publication["doi"], "#{id}: DOI-only entry needs the verified publication DOI", errors)
+    assert(paper["paper_url"] == publication["url"], "#{id}: DOI-only entry must link to its verified publication", errors)
+    assert(paper["title"] == publication["title"] && paper["authors"].to_s.split(", ") == publication["author_names"], "#{id}: DOI-only title and authors must match the publication", errors)
+    assert(paper.fetch("citation_date", paper["first_public"]).to_s[0, 4].to_i == publication["year"], "#{id}: DOI-only citation date must match publication year", errors)
+  end
+
+  def validate_citation_source_regressions(errors)
+    paper = {"id" => "journal2026example", "title" => "Journal example", "authors" => "A. Author", "first_public" => "2026-01-01", "doi" => "10.1234/example", "paper_url" => "https://doi.org/10.1234/example"}
+    publication = {"title" => paper["title"], "author_names" => ["A. Author"], "year" => 2026, "type" => "article-journal", "container_title" => "Example Journal", "doi" => paper["doi"], "url" => paper["paper_url"], "source_url" => paper["paper_url"], "verified_at" => "2026-01-01"}
+    {
+      "verified DOI source" => [paper, publication, true],
+      "missing verified publication" => [paper, nil, false],
+      "missing DOI" => [paper.reject { |key, _| key == "doi" }, publication, false],
+      "wrong publication DOI" => [paper, publication.merge("doi" => "10.1234/other"), false],
+      "wrong publication author" => [paper, publication.merge("author_names" => ["Other Author"]), false],
+      "wrong publication URL" => [paper, publication.merge("url" => "https://example.org/other"), false],
+      "invented arXiv ID" => [paper.merge("arxiv" => "2601.00001"), publication, false],
+      "unsafe slug" => [paper.merge("id" => "../journal2026example"), publication, false],
+      "arXiv source" => [{"id" => "2601.00001", "arxiv" => "2601.00001", "paper_url" => "https://arxiv.org/abs/2601.00001"}, nil, true],
+      "legacy arXiv precursor" => [{"id" => "2601.00001", "connection" => "Background", "paper_url" => "https://arxiv.org/abs/2601.00001"}, nil, true]
+    }.each do |name, (record, pub, valid)|
+      observed = []
+      validate_canonical_source(record, pub, observed)
+      assert(observed.empty? == valid, "citation source regression #{name}: did not #{valid ? 'accept' : 'reject'} fixture", errors)
+    end
+    ["../escape", "/absolute", "a/b", "a\\b", "a..b", "a%2fb", "a\nb", "A-title", "-title", "title-"].each do |id|
+      assert(!PublicFiles.safe_paper_id?(id), "unsafe record path accepted: #{id.inspect}", errors)
+    end
+  end
+
   def validate(repo_root, site_root)
     errors = []
     validate_comparison_regressions(errors)
     validate_dataset_regressions(errors)
+    validate_citation_source_regressions(errors)
     papers = load_yaml(repo_root, "papers")
     precursors = load_yaml(repo_root, "precursors")
     methods = load_yaml(repo_root, "methods")
@@ -394,6 +440,8 @@ module AgentExports
 
     records.each_with_index do |paper, index|
       id = paper.fetch("id")
+      validate_canonical_source(paper, publications[id], errors)
+      preprint = arxiv_source?(paper)
       collection = index < papers.length ? "core" : "precursor"
       prefix = collection == "core" ? "paper-" : "precursor-"
       citation_key = "lit_#{collection == 'precursor' ? 'precursor_' : ''}#{id.tr('.', '_')}"
@@ -432,10 +480,18 @@ module AgentExports
       [paper["title"], *authors, summary, paper["paper_url"], url, paper["first_public"]].each do |text|
         assert(markdown.include?(text.to_s), "#{id}: Markdown omits an essential record field", errors)
       end
-      assert(csl.length == 1 && csl.first == aggregate_csl.find { |item| item["id"] == citation_key }, "#{id}: standalone preprint CSL differs from the aggregate citation", errors)
-      assert(csl.length == 1 && csl.first["title"] == paper["title"], "#{id}: preprint citation title must remain the original paper title", errors)
+      assert(csl.length == 1 && csl.first == aggregate_csl.find { |item| item["id"] == citation_key }, "#{id}: standalone CSL differs from the aggregate citation", errors)
+      assert(csl.length == 1 && csl.first["title"] == paper["title"], "#{id}: citation title must remain the original paper title", errors)
       entries = bib_entries(bib)
-      assert(entries.keys == [citation_key] && entries[citation_key] == aggregate_bib[citation_key], "#{id}: standalone preprint BibTeX differs from aggregate citation", errors)
+      assert(entries.keys == [citation_key] && entries[citation_key] == aggregate_bib[citation_key], "#{id}: standalone BibTeX differs from aggregate citation", errors)
+      unless preprint
+        published = publication_csl.find { |item| item["id"] == citation_key + "_published" }
+        assert(published && csl.first && csl.first.reject { |key, _| key == "id" } == published.reject { |key, _| key == "id" }, "#{id}: DOI-only canonical CSL differs from verified publication", errors)
+        assert(entries[citation_key] == publication_bib[citation_key + "_published"], "#{id}: DOI-only canonical BibTeX differs from verified publication", errors)
+        assert(bib.start_with?(publications.dig(id, "type") == "paper-conference" ? "@inproceedings{" : "@article{"), "#{id}: DOI-only BibTeX must use a publication type", errors)
+        assert(!visible.match?(/arxiv|preprint citation/i) && !markdown.match?(/arxiv|\[Preprint (?:BibTeX|CSL-JSON)\]/i), "#{id}: DOI-only page invents an arXiv/preprint version", errors)
+        assert(!bib.include?("archivePrefix") && !bib.include?("eprint =") && csl.first && !csl.first.key?("archive") && csl.first["genre"] != "Preprint", "#{id}: DOI-only citations contain preprint fields", errors)
+      end
       related_terms = paper.fetch("related_terms", [])
       assert(record.fetch("related_terms", []) == related_terms, "#{id}: exported related terms differ from source", errors)
       row = old_index[/<article\b[^>]*id="#{Regexp.escape(prefix + id.tr('.', '-'))}"[^>]*>.*?<\/article>/m].to_s
@@ -485,7 +541,8 @@ module AgentExports
       if article
         assert(article["@type"] == "ScholarlyArticle" && article["name"] == paper["title"] && article["description"] == summary, "#{id}: structured article differs from visible title or summary", errors)
         assert(article["author"] == authors.map { |name| {"@type" => "Person", "name" => name} }, "#{id}: structured article authors differ from visible authors", errors)
-        assert(article.dig("identifier", "value") == id, "#{id}: structured article identifier differs", errors)
+        identifier = {"@type" => "PropertyValue", "propertyID" => preprint ? "arXiv" : "DOI", "value" => preprint ? id : paper["doi"]}
+        assert(article["identifier"] == identifier, "#{id}: structured article identifier differs", errors)
         assert([paper["paper_url"], url].include?(article["url"]), "#{id}: structured article URL points at another work", errors)
         assert(article.fetch("keywords", []) == related_terms, "#{id}: scholarly keywords differ from the visible related terms", errors)
       end
@@ -670,14 +727,16 @@ module AgentExports
     assert(citation["author"] == publication.fetch("author_names", []).map { |name| {"literal" => name} }, "#{id}: publication author list differs from verified order", errors)
     assert(citation.dig("issued", "date-parts") == [[publication["year"]]], "#{id}: publication year must not be replaced by arXiv chronology", errors)
     assert(citation["container-title"] == publication["container_title"] && citation["publisher"] == publication["publisher"], "#{id}: publication venue or publisher differs from verified metadata", errors)
-    {"doi" => "DOI", "pages" => "page", "volume" => "volume"}.each do |source_key, csl_key|
+    {"doi" => "DOI", "volume" => "volume", "issue" => "issue"}.each do |source_key, csl_key|
       assert(citation[csl_key] == publication[source_key], "#{id}: publication #{csl_key} differs from verified metadata", errors)
     end
+    assert(citation["page"] == (publication["pages"] || publication["article_number"]), "#{id}: publication pages or article number differs", errors)
     assert(!citation.key?("archive") && !citation.key?("number") && citation["genre"] != "Preprint", "#{id}: publication citation incorrectly describes a preprint", errors)
     entry = entries.fetch(key, "")
     assert(entry.match?(/year\s*=\s*\{\s*#{publication['year']}\s*\}/), "#{id}: publication BibTeX year differs", errors)
     assert(entry.include?("url = {#{publication['url']}}"), "#{id}: publication BibTeX source identity differs", errors)
-    %w[publication.bib publication.csl.json].each do |filename|
+    downloads = arxiv_source?(paper) ? %w[publication.bib publication.csl.json] : %w[citation.bib citation.csl.json]
+    downloads.each do |filename|
       assert(linked?(html, "#{canonical}#{path}/#{filename}", canonical), "#{id}: paper page omits publication download #{filename}", errors)
     end
     assert(linked?(html, publication["url"], canonical), "#{id}: publication source is not visible", errors)

@@ -17,7 +17,7 @@ Cite the original papers for scientific claims. The summaries below are written 
 
 - [JSON paper list]({{ '/data/papers.json' | absolute_url }})
 - [Recent additions]({{ '/recent/' | absolute_url }}): additions since the initial collection, not necessarily newly published papers
-- [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): arXiv preprints using initial submission dates, not later proceedings; source URLs are not version-pinned
+- [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): each entry's linked source—arXiv preprints using initial submission dates, or verified publications for entries without an arXiv version
 - [Introduction and examples]({{ '/topics/' | absolute_url }})
 - [Downloads and file details]({{ '/data/' | absolute_url }})
 - [Corrections]({{ '/contribute/' | absolute_url }})
@@ -37,7 +37,7 @@ For example: {{ method.example }}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
+Source: [{% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ site.data.publications[paper.id].doi }}{% endif %}]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
 {% if paper.related_terms %}Related terms: {{ paper.related_terms | join: '; ' }}.
@@ -50,7 +50,7 @@ Summary: {{ paper.summary }}
 {% endfor %}
 {% if paper.added_at %}Added to this list: {{ paper.added_at }}.
 {% endif %}
-{% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}). Linked arXiv version: {{ paper.citation_date }}.
+{% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}).{% if paper.arxiv %} Linked arXiv version: {{ paper.citation_date }}.{% endif %}
 {% endif %}{% endfor %}
 ## Related background papers
 {% for paper in site.data.precursors %}

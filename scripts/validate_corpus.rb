@@ -19,6 +19,15 @@ def validate_against_schema(value, schema, root_schema, path, errors)
     return validate_against_schema(value, target, root_schema, path, errors)
   end
 
+  if schema["anyOf"]
+    matches = schema["anyOf"].any? do |branch|
+      branch_errors = []
+      validate_against_schema(value, branch, root_schema, path, branch_errors)
+      branch_errors.empty?
+    end
+    errors << "#{path} does not match any declared source type" unless matches
+  end
+
   errors << "#{path} is outside the declared enum" if schema["enum"] && !schema["enum"].include?(value)
 
   case schema["type"]
@@ -96,6 +105,7 @@ end
 papers = YAML.safe_load(File.read(File.join(repo_root, "_data/papers.yml")), permitted_classes: [Date], aliases: false)
 precursors = YAML.safe_load(File.read(File.join(repo_root, "_data/precursors.yml")), permitted_classes: [Date], aliases: false)
 meta = YAML.safe_load(File.read(File.join(repo_root, "_data/meta.yml")), permitted_classes: [Date], aliases: false)
+publications = YAML.safe_load(File.read(File.join(repo_root, "_data/publications.yml")), permitted_classes: [Date], aliases: false)
 
 required_paper_fields = %w[id title authors first_public venue paper_url lens representation computation training questions evidence modality summary provenance]
 array_fields = %w[lens representation computation training questions evidence modality]
@@ -206,13 +216,21 @@ all_records.each_with_index do |paper, index|
   errors << "#{key}: Markdown reading list omits title, authors, source or record" unless [paper["title"], paper["authors"], paper["paper_url"], expected_url].all? { |value| reading_list.include?(value) }
   errors << "#{key}: CSL title or source differs" unless citation["title"] == paper["title"] && citation["URL"] == paper["paper_url"]
   errors << "#{key}: CSL authors are not lossless and ordered" unless citation["author"] == authors.map { |name| {"literal" => name} }
-  errors << "#{key}: CSL date differs from citation version" unless citation.dig("issued", "date-parts") == [date_parts]
+  publication = publications[paper["id"]]
+  preprint = AgentExports.arxiv_source?(paper)
+  expected_issued = preprint ? [date_parts] : [[publication.fetch("year")]]
+  errors << "#{key}: CSL date differs from citation version" unless citation.dig("issued", "date-parts") == expected_issued
   errors << "#{key}: CSL collection or record URL differs" unless citation.dig("custom", "collection") == collection && citation.dig("custom", "record_url") == expected_url
   errors << "#{key}: CSL chronology differs from source" unless citation.dig("custom", "first_public") == paper["first_public"]
-  errors << "#{key}: citation source is not the declared arXiv version" unless paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}" && citation["number"] == "arXiv:#{paper['id']}" && citation["archive"] == "arXiv"
+  if preprint
+    errors << "#{key}: citation source is not the declared arXiv version" unless paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}" && citation["number"] == "arXiv:#{paper['id']}" && citation["archive"] == "arXiv"
+    errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("eprint = {#{paper['id']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && bib_entry.include?("note = {arXiv preprint}")
+  else
+    errors << "#{key}: canonical citation does not identify the verified publication" unless publication && citation["DOI"] == publication["doi"] && citation["type"] == publication["type"] && citation["container-title"] == publication["container_title"] && !citation.key?("archive") && citation["genre"] != "Preprint"
+    errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("doi = {#{paper['doi']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && !bib_entry.include?("eprint =") && !bib_entry.include?("arXiv")
+  end
   errors << "#{key}: BibTeX year differs from citation version" unless bib_entry.match?(/year\s*=\s*\{\s*#{date_parts.first}\s*\}/)
   errors << "#{key}: BibTeX authors differ" unless bib_entry.include?("author = {#{authors.join(' and ')}}")
-  errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("eprint = {#{paper['id']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && bib_entry.include?("note = {arXiv preprint}")
   escaped_title = paper.fetch("title").gsub(/[&%_#$]/) { |char| "\\#{char}" }
   errors << "#{key}: BibTeX title or capitalization protection differs" unless bib_entry.include?("title = { {#{escaped_title}} }")
 
@@ -223,7 +241,8 @@ all_records.each_with_index do |paper, index|
 
   row = paper_html.match(/<article\s+id="#{Regexp.escape(anchor)}"(.*?)<\/article>/m)&.[](1).to_s
   searchable = CGI.unescapeHTML(row[/data-search="([^"]*)"/, 1].to_s)
-  [paper["id"], "arXiv:#{paper['arxiv']}", paper["venue"], paper["title"], paper["authors"]].each do |term|
+  source_identifier = preprint ? "arXiv:#{paper['arxiv']}" : "DOI:#{paper['doi']}"
+  [paper["id"], source_identifier, paper["venue"], paper["title"], paper["authors"]].each do |term|
     errors << "#{key}: search index omits #{term}" unless searchable.include?(term.downcase)
   end
   Array(paper["previous_titles"]).each do |title|
@@ -309,7 +328,8 @@ Dir[File.join(site_root, "**", "*.html")].each do |html_file|
       source = expected_records[index] || {}
       scholarly = item["item"] || {}
       expected_authors = source.fetch("authors", "").split(", ").map { |name| {"@type" => "Person", "name" => name} }
-      errors << "#{relative_path}: scholarly record #{index} differs from visible source" unless item["position"] == index + 1 && scholarly["@type"] == "ScholarlyArticle" && scholarly["name"] == source["title"] && scholarly["url"] == source["paper_url"] && scholarly["@id"] == source["paper_url"] && scholarly["author"] == expected_authors && scholarly["description"] == source["summary"] && scholarly.dig("identifier", "value") == source["id"]
+      identifier = source["arxiv"] ? {"@type" => "PropertyValue", "propertyID" => "arXiv", "value" => source["arxiv"]} : {"@type" => "PropertyValue", "propertyID" => "DOI", "value" => source["doi"]}
+      errors << "#{relative_path}: scholarly record #{index} differs from visible source" unless item["position"] == index + 1 && scholarly["@type"] == "ScholarlyArticle" && scholarly["name"] == source["title"] && scholarly["url"] == source["paper_url"] && scholarly["@id"] == source["paper_url"] && scholarly["author"] == expected_authors && scholarly["description"] == source["summary"] && scholarly["identifier"] == identifier
     end
     errors << "#{relative_path}: related concepts are incorrectly marked as synonyms" if collection.dig("about", "alternateName")
   end

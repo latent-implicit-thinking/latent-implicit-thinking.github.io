@@ -6,7 +6,7 @@ share-description: "See which papers have joined the implicit chain-of-thought r
 permalink: /recent/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-19
 ---
 
 {% assign tracked_papers = site.data.papers | where_exp: "paper", "paper.added_at" | reverse %}
@@ -47,7 +47,7 @@ last_modified_at: 2026-10-18
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
             <a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a>
-            <span>arXiv:{{ paper.arxiv }}</span>
+            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% else %}<span>DOI:{{ site.data.publications[paper.id].doi }}</span>{% endif %}
           </div>
         </article>
         {% endfor %}

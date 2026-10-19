@@ -6,7 +6,7 @@ share-description: "Search the implicit chain-of-thought literature by method fa
 permalink: /papers/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-19
 js:
   - "/assets/js/lit-hub.js"
 ---
@@ -154,7 +154,8 @@ js:
       <div id="paper-list" class="lit-paper-list">
         {% for paper in site.data.papers %}
         {% capture lens_labels %}{% for value in paper.lens %}{% case value %}{% when 'internalized' %}internalized reasoning{% when 'learned-tokens' %}thinking tokens learned tokens{% when 'continuous' %}continuous states{% when 'recurrent' %}recurrent stateful{% when 'beyond-sequential' %}alternative schedules beyond sequential{% when 'analysis' %}analysis evaluation limits{% endcase %} {% endfor %}{% endcapture %}
-        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.related_terms | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
+        {% assign publication = site.data.publications[paper.id] %}
+        {% capture searchable %}{{ paper.id }} {% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ publication.doi }}{% endif %} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.related_terms | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
         <article
           id="paper-{{ paper.id | replace: '.', '-' }}"
           class="lit-paper-row"
@@ -181,7 +182,7 @@ js:
             <p class="lit-paper-authors">{{ paper.authors }}</p>
             <p class="lit-paper-summary">{{ paper.summary }}</p>
             {% if paper.related_terms %}<p class="lit-guide-note">Related terms: {{ paper.related_terms | join: ', ' | escape }}.</p>{% endif %}
-            {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p></details>{% endif %}
+            {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }}{% if paper.arxiv %} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.{% endif %}</p></details>{% endif %}
             <div class="lit-paper-tags" aria-label="Approaches">
               {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}<span>{{ category.label }}</span>{% endfor %}
             </div>
@@ -190,7 +191,7 @@ js:
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
             <a class="lit-record-link" href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}" aria-label="Details and citations for {{ paper.title | escape }}">Details &amp; citations</a>
-            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% endif %}
+            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% elsif publication.doi %}<span>DOI:{{ publication.doi }}</span>{% endif %}
           </div>
         </article>
         {% endfor %}
@@ -205,7 +206,7 @@ js:
 
   <aside class="lit-source-note">
     <div class="lit-shell">
-      <p><strong>Download citations:</strong> <a href="{{ '/data/papers.bib' | relative_url }}">BibTeX</a> · <a href="{{ '/data/papers.csl.json' | relative_url }}">CSL-JSON</a>. These files cite the arXiv preprints. <a href="{{ '/data/#citation' | relative_url }}">Citation details →</a></p>
+      <p><strong>Download citations:</strong> <a href="{{ '/data/papers.bib' | relative_url }}">BibTeX</a> · <a href="{{ '/data/papers.csl.json' | relative_url }}">CSL-JSON</a>. These files cite each entry’s linked source. <a href="{{ '/data/#citation' | relative_url }}">Citation details →</a></p>
       <p>This list may miss relevant work—<a href="{{ '/contribute/' | relative_url }}">suggest a paper or correction</a>. Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey for helping us find many of these papers.</p>
     </div>
   </aside>

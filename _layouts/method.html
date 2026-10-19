@@ -61,7 +61,7 @@ layout: base
             <a href="{{ paper.paper_url }}">Paper ↗</a>
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
             <a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a>
-            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% endif %}
+            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% else %}<span>DOI:{{ site.data.publications[paper.id].doi }}</span>{% endif %}
           </div>
         </article>
         {% endfor %}

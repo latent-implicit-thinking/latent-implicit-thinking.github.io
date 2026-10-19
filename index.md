@@ -6,7 +6,7 @@ share-title: "Implicit Chain-of-Thought — Reading List and Research Guide"
 share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, source-backed comparisons, examples, and downloadable citations."
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-19
 ---
 
 <main class="lit-home">

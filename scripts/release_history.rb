@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "date"
+require_relative "public_files"
 
 module ReleaseHistory
   module_function
@@ -34,7 +35,7 @@ module ReleaseHistory
         end
         errors << "Duplicate #{field} IDs in #{label}" unless values.uniq == values
         values.each do |id|
-          unless id.is_a?(String) && id.match?(/\A\d{4}\.\d{4,5}\z/)
+          unless PublicFiles.safe_paper_id?(id)
             errors << "Malformed #{field} ID in #{label}"
             next
           end

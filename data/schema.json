@@ -56,7 +56,7 @@ permalink: /data/schema.json
       "type": "object",
       "required": ["id", "title", "authors", "first_public", "venue", "paper_url", "lens", "representation", "computation", "training", "questions", "evidence", "modality", "summary", "provenance"],
       "properties": {
-        "id": {"type": "string", "description": "Stable record identifier; arXiv ID when available."},
+        "id": {"type": "string", "pattern": "^(?:[0-9]{4}\\.[0-9]{4,5}|[a-z][a-z0-9]*(?:-[a-z0-9]+)*)$", "description": "Stable record identifier; arXiv ID when available, otherwise a lowercase slug."},
         "title": {"type": "string"},
         "previous_titles": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
         "related_terms": {"type": "array", "items": {"type": "string", "minLength": 1, "pattern": "\\S"}, "minItems": 1, "uniqueItems": true, "description": "Editorial search terminology that connects this paper to related names for its research area; not alternative paper titles."},
@@ -77,9 +77,10 @@ permalink: /data/schema.json
         "first_public": {"type": "string", "format": "date"},
         "first_public_source": {"type": "string", "format": "uri"},
         "first_public_note": {"type": "string"},
-        "citation_date": {"type": "string", "format": "date", "description": "ArXiv v1 submission date for the linked citation version, distinct from earlier conference history or later proceedings."},
+        "citation_date": {"type": "string", "format": "date", "description": "Date of the linked source: arXiv v1 submission or DOI-only publication, distinct from earlier public history."},
         "venue": {"type": "string"},
         "arxiv": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"},
+        "doi": {"type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$"},
         "paper_url": {"type": "string", "format": "uri"},
         "code_url": {"type": "string", "format": "uri"},
         "lens": {"$ref": "#/$defs/lensValues"},
@@ -92,7 +93,11 @@ permalink: /data/schema.json
         "summary": {"type": "string"},
         "provenance": {"type": "string"}
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "anyOf": [
+        {"type": "object", "required": ["arxiv"]},
+        {"type": "object", "required": ["doi", "publication"], "properties": {"publication": {"type": "object", "required": ["doi"]}}}
+      ]
     },
     "precursor": {
       "type": "object",
@@ -182,6 +187,8 @@ permalink: /data/schema.json
         "doi": {"type": "string"},
         "pages": {"type": "string"},
         "volume": {"type": "string"},
+        "issue": {"type": "string"},
+        "article_number": {"type": "string"},
         "source_url": {"type": "string", "format": "uri"},
         "verified_at": {"type": "string", "format": "date"}
       },

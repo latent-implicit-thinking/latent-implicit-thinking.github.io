@@ -83,20 +83,39 @@ module Literature
     prefix + paper.fetch("id").tr(".", "_")
   end
 
+  def arxiv_id(paper)
+    return paper["arxiv"] if paper["arxiv"]
+    # Older background records store the identifier only in their source URL.
+    paper["id"] if paper["id"].to_s.match?(/\A\d{4}\.\d{4,5}\z/) && paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}"
+  end
+
+  def canonical_publication(site, paper)
+    return nil if arxiv_id(paper)
+
+    publication = site.data.fetch("publications", {})[paper.fetch("id")]
+    raise "#{paper['id']}: non-arXiv paper requires verified DOI publication metadata" unless publication && publication["doi"].to_s.match?(%r{\A10\.\d{4,9}/\S+\z})
+
+    publication
+  end
+
   def csl(site, paper, publication = nil)
+    canonical = publication.nil?
+    publication ||= canonical_publication(site, paper)
     entry = record(site, paper)
     custom = {"record_url" => entry["record_url"], "first_public" => paper["first_public"],
               "collection" => key(site, paper).start_with?("lit_precursor_") ? "precursor" : "core"}
     if publication
-      value = {"id" => key(site, paper) + "_published", "type" => publication.fetch("type"),
+      value = {"id" => key(site, paper) + (canonical ? "" : "_published"), "type" => publication.fetch("type"),
                "title" => publication.fetch("title"), "author" => publication.fetch("author_names").map { |name| {"literal" => name} },
                "issued" => {"date-parts" => [[publication.fetch("year")]]},
                "container-title" => publication.fetch("container_title"), "URL" => publication.fetch("url"),
-               "custom" => custom.merge("citation_basis" => "Verified published version; distinct from the arXiv preprint.",
+               "custom" => custom.merge("citation_basis" => arxiv_id(paper) ? "Verified published version; distinct from the arXiv preprint." : "Verified published version.",
                                          "source_url" => publication.fetch("source_url"), "verified_at" => publication.fetch("verified_at"))}
       {"DOI" => "doi", "page" => "pages", "volume" => "volume", "publisher" => "publisher"}.each do |target, source|
         value[target] = publication[source] if publication[source]
       end
+      value["issue"] = publication["issue"] if publication["issue"]
+      value["page"] = publication["article_number"] if publication["article_number"] && !publication["pages"]
       value
     else
       {"id" => key(site, paper), "type" => "article", "title" => paper.fetch("title"),
@@ -112,14 +131,18 @@ module Literature
   end
 
   def bib(site, paper, publication = nil)
+    canonical = publication.nil?
+    publication ||= canonical_publication(site, paper)
     if publication
       kind = publication.fetch("type") == "paper-conference" ? "inproceedings" : "article"
       container = kind == "inproceedings" ? "booktitle" : "journal"
       fields = {"title" => " {#{tex(publication.fetch('title'))}} ", "author" => publication.fetch("author_names").map { |name| tex(name) }.join(" and "),
                 "year" => publication.fetch("year"), container => tex(publication.fetch("container_title"))}
       %w[publisher volume pages doi].each { |field| fields[field] = tex(publication[field]) if publication[field] }
+      fields["number"] = tex(publication["issue"]) if publication["issue"]
+      fields["pages"] = tex(publication["article_number"]) if publication["article_number"] && !publication["pages"]
       fields["url"] = publication.fetch("url")
-      citation_key = key(site, paper) + "_published"
+      citation_key = key(site, paper) + (canonical ? "" : "_published")
     else
       kind = "misc"
       fields = {"title" => " {#{tex(paper.fetch('title'))}} ", "author" => paper.fetch("authors").split(", ").map { |name| tex(name) }.join(" and "),
@@ -132,11 +155,12 @@ module Literature
 
   def markdown(site, paper)
     entry = record(site, paper)
+    preprint = arxiv_id(paper)
     lines = ["# #{paper.fetch('title')}", "", "Authors: #{paper.fetch('authors')}.", "",
              paper["summary"] || paper.fetch("connection"), "", "First public: #{paper.fetch('first_public')}.",
-             "ArXiv initial submission: #{entry.fetch('citation_date')}.", "",
+             *(preprint ? ["ArXiv initial submission: #{entry.fetch('citation_date')}."] : []), "",
              "[Original paper](#{paper.fetch('paper_url')}) · [Reading-list entry](#{entry.fetch('record_url')})",
-             "[Preprint BibTeX](#{entry.fetch('bibtex_url')}) · [Preprint CSL-JSON](#{entry.fetch('csl_url')}) · [JSON record](#{entry.fetch('json_url')})"]
+             "[#{preprint ? 'Preprint ' : ''}BibTeX](#{entry.fetch('bibtex_url')}) · [#{preprint ? 'Preprint ' : ''}CSL-JSON](#{entry.fetch('csl_url')}) · [JSON record](#{entry.fetch('json_url')})"]
     lines << "[Code](#{paper['code_url']})" if paper["code_url"]
     lines += ["", "Related terms: #{paper['related_terms'].join(', ')}."] if paper["related_terms"]
     unless entry.fetch("method_comparisons", []).empty?
@@ -164,6 +188,10 @@ module Literature
   end
 
   module Filters
+    def lit_arxiv_id(paper)
+      Literature.arxiv_id(paper)
+    end
+
     def lit_paper_by_id(id)
       site = @context.registers[:site]
       (site.data.fetch("papers") + site.data.fetch("precursors")).find { |paper| paper.fetch("id") == id }
@@ -207,7 +235,7 @@ module Literature
       publications = site.data.fetch("publications", {})
       publication_bib, publication_csl = [], []
       records.each do |paper|
-        raise "Unsafe paper identifier" unless paper.fetch("id").match?(/\A\d{4}\.\d{4,5}\z/)
+        raise "Unsafe paper identifier" unless paper.fetch("id").match?(/\A(?:\d{4}\.\d{4,5}|[a-z][a-z0-9]*(?:-[a-z0-9]+)*)\z/)
         dir = "papers/#{paper.fetch('id')}/"
         entry = Literature.record(site, paper)
         publication = publications[paper["id"]]

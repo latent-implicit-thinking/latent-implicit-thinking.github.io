@@ -21,7 +21,7 @@ permalink: /data/papers.json
     "reading_list_url": {{ '/data/reading-list.md' | absolute_url | jsonify }},
     "recent_additions_url": {{ '/recent/' | absolute_url | jsonify }},
     "addition_tracking_started_at": {{ site.data.meta.addition_tracking_started_at | jsonify }},
-    "citation_policy": "Citation exports describe arXiv preprints, using their initial submission dates, not later proceedings. Source URLs are not version-pinned. citation_date is the arXiv v1 submission date; first_public orders the earliest dated public version verified during curation and may refer to an earlier conference presentation. These are not verified public-announcement timestamps.",
+    "citation_policy": "Citation exports describe each entry's linked source: arXiv preprints using initial submission dates, or verified publications for entries without an arXiv version. Source URLs are not version-pinned. citation_date is the linked source's date; first_public orders the earliest dated public version verified during curation and may refer to an earlier conference presentation. These are not verified public-announcement timestamps.",
     "license_name": {{ site.data.meta.license_name | jsonify }},
     "license_url": {{ site.data.meta.license_url | jsonify }},
     "license_scope": "Original taxonomy, normalized curation metadata, summaries, and editorial material; third-party works remain under their own terms.",

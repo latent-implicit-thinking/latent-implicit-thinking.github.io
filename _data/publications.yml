@@ -1,3 +1,17 @@
+"lei2026revisionrisk":
+  title: "Question Selection and Answer Scoring Shape Revision Risk in Recurrent Language Models"
+  author_names: ["Ruian Lei", "Yazhou Ren", "Zenglin Xu"]
+  year: 2026
+  type: "article-journal"
+  container_title: "Applied Sciences"
+  volume: "16"
+  issue: "19"
+  article_number: "9857"
+  doi: "10.3390/app16199857"
+  url: "https://doi.org/10.3390/app16199857"
+  source_url: "https://mdpi-res.com/d_attachment/applsci/applsci-16-09857/article_deploy/applsci-16-09857.pdf"
+  verified_at: "2026-10-19"
+
 "2310.02226":
   title: "Think before you speak: Training Language Models With Pause Tokens"
   author_names: ["Sachin Goyal", "Ziwei Ji", "Ankit Singh Rawat", "Aditya Krishna Menon", "Sanjiv Kumar", "Vaishnavh Nagarajan"]

@@ -23,7 +23,7 @@ permalink: /data/ontology.json
   },
   "date_policy": {
     "field": "first_public",
-    "definition": "Date of the earliest public version verified during curation, usually the arXiv v1 submission date, not an independently verified announcement timestamp. Earlier conference presentations carry a source note. citation_date separately dates the linked arXiv version used by citation exports.",
+    "definition": "Date of the earliest public version verified during curation, usually the arXiv v1 submission date, not an independently verified announcement timestamp. Earlier conference presentations carry a source note. citation_date dates the linked source: the initial arXiv submission or, for a DOI-only record, the journal publication.",
     "sort_order": "ascending by first_public, then stable record identifier"
   },
   "research_lenses": [

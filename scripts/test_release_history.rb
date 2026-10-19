@@ -36,6 +36,16 @@ module ReleaseHistoryTests
       ["out-of-order release dates", [add, remove], [], false],
       ["same-date releases preserve order", [restore.merge("date" => "2026-10-02"), remove, add], [original.merge("added_at" => "2026-10-02")], true]
     ]
+    slug = "journal2026example"
+    slug_add = add.merge("added_papers" => [slug])
+    slug_remove = remove.merge("removed_papers" => [slug])
+    slug_restore = restore.merge("added_papers" => [slug])
+    cases += [
+      ["DOI-only slug addition", [slug_add], [added.merge("id" => slug)], true],
+      ["DOI-only slug restoration", [slug_restore, slug_remove, slug_add], [restored.merge("id" => slug)], true],
+      ["DOI-only slug duplicate addition", [slug_restore, slug_add], [restored.merge("id" => slug)], false],
+      ["unsafe slug restoration", [slug_restore.merge("added_papers" => ["../journal2026example"]), slug_remove, slug_add], [restored.merge("id" => slug)], false]
+    ]
     cases.each do |name, releases, papers, valid|
       errors = ReleaseHistory.validate(releases, papers)
       raise "#{name}: expected #{valid ? 'valid' : 'invalid'} history, got #{errors.inspect}" unless errors.empty? == valid

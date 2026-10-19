@@ -3054,6 +3054,26 @@
   summary: "Compresses images of written derivations into continuous states, training both the answers they support and the reasoning that can be recovered from them. Gradually shifts from generating latent blocks in parallel to generating them in sequence."
   provenance: "Primary-source literature search, 2026-10-18"
 
+- id: "lei2026revisionrisk"
+  title: "Question Selection and Answer Scoring Shape Revision Risk in Recurrent Language Models"
+  authors: "Ruian Lei, Yazhou Ren, Zenglin Xu"
+  first_public: "2026-10-05"
+  first_public_source: "https://mdpi-res.com/d_attachment/applsci/applsci-16-09857/article_deploy/applsci-16-09857.pdf"
+  first_public_note: "Journal publication date; no earlier preprint identified."
+  added_at: "2026-10-19"
+  venue: "Applied Sciences 2026"
+  doi: "10.3390/app16199857"
+  paper_url: "https://doi.org/10.3390/app16199857"
+  lens: [analysis, recurrent]
+  representation: [hidden-state]
+  computation: [recurrent, depth-wise]
+  training: [analysis-only]
+  questions: [evaluation]
+  evidence: [empirical]
+  modality: [language]
+  summary: "Tests how answer scoring changes measurements of early-answer stability in Huginn and Ouro. Shows that choosing which questions to answer early and deciding what counts as an answer change must be evaluated separately; lower revision risk did not establish better accuracy or stopping decisions."
+  provenance: "Primary-source literature search, 2026-10-19"
+
 - id: "2610.07591"
   title: "Recurrent Looped Transformer"
   authors: "Yifan Zhang, Jichen Feng, Shihan Qin, Sun-Yuan Kung, Mengdi Wang"

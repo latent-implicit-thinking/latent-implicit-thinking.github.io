@@ -40,7 +40,7 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 - [Category definitions]({{ '/data/ontology.json' | absolute_url }}): category IDs, descriptions, and allowed filter values
 - [JSON Schema]({{ '/data/schema.json' | absolute_url }}): field types and constraints
 - [BibTeX]({{ '/data/papers.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }}): citations for all papers, including background
-- [Published-version BibTeX]({{ '/data/publications.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/publications.csl.json' | absolute_url }}): only the subset with verified publication records; not a replacement for the complete preprint files
+- [Published-version BibTeX]({{ '/data/publications.bib' | absolute_url }}) and [CSL-JSON]({{ '/data/publications.csl.json' | absolute_url }}): only the subset with verified publication records; not a replacement for the complete citation files
 - [Changes]({{ '/data/changes.json' | absolute_url }}) and [RSS feed]({{ '/feed.xml' | absolute_url }}): website and reading-list updates
 - [Source repository]({{ site.data.meta.repository_url }})
 
@@ -55,8 +55,8 @@ Use the original papers for scientific claims. Summaries and categories are writ
 - Optional `method_comparisons` contains the comparisons shown on a paper's page, with the papers discussed in `source_ids`, primary-source links in `source_urls`, and readable `source_labels`. Each comparison identifies its topic guide. A comparison may explain a difference or a documented influence; its presence is not itself an influence claim.
 - `added_at` is when a paper was added to this list, not its publication date. Tracking began {{ site.data.meta.addition_tracking_started_at }}; initial-collection records omit this field. Release history lists `added_papers` IDs. A new addition may be an older paper.
 - `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note. It is not an independently verified announcement date.
-- `citation_date` is the initial submission date of the linked arXiv preprint. BibTeX and CSL-JSON describe that preprint, not a later proceedings version. Source URLs may serve revised versions.
-- Optional `publication` metadata describes a separately verified published version. Its own title, author list and year may differ; use `publication_bibtex_url` or `publication_csl_url` for that version. Absence means we have not verified a publication record, not that the paper is unpublished.
+- `citation_date` is the date of the linked source: the initial submission for an arXiv preprint, or the publication date for a DOI-only entry. The complete BibTeX and CSL-JSON files cite that source. Source URLs may serve revised versions.
+- `publication` metadata describes a verified published version. For arXiv entries, its title, author list and year may differ; use `publication_bibtex_url` or `publication_csl_url` for that version. DOI-only entries use this metadata in their default citations too. Absence means we have not verified a publication record, not that the paper is unpublished.
 - Optional `demos` link to interactive examples and model details. Each demo's `paper_relationships` distinguishes `implementation` from `related_method`; `relationship` gives its connection to the current paper. A related-method demo does not implement that paper. Topic downloads also list the demos shown in the guide. Demo outputs are examples, not benchmark evidence; use the method paper for scientific claims and cite the model separately when you use it.
 - Release entries can list `updated_papers` (IDs and changed fields) and `removed_papers` (IDs). Refresh cached records using the current corpus; do not treat a historical release as the current membership list.
 - `provenance` says where we first found a paper.

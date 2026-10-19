@@ -17,10 +17,10 @@ The list covers methods that replace, compress, or learn from written reasoning,
 Paper entries live in `_data/papers.yml`; background papers live in `_data/precursors.yml`. The website and JSON, Markdown, BibTeX, and CSL-JSON downloads are generated from these files.
 
 - Check titles, authors, links, and dates against the original paper. Write summaries in your own words.
-- `first_public` is the earliest public date we have verified, usually the first arXiv submission. For an earlier conference presentation, include `first_public_source` and `first_public_note`. Set `citation_date` to the initial submission date of the linked arXiv preprint. Do not infer dates from an arXiv identifier or venue label.
+- `first_public` is the earliest public date we have verified, usually the first arXiv submission. For an earlier conference presentation, include `first_public_source` and `first_public_note`. Set `citation_date` to the linked source's date: initial submission for an arXiv preprint, or publication for a DOI-only entry. Do not infer dates from an identifier or venue label.
 - Preserve author names and order. The current comma-separated format requires each author's name to contain no comma.
 - Assign more than one category when appropriate. The allowed values are in `data/ontology.json`.
-- Citation exports currently describe arXiv preprints, not later proceedings. Supporting other sources would require changes to the exports and their tests.
+- Citation exports describe the linked arXiv preprint, or the verified publication for DOI-only entries. For a DOI-only entry, use a stable lowercase record ID, omit `arxiv`, and add its DOI and verified citation fields to `_data/publications.yml`. The title, ordered authors and source URL must match that publication record; never invent an arXiv identifier.
 - Describe substantial reading-list changes in `_data/releases.yml`.
 
 We review suggestions before adding them.

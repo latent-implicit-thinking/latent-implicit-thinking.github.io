@@ -7,5 +7,5 @@ permalink: /topics/recurrent-reasoning/
 method_id: recurrent
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-19
 ---

@@ -1,3 +1,12 @@
+- version: "0.9.6"
+  date: "2026-10-19"
+  title: "Recurrent-model evaluation and journal citations"
+  changes:
+    - "Added a study of how answer scoring and question selection affect measurements of early-answer stability in recurrent language models. The collection now contains 208 papers plus eight background papers."
+    - "Added journal-source citations for papers without an arXiv version, including DOI, volume, issue and article number in citation downloads."
+    - "The literature-check date remains October 18: this addition is source-verified, but the latest discovery scan is incomplete."
+  added_papers: ["lei2026revisionrisk"]
+
 - version: "0.9.5"
   date: "2026-10-18"
   title: "Reading-list navigation"
