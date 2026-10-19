@@ -4,7 +4,7 @@ A reading list about reasoning without writing every intermediate step, also dis
 
 [Visit the reading list](https://latent-implicit-thinking.github.io/).
 
-Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
+Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's [distillation method](https://arxiv.org/html/2311.01460v1#S3) is one implementation of that proposal. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
 
 - New to the field? [Start with explanations and concrete examples](https://latent-implicit-thinking.github.io/topics/).
 - Looking for papers? [Browse the paper list](https://latent-implicit-thinking.github.io/papers/), search by author, title, method, or arXiv ID, and sort by publication date or when papers joined the list. Related background papers are listed separately.

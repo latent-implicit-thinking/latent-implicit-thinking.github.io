@@ -1,8 +1,9 @@
 internalized:
   - title: "Distillation and stepwise internalization"
     text: >-
-      Knowledge distillation and stepwise internalization use different training
-      signals. Implicit CoT via Knowledge Distillation learns to predict a
+      Deng et al. (2023) introduced implicit CoT as reasoning through hidden
+      states rather than written steps; distillation is the paper's
+      implementation of that proposal. It learns to predict a
       teacher's intermediate hidden states, which help a student produce the
       answer. Stepwise Internalization instead repeatedly shortens the written
       solution and fine-tunes the same model on what remains. Both use worked
@@ -11,9 +12,10 @@ internalized:
       grade-school math, not a guarantee of general reasoning ability.
     source_ids: ["2311.01460", "2405.14838"]
     source_urls:
+      - "https://arxiv.org/html/2311.01460v1#S2.SS3"
       - "https://arxiv.org/html/2311.01460v1#S3"
       - "https://arxiv.org/html/2405.14838v1#S3"
-    source_labels: ["Deng et al. (2023), §3", "Deng et al. (2024), §3"]
+    source_labels: ["Implicit CoT proposal, §2.3", "Distillation implementation, §3", "Stepwise internalization, §3"]
   - title: "Hidden-state distillation: the 2023 method and CODI"
     text: >-
       The 2023 implicit CoT paper proposes reasoning through hidden states and
@@ -45,6 +47,23 @@ learned-tokens:
     source_labels: ["Pause-token paper", "Planning-token paper, §2"]
 
 continuous:
+  - title: "Implicit CoT: proposal and implementation"
+    text: >-
+      Deng et al. (2023) proposed implicit chain-of-thought reasoning:
+      language models carry out intermediate reasoning in continuous hidden
+      states rather than generate it as text. Section 2.3 defines this setting;
+      section 3 develops a distillation method to implement it. That method
+      transfers a teacher's reasoning into hidden states across layers.
+      Reasoning through continuous hidden states is the broader proposal;
+      it does not require the particular distillation procedure used in this
+      paper. Its across-layer computation differs from the repeated hidden-state
+      feedback used by later methods such as Coconut.
+    source_ids: ["2311.01460", "2412.06769"]
+    source_urls:
+      - "https://arxiv.org/html/2311.01460v1#S2.SS3"
+      - "https://arxiv.org/html/2311.01460v1#S3"
+      - "https://arxiv.org/html/2412.06769v3#S3"
+    source_labels: ["Implicit CoT proposal, §2.3", "Distillation implementation, §3", "Coconut, §3"]
   - title: "From stepwise internalization to Coconut"
     text: >-
       Coconut explicitly credits Deng et al. (2024) as the inspiration for its

@@ -306,6 +306,7 @@ module AgentExports
     validate_demo_discovery(demos, site_root, canonical, errors)
     validate_history_discovery(repo_root, site_root, canonical, errors)
     validate_alias_sources(source_by_id, errors)
+    validate_proposal_discovery(source_by_id, comparisons, site_root, errors)
 
     records.each_with_index do |paper, index|
       id = paper.fetch("id")
@@ -423,8 +424,9 @@ module AgentExports
   end
 
   def validate_history_discovery(repo_root, site_root, canonical, errors)
-    history = "Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in 2023: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their 2024 work introduced step-by-step internalization."
+    history = "Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in 2023: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's distillation method is one implementation of that proposal. Their 2024 work introduced step-by-step internalization."
     sources = {"2023" => "https://arxiv.org/html/2311.01460v1#S2.SS3",
+               "distillation method" => "https://arxiv.org/html/2311.01460v1#S3",
                "2024 work" => "https://arxiv.org/abs/2405.14838"}
     %w[index.html topics/index.html].each do |path|
       html = read_file(site_root, path, errors)
@@ -454,6 +456,41 @@ module AgentExports
     end
     guide = read_file(site_root, "llms.txt", errors)
     assert(guide.include?("`related_terms`"), "agent guide does not explain the related_terms field", errors)
+  end
+
+  def validate_proposal_discovery(source_by_id, comparisons, site_root, errors)
+    id = "2311.01460"
+    title = "Implicit CoT: proposal and implementation"
+    sources = ["https://arxiv.org/html/2311.01460v1#S2.SS3", "https://arxiv.org/html/2311.01460v1#S3"]
+    paper = source_by_id.fetch(id)
+    assert(paper["lens"] == ["internalized"] && paper["computation"] == ["depth-wise"],
+           "#{id}: broader proposal credit must not reclassify the implemented method as recurrent state feedback", errors)
+
+    note = Array(comparisons["continuous"]).find { |item| item["title"] == title }
+    assert(!note.nil?, "continuous topic: missing the proposal-versus-implementation comparison", errors)
+    return unless note
+
+    text = note.fetch("text")
+    assert(note.fetch("source_ids").include?(id) && (sources - note.fetch("source_urls")).empty?,
+           "#{id}: proposal and implementation need their distinct original-paper section links", errors)
+    assert(text.match?(/propos/i) && text.match?(/continuous hidden states/i) && text.match?(/implement/i) &&
+           text.match?(/distill/i) && text.match?(/(?:across|through|different|successive)[^.]*layers|depth[- ]wise/i),
+           "#{id}: comparison must distinguish the continuous-hidden-state proposal from across-layer distillation", errors)
+
+    # General comparison checks below enforce complete text, labels and source
+    # parity. These checks pin the discovery routes where this distinction must
+    # remain available, without adding the implemented method to a new category.
+    %w[topics/continuous-states/index.html data/topics/continuous-states.md papers/2311.01460/index.html papers/2311.01460/index.md].each do |path|
+      rendered = read_file(site_root, path, errors)
+      assert(rendered.include?(title) && sources.all? { |url| rendered.include?(url) },
+             "#{path}: proposal-versus-implementation note or its original-paper sources are missing", errors)
+    end
+    {"data/topics/continuous-states.json" => "comparisons", "papers/2311.01460/record.json" => "method_comparisons"}.each do |path, field|
+      json = read_json(site_root, path, errors)
+      exported = json.is_a?(Hash) && Array(json[field]).find { |item| item["title"] == title }
+      assert(exported && note.all? { |key, value| exported[key] == value },
+             "#{path}: source-backed proposal-versus-implementation note is missing or changed", errors)
+    end
   end
 
   def validate_alias_sources(source_by_id, errors)

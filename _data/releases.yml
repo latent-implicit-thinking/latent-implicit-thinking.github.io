@@ -1,3 +1,19 @@
+- version: "0.9.4"
+  date: "2026-10-18"
+  title: "Implicit CoT: proposal and implementation"
+  changes:
+    - "Clarified the distinction between the 2023 implicit CoT proposal and its distillation implementation, with separate links to the original paper sections."
+    - "Added this context to the continuous-state guide, paper details, and JSON and Markdown downloads."
+    - "Paper titles, citations, categories, collection membership, date ordering and literature-check dates are unchanged."
+  added_papers: []
+  updated_papers:
+    - id: "2311.01460"
+      fields: [summary, method_comparisons]
+    - id: "2405.14838"
+      fields: [method_comparisons]
+    - id: "2412.06769"
+      fields: [method_comparisons]
+
 - version: "0.9.3"
   date: "2026-10-18"
   title: "Connections between methods"

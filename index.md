@@ -15,7 +15,7 @@ last_modified_at: 2026-10-18
       <p class="lit-eyebrow">Implicit chain-of-thought · A reading list</p>
       <h1 id="lit-title">Can language models reason without writing every intermediate step?</h1>
       <p class="lit-deck">An explicit chain of thought writes out intermediate steps. Implicit chain-of-thought methods try to do some or all of that work without putting each step into words. This research is also discussed as latent reasoning or latent chain-of-thought.</p>
-      <p class="lit-deck lit-history">Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023</a>: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their <a href="https://arxiv.org/abs/2405.14838">2024 work</a> introduced step-by-step internalization.</p>
+      <p class="lit-deck lit-history">Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023</a>: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's <a href="https://arxiv.org/html/2311.01460v1#S3">distillation method</a> is one implementation of that proposal. Their <a href="https://arxiv.org/abs/2405.14838">2024 work</a> introduced step-by-step internalization.</p>
       <div class="lit-actions" aria-label="Choose how to use the guide">
         <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">Browse {{ site.data.papers | size }} papers</a>
         <a class="lit-button lit-button-secondary" href="{{ '/topics/' | relative_url }}">New here? Start here</a>
