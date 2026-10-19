@@ -135,6 +135,7 @@ module AgentExports
     assert((comparisons.keys - methods.map { |method| method["id"] }).empty?, "comparison notes contain unknown topics", errors)
     validate_demo_sources(demos, source_by_id, methods, errors)
     validate_demo_discovery(demos, site_root, canonical, errors)
+    validate_history_discovery(repo_root, site_root, canonical, errors)
 
     records.each_with_index do |paper, index|
       id = paper.fetch("id")
@@ -227,6 +228,32 @@ module AgentExports
     end
 
     errors
+  end
+
+  def validate_history_discovery(repo_root, site_root, canonical, errors)
+    history = "Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in 2023: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their 2024 work introduced step-by-step internalization."
+    sources = {"2023" => "https://arxiv.org/html/2311.01460v1#S2.SS3",
+               "2024 work" => "https://arxiv.org/abs/2405.14838"}
+    %w[index.html topics/index.html].each do |path|
+      html = read_file(site_root, path, errors)
+      paragraph = html[/<p\b[^>]*class="[^"]*\blit-history\b[^"]*"[^>]*>.*?<\/p>/m].to_s
+      history_text = CGI.unescapeHTML(paragraph.gsub(/<[^>]*>/, "")).gsub(/\s+/, " ").strip
+      assert(history_text == history, "#{path}: visible history differs from the source-linked introduction", errors)
+      sources.each do |label, url|
+        assert(linked?(paragraph, url, canonical), "#{path}: history omits the #{label} primary source", errors)
+      end
+      assert(html.index(paragraph).to_i < html.index("</header>").to_i, "#{path}: history must remain in the introductory header", errors) if path == "topics/index.html"
+      assert(html.index(paragraph).to_i < html.index('class="lit-actions"').to_i, "#{path}: history must precede homepage browsing actions", errors) if path == "index.html"
+    end
+    {"llms.txt" => site_root, "data/reading-list.md" => site_root, "README.md" => repo_root}.each do |path, root|
+      text = read_file(root, path, errors)
+      paragraph = text.split(/\n\s*\n/).find { |part| part.start_with?("Yuntian Deng and colleagues") }.to_s
+      plain_text = paragraph.gsub(/\[([^\]]+)\]\([^)]+\)/, '\1')
+      assert(plain_text == history, "#{path}: history differs from the visible introduction", errors)
+      sources.each do |label, url|
+        assert(paragraph.include?("[#{label}](#{url})"), "#{path}: history omits the #{label} primary source", errors)
+      end
+    end
   end
 
   def validate_demo_sources(demos, source_by_id, methods, errors)

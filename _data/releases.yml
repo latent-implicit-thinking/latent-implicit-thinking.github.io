@@ -1,3 +1,14 @@
+- version: "0.9.1"
+  date: "2026-10-18"
+  title: "Implicit chain-of-thought history"
+  changes:
+    - "Added source-linked history of the 2023 implicit chain-of-thought proposal and 2024 step-by-step internalization work to the introduction, README and agent-facing reading guides."
+    - "Clarified the 2023 paper summary to distinguish the proposed framework from its knowledge-distillation implementation. Paper membership, categories and literature-check dates are unchanged."
+  added_papers: []
+  updated_papers:
+    - id: "2311.01460"
+      fields: [summary]
+
 - version: "0.9.0"
   date: "2026-10-18"
   title: "Interactive examples"

@@ -14,6 +14,7 @@ last_modified_at: 2026-10-18
     <div class="lit-shell lit-narrow-shell">
       <h1>What is implicit chain-of-thought?</h1>
       <p>In an explicit chain of thought, a language model writes intermediate steps before its answer. Implicit chain-of-thought methods try to carry out some or all of those steps without expressing them as words.</p>
+      <p class="lit-history">Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023</a>: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their <a href="https://arxiv.org/abs/2405.14838">2024 work</a> introduced step-by-step internalization.</p>
       <p>The aim is not simply to hide a written explanation from the user. Researchers change how a model is trained or how it computes, then test whether it can solve problems without generating the full explanation.</p>
     </div>
   </header>

@@ -7,6 +7,8 @@ sitemap: false
 
 Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language.
 
+Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
+
 Version {{ site.data.meta.version }}. Website updated {{ site.data.meta.updated_at }}; literature checked through {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers. The list is not exhaustive.
 
 ## Sources and citation

@@ -102,7 +102,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "Distills intermediate representations from an explicit chain-of-thought teacher into a student that reasons through hidden states without emitting the intermediate steps."
+  summary: "First proposes implicit chain-of-thought reasoning: learning to reason through continuous hidden states instead of generating explicit intermediate steps. Implements this framework by distilling an explicit-CoT teacher's intermediate representations into an emulator and a student that produces the answer."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2402.07754"
