@@ -1556,6 +1556,15 @@ a.lit-entry:focus {
   padding-bottom: 0;
 }
 
+.lit-method-comparison + .lit-method-comparison {
+  margin-top: 2rem;
+}
+
+.lit-method-comparison h3 {
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
 .lit-demo-shortcuts {
   margin: 16px 0 0;
   color: var(--lit-muted);

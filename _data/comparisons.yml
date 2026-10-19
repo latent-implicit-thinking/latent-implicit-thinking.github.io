@@ -1,5 +1,6 @@
 internalized:
-  - text: >-
+  - title: "Distillation and stepwise internalization"
+    text: >-
       Knowledge distillation and stepwise internalization use different training
       signals. Implicit CoT via Knowledge Distillation learns to predict a
       teacher's intermediate hidden states, which help a student produce the
@@ -12,9 +13,25 @@ internalized:
     source_urls:
       - "https://arxiv.org/html/2311.01460v1#S3"
       - "https://arxiv.org/html/2405.14838v1#S3"
+    source_labels: ["Deng et al. (2023), §3", "Deng et al. (2024), §3"]
+  - title: "Hidden-state distillation: the 2023 method and CODI"
+    text: >-
+      The 2023 implicit CoT paper proposes reasoning through hidden states and
+      implements it with a teacher, a thought emulator and an answer-generating
+      student. CODI also transfers explicit reasoning through hidden-state
+      supervision, but uses one model for both teacher and student tasks. It
+      aligns their states just before the answer, while the student takes
+      successive continuous reasoning steps.
+    source_ids: ["2311.01460", "2502.21074"]
+    source_urls:
+      - "https://arxiv.org/html/2311.01460v1#S2.SS3"
+      - "https://arxiv.org/html/2311.01460v1#S3"
+      - "https://arxiv.org/html/2502.21074v3#S3"
+    source_labels: ["Deng et al. (2023), §2.3", "Deng et al. (2023), §3", "CODI, §3"]
 
 learned-tokens:
-  - text: >-
+  - title: "Pausing and planning"
+    text: >-
       Pause tokens add computation before the answer without choosing a different
       plan token for each step. Planning tokens instead select a learned token
       before generating each written reasoning step. The latter still produces
@@ -25,9 +42,24 @@ learned-tokens:
     source_urls:
       - "https://proceedings.iclr.cc/paper_files/paper/2024/hash/76917808731dae9e6d62c2a7a6afb542-Abstract-Conference.html"
       - "https://arxiv.org/html/2310.05707v3#S2"
+    source_labels: ["Pause-token paper", "Planning-token paper, §2"]
 
 continuous:
-  - text: >-
+  - title: "From stepwise internalization to Coconut"
+    text: >-
+      Coconut explicitly credits Deng et al. (2024) as the inspiration for its
+      multistage training curriculum. Stepwise internalization gradually removes
+      written CoT tokens until the model answers directly. Coconut instead
+      replaces removed steps with continuous hidden-state inputs, retaining
+      a sequence of internal reasoning steps before the answer. It also follows
+      the earlier work in resetting the optimizer between training stages.
+    source_ids: ["2405.14838", "2412.06769"]
+    source_urls:
+      - "https://arxiv.org/html/2405.14838v1#S3"
+      - "https://arxiv.org/html/2412.06769v3#S3"
+    source_labels: ["Deng et al. (2024), §3", "Coconut, §3"]
+  - title: "Coconut and CODI: similar computation, different training"
+    text: >-
       Coconut and CODI both pass continuous states between reasoning steps, but
       supervise them differently. Coconut gradually replaces written steps with
       hidden-state inputs and trains on the remaining text. CODI jointly trains
@@ -39,9 +71,11 @@ continuous:
     source_urls:
       - "https://arxiv.org/html/2412.06769v3#S3"
       - "https://arxiv.org/html/2502.21074v3#S3"
+    source_labels: ["Coconut, §3", "CODI, §3"]
 
 recurrent:
-  - text: >-
+  - title: "Recurrent depth and fixed points"
+    text: >-
       Recurrent depth and fixed-point models repeat computation in different
       ways. Geiping and colleagues reuse a transformer block, allowing the
       number of passes to change at inference. The implicit state-space models
@@ -53,9 +87,11 @@ recurrent:
     source_urls:
       - "https://proceedings.neurips.cc/paper_files/paper/2025/hash/3b01972cf31e6fa0fe29e4b8b5c2a0a1-Abstract-Conference.html"
       - "https://proceedings.mlr.press/v267/schone25a.html"
+    source_labels: ["Recurrent-depth paper", "Implicit state-space paper"]
 
 beyond-sequential:
-  - text: >-
+  - title: "Changing generation order or removing written steps"
+    text: >-
       Diffusion of Thought changes how a chain of thought is generated: it
       refines the solution through denoising rather than committing to words
       strictly from left to right. This changes the generation schedule, not
@@ -65,9 +101,11 @@ beyond-sequential:
     source_urls:
       - "https://proceedings.neurips.cc/paper_files/paper/2024/hash/be30024e7fa2c29cac7a6dafcbb8571f-Abstract-Conference.html"
       - "https://arxiv.org/html/2405.14838v1#S3"
+    source_labels: ["Diffusion of Thought", "Deng et al. (2024), §3"]
 
 analysis:
-  - text: >-
+  - title: "Recovering information and testing its use"
+    text: >-
       Recovering an intermediate answer from hidden states is different from
       showing that the model uses it. The multi-hop study by Yang and
       colleagues separates recall of a bridge entity from its contribution to
@@ -78,3 +116,4 @@ analysis:
     source_ids: ["2402.16837"]
     source_urls:
       - "https://aclanthology.org/2024.acl-long.550/"
+    source_labels: ["Yang et al. (2024)"]

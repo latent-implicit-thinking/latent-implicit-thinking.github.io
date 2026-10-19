@@ -31,7 +31,32 @@ module Literature
     end
     demos = demos_for_paper(site, paper)
     result["demos"] = demos unless demos.empty?
+    comparisons = comparisons_for_paper(site, paper)
+    result["method_comparisons"] = comparisons unless comparisons.empty?
     result
+  end
+
+  def comparisons_for_paper(site, paper)
+    site.data.fetch("comparisons", {}).flat_map do |topic_id, comparisons|
+      method = site.data.fetch("methods").find { |item| item.fetch("id") == topic_id }
+      comparisons.select { |item| item.fetch("source_ids").include?(paper.fetch("id")) }.map do |comparison|
+        comparison.merge("topic_id" => topic_id, "topic_label" => method.fetch("label"),
+                         "topic_url" => absolute(site, method.fetch("url")))
+      end
+    end
+  end
+
+  def comparison_markdown(site, comparison)
+    lines = ["**#{comparison.fetch('title')}**", comparison.fetch("text")]
+    lines << "Sources: " + comparison.fetch("source_urls").each_with_index.map do |url, index|
+      "[#{comparison.fetch('source_labels')[index]}](#{url})"
+    end.join(" · ")
+    records = site.data.fetch("papers") + site.data.fetch("precursors")
+    lines << "Paper details: " + comparison.fetch("source_ids").map do |id|
+      paper = records.find { |item| item.fetch("id") == id }
+      "[#{paper.fetch('title')}](#{absolute(site, '/papers/' + id + '/')})"
+    end.join(" · ")
+    lines.join("\n\n")
   end
 
   def demos_for_paper(site, paper)
@@ -114,6 +139,10 @@ module Literature
              "[Preprint BibTeX](#{entry.fetch('bibtex_url')}) · [Preprint CSL-JSON](#{entry.fetch('csl_url')}) · [JSON record](#{entry.fetch('json_url')})"]
     lines << "[Code](#{paper['code_url']})" if paper["code_url"]
     lines += ["", "Related terms: #{paper['related_terms'].join(', ')}."] if paper["related_terms"]
+    unless entry.fetch("method_comparisons", []).empty?
+      lines += ["", "## Method comparisons", ""]
+      entry.fetch("method_comparisons").each { |comparison| lines += [comparison_markdown(site, comparison), ""] }
+    end
     unless entry.fetch("demos", []).empty?
       lines += ["", "## Demos", ""]
       entry.fetch("demos").each { |demo| lines += [demo_markdown(site, demo), ""] }
@@ -135,6 +164,11 @@ module Literature
   end
 
   module Filters
+    def lit_paper_by_id(id)
+      site = @context.registers[:site]
+      (site.data.fetch("papers") + site.data.fetch("precursors")).find { |paper| paper.fetch("id") == id }
+    end
+
     def lit_record(paper)
       Literature.record(@context.registers[:site], paper)
     end
@@ -149,6 +183,10 @@ module Literature
 
     def lit_demo_markdown(demo)
       Literature.demo_markdown(@context.registers[:site], demo)
+    end
+
+    def lit_comparison_markdown(comparison)
+      Literature.comparison_markdown(@context.registers[:site], comparison)
     end
   end
 
@@ -213,15 +251,13 @@ module Literature
           demos.each { |demo| text << Literature.demo_markdown(site, demo) }
         end
         unless comparisons.empty?
-          text << "## How these methods differ"
+          text << "## How the methods connect and differ"
           comparisons.each do |comparison|
-            text << comparison.fetch("text")
-            text << comparison.fetch("source_ids").map { |id| "[Paper #{id}](#{Literature.absolute(site, '/papers/' + id + '/')})" }.join(" · ")
-            text << comparison.fetch("source_urls").each_with_index.map { |url, index| "[Original source #{index + 1}](#{url})" }.join(" · ")
+            text << Literature.comparison_markdown(site, comparison)
           end
         end
         text << "## Papers — oldest first"
-        papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches|Demos)/, '### \1') }
+        papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches|Demos|Method comparisons)/, '### \1') }
         site.pages << GeneratedPage.new(site, path + ".json", JSON.pretty_generate(data) + "\n")
         site.pages << GeneratedPage.new(site, path + ".md", text.join("\n\n") + "\n")
       end

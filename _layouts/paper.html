@@ -42,6 +42,13 @@ layout: base
     </div>
   </section>
 
+  {% if record.method_comparisons %}<section class="lit-section lit-paper-comparisons" id="method-comparisons">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>Method comparisons</h2>
+      {% for comparison in record.method_comparisons %}{% include method-comparison.html comparison=comparison %}{% endfor %}
+    </div>
+  </section>{% endif %}
+
   {% if paper.lens %}<section class="lit-section lit-start">
     <div class="lit-shell lit-narrow-shell"><h2>Explore this approach</h2>
       {% for lens in paper.lens %}{% assign method = site.data.methods | where: 'id', lens | first %}<p><a href="{{ method.url | relative_url }}">{{ method.label }}</a> — {{ method.definition | escape }}</p>{% endfor %}

@@ -45,6 +45,9 @@ Summary: {{ paper.summary }}
 {% assign record = paper | lit_record %}{% for demo in record.demos %}
 {{ demo | lit_demo_markdown }}
 {% endfor %}
+{% for comparison in record.method_comparisons %}
+{{ comparison | lit_comparison_markdown }}
+{% endfor %}
 {% if paper.added_at %}Added to this list: {{ paper.added_at }}.
 {% endif %}
 {% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}). Linked arXiv version: {{ paper.citation_date }}.
@@ -56,6 +59,9 @@ Summary: {{ paper.summary }}
 Authors: {{ paper.authors }}.
 Source: [Original paper]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).
 Why it is relevant: {{ paper.connection }}
+{% assign record = paper | lit_record %}{% for comparison in record.method_comparisons %}
+{{ comparison | lit_comparison_markdown }}
+{% endfor %}
 {% endfor %}
 ## Acknowledgment and reuse
 

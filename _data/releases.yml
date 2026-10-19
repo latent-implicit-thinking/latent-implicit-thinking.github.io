@@ -1,3 +1,33 @@
+- version: "0.9.3"
+  date: "2026-10-18"
+  title: "Connections between methods"
+  changes:
+    - "Added comparisons of stepwise internalization with Coconut and the 2023 hidden-state distillation method with CODI, linking directly to the relevant paper sections."
+    - "Made method comparisons available on the papers they discuss, in individual, topic and full-list JSON and Markdown downloads."
+    - "Paper titles, citations, collection membership, date ordering and literature-check dates are unchanged."
+  added_papers: []
+  updated_papers:
+    - id: "2310.02226"
+      fields: [method_comparisons]
+    - id: "2310.05707"
+      fields: [method_comparisons]
+    - id: "2311.01460"
+      fields: [method_comparisons]
+    - id: "2402.07754"
+      fields: [method_comparisons]
+    - id: "2402.16837"
+      fields: [method_comparisons]
+    - id: "2405.14838"
+      fields: [method_comparisons]
+    - id: "2412.06769"
+      fields: [method_comparisons]
+    - id: "2502.05171"
+      fields: [method_comparisons]
+    - id: "2502.07827"
+      fields: [method_comparisons]
+    - id: "2502.21074"
+      fields: [method_comparisons]
+
 - version: "0.9.2"
   date: "2026-10-18"
   title: "Search across implicit and latent terminology"

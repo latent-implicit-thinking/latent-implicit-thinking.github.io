@@ -25,12 +25,11 @@ layout: base
   </section>{% endif %}
 
   {% assign comparisons = site.data.comparisons[method.id] %}{% if comparisons %}
-  <section class="lit-section lit-topic-comparisons">
+  <section class="lit-section lit-topic-comparisons" id="method-comparisons">
     <div class="lit-shell lit-narrow-shell">
-      <h2>How these methods differ</h2>
+      <h2>How the methods connect and differ</h2>
       {% for comparison in comparisons %}
-      <p>{{ comparison.text | escape }}</p>
-      <p class="lit-comparison-sources">Sources: {% for id in comparison.source_ids %}{% assign source = site.data.papers | where: 'id', id | first %}{% if source %}<a href="{{ '/papers/' | append: id | append: '/' | relative_url }}">{{ source.title | escape }}</a>{% unless forloop.last %} · {% endunless %}{% endif %}{% endfor %}. {% for url in comparison.source_urls %}<a href="{{ url }}">Original source {{ forloop.index }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
+      {% include method-comparison.html comparison=comparison %}
       {% endfor %}
     </div>
   </section>{% endif %}

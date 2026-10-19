@@ -48,6 +48,7 @@ def validate_against_schema(value, schema, root_schema, path, errors)
       errors << "#{path} is not a string"
       return
     end
+    errors << "#{path} is too short" if schema["minLength"] && value.length < schema["minLength"]
     errors << "#{path} does not match its pattern" if schema["pattern"] && !Regexp.new(schema["pattern"]).match?(value)
     if schema["format"] == "date"
       begin

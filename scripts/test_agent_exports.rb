@@ -46,6 +46,12 @@ module AgentExports
     attributes(html, "a").any? { |attrs| [expected_url, path].include?(attrs["href"]) }
   end
 
+  def named_link?(html, url, label, canonical)
+    html.scan(/<a\b[^>]*>.*?<\/a>/m).any? do |anchor|
+      linked?(anchor, url, canonical) && visible_text(anchor) == label
+    end
+  end
+
   def json_ld(html, path, errors)
     html.scan(/<script\s+type="application\/ld\+json"[^>]*>(.*?)<\/script>/m).flatten.flat_map do |content|
       object = JSON.parse(content)
@@ -66,6 +72,164 @@ module AgentExports
 
   def assert(condition, message, errors)
     errors << "Agent exports: #{message}" unless condition
+  end
+
+  def validate_comparison_sources(comparisons, source_by_id, methods, errors)
+    topic_ids = methods.map { |method| method.fetch("id") }
+    assert(comparisons.is_a?(Hash), "method comparisons must be grouped by topic", errors)
+    return unless comparisons.is_a?(Hash)
+
+    assert((comparisons.keys - topic_ids).empty?, "comparison notes contain unknown topics", errors)
+    comparisons.each do |topic_id, notes|
+      assert(notes.is_a?(Array) && !notes.empty?, "#{topic_id}: comparisons must be a nonempty array", errors)
+      next unless notes.is_a?(Array)
+
+      titles = []
+      notes.each_with_index do |note, index|
+        context = "#{topic_id} comparison #{index + 1}"
+        assert(note.is_a?(Hash), "#{context}: comparison must be an object", errors)
+        next unless note.is_a?(Hash)
+
+        %w[title text].each do |field|
+          assert(note[field].is_a?(String) && !note[field].strip.empty?, "#{context}: #{field} must be nonempty text", errors)
+        end
+        titles << note["title"]
+        ids, urls, labels = note.values_at("source_ids", "source_urls", "source_labels")
+        assert(ids.is_a?(Array) && !ids.empty? && ids.uniq == ids && (ids - source_by_id.keys).empty?, "#{context}: source IDs must be distinct known papers", errors)
+        assert(urls.is_a?(Array) && !urls.empty? && urls.uniq == urls, "#{context}: source URLs must be a nonempty distinct array", errors)
+        Array(urls).each do |url|
+          begin
+            parsed = URI.parse(url.to_s)
+            assert(url.is_a?(String) && parsed.scheme == "https" && parsed.host && !parsed.host.empty?, "#{context}: source URL must be absolute HTTPS", errors)
+          rescue URI::InvalidURIError
+            errors << "Agent exports: #{context}: invalid source URL"
+          end
+        end
+        assert(labels.is_a?(Array) && !labels.empty? && labels.all? { |label| label.is_a?(String) && !label.strip.empty? }, "#{context}: source labels must be nonempty text", errors)
+        assert(urls.is_a?(Array) && labels.is_a?(Array) && urls.length == labels.length, "#{context}: each source URL must have its own label", errors)
+      end
+      assert(titles.uniq == titles, "#{topic_id}: comparison titles must be distinct", errors)
+    end
+  end
+
+  def expected_paper_comparisons(id, comparisons, methods, canonical)
+    comparisons.each_with_object([]) do |(topic_id, notes), expected|
+      method = methods.find { |item| item.fetch("id") == topic_id }
+      notes.each do |note|
+        next unless note.fetch("source_ids").include?(id)
+        expected << note.merge("topic_id" => topic_id, "topic_label" => method.fetch("label"),
+                               "topic_url" => "#{canonical.delete_suffix('/')}#{method.fetch('url')}")
+      end
+    end
+  end
+
+  def validate_comparison_record(record, expected, context, errors)
+    if expected.empty?
+      assert(!record.key?("method_comparisons"), "#{context}: unrelated paper received method comparisons", errors)
+    else
+      assert(record["method_comparisons"] == expected, "#{context}: method comparisons differ from source notes or topic metadata", errors)
+    end
+  end
+
+  def validate_comparison_markdown(expected, markdown, all_titles, source_by_id, canonical, context, errors)
+    rendered_titles = markdown.scan(/^\*\*(.+)\*\*$/).flatten.select { |title| all_titles.include?(title) }
+    assert(rendered_titles == expected.map { |note| note.fetch("title") }, "#{context}: Markdown omits, duplicates, reorders or adds comparison notes", errors)
+    expected.each do |note|
+      block = markdown.split(/(?=^\*\*.+\*\*$)/).find { |part| part.start_with?("**#{note.fetch('title')}**\n") }.to_s
+      assert(block.include?(note.fetch("text")), "#{context}: Markdown comparison text differs from source", errors)
+      note.fetch("source_urls").each_with_index do |url, index|
+        assert(block.include?("[#{note.fetch('source_labels')[index]}](#{url})"), "#{context}: comparison source lacks its matching Markdown label and URL", errors)
+      end
+      note.fetch("source_ids").each do |id|
+        assert(block.include?("[#{source_by_id.fetch(id).fetch('title')}](#{canonical}papers/#{id}/)"), "#{context}: comparison omits named Markdown link to paper #{id}", errors)
+      end
+    end
+  end
+
+  def validate_comparison_html(expected, html, source_by_id, canonical, context, errors)
+    blocks = html.scan(/<div\b[^>]*class="lit-method-comparison"[^>]*>.*?<\/div>/m)
+    assert(blocks.length == expected.length, "#{context}: HTML omits or adds comparison notes", errors)
+    expected.each_with_index do |note, index|
+      block = blocks[index].to_s
+      heading = block[/<h3\b[^>]*>.*?<\/h3>/m].to_s
+      assert(visible_text(heading) == note.fetch("title"), "#{context}: comparison heading differs from source or is out of order", errors)
+      assert(visible_text(block).include?(note.fetch("text").gsub(/\s+/, " ")), "#{context}: visible comparison text differs from source", errors)
+      note.fetch("source_urls").each_with_index do |url, source_index|
+        assert(named_link?(block, url, note.fetch("source_labels")[source_index], canonical), "#{context}: comparison source lacks its matching visible label and URL", errors)
+      end
+      note.fetch("source_ids").each do |id|
+        assert(named_link?(block, "#{canonical}papers/#{id}/", source_by_id.fetch(id).fetch("title"), canonical), "#{context}: comparison omits named HTML link to paper #{id}", errors)
+      end
+    end
+  end
+
+  def validate_comparison_regressions(errors)
+    canonical = "https://example.test/"
+    papers = {"2301.00001" => {"title" => "First paper"}, "2401.00001" => {"title" => "Second paper"}}
+    methods = [{"id" => "test-topic", "label" => "Test topic", "url" => "/topics/test/"}]
+    note = {"title" => "Two methods", "text" => "A source-backed technical distinction.",
+            "source_ids" => papers.keys, "source_urls" => ["https://example.test/first#S3", "https://example.test/second#S3"],
+            "source_labels" => ["First paper, §3", "Second paper, §3"]}
+    cases = [
+      ["valid source", {}, true],
+      ["missing title", {"title" => nil}, false],
+      ["blank title", {"title" => "  "}, false],
+      ["missing text", {"text" => nil}, false],
+      ["blank text", {"text" => "\n"}, false],
+      ["missing IDs", {"source_ids" => nil}, false],
+      ["empty IDs", {"source_ids" => []}, false],
+      ["unknown ID", {"source_ids" => ["9901.00001"]}, false],
+      ["duplicate IDs", {"source_ids" => ["2301.00001", "2301.00001"]}, false],
+      ["missing URLs", {"source_urls" => nil}, false],
+      ["empty URLs", {"source_urls" => []}, false],
+      ["relative URL", {"source_urls" => ["/source", "https://example.test/second#S3"]}, false],
+      ["insecure URL", {"source_urls" => ["http://example.test/first", "https://example.test/second#S3"]}, false],
+      ["duplicate URLs", {"source_urls" => ["https://example.test/first", "https://example.test/first"]}, false],
+      ["missing labels", {"source_labels" => nil}, false],
+      ["blank label", {"source_labels" => [" ", "Second paper, §3"]}, false],
+      ["unpaired source label", {"source_labels" => ["First paper, §3"]}, false]
+    ]
+    cases.each do |name, changes, valid|
+      observed = []
+      validate_comparison_sources({"test-topic" => [note.merge(changes)]}, papers, methods, observed)
+      assert(observed.empty? == valid, "comparison regression #{name}: source validation did not #{valid ? 'accept' : 'reject'} the fixture", errors)
+    end
+
+    expected = expected_paper_comparisons("2301.00001", {"test-topic" => [note]}, methods, canonical)
+    records = [
+      ["matching export", {"method_comparisons" => expected}, expected, true],
+      ["changed export text", {"method_comparisons" => [expected.first.merge("text" => "Changed")]}, expected, false],
+      ["missing topic metadata", {"method_comparisons" => [note]}, expected, false],
+      ["unrelated record", {}, [], true],
+      ["unrelated record with notes", {"method_comparisons" => expected}, [], false],
+      ["unrelated record with empty field", {"method_comparisons" => []}, [], false]
+    ]
+    records.each do |name, record, notes, valid|
+      observed = []
+      validate_comparison_record(record, notes, name, observed)
+      assert(observed.empty? == valid, "comparison regression #{name}: record parity did not #{valid ? 'accept' : 'reject'} the fixture", errors)
+    end
+
+    source_links = note.fetch("source_urls").each_with_index.map { |url, index| "<a href=\"#{url}\">#{note.fetch('source_labels')[index]}</a>" }.join(" ")
+    paper_links = papers.map { |id, paper| "<a href=\"/papers/#{id}/\">#{paper.fetch('title')}</a>" }.join(" ")
+    html = "<div class=\"lit-method-comparison\"><h3>#{note.fetch('title')}</h3><p>#{note.fetch('text')}</p>#{source_links}#{paper_links}</div>"
+    {"matching HTML" => [html, true], "unnamed HTML source" => [html.sub("First paper, §3", ""), false],
+     "wrong HTML source URL" => [html.sub("first#S3", "different#S3"), false],
+     "wrong HTML paper link" => [html.sub("/papers/2301.00001/", "/papers/9901.00001/"), false]}.each do |name, (content, valid)|
+      observed = []
+      validate_comparison_html(expected, content, papers, canonical, name, observed)
+      assert(observed.empty? == valid, "comparison regression #{name}: HTML checks did not #{valid ? 'accept' : 'reject'} the fixture", errors)
+    end
+    markdown = ["**#{note.fetch('title')}**", note.fetch("text"),
+                note.fetch("source_urls").each_with_index.map { |url, index| "[#{note.fetch('source_labels')[index]}](#{url})" }.join(" · "),
+                papers.map { |id, paper| "[#{paper.fetch('title')}](#{canonical}papers/#{id}/)" }.join(" · ")].join("\n\n")
+    {"matching Markdown" => [markdown, true], "missing Markdown note" => [markdown.sub(note.fetch("text"), ""), false],
+     "unnamed Markdown source" => [markdown.sub("First paper, §3", ""), false],
+     "wrong Markdown paper link" => [markdown.sub("/papers/2301.00001/", "/papers/9901.00001/"), false]}.each do |name, (content, valid)|
+      observed = []
+      validate_comparison_markdown(expected, content, [note.fetch("title")], papers, canonical, name, observed)
+      assert(observed.empty? == valid, "comparison regression #{name}: Markdown checks did not #{valid ? 'accept' : 'reject'} the fixture", errors)
+    end
   end
 
   def validate_publication_source(id, publication, record, errors)
@@ -100,6 +264,7 @@ module AgentExports
 
   def validate(repo_root, site_root)
     errors = []
+    validate_comparison_regressions(errors)
     papers = load_yaml(repo_root, "papers")
     precursors = load_yaml(repo_root, "precursors")
     methods = load_yaml(repo_root, "methods")
@@ -133,7 +298,10 @@ module AgentExports
 
     assert((publications.keys - source_by_id.keys).empty?, "publication metadata contains unknown paper IDs", errors)
     assert(publication_csl.length == publications.length && publication_bib.length == publications.length, "aggregate publication citations do not cover exactly the verified subset", errors)
-    assert((comparisons.keys - methods.map { |method| method["id"] }).empty?, "comparison notes contain unknown topics", errors)
+    before_comparison_validation = errors.length
+    validate_comparison_sources(comparisons, source_by_id, methods, errors)
+    return errors unless errors.length == before_comparison_validation
+    comparison_titles = comparisons.values.flatten.map { |note| note.fetch("title") }
     validate_demo_sources(demos, source_by_id, methods, errors)
     validate_demo_discovery(demos, site_root, canonical, errors)
     validate_history_discovery(repo_root, site_root, canonical, errors)
@@ -187,6 +355,17 @@ module AgentExports
       assert(record.fetch("related_terms", []) == related_terms, "#{id}: exported related terms differ from source", errors)
       row = old_index[/<article\b[^>]*id="#{Regexp.escape(prefix + id.tr('.', '-'))}"[^>]*>.*?<\/article>/m].to_s
       full_entry = full_markdown.split(/^### /).find { |entry| entry.start_with?("#{paper['first_public']} — #{paper['title']}\n") }.to_s
+      expected_comparisons = expected_paper_comparisons(id, comparisons, methods, canonical)
+      validate_comparison_record(record, expected_comparisons, id, errors)
+      validate_comparison_html(expected_comparisons, html, source_by_id, canonical, id, errors)
+      validate_comparison_markdown(expected_comparisons, markdown, comparison_titles, source_by_id, canonical, id, errors)
+      validate_comparison_markdown(expected_comparisons, full_entry, comparison_titles, source_by_id, canonical, "#{id} full reading list", errors)
+      if expected_comparisons.empty?
+        assert(!html.include?('class="lit-section lit-paper-comparisons"') && !markdown.include?("## Method comparisons"), "#{id}: unrelated paper received a comparisons section", errors)
+      else
+        assert(markdown.scan(/^## Method comparisons$/).length == 1, "#{id}: comparisons need one second-level Markdown heading", errors)
+        assert(html.include?('class="lit-section lit-paper-comparisons"') && html.include?("<h2>Method comparisons</h2>"), "#{id}: visible comparisons need a named section", errors)
+      end
       related_terms.each do |term|
         assert(visible.include?(term) && markdown.include?(term), "#{id}: related term #{term.inspect} is missing from the visible paper page or Markdown", errors)
         assert(visible_text(row).include?(term), "#{id}: related term #{term.inspect} is not visible in the paper list", errors)
@@ -237,7 +416,7 @@ module AgentExports
     end
 
     methods.each do |method|
-      validate_topic(method, papers, generated_by_id, comparisons, demos, meta, canonical, site_root, errors)
+      validate_topic(method, methods, papers, source_by_id, generated_by_id, comparisons, demos, meta, canonical, site_root, errors)
     end
 
     errors
@@ -385,7 +564,7 @@ module AgentExports
     assert(markdown.include?(publication["url"]) && markdown.include?(publication["container_title"]), "#{id}: Markdown omits verified publication version", errors)
   end
 
-  def validate_topic(method, papers, generated_by_id, comparisons, demos, meta, canonical, site_root, errors)
+  def validate_topic(method, methods, papers, source_by_id, generated_by_id, comparisons, demos, meta, canonical, site_root, errors)
     id = method.fetch("id")
     slug = method.fetch("slug")
     selected = papers.select { |paper| paper.fetch("lens").include?(id) }
@@ -394,6 +573,13 @@ module AgentExports
     markdown = read_file(site_root, "data/topics/#{slug}.md", errors)
     html = read_file(site_root, "#{method.fetch('url').sub(%r{\A/}, '')}index.html", errors)
     assert(json.is_a?(Hash) && json["papers"] == expected, "#{id}: topic export omits, duplicates, reorders or changes records", errors)
+    topic_comparisons = comparisons.fetch(id, [])
+    comparison_titles = comparisons.values.flatten.map { |note| note.fetch("title") }
+    assert(json.is_a?(Hash) && json["comparisons"] == topic_comparisons, "#{id}: topic comparison JSON differs from source notes", errors)
+    validate_comparison_html(topic_comparisons, html, source_by_id, canonical, "#{id} topic", errors)
+    introduction = markdown.split(/^## Papers — oldest first$/, 2).first.to_s
+    validate_comparison_markdown(topic_comparisons, introduction, comparison_titles, source_by_id, canonical, "#{id} topic introduction", errors)
+    assert(!markdown.match?(/^## Method comparisons$/), "#{id}: per-paper comparisons escaped their Markdown paper section", errors)
     expected_demos = demos.select { |demo| demo.fetch("topic_ids").include?(id) }
     assert(json.is_a?(Hash) && json["demos"] == expected_demos, "#{id}: topic demos differ from source", errors)
     expected_demos.each do |demo|
@@ -431,24 +617,16 @@ module AgentExports
       terms = paper.fetch("related_terms", [])
       row = html.scan(/<article\b[^>]*>.*?<\/article>/m).find { |entry| linked?(entry, paper["paper_url"], canonical) }.to_s
       entry = markdown.split(/^## /).find { |part| part.start_with?("#{paper['title']}\n") }.to_s
+      paper_comparisons = expected_paper_comparisons(paper.fetch("id"), comparisons, methods, canonical)
+      validate_comparison_markdown(paper_comparisons, entry, comparison_titles, source_by_id, canonical, "#{id} topic paper #{paper['id']}", errors)
+      expected_heading_count = paper_comparisons.empty? ? 0 : 1
+      assert(entry.scan(/^### Method comparisons$/).length == expected_heading_count, "#{id}: paper #{paper['id']} comparisons must be nested under its Markdown heading", errors)
       terms.each do |term|
         assert(visible_text(row).include?(term) && entry.include?(term), "#{id}: paper #{paper['id']} related term #{term.inspect} is missing from the topic HTML or Markdown entry", errors)
       end
     end
     %w[json md].each do |extension|
       assert(linked?(html, "#{canonical}data/topics/#{slug}.#{extension}", canonical), "#{id}: topic page does not expose its #{extension} export", errors)
-    end
-    Array(comparisons[id]).each do |comparison|
-      assert(comparison["text"].is_a?(String) && !comparison["text"].empty?, "#{id}: comparison is missing text", errors)
-      source_ids = Array(comparison["source_ids"])
-      source_urls = Array(comparison["source_urls"])
-      assert(!source_ids.empty? && (source_ids - generated_by_id.keys).empty?, "#{id}: comparison cites missing records", errors)
-      assert(!source_urls.empty? && source_urls.all? { |url| url.match?(%r{\Ahttps://}) }, "#{id}: comparison lacks primary source URLs", errors)
-      assert(visible_text(html).include?(comparison["text"]), "#{id}: sourced comparison is not visible in topic guide", errors)
-      assert(markdown.include?(comparison["text"]), "#{id}: sourced comparison is missing from topic Markdown", errors)
-      source_urls.each do |url|
-        assert(linked?(html, url, canonical) && markdown.include?(url), "#{id}: comparison source is not available to both readers and agents", errors)
-      end
     end
   rescue KeyError => error
     errors << "Agent exports: #{id}: missing topic field: #{error.message}"
