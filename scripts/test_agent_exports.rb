@@ -74,6 +74,59 @@ module AgentExports
     errors << "Agent exports: #{message}" unless condition
   end
 
+  def dataset_nodes(value)
+    case value
+    when Hash
+      own = Array(value["@type"]).include?("Dataset") ? [value] : []
+      own + value.values.flat_map { |child| dataset_nodes(child) }
+    when Array
+      value.flat_map { |child| dataset_nodes(child) }
+    else
+      []
+    end
+  end
+
+  def validate_dataset_metadata(objects, context, errors)
+    datasets = dataset_nodes(objects)
+    datasets.each_with_index do |dataset, index|
+      %w[name description].each do |field|
+        value = dataset[field]
+        assert(value.is_a?(String) && !value.strip.empty?, "#{context}: Dataset #{index + 1} #{field} must be nonempty text", errors)
+      end
+    end
+    datasets
+  end
+
+  def validate_dataset_discovery(site_root, meta, errors)
+    datasets = %w[index.html data/index.html].map do |path|
+      objects = json_ld(read_file(site_root, path, errors), path, errors)
+      entries = validate_dataset_metadata(objects, path, errors)
+      assert(entries.length == 1, "#{path}: expected exactly one research Dataset", errors)
+      entries.first || {}
+    end
+    homepage, downloads = datasets
+    datasets.each do |dataset|
+      assert(dataset["url"] == "#{meta.fetch('canonical_url')}data/", "Dataset must identify the canonical downloads URL", errors)
+      assert(dataset["license"] == meta.fetch("license_url"), "Dataset license differs from the canonical data license", errors)
+    end
+    assert(homepage["description"] == downloads["description"], "homepage Dataset description differs from the canonical downloads Dataset", errors)
+  end
+
+  def validate_dataset_regressions(errors)
+    valid = {"@type" => "Dataset", "name" => "Example corpus", "description" => "A research corpus."}
+    [valid, valid.reject { |key, _| key == "description" }, valid.merge("description" => nil),
+     valid.merge("description" => "  \n"), valid.merge("description" => []), valid.merge("name" => "")].each_with_index do |dataset, index|
+      nested = {"@type" => "WebSite", "hasPart" => [{"@type" => "WebPage"}, dataset]}
+      observed = []
+      found = validate_dataset_metadata([nested], "nested fixture #{index}", observed)
+      assert(found == [dataset] && observed.empty? == index.zero?, "Dataset regression #{index}: nested validation did not #{index.zero? ? 'accept' : 'reject'} the fixture", errors)
+    end
+    graph = {"@graph" => [valid.merge("@type" => ["CreativeWork", "Dataset"])]}
+    observed = []
+    found = validate_dataset_metadata(graph, "graph fixture", observed)
+    assert(found.length == 1 && observed.empty?, "Dataset regression: graph or multiple-type Dataset was not recognized", errors)
+  end
+
   def validate_comparison_sources(comparisons, source_by_id, methods, errors)
     topic_ids = methods.map { |method| method.fetch("id") }
     assert(comparisons.is_a?(Hash), "method comparisons must be grouped by topic", errors)
@@ -265,6 +318,7 @@ module AgentExports
   def validate(repo_root, site_root)
     errors = []
     validate_comparison_regressions(errors)
+    validate_dataset_regressions(errors)
     papers = load_yaml(repo_root, "papers")
     precursors = load_yaml(repo_root, "precursors")
     methods = load_yaml(repo_root, "methods")
@@ -275,6 +329,7 @@ module AgentExports
     records = papers + precursors
     source_by_id = records.each_with_object({}) { |paper, hash| hash[paper.fetch("id")] = paper }
     canonical = meta.fetch("canonical_url")
+    validate_dataset_discovery(site_root, meta, errors)
     corpus = read_json(site_root, "data/papers.json", errors)
     return errors unless corpus.is_a?(Hash)
 
