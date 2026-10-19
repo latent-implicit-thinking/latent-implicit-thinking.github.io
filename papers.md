@@ -189,6 +189,8 @@ js:
           </div>
           <div class="lit-paper-actions">
             <a href="{{ paper.paper_url }}">Paper ↗</a>
+            {% if paper.arxiv %}<a href="https://arxiv.org/pdf/{{ paper.arxiv }}">PDF ↗</a>{% endif %}
+            {% if paper.html_url %}<a href="{{ paper.html_url }}">HTML ↗</a>{% endif %}
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
             <a class="lit-record-link" href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}" aria-label="Details and citations for {{ paper.title | escape }}">Details &amp; citations</a>
             {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% elsif publication.doi %}<span>DOI:{{ publication.doi }}</span>{% endif %}
@@ -221,7 +223,7 @@ js:
         {% for paper in site.data.precursors %}
         <article id="precursor-{{ paper.id | replace: '.', '-' }}">
           <div><time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%Y" }}</time><span>Context</span></div>
-          <div><h3><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h3><p class="lit-paper-authors">{{ paper.authors }}</p><p>{{ paper.connection }}</p><a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a></div>
+          <div><h3><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h3><p class="lit-paper-authors">{{ paper.authors }}</p><p>{{ paper.connection }}</p>{% assign precursor_arxiv_id = paper | lit_arxiv_id %}{% if precursor_arxiv_id %}<a href="https://arxiv.org/pdf/{{ precursor_arxiv_id }}">PDF ↗</a> · {% endif %}<a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a></div>
         </article>
         {% endfor %}
       </div>

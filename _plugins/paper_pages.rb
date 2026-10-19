@@ -23,6 +23,7 @@ module Literature
       "bibtex_url" => absolute(site, path + "citation.bib"),
       "csl_url" => absolute(site, path + "citation.csl.json")
     )
+    result["pdf_url"] = "https://arxiv.org/pdf/#{arxiv_id(paper)}" if arxiv_id(paper)
     publication = site.data.fetch("publications", {})[paper["id"]]
     if publication
       result.merge!("publication" => publication,
@@ -156,10 +157,14 @@ module Literature
   def markdown(site, paper)
     entry = record(site, paper)
     preprint = arxiv_id(paper)
+    source_links = ["[Original paper](#{paper.fetch('paper_url')})"]
+    source_links << "[PDF](#{entry.fetch('pdf_url')})" if entry["pdf_url"]
+    source_links << "[HTML](#{entry.fetch('html_url')})" if entry["html_url"]
+    source_links << "[Reading-list entry](#{entry.fetch('record_url')})"
     lines = ["# #{paper.fetch('title')}", "", "Authors: #{paper.fetch('authors')}.", "",
              paper["summary"] || paper.fetch("connection"), "", "First public: #{paper.fetch('first_public')}.",
              *(preprint ? ["ArXiv initial submission: #{entry.fetch('citation_date')}."] : []), "",
-             "[Original paper](#{paper.fetch('paper_url')}) · [Reading-list entry](#{entry.fetch('record_url')})",
+             source_links.join(" · "),
              "[#{preprint ? 'Preprint ' : ''}BibTeX](#{entry.fetch('bibtex_url')}) · [#{preprint ? 'Preprint ' : ''}CSL-JSON](#{entry.fetch('csl_url')}) · [JSON record](#{entry.fetch('json_url')})"]
     lines << "[Code](#{paper['code_url']})" if paper["code_url"]
     lines += ["", "Related terms: #{paper['related_terms'].join(', ')}."] if paper["related_terms"]

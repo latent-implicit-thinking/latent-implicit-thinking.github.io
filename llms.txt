@@ -49,6 +49,7 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 Use the original papers for scientific claims. Summaries and categories are written for this reading list, not copied abstracts. Papers can belong to several categories. Coverage includes related generation methods and is not exhaustive.
 
 - `id` identifies a paper; `paper_url` links to the original source; `record_url` links to an independently fetchable entry at `/papers/{id}/`. Earlier full-list anchors still work through `legacy_record_url`.
+- For arXiv papers, `paper_url` is the abstract page and `pdf_url` is the full-text PDF. Optional `html_url` provides full-text HTML when we have checked that link. Citation URLs use the abstract page. Version-specific links in source notes and comparisons identify the exact passages being discussed.
 - Each entry has `json_url`, `markdown_url`, `bibtex_url`, and `csl_url`. Use the topic downloads or individual entries when you do not need the complete list.
 - `author_names` preserves the authors' names and order.
 - Optional `related_terms` provides editorial search terminology, such as latent reasoning or latent chain-of-thought. These terms are also visible on the paper's page; they do not replace its title or citation. Search them alongside the title and summary.

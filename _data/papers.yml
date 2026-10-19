@@ -95,6 +95,7 @@
   venue: "arXiv"
   arxiv: "2311.01460"
   paper_url: "https://arxiv.org/abs/2311.01460"
+  html_url: "https://arxiv.org/html/2311.01460v1"
   code_url: "https://github.com/da03/implicit_chain_of_thought/"
   lens: [internalized]
   representation: [hidden-state]
@@ -217,6 +218,7 @@
   venue: "arXiv"
   arxiv: "2405.14838"
   paper_url: "https://arxiv.org/abs/2405.14838"
+  html_url: "https://arxiv.org/html/2405.14838v1"
   code_url: "https://github.com/da03/Internalize_CoT_Step_by_Step"
   lens: [internalized]
   representation: [hidden-state]

@@ -313,6 +313,19 @@ module AgentExports
       validate_comparison_markdown(expected, content, [note.fetch("title")], papers, canonical, name, observed)
       assert(observed.empty? == valid, "comparison regression #{name}: Markdown checks did not #{valid ? 'accept' : 'reject'} the fixture", errors)
     end
+    pinned = "https://arxiv.org/html/2311.01460v1#S2.SS3"
+    pinned_note = note.merge("source_urls" => [pinned], "source_labels" => ["2023 proposal, §2.3"])
+    pinned_expected = expected_paper_comparisons("2301.00001", {"test-topic" => [pinned_note]}, methods, canonical)
+    pinned_html = html.sub(source_links, "<a href=\"#{pinned}\">2023 proposal, §2.3</a>")
+    pinned_markdown = markdown.sub(note.fetch("source_urls").each_with_index.map { |url, index| "[#{note.fetch('source_labels')[index]}](#{url})" }.join(" · "), "[2023 proposal, §2.3](#{pinned})")
+    [pinned, pinned.sub("v1", ""), pinned.sub("#S2.SS3", ""), "https://arxiv.org/abs/2311.01460"].each_with_index do |url, index|
+      observed = []
+      validate_comparison_html(pinned_expected, pinned_html.sub(pinned, url), papers, canonical, "pinned source", observed)
+      assert(observed.empty? == index.zero?, "comparison regression: HTML must preserve source version and section", errors)
+      observed = []
+      validate_comparison_markdown(pinned_expected, pinned_markdown.sub(pinned, url), [note.fetch("title")], papers, canonical, "pinned source", observed)
+      assert(observed.empty? == index.zero?, "comparison regression: Markdown must preserve source version and section", errors)
+    end
   end
 
   def validate_publication_source(id, publication, record, errors)
@@ -347,6 +360,81 @@ module AgentExports
 
   def arxiv_source?(paper)
     paper.key?("arxiv") || (paper.key?("connection") && paper["id"].to_s.match?(/\A\d{4}\.\d{4,5}\z/) && paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}")
+  end
+
+  def full_text_links(paper)
+    links = {}
+    links["PDF"] = "https://arxiv.org/pdf/#{paper.fetch('id')}" if arxiv_source?(paper)
+    links["HTML"] = paper["html_url"] if paper["html_url"]
+    links
+  end
+
+  def validate_full_text_record(paper, record, context, errors)
+    assert(record["paper_url"] == paper["paper_url"], "#{context}: primary source URL must remain the landing page", errors)
+    expected = full_text_links(paper)
+    %w[PDF HTML].each do |label|
+      field = "#{label.downcase}_url"
+      if expected[label]
+        assert(record[field] == expected[label], "#{context}: #{field} differs from the source-specific full-text URL", errors)
+      else
+        assert(!record.key?(field), "#{context}: #{field} was invented for an unchecked format", errors)
+      end
+    end
+    if paper["html_url"]
+      assert(arxiv_source?(paper) && paper["html_url"].match?(%r{\Ahttps://arxiv\.org/html/#{Regexp.escape(paper.fetch('id'))}(?:v[1-9]\d*)?\z}), "#{context}: HTML link must identify this arXiv paper", errors)
+    end
+  end
+
+  def validate_full_text_html(paper, html, context, errors)
+    %w[PDF HTML].each do |label|
+      expected = full_text_links(paper)[label]
+      links = html.scan(/<a\b[^>]*>.*?<\/a>/m).select { |anchor| visible_text(anchor) == "#{label} ↗" }
+      urls = links.flat_map { |anchor| attributes(anchor, "a").map { |attrs| attrs["href"] } }
+      assert(urls == (expected ? [expected] : []), "#{context}: #{label} link must be separately labeled and use its matching full-text URL", errors)
+    end
+  end
+
+  def validate_full_text_markdown(paper, markdown, context, errors)
+    %w[PDF HTML].each do |label|
+      expected = full_text_links(paper)[label]
+      urls = markdown.scan(/\[#{label}\]\(([^)]+)\)/).flatten
+      assert(urls == (expected ? [expected] : []), "#{context}: Markdown #{label} link must be separately labeled and use its matching full-text URL", errors)
+    end
+  end
+
+  def validate_full_text_regressions(errors)
+    paper = {"id" => "2311.01460", "arxiv" => "2311.01460", "paper_url" => "https://arxiv.org/abs/2311.01460", "html_url" => "https://arxiv.org/html/2311.01460v1"}
+    valid = paper.merge("pdf_url" => "https://arxiv.org/pdf/2311.01460")
+    doi = {"id" => "journal2026example", "doi" => "10.1234/example", "paper_url" => "https://doi.org/10.1234/example"}
+    {
+      "matching formats" => [paper, valid, true],
+      "PDF as primary source" => [paper, valid.merge("paper_url" => valid["pdf_url"]), false],
+      "legacy PDF suffix" => [paper, valid.merge("pdf_url" => valid["pdf_url"] + ".pdf"), false],
+      "wrong PDF identity" => [paper, valid.merge("pdf_url" => "https://arxiv.org/pdf/2405.14838"), false],
+      "missing PDF" => [paper, valid.reject { |key, _| key == "pdf_url" }, false],
+      "changed HTML version" => [paper, valid.merge("html_url" => "https://arxiv.org/html/2311.01460"), false],
+      "invented HTML" => [paper.reject { |key, _| key == "html_url" }, valid, false],
+      "DOI without guessed formats" => [doi, doi, true],
+      "DOI with guessed PDF" => [doi, doi.merge("pdf_url" => "https://arxiv.org/pdf/journal2026example"), false],
+      "DOI with null PDF" => [doi, doi.merge("pdf_url" => nil), false]
+    }.each do |name, (source, record, accepted)|
+      observed = []
+      validate_full_text_record(source, record, name, observed)
+      assert(observed.empty? == accepted, "full-text regression #{name}: record check did not #{accepted ? 'accept' : 'reject'} fixture", errors)
+    end
+    html = full_text_links(paper).map { |label, url| "<a href=\"#{url}\">#{label} ↗</a>" }.join(" ")
+    markdown = full_text_links(paper).map { |label, url| "[#{label}](#{url})" }.join(" · ")
+    {"matching links" => [html, markdown, true],
+     "unlabeled PDF" => [html.sub("PDF ↗", "Paper ↗"), markdown.sub("[PDF]", "[Paper]"), false],
+     "suffix PDF" => [html.sub("/pdf/2311.01460", "/pdf/2311.01460.pdf"), markdown.sub("/pdf/2311.01460", "/pdf/2311.01460.pdf"), false],
+     "changed HTML version" => [html.sub("01460v1", "01460v2"), markdown.sub("01460v1", "01460v2"), false]}.each do |name, (html_content, markdown_content, accepted)|
+      observed = []
+      validate_full_text_html(paper, html_content, name, observed)
+      assert(observed.empty? == accepted, "full-text regression #{name}: HTML check did not #{accepted ? 'accept' : 'reject'} fixture", errors)
+      observed = []
+      validate_full_text_markdown(paper, markdown_content, name, observed)
+      assert(observed.empty? == accepted, "full-text regression #{name}: Markdown check did not #{accepted ? 'accept' : 'reject'} fixture", errors)
+    end
   end
 
   def validate_canonical_source(paper, publication, errors)
@@ -394,6 +482,7 @@ module AgentExports
     validate_comparison_regressions(errors)
     validate_dataset_regressions(errors)
     validate_citation_source_regressions(errors)
+    validate_full_text_regressions(errors)
     papers = load_yaml(repo_root, "papers")
     precursors = load_yaml(repo_root, "precursors")
     methods = load_yaml(repo_root, "methods")
@@ -417,6 +506,7 @@ module AgentExports
     publication_bib = bib_entries(publication_bib_text)
     old_index = read_file(site_root, "papers/index.html", errors)
     full_markdown = read_file(site_root, "data/reading-list.md", errors)
+    recent_html = read_file(site_root, "recent/index.html", errors)
     sitemap = read_file(site_root, "sitemap.xml", errors)
     sitemap_urls = []
     begin
@@ -460,6 +550,9 @@ module AgentExports
       assert(record.is_a?(Hash) && record["record_url"] == url && record["legacy_record_url"] == expected_legacy, "#{id}: new or legacy record address is incorrect", errors)
       next unless record.is_a?(Hash)
 
+      validate_full_text_record(paper, record, id, errors)
+      validate_full_text_html(paper, html, id, errors)
+      validate_full_text_markdown(paper, markdown, id, errors)
       {"json_url" => "record.json", "markdown_url" => "index.md", "bibtex_url" => "citation.bib", "csl_url" => "citation.csl.json"}.each do |field, filename|
         assert(record.is_a?(Hash) && record[field] == "#{url}#{filename}", "#{id}: record does not advertise its #{filename} endpoint", errors)
       end
@@ -496,6 +589,12 @@ module AgentExports
       assert(record.fetch("related_terms", []) == related_terms, "#{id}: exported related terms differ from source", errors)
       row = old_index[/<article\b[^>]*id="#{Regexp.escape(prefix + id.tr('.', '-'))}"[^>]*>.*?<\/article>/m].to_s
       full_entry = full_markdown.split(/^### /).find { |entry| entry.start_with?("#{paper['first_public']} — #{paper['title']}\n") }.to_s
+      validate_full_text_html(paper, row, "#{id} full list", errors)
+      validate_full_text_markdown(paper, full_entry, "#{id} full list", errors)
+      if paper["added_at"]
+        recent_row = recent_html.scan(/<article\b[^>]*>.*?<\/article>/m).find { |entry| linked?(entry, paper["paper_url"], canonical) }.to_s
+        validate_full_text_html(paper, recent_row, "#{id} recent additions", errors)
+      end
       expected_comparisons = expected_paper_comparisons(id, comparisons, methods, canonical)
       validate_comparison_record(record, expected_comparisons, id, errors)
       validate_comparison_html(expected_comparisons, html, source_by_id, canonical, id, errors)
@@ -797,6 +896,8 @@ module AgentExports
       terms = paper.fetch("related_terms", [])
       row = html.scan(/<article\b[^>]*>.*?<\/article>/m).find { |entry| linked?(entry, paper["paper_url"], canonical) }.to_s
       entry = markdown.split(/^## /).find { |part| part.start_with?("#{paper['title']}\n") }.to_s
+      validate_full_text_html(paper, row, "#{id} topic paper #{paper['id']}", errors)
+      validate_full_text_markdown(paper, entry, "#{id} topic paper #{paper['id']}", errors)
       paper_comparisons = expected_paper_comparisons(paper.fetch("id"), comparisons, methods, canonical)
       validate_comparison_markdown(paper_comparisons, entry, comparison_titles, source_by_id, canonical, "#{id} topic paper #{paper['id']}", errors)
       expected_heading_count = paper_comparisons.empty? ? 0 : 1

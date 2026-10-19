@@ -81,7 +81,9 @@ permalink: /data/schema.json
         "venue": {"type": "string"},
         "arxiv": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"},
         "doi": {"type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$"},
-        "paper_url": {"type": "string", "format": "uri"},
+        "paper_url": {"type": "string", "format": "uri", "description": "Primary source landing page: arXiv abstract or verified publication."},
+        "pdf_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/pdf/[0-9]{4}\\.[0-9]{4,5}$", "description": "Direct arXiv PDF, separate from the source landing page and citation URL."},
+        "html_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/html/[0-9]{4}\\.[0-9]{4,5}(?:v[0-9]+)?$", "description": "Full-text HTML linked by the paper's arXiv abstract page, when checked."},
         "code_url": {"type": "string", "format": "uri"},
         "lens": {"$ref": "#/$defs/lensValues"},
         "representation": {"$ref": "#/$defs/representationValues"},
@@ -120,7 +122,8 @@ permalink: /data/schema.json
         "publication_csl_url": {"type": "string", "format": "uri"},
         "first_public": {"type": "string", "format": "date"},
         "citation_date": {"type": "string", "format": "date"},
-        "paper_url": {"type": "string", "format": "uri"},
+        "paper_url": {"type": "string", "format": "uri", "description": "Primary source landing page."},
+        "pdf_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/pdf/[0-9]{4}\\.[0-9]{4,5}$", "description": "Direct arXiv PDF, separate from the source landing page and citation URL."},
         "connection": {"type": "string"}
       },
       "additionalProperties": false

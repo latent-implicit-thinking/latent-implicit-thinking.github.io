@@ -37,7 +37,7 @@ For example: {{ method.example }}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [{% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ site.data.publications[paper.id].doi }}{% endif %}]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
+Source: [{% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ site.data.publications[paper.id].doi }}{% endif %}]({{ paper.paper_url }}).{% if paper.arxiv %} [PDF](https://arxiv.org/pdf/{{ paper.arxiv }}).{% endif %}{% if paper.html_url %} [HTML]({{ paper.html_url }}).{% endif %} [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
 {% if paper.related_terms %}Related terms: {{ paper.related_terms | join: '; ' }}.
@@ -57,7 +57,7 @@ Summary: {{ paper.summary }}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [Original paper]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).
+Source: [Original paper]({{ paper.paper_url }}).{% assign precursor_arxiv_id = paper | lit_arxiv_id %}{% if precursor_arxiv_id %} [PDF](https://arxiv.org/pdf/{{ precursor_arxiv_id }}).{% endif %} [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).
 Why it is relevant: {{ paper.connection }}
 {% assign record = paper | lit_record %}{% for comparison in record.method_comparisons %}
 {{ comparison | lit_comparison_markdown }}
