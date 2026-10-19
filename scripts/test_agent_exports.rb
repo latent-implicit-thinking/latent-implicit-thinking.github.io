@@ -97,12 +97,20 @@ module AgentExports
     datasets
   end
 
+  def validate_dataset_creator(dataset, canonical, context, errors)
+    expected = {"@type" => "Organization", "name" => "Latent & Implicit Thinking (LIT) workshop organizing team",
+                "url" => "#{canonical}organizers/"}
+    assert(dataset["creator"] == expected, "#{context}: Dataset creator must identify the LIT workshop organizing team and organizers page", errors)
+  end
+
   def validate_dataset_discovery(site_root, meta, errors)
     datasets = %w[index.html data/index.html].map do |path|
       objects = json_ld(read_file(site_root, path, errors), path, errors)
       entries = validate_dataset_metadata(objects, path, errors)
       assert(entries.length == 1, "#{path}: expected exactly one research Dataset", errors)
-      entries.first || {}
+      dataset = entries.first || {}
+      validate_dataset_creator(dataset, meta.fetch("canonical_url"), path, errors)
+      dataset
     end
     homepage, downloads = datasets
     datasets.each do |dataset|
@@ -125,6 +133,27 @@ module AgentExports
     observed = []
     found = validate_dataset_metadata(graph, "graph fixture", observed)
     assert(found.length == 1 && observed.empty?, "Dataset regression: graph or multiple-type Dataset was not recognized", errors)
+
+    canonical = "https://latent-implicit-thinking.github.io/"
+    creator = {"@type" => "Organization", "name" => "Latent & Implicit Thinking (LIT) workshop organizing team",
+               "url" => "https://latent-implicit-thinking.github.io/organizers/"}
+    creator_cases = [
+      ["matching organizing team", creator, true],
+      ["missing creator", nil, false],
+      ["text instead of object", creator["name"], false],
+      ["wrong type", creator.merge("@type" => "Person"), false],
+      ["missing name", creator.reject { |key, _| key == "name" }, false],
+      ["wrong name", creator.merge("name" => "Another team"), false],
+      ["missing URL", creator.reject { |key, _| key == "url" }, false],
+      ["wrong URL", creator.merge("url" => "#{canonical}data/"), false],
+      ["unexpected field", creator.merge("alternateName" => "Example team"), false]
+    ]
+    creator_cases.each do |name, value, accepted|
+      observed = []
+      fixture = value.nil? ? {} : {"creator" => value}
+      validate_dataset_creator(fixture, canonical, name, observed)
+      assert(observed.empty? == accepted, "Dataset creator regression #{name}: validation did not #{accepted ? 'accept' : 'reject'} the fixture", errors)
+    end
   end
 
   def validate_comparison_sources(comparisons, source_by_id, methods, errors)

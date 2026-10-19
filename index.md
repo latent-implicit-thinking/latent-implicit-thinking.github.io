@@ -72,7 +72,7 @@ last_modified_at: 2026-10-18
   "hasPart": [
     {"@type": "WebPage", "name": "Start here: implicit chain-of-thought and latent reasoning", "url": {{ '/topics/' | absolute_url | jsonify }}},
     {"@type": "CollectionPage", "name": "Implicit Chain-of-Thought paper index", "url": {{ '/papers/' | absolute_url | jsonify }}},
-    {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "description": "A curated, structured corpus and reading guide for research on implicit chain-of-thought.", "license": {{ site.data.meta.license_url | jsonify }}, "url": {{ '/data/' | absolute_url | jsonify }}},
+    {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "description": "A curated, structured corpus and reading guide for research on implicit chain-of-thought.", "creator": {% include dataset-creator.json %}, "license": {{ site.data.meta.license_url | jsonify }}, "url": {{ '/data/' | absolute_url | jsonify }}},
     {"@type": "WebPage", "name": "Recent additions", "url": {{ '/recent/' | absolute_url | jsonify }}}{% for method in site.data.methods %},
     {"@type": "CollectionPage", "name": {{ method.label | jsonify }}, "url": {{ method.url | absolute_url | jsonify }}}{% endfor %}
   ]

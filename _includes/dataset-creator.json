@@ -1,0 +1,5 @@
+{
+  "@type": "Organization",
+  "name": "Latent & Implicit Thinking (LIT) workshop organizing team",
+  "url": {{ '/organizers/' | absolute_url | jsonify }}
+}

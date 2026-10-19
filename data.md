@@ -79,6 +79,7 @@ last_modified_at: 2026-10-18
   "name": "Implicit Chain-of-Thought Research Map",
   "alternateName": ["Implicit CoT paper corpus", "Implicit Chain-of-Thought literature map"],
   "description": "A curated, structured corpus and reading guide for research on implicit chain-of-thought.",
+  "creator": {% include dataset-creator.json %},
   "url": {{ page.url | absolute_url | jsonify }},
   "sameAs": {{ site.data.meta.repository_url | jsonify }},
   "license": {{ site.data.meta.license_url | jsonify }},
