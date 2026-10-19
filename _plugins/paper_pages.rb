@@ -113,6 +113,7 @@ module Literature
              "[Original paper](#{paper.fetch('paper_url')}) · [Reading-list entry](#{entry.fetch('record_url')})",
              "[Preprint BibTeX](#{entry.fetch('bibtex_url')}) · [Preprint CSL-JSON](#{entry.fetch('csl_url')}) · [JSON record](#{entry.fetch('json_url')})"]
     lines << "[Code](#{paper['code_url']})" if paper["code_url"]
+    lines += ["", "Related terms: #{paper['related_terms'].join(', ')}."] if paper["related_terms"]
     unless entry.fetch("demos", []).empty?
       lines += ["", "## Demos", ""]
       entry.fetch("demos").each { |demo| lines += [demo_markdown(site, demo), ""] }

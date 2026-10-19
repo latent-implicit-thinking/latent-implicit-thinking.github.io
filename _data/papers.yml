@@ -89,6 +89,7 @@
 
 - id: "2311.01460"
   title: "Implicit Chain of Thought Reasoning via Knowledge Distillation"
+  related_terms: ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT"]
   authors: "Yuntian Deng, Kiran Prasad, Roland Fernandez, Paul Smolensky, Vishrav Chaudhary, Stuart Shieber"
   first_public: "2023-11-02"
   venue: "arXiv"
@@ -210,6 +211,7 @@
 
 - id: "2405.14838"
   title: "From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step"
+  related_terms: ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT"]
   authors: "Yuntian Deng, Yejin Choi, Stuart Shieber"
   first_public: "2024-05-23"
   venue: "arXiv"

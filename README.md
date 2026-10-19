@@ -1,6 +1,6 @@
 # Implicit Chain-of-Thought
 
-A reading list about reasoning without writing every intermediate step.
+A reading list about reasoning without writing every intermediate step, also discussed as latent reasoning or latent chain-of-thought.
 
 [Visit the reading list](https://latent-implicit-thinking.github.io/).
 

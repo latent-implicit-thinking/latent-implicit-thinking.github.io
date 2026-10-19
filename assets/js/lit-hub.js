@@ -47,6 +47,10 @@
     return (value || "").split(/\s+/).indexOf(selected) !== -1;
   }
 
+  function normalizeSearch(value) {
+    return (value || "").toLowerCase().replace(/[-\u2010-\u2015]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
   function updateUrl() {
     var next = new URLSearchParams();
     var query = search.value.trim();
@@ -73,11 +77,11 @@
   }
 
   function applyFilters() {
-    var query = search.value.trim().toLowerCase();
+    var query = normalizeSearch(search.value);
     var visible = 0;
 
     papers.forEach(function (paper) {
-      var matchesSearch = !query || paper.dataset.search.indexOf(query) !== -1;
+      var matchesSearch = !query || normalizeSearch(paper.dataset.search).indexOf(query) !== -1;
       var matchesFilters = Object.keys(state).every(function (name) {
         return tokenMatch(paper.dataset[name], state[name]);
       });

@@ -154,7 +154,7 @@ js:
       <div id="paper-list" class="lit-paper-list">
         {% for paper in site.data.papers %}
         {% capture lens_labels %}{% for value in paper.lens %}{% case value %}{% when 'internalized' %}internalized reasoning{% when 'learned-tokens' %}thinking tokens learned tokens{% when 'continuous' %}continuous states{% when 'recurrent' %}recurrent stateful{% when 'beyond-sequential' %}alternative schedules beyond sequential{% when 'analysis' %}analysis evaluation limits{% endcase %} {% endfor %}{% endcapture %}
-        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
+        {% capture searchable %}{{ paper.id }} arXiv:{{ paper.arxiv }} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.related_terms | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
         <article
           id="paper-{{ paper.id | replace: '.', '-' }}"
           class="lit-paper-row"
@@ -180,6 +180,7 @@ js:
             <h2><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h2>
             <p class="lit-paper-authors">{{ paper.authors }}</p>
             <p class="lit-paper-summary">{{ paper.summary }}</p>
+            {% if paper.related_terms %}<p class="lit-guide-note">Related terms: {{ paper.related_terms | join: ', ' | escape }}.</p>{% endif %}
             {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p></details>{% endif %}
             <div class="lit-paper-tags" aria-label="Approaches">
               {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}<span>{{ category.label }}</span>{% endfor %}

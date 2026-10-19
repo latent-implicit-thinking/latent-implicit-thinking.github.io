@@ -121,6 +121,7 @@ module AgentExports
     publication_bib_text = read_file(site_root, "data/publications.bib", errors)
     publication_bib = bib_entries(publication_bib_text)
     old_index = read_file(site_root, "papers/index.html", errors)
+    full_markdown = read_file(site_root, "data/reading-list.md", errors)
     sitemap = read_file(site_root, "sitemap.xml", errors)
     sitemap_urls = []
     begin
@@ -136,6 +137,7 @@ module AgentExports
     validate_demo_sources(demos, source_by_id, methods, errors)
     validate_demo_discovery(demos, site_root, canonical, errors)
     validate_history_discovery(repo_root, site_root, canonical, errors)
+    validate_alias_sources(source_by_id, errors)
 
     records.each_with_index do |paper, index|
       id = paper.fetch("id")
@@ -178,8 +180,18 @@ module AgentExports
         assert(markdown.include?(text.to_s), "#{id}: Markdown omits an essential record field", errors)
       end
       assert(csl.length == 1 && csl.first == aggregate_csl.find { |item| item["id"] == citation_key }, "#{id}: standalone preprint CSL differs from the aggregate citation", errors)
+      assert(csl.length == 1 && csl.first["title"] == paper["title"], "#{id}: preprint citation title must remain the original paper title", errors)
       entries = bib_entries(bib)
       assert(entries.keys == [citation_key] && entries[citation_key] == aggregate_bib[citation_key], "#{id}: standalone preprint BibTeX differs from aggregate citation", errors)
+      related_terms = paper.fetch("related_terms", [])
+      assert(record.fetch("related_terms", []) == related_terms, "#{id}: exported related terms differ from source", errors)
+      row = old_index[/<article\b[^>]*id="#{Regexp.escape(prefix + id.tr('.', '-'))}"[^>]*>.*?<\/article>/m].to_s
+      full_entry = full_markdown.split(/^### /).find { |entry| entry.start_with?("#{paper['first_public']} — #{paper['title']}\n") }.to_s
+      related_terms.each do |term|
+        assert(visible.include?(term) && markdown.include?(term), "#{id}: related term #{term.inspect} is missing from the visible paper page or Markdown", errors)
+        assert(visible_text(row).include?(term), "#{id}: related term #{term.inspect} is not visible in the paper list", errors)
+        assert(full_entry.include?(term), "#{id}: full Markdown entry omits related term #{term.inspect}", errors)
+      end
       expected_demos = demos.each_with_object([]) do |demo, selected|
         link = demo.fetch("paper_relationships").find { |item| item["paper_id"] == id }
         selected << demo.merge("relationship" => link.fetch("relationship")) if link
@@ -211,6 +223,7 @@ module AgentExports
         assert(article["author"] == authors.map { |name| {"@type" => "Person", "name" => name} }, "#{id}: structured article authors differ from visible authors", errors)
         assert(article.dig("identifier", "value") == id, "#{id}: structured article identifier differs", errors)
         assert([paper["paper_url"], url].include?(article["url"]), "#{id}: structured article URL points at another work", errors)
+        assert(article.fetch("keywords", []) == related_terms, "#{id}: scholarly keywords differ from the visible related terms", errors)
       end
       if publications[id]
         assert(record["publication"] == publications[id], "#{id}: exported publication differs from verified source metadata", errors)
@@ -239,6 +252,9 @@ module AgentExports
       paragraph = html[/<p\b[^>]*class="[^"]*\blit-history\b[^"]*"[^>]*>.*?<\/p>/m].to_s
       history_text = CGI.unescapeHTML(paragraph.gsub(/<[^>]*>/, "")).gsub(/\s+/, " ").strip
       assert(history_text == history, "#{path}: visible history differs from the source-linked introduction", errors)
+      %w[latent\ reasoning latent\ chain-of-thought].each do |term|
+        assert(visible_text(html).include?(term), "#{path}: introduction omits related term #{term}", errors)
+      end
       sources.each do |label, url|
         assert(linked?(paragraph, url, canonical), "#{path}: history omits the #{label} primary source", errors)
       end
@@ -250,9 +266,30 @@ module AgentExports
       paragraph = text.split(/\n\s*\n/).find { |part| part.start_with?("Yuntian Deng and colleagues") }.to_s
       plain_text = paragraph.gsub(/\[([^\]]+)\]\([^)]+\)/, '\1')
       assert(plain_text == history, "#{path}: history differs from the visible introduction", errors)
+      %w[latent\ reasoning latent\ chain-of-thought].each do |term|
+        assert(text.include?(term), "#{path}: guide omits related term #{term}", errors)
+      end
       sources.each do |label, url|
         assert(paragraph.include?("[#{label}](#{url})"), "#{path}: history omits the #{label} primary source", errors)
       end
+    end
+    guide = read_file(site_root, "llms.txt", errors)
+    assert(guide.include?("`related_terms`"), "agent guide does not explain the related_terms field", errors)
+  end
+
+  def validate_alias_sources(source_by_id, errors)
+    source_by_id.each do |id, paper|
+      next unless paper.key?("related_terms")
+      terms = paper["related_terms"]
+      assert(terms.is_a?(Array) && !terms.empty? && terms.all? { |term| term.is_a?(String) && !term.strip.empty? } && terms.uniq == terms,
+             "#{id}: related terms must be a nonempty array of distinct strings", errors)
+    end
+    {"2311.01460" => "Implicit Chain of Thought Reasoning via Knowledge Distillation",
+     "2405.14838" => "From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step"}.each do |id, title|
+      paper = source_by_id[id]
+      assert(paper && paper["title"] == title, "#{id}: terminology aliases must not replace the original title", errors)
+      expected = ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT"]
+      assert(paper && (expected - Array(paper["related_terms"])).empty?, "#{id}: implicit/latent terminology aliases are missing", errors)
     end
   end
 
@@ -390,6 +427,12 @@ module AgentExports
     selected.each do |paper|
       [paper["title"], paper["paper_url"], paper["summary"], "#{canonical}papers/#{paper['id']}/"].each do |text|
         assert(markdown.include?(text), "#{id}: topic Markdown omits paper #{paper['id']}", errors)
+      end
+      terms = paper.fetch("related_terms", [])
+      row = html.scan(/<article\b[^>]*>.*?<\/article>/m).find { |entry| linked?(entry, paper["paper_url"], canonical) }.to_s
+      entry = markdown.split(/^## /).find { |part| part.start_with?("#{paper['title']}\n") }.to_s
+      terms.each do |term|
+        assert(visible_text(row).include?(term) && entry.include?(term), "#{id}: paper #{paper['id']} related term #{term.inspect} is missing from the topic HTML or Markdown entry", errors)
       end
     end
     %w[json md].each do |extension|

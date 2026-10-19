@@ -3,7 +3,7 @@ layout: base
 title: "Implicit Chain-of-Thought"
 seo-title: "Implicit Chain-of-Thought Papers & Research Map"
 share-title: "Implicit Chain-of-Thought — Papers and Research Map"
-share-description: "A growing reading list on reasoning without written steps, with explanations of the main approaches and downloadable citations."
+share-description: "A reading list on implicit chain-of-thought and latent reasoning, with explanations of the main approaches and downloadable citations."
 show-avatar: false
 nav-short: true
 last_modified_at: 2026-10-18
@@ -14,7 +14,7 @@ last_modified_at: 2026-10-18
     <div class="lit-shell">
       <p class="lit-eyebrow">Implicit chain-of-thought · A reading list</p>
       <h1 id="lit-title">Can language models reason without writing every intermediate step?</h1>
-      <p class="lit-deck">An explicit chain of thought writes out intermediate steps. Implicit chain-of-thought methods try to do some or all of that work without putting each step into words.</p>
+      <p class="lit-deck">An explicit chain of thought writes out intermediate steps. Implicit chain-of-thought methods try to do some or all of that work without putting each step into words. This research is also discussed as latent reasoning or latent chain-of-thought.</p>
       <p class="lit-deck lit-history">Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023</a>: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their <a href="https://arxiv.org/abs/2405.14838">2024 work</a> introduced step-by-step internalization.</p>
       <div class="lit-actions" aria-label="Choose how to use the guide">
         <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">Browse {{ site.data.papers | size }} papers</a>
@@ -67,7 +67,7 @@ last_modified_at: 2026-10-18
   "url": {{ '/' | absolute_url | jsonify }},
   "description": "A reading list with explanations, paper summaries, and citations for research on reasoning without written intermediate steps.",
   "inLanguage": "en",
-  "about": {"@type": "Thing", "name": "Implicit chain-of-thought reasoning"},
+  "about": {"@type": "Thing", "name": "Implicit chain-of-thought reasoning", "alternateName": ["Implicit CoT", "Latent reasoning", "Latent chain-of-thought", "Latent CoT"]},
   "hasPart": [
     {"@type": "CollectionPage", "name": "Implicit Chain-of-Thought paper index", "url": {{ '/papers/' | absolute_url | jsonify }}},
     {"@type": "Dataset", "name": "Implicit Chain-of-Thought research corpus", "url": {{ '/data/' | absolute_url | jsonify }}}

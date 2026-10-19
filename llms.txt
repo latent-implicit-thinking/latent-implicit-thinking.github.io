@@ -6,6 +6,8 @@ permalink: /llms.txt
 
 > A reading list about reasoning without writing every intermediate step, with explanations, paper summaries, and downloadable citations.
 
+This research is also discussed as latent reasoning or latent chain-of-thought.
+
 Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
 
 Version: {{ site.data.meta.version }}
@@ -45,6 +47,7 @@ Use the original papers for scientific claims. Summaries and categories are writ
 - `id` identifies a paper; `paper_url` links to the original source; `record_url` links to an independently fetchable entry at `/papers/{id}/`. Earlier full-list anchors still work through `legacy_record_url`.
 - Each entry has `json_url`, `markdown_url`, `bibtex_url`, and `csl_url`. Use the topic downloads or individual entries when you do not need the complete list.
 - `author_names` preserves the authors' names and order.
+- Optional `related_terms` provides editorial search terminology, such as latent reasoning or latent chain-of-thought. These terms are also visible on the paper's page; they do not replace its title or citation. Search them alongside the title and summary.
 - `added_at` is when a paper was added to this list, not its publication date. Tracking began {{ site.data.meta.addition_tracking_started_at }}; initial-collection records omit this field. Release history lists `added_papers` IDs. A new addition may be an older paper.
 - `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier conference presentation has a source note. It is not an independently verified announcement date.
 - `citation_date` is the initial submission date of the linked arXiv preprint. BibTeX and CSL-JSON describe that preprint, not a later proceedings version. Source URLs may serve revised versions.

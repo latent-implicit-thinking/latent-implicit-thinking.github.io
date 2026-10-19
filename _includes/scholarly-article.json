@@ -6,5 +6,6 @@
   "url": {{ include.paper.paper_url | jsonify }},
   "identifier": {"@type": "PropertyValue", "propertyID": "arXiv", "value": {{ include.paper.id | jsonify }}},
   "author": [{% for name in author_names %}{"@type": "Person", "name": {{ name | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}],
-  "description": {{ include.paper.summary | default: include.paper.connection | jsonify }}
+  "description": {{ include.paper.summary | default: include.paper.connection | jsonify }}{% if include.paper.related_terms %},
+  "keywords": {{ include.paper.related_terms | jsonify }}{% endif %}
 }

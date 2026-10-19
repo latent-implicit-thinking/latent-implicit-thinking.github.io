@@ -9,6 +9,7 @@ layout: base
       <h1>{{ paper.title | escape }}</h1>
       <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
       <p>{{ paper.summary | default: paper.connection | escape }}</p>
+      {% if paper.related_terms %}<p class="lit-guide-note">Related terms: {{ paper.related_terms | join: ', ' | escape }}.</p>{% endif %}
       <p class="lit-detail-date">First public: <time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%B %-d, %Y" }}</time>{% if paper.added_at %} · Added to this list: {{ paper.added_at | date: "%B %-d, %Y" }}{% endif %}</p>
       {% if paper.first_public_note %}<p class="lit-guide-note">{{ paper.first_public_note | escape }} <a href="{{ paper.first_public_source }}">Date source</a>. ArXiv initial submission: {{ record.citation_date }}.</p>{% endif %}
       {% if paper.previous_titles %}<p>Earlier title: {{ paper.previous_titles | join: '; ' | escape }}.</p>{% endif %}

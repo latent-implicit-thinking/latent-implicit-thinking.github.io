@@ -5,7 +5,7 @@ sitemap: false
 ---
 # Implicit Chain-of-Thought reading list
 
-Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language.
+Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language. This research is also discussed as latent reasoning or latent chain-of-thought.
 
 Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
 
@@ -40,6 +40,8 @@ Authors: {{ paper.authors }}.
 Source: [arXiv:{{ paper.arxiv }}]({{ paper.paper_url }}). [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
+{% if paper.related_terms %}Related terms: {{ paper.related_terms | join: '; ' }}.
+{% endif %}
 {% assign record = paper | lit_record %}{% for demo in record.demos %}
 {{ demo | lit_demo_markdown }}
 {% endfor %}

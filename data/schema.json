@@ -59,6 +59,7 @@ permalink: /data/schema.json
         "id": {"type": "string", "description": "Stable record identifier; arXiv ID when available."},
         "title": {"type": "string"},
         "previous_titles": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "related_terms": {"type": "array", "items": {"type": "string", "minLength": 1, "pattern": "\\S"}, "minItems": 1, "uniqueItems": true, "description": "Editorial search terminology that connects this paper to related names for its research area; not alternative paper titles."},
         "added_at": {"type": "string", "format": "date", "description": "Date added to this reading list, not the paper's publication date. Tracked for additions after the initial collection; absent on initial-collection records."},
         "authors": {"type": "string"},
         "author_names": {"type": "array", "items": {"type": "string"}, "minItems": 1},

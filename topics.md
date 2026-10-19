@@ -13,7 +13,7 @@ last_modified_at: 2026-10-18
   <header class="lit-index-hero">
     <div class="lit-shell lit-narrow-shell">
       <h1>What is implicit chain-of-thought?</h1>
-      <p>In an explicit chain of thought, a language model writes intermediate steps before its answer. Implicit chain-of-thought methods try to carry out some or all of those steps without expressing them as words.</p>
+      <p>In an explicit chain of thought, a language model writes intermediate steps before its answer. Implicit chain-of-thought methods try to carry out some or all of those steps without expressing them as words. This research is also discussed as latent reasoning or latent chain-of-thought.</p>
       <p class="lit-history">Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023</a>: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. Their <a href="https://arxiv.org/abs/2405.14838">2024 work</a> introduced step-by-step internalization.</p>
       <p>The aim is not simply to hide a written explanation from the user. Researchers change how a model is trained or how it computes, then test whether it can solve problems without generating the full explanation.</p>
     </div>
@@ -54,7 +54,7 @@ last_modified_at: 2026-10-18
         <li><strong>What does it cost?</strong> Fewer output tokens can still mean more computation. Check for extra model passes, repeated layers, and changes in accuracy as well as speed.</li>
         <li><strong>What does the evidence show?</strong> Correct answers alone do not establish how a model solves a problem. Tests on new problems and experiments that alter internal states can help distinguish reasoning from shortcuts.</li>
       </ul>
-      <p>The list includes work often described as latent reasoning or continuous chain-of-thought, along with related generation methods and earlier background papers. Paper titles retain the authors' terminology.</p>
+      <p>The list also includes related generation methods and earlier background papers. Paper titles retain the authors' terminology.</p>
       <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">Browse all {{ site.data.papers | size }} papers</a>
     </div>
   </section>

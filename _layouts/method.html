@@ -52,6 +52,7 @@ layout: base
             <h2><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h2>
             <p class="lit-paper-authors">{{ paper.authors }}</p>
             <p class="lit-paper-summary">{{ paper.summary }}</p>
+            {% if paper.related_terms %}<p class="lit-guide-note">Related terms: {{ paper.related_terms | join: ', ' | escape }}.</p>{% endif %}
             {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.</p></details>{% endif %}
             <div class="lit-paper-tags" aria-label="Approaches">
               {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}<span>{{ category.label }}</span>{% endfor %}
