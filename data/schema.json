@@ -72,16 +72,17 @@ permalink: /data/schema.json
         "csl_url": {"type": "string", "format": "uri"},
         "demos": {"type": "array", "items": {"$ref": "#/$defs/demo"}, "minItems": 1},
         "publication": {"$ref": "#/$defs/publication"},
+        "preprint": {"$ref": "#/$defs/preprint"},
         "publication_bibtex_url": {"type": "string", "format": "uri"},
         "publication_csl_url": {"type": "string", "format": "uri"},
         "first_public": {"type": "string", "format": "date"},
         "first_public_source": {"type": "string", "format": "uri"},
         "first_public_note": {"type": "string"},
-        "citation_date": {"type": "string", "format": "date", "description": "Date of the linked source: arXiv v1 submission or DOI-only publication, distinct from earlier public history."},
+        "citation_date": {"type": "string", "format": "date", "description": "Date of the cited source: preprint posting or publication, distinct from earlier public history."},
         "venue": {"type": "string"},
         "arxiv": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"},
         "doi": {"type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$"},
-        "paper_url": {"type": "string", "format": "uri", "description": "Primary source landing page: arXiv abstract or verified publication."},
+        "paper_url": {"type": "string", "format": "uri", "description": "Primary source landing page: preprint repository or verified publication."},
         "pdf_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/pdf/[0-9]{4}\\.[0-9]{4,5}$", "description": "Direct arXiv PDF, separate from the source landing page and citation URL."},
         "html_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/html/[0-9]{4}\\.[0-9]{4,5}(?:v[0-9]+)?$", "description": "Full-text HTML linked by the paper's arXiv abstract page, when checked."},
         "code_url": {"type": "string", "format": "uri"},
@@ -98,7 +99,8 @@ permalink: /data/schema.json
       "additionalProperties": false,
       "anyOf": [
         {"type": "object", "required": ["arxiv"]},
-        {"type": "object", "required": ["doi", "publication"], "properties": {"publication": {"type": "object", "required": ["doi"]}}}
+        {"type": "object", "required": ["doi", "publication"], "properties": {"publication": {"type": "object", "required": ["doi"]}}},
+        {"type": "object", "required": ["doi", "preprint"]}
       ]
     },
     "precursor": {
@@ -173,6 +175,18 @@ permalink: /data/schema.json
             "additionalProperties": false
           }
         }
+      },
+      "additionalProperties": false
+    },
+    "preprint": {
+      "type": "object",
+      "description": "Verified non-arXiv DOI preprint source, separate from a conference or journal publication.",
+      "required": ["repository", "source_url", "verified_at"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "format": "uri"},
+        "verified_at": {"type": "string", "format": "date"}
       },
       "additionalProperties": false
     },

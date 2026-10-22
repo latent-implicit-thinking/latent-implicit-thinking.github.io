@@ -1,3 +1,12 @@
+- version: "0.10.0"
+  date: "2026-10-22"
+  title: "October reading-list update"
+  changes:
+    - "Added 33 papers on continuous-state reasoning, recurrent models, thinking tokens, diffusion, and analysis. The collection now contains 241 papers plus eight background papers."
+    - "Checked the literature through October 22, including earlier papers not yet in the list."
+    - "Added Preprints.org citation support and a verified ICML 2026 citation, keeping preprint dates and published versions separate."
+  added_papers: ["2602.04925", "2602.13517", "2607.22925", "2610.09013", "azizi2026loopedsurvey", "2610.22796", "2610.22924", "2610.23036", "2610.23275", "2610.23302", "2610.24135", "2610.24929", "2610.25086", "2610.25464", "2610.25612", "2610.25723", "2610.25835", "2610.25932", "2610.26030", "2610.26040", "2610.26542", "2610.26666", "2610.26854", "2610.27559", "2610.27628", "2610.28489", "2610.28498", "2610.28540", "2610.28607", "2610.28871", "2610.29255", "2610.29385", "2610.30066"]
+
 - version: "0.9.6"
   date: "2026-10-19"
   title: "Recurrent-model evaluation and journal citations"

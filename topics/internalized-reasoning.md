@@ -7,5 +7,5 @@ permalink: /topics/internalized-reasoning/
 method_id: internalized
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-22
 ---

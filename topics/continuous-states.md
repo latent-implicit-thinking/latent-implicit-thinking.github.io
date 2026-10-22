@@ -7,5 +7,5 @@ permalink: /topics/continuous-states/
 method_id: continuous
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-22
 ---

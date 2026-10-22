@@ -75,8 +75,8 @@
   <link rel="alternate" type="application/json" title="This paper's record" href="{{ page.record.json_url }}">
   <link rel="alternate" type="text/markdown" title="This paper as Markdown" href="{{ page.record.markdown_url }}">
   {% assign citation_arxiv_id = page.paper | lit_arxiv_id %}
-  <link rel="alternate" type="application/x-bibtex" title="{% if citation_arxiv_id %}Preprint{% else %}Paper{% endif %} citation" href="{{ page.record.bibtex_url }}">
-  <link rel="alternate" type="application/vnd.citationstyles.csl+json" title="{% if citation_arxiv_id %}Preprint{% else %}Paper{% endif %} citation" href="{{ page.record.csl_url }}">
+  <link rel="alternate" type="application/x-bibtex" title="{% if citation_arxiv_id or page.paper.preprint %}Preprint{% else %}Paper{% endif %} citation" href="{{ page.record.bibtex_url }}">
+  <link rel="alternate" type="application/vnd.citationstyles.csl+json" title="{% if citation_arxiv_id or page.paper.preprint %}Preprint{% else %}Paper{% endif %} citation" href="{{ page.record.csl_url }}">
   {% if page.publication %}<link rel="alternate" type="application/x-bibtex" title="Published-version citation" href="{{ page.record.publication_bibtex_url }}">{% endif %}
   {% endif %}
 

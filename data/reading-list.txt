@@ -17,7 +17,7 @@ Papers are ordered by their earliest public date, usually the first arXiv submis
 
 - [JSON paper list]({{ '/data/papers.json' | absolute_url }})
 - [Recent additions]({{ '/recent/' | absolute_url }}): papers added since the initial collection
-- [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): each entry's linked source—arXiv preprints using initial submission dates, or publications for entries without an arXiv version
+- [CSL-JSON citations]({{ '/data/papers.csl.json' | absolute_url }}) and [BibTeX citations]({{ '/data/papers.bib' | absolute_url }}): each entry's linked source—an arXiv or DOI preprint, or a conference or journal publication
 - [Introduction and examples]({{ '/topics/' | absolute_url }})
 - [Downloads and file details]({{ '/data/' | absolute_url }})
 - [Corrections]({{ '/contribute/' | absolute_url }})
@@ -37,7 +37,9 @@ For example: {{ method.example }}
 ### {{ paper.first_public }} — {{ paper.title }}
 
 Authors: {{ paper.authors }}.
-Source: [{% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ site.data.publications[paper.id].doi }}{% endif %}]({{ paper.paper_url }}).{% if paper.arxiv %} [PDF](https://arxiv.org/pdf/{{ paper.arxiv }}).{% endif %}{% if paper.html_url %} [HTML]({{ paper.html_url }}).{% endif %} [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
+Source: [{% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ paper.doi }}{% endif %}]({{ paper.paper_url }}).{% if paper.arxiv %} [PDF](https://arxiv.org/pdf/{{ paper.arxiv }}).{% endif %}{% if paper.html_url %} [HTML]({{ paper.html_url }}).{% endif %} [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
+{% if paper.preprint %}{{ paper.preprint.repository }} preprint{% if paper.preprint.version %}, version {{ paper.preprint.version }}{% endif %}: {{ paper.citation_date }}.
+{% endif %}
 Categories: {% for value in paper.lens %}{% assign method = site.data.methods | where: 'id', value | first %}{{ method.label }}{% unless forloop.last %}; {% endunless %}{% endfor %}.
 Summary: {{ paper.summary }}
 {% if paper.related_terms %}Related terms: {{ paper.related_terms | join: '; ' }}.

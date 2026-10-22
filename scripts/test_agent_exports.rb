@@ -362,6 +362,60 @@ module AgentExports
     paper.key?("arxiv") || (paper.key?("connection") && paper["id"].to_s.match?(/\A\d{4}\.\d{4,5}\z/) && paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}")
   end
 
+  def preprint_source?(paper)
+    arxiv_source?(paper) || paper.key?("preprint")
+  end
+
+  def validate_preprint_source(paper, errors)
+    id, preprint = paper.values_at("id", "preprint")
+    assert(preprint.is_a?(Hash), "#{id}: preprint metadata must be an object", errors)
+    return unless preprint.is_a?(Hash)
+
+    assert((preprint.keys - %w[repository version source_url verified_at]).empty?, "#{id}: preprint metadata has unknown fields", errors)
+    %w[repository source_url verified_at].each do |field|
+      assert(preprint[field].is_a?(String) && !preprint[field].strip.empty?, "#{id}: preprint lacks #{field}", errors)
+    end
+    assert(preprint["repository"] != "arXiv", "#{id}: arXiv sources must use arxiv metadata", errors)
+    if preprint.key?("version")
+      assert(preprint["version"].is_a?(String) && !preprint["version"].strip.empty?, "#{id}: preprint version must be nonempty text", errors)
+    end
+    assert(paper["doi"].to_s.match?(%r{\A10\.\d{4,9}/\S+\z}), "#{id}: DOI preprint needs its verified DOI", errors)
+    [paper["paper_url"], preprint["source_url"]].each do |url|
+      begin
+        parsed = URI.parse(url.to_s)
+        assert(parsed.scheme == "https" && parsed.host && !parsed.host.empty?, "#{id}: preprint sources must be absolute HTTPS URLs", errors)
+      rescue URI::InvalidURIError
+        errors << "Agent exports: #{id}: invalid preprint source URL"
+      end
+    end
+    begin
+      posted = Date.iso8601(paper.fetch("citation_date").to_s)
+      first = Date.iso8601(paper.fetch("first_public").to_s)
+      checked = Date.iso8601(preprint["verified_at"].to_s)
+      assert(first <= posted && posted <= checked && checked <= Date.today, "#{id}: preprint dates must preserve public, posted and verified chronology", errors)
+    rescue ArgumentError, KeyError
+      errors << "Agent exports: #{id}: DOI preprint needs valid citation and verification dates"
+    end
+  end
+
+  def validate_doi_preprint_artifacts(paper, record, citation, bib, visible, markdown, errors)
+    id, preprint = paper.values_at("id", "preprint")
+    assert(record["preprint"] == preprint, "#{id}: exported preprint metadata differs from source", errors)
+    assert(citation["type"] == "article" && citation["genre"] == "Preprint" && citation["archive"] == preprint["repository"], "#{id}: DOI preprint citation must not invent a journal or conference", errors)
+    assert(citation["DOI"] == paper["doi"] && citation["URL"] == paper["paper_url"] && citation["version"] == preprint["version"], "#{id}: DOI preprint citation identity differs", errors)
+    assert(citation.dig("issued", "date-parts") == [paper.fetch("citation_date").split("-").map(&:to_i)], "#{id}: DOI preprint citation must use its posting date", errors)
+    assert(!citation.key?("container-title") && !citation.key?("number"), "#{id}: DOI preprint citation contains invented publication or arXiv fields", errors)
+    assert(citation.dig("custom", "source_url") == preprint["source_url"] && citation.dig("custom", "verified_at") == preprint["verified_at"], "#{id}: DOI preprint citation lacks checked source details", errors)
+    note = "#{preprint['repository']} preprint"
+    note += ", version #{preprint['version']}" if preprint["version"]
+    escaped_note = note.gsub(/[&%_#$]/) { |char| "\\#{char}" }
+    assert(bib.start_with?("@misc{") && bib.include?("note = {#{escaped_note}}") && bib.include?("doi = {#{paper['doi']}}"), "#{id}: DOI preprint BibTeX must identify its repository, version and DOI", errors)
+    assert(!bib.match?(/archivePrefix|eprint =|journal =|booktitle =/), "#{id}: DOI preprint BibTeX contains invented source fields", errors)
+    assert(visible.include?("#{preprint['repository']} preprint") && visible.include?("Posted: #{paper['citation_date']}") && visible.include?(paper["doi"]), "#{id}: DOI preprint source and posting date must be visible", errors)
+    assert(markdown.include?("#{note}: #{paper['citation_date']}") && markdown.include?("[Preprint BibTeX]"), "#{id}: DOI preprint Markdown must label the citation version", errors)
+    assert(!visible.match?(/arxiv preprint/i) && !markdown.match?(/ArXiv initial submission/), "#{id}: DOI preprint page invents an arXiv version", errors)
+  end
+
   def full_text_links(paper)
     links = {}
     links["PDF"] = "https://arxiv.org/pdf/#{paper.fetch('id')}" if arxiv_source?(paper)
@@ -442,6 +496,11 @@ module AgentExports
     assert(PublicFiles.safe_paper_id?(id), "#{id}: unsafe record identifier", errors)
     if arxiv_source?(paper)
       assert(paper["paper_url"] == "https://arxiv.org/abs/#{id}" && (!paper.key?("arxiv") || paper["arxiv"] == id), "#{id}: arXiv identifier and source URL must agree", errors)
+      assert(!paper.key?("preprint"), "#{id}: arXiv source cannot also declare non-arXiv preprint metadata", errors)
+      return
+    end
+    if paper.key?("preprint")
+      validate_preprint_source(paper, errors)
       return
     end
     validate_publication_source(id, publication, paper, errors)
@@ -477,11 +536,54 @@ module AgentExports
     end
   end
 
+  def validate_doi_preprint_regressions(errors)
+    source = {"repository" => "Example Repository", "version" => "1", "source_url" => "https://example.org/preprint/v1", "verified_at" => "2026-01-03"}
+    paper = {"id" => "preprint2026example", "title" => "Preprint example", "authors" => "A. Author", "first_public" => "2026-01-01", "citation_date" => "2026-01-02", "doi" => "10.1234/preprint.v1", "paper_url" => "https://example.org/preprint", "preprint" => source}
+    {
+      "verified DOI preprint" => [paper, true],
+      "missing source object" => [paper.merge("preprint" => nil), false],
+      "missing repository" => [paper.merge("preprint" => source.reject { |key, _| key == "repository" }), false],
+      "blank repository" => [paper.merge("preprint" => source.merge("repository" => " ")), false],
+      "invalid source URL" => [paper.merge("preprint" => source.merge("source_url" => "/v1")), false],
+      "invalid verification date" => [paper.merge("preprint" => source.merge("verified_at" => "unknown")), false],
+      "missing citation date" => [paper.reject { |key, _| key == "citation_date" }, false],
+      "posting before first public" => [paper.merge("citation_date" => "2025-12-31"), false],
+      "posting after verification" => [paper.merge("citation_date" => "2026-01-04"), false],
+      "missing DOI" => [paper.reject { |key, _| key == "doi" }, false],
+      "arXiv conflict" => [paper.merge("id" => "2601.00001", "arxiv" => "2601.00001", "paper_url" => "https://arxiv.org/abs/2601.00001"), false]
+    }.each do |name, (value, accepted)|
+      observed = []
+      validate_canonical_source(value, nil, observed)
+      assert(observed.empty? == accepted, "DOI preprint source regression #{name}: did not #{accepted ? 'accept' : 'reject'} fixture", errors)
+    end
+    citation = {"type" => "article", "genre" => "Preprint", "archive" => source["repository"], "DOI" => paper["doi"], "URL" => paper["paper_url"], "version" => "1", "issued" => {"date-parts" => [[2026, 1, 2]]}, "custom" => source.slice("source_url", "verified_at")}
+    bib = "@misc{example,\n  note = {Example Repository preprint, version 1},\n  doi = {10.1234/preprint.v1}\n}"
+    visible = "Example Repository preprint Posted: 2026-01-02 DOI: 10.1234/preprint.v1"
+    markdown = "Example Repository preprint, version 1: 2026-01-02.\n[Preprint BibTeX](citation.bib)"
+    cases = [
+      ["correct artifacts", citation, bib, visible, markdown, true],
+      ["journal mislabel", citation.merge("type" => "article-journal"), bib, visible, markdown, false],
+      ["wrong posting date", citation.merge("issued" => {"date-parts" => [[2026, 1, 1]]}), bib, visible, markdown, false],
+      ["wrong DOI", citation.merge("DOI" => "10.1234/other"), bib, visible, markdown, false],
+      ["missing version", citation.reject { |key, _| key == "version" }, bib, visible, markdown, false],
+      ["journal BibTeX", citation, bib.sub("@misc", "@article"), visible, markdown, false],
+      ["invented arXiv", citation.merge("number" => "arXiv:2601.00001"), bib, visible, markdown, false],
+      ["missing visible preprint", citation, bib, "Published version", markdown, false],
+      ["missing Markdown preprint", citation, bib, visible, "Published version", false]
+    ]
+    cases.each do |name, value, bib_text, html_text, md_text, accepted|
+      observed = []
+      validate_doi_preprint_artifacts(paper, paper, value, bib_text, html_text, md_text, observed)
+      assert(observed.empty? == accepted, "DOI preprint artifact regression #{name}: did not #{accepted ? 'accept' : 'reject'} fixture", errors)
+    end
+  end
+
   def validate(repo_root, site_root)
     errors = []
     validate_comparison_regressions(errors)
     validate_dataset_regressions(errors)
     validate_citation_source_regressions(errors)
+    validate_doi_preprint_regressions(errors)
     validate_full_text_regressions(errors)
     papers = load_yaml(repo_root, "papers")
     precursors = load_yaml(repo_root, "precursors")
@@ -531,7 +633,7 @@ module AgentExports
     records.each_with_index do |paper, index|
       id = paper.fetch("id")
       validate_canonical_source(paper, publications[id], errors)
-      preprint = arxiv_source?(paper)
+      preprint = preprint_source?(paper)
       collection = index < papers.length ? "core" : "precursor"
       prefix = collection == "core" ? "paper-" : "precursor-"
       citation_key = "lit_#{collection == 'precursor' ? 'precursor_' : ''}#{id.tr('.', '_')}"
@@ -577,7 +679,9 @@ module AgentExports
       assert(csl.length == 1 && csl.first["title"] == paper["title"], "#{id}: citation title must remain the original paper title", errors)
       entries = bib_entries(bib)
       assert(entries.keys == [citation_key] && entries[citation_key] == aggregate_bib[citation_key], "#{id}: standalone BibTeX differs from aggregate citation", errors)
-      unless preprint
+      if paper["preprint"]
+        validate_doi_preprint_artifacts(paper, record, csl.first || {}, bib, visible, markdown, errors)
+      elsif !preprint
         published = publication_csl.find { |item| item["id"] == citation_key + "_published" }
         assert(published && csl.first && csl.first.reject { |key, _| key == "id" } == published.reject { |key, _| key == "id" }, "#{id}: DOI-only canonical CSL differs from verified publication", errors)
         assert(entries[citation_key] == publication_bib[citation_key + "_published"], "#{id}: DOI-only canonical BibTeX differs from verified publication", errors)
@@ -640,7 +744,7 @@ module AgentExports
       if article
         assert(article["@type"] == "ScholarlyArticle" && article["name"] == paper["title"] && article["description"] == summary, "#{id}: structured article differs from visible title or summary", errors)
         assert(article["author"] == authors.map { |name| {"@type" => "Person", "name" => name} }, "#{id}: structured article authors differ from visible authors", errors)
-        identifier = {"@type" => "PropertyValue", "propertyID" => preprint ? "arXiv" : "DOI", "value" => preprint ? id : paper["doi"]}
+        identifier = {"@type" => "PropertyValue", "propertyID" => arxiv_source?(paper) ? "arXiv" : "DOI", "value" => arxiv_source?(paper) ? id : paper["doi"]}
         assert(article["identifier"] == identifier, "#{id}: structured article identifier differs", errors)
         assert([paper["paper_url"], url].include?(article["url"]), "#{id}: structured article URL points at another work", errors)
         assert(article.fetch("keywords", []) == related_terms, "#{id}: scholarly keywords differ from the visible related terms", errors)
@@ -834,7 +938,7 @@ module AgentExports
     entry = entries.fetch(key, "")
     assert(entry.match?(/year\s*=\s*\{\s*#{publication['year']}\s*\}/), "#{id}: publication BibTeX year differs", errors)
     assert(entry.include?("url = {#{publication['url']}}"), "#{id}: publication BibTeX source identity differs", errors)
-    downloads = arxiv_source?(paper) ? %w[publication.bib publication.csl.json] : %w[citation.bib citation.csl.json]
+    downloads = preprint_source?(paper) ? %w[publication.bib publication.csl.json] : %w[citation.bib citation.csl.json]
     downloads.each do |filename|
       assert(linked?(html, "#{canonical}#{path}/#{filename}", canonical), "#{id}: paper page omits publication download #{filename}", errors)
     end

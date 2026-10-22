@@ -29,12 +29,19 @@ layout: base
         <h3>Published version</h3>
         <p><a href="{{ publication.url }}">{{ publication.title | escape }}</a><br>{{ publication.author_names | join: ', ' | escape }}<br>{{ publication.container_title | escape }}, {{ publication.year }}{% unless arxiv_id %}{% if publication.volume %}, {{ publication.volume | escape }}{% if publication.issue %}({{ publication.issue | escape }}){% endif %}{% endif %}{% endunless %}{% if publication.pages %}, pp. {{ publication.pages | escape }}{% elsif publication.article_number %}, article {{ publication.article_number | escape }}{% endif %}.</p>
         {% if publication.doi %}<p>DOI: <a href="https://doi.org/{{ publication.doi | escape }}">{{ publication.doi | escape }}</a></p>{% endif %}
-        <p><a href="{% if arxiv_id %}{{ record.publication_bibtex_url }}{% else %}{{ record.bibtex_url }}{% endif %}">BibTeX</a> · <a href="{% if arxiv_id %}{{ record.publication_csl_url }}{% else %}{{ record.csl_url }}{% endif %}">CSL-JSON</a></p>
+        <p><a href="{% if arxiv_id or paper.preprint %}{{ record.publication_bibtex_url }}{% else %}{{ record.bibtex_url }}{% endif %}">BibTeX</a> · <a href="{% if arxiv_id or paper.preprint %}{{ record.publication_csl_url }}{% else %}{{ record.csl_url }}{% endif %}">CSL-JSON</a></p>
       </div>{% endif %}
       {% if arxiv_id %}
       <div class="lit-citation-choice">
         <h3>ArXiv preprint</h3>
         <p>arXiv:{{ arxiv_id }} · Initial submission: {{ record.citation_date }}</p>
+        <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a></p>
+      </div>
+      {% elsif paper.preprint %}
+      <div class="lit-citation-choice">
+        <h3>{{ paper.preprint.repository | escape }} preprint</h3>
+        <p>{% if paper.preprint.version %}Version {{ paper.preprint.version | escape }} · {% endif %}Posted: {{ record.citation_date }}</p>
+        <p>DOI: <a href="https://doi.org/{{ paper.doi | escape }}">{{ paper.doi | escape }}</a></p>
         <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a></p>
       </div>
       {% endif %}

@@ -6,7 +6,7 @@ share-description: "See which papers have joined the implicit chain-of-thought r
 permalink: /recent/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-19
+last_modified_at: 2026-10-22
 ---
 
 {% assign tracked_papers = site.data.papers | where_exp: "paper", "paper.added_at" | reverse %}

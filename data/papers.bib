@@ -2,8 +2,8 @@
 layout: null
 permalink: /data/papers.bib
 ---
-% Citations refer to each entry's linked source: arXiv preprints using initial submission dates, or publications for entries without an arXiv version.
-% Source URLs are not version-pinned.
+% Citations refer to each entry's linked source: an arXiv or DOI preprint, or a conference or journal publication.
+% ArXiv source URLs are not version-pinned.
 % Chronology dates and venue labels are available separately in papers.json.
 {% for paper in site.data.papers %}{{ paper | lit_bib }}
 {% endfor %}{% for paper in site.data.precursors %}{{ paper | lit_bib }}

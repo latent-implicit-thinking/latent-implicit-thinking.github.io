@@ -3,7 +3,7 @@ layout: page
 title: Changelog
 share-description: "Versioned updates to the Implicit Chain-of-Thought research map."
 permalink: /changelog/
-last_modified_at: 2026-10-19
+last_modified_at: 2026-10-22
 ---
 
 Changes to the reading list and website are listed below. You can follow updates through the [RSS feed]({{ '/feed.xml' | relative_url }}) or download the history as [`changes.json`]({{ '/data/changes.json' | relative_url }}).

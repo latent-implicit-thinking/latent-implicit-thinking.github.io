@@ -6,7 +6,7 @@ share-description: "Search the implicit chain-of-thought literature by method fa
 permalink: /papers/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-19
+last_modified_at: 2026-10-22
 js:
   - "/assets/js/lit-hub.js"
 ---
@@ -155,7 +155,7 @@ js:
         {% for paper in site.data.papers %}
         {% capture lens_labels %}{% for value in paper.lens %}{% case value %}{% when 'internalized' %}internalized reasoning{% when 'learned-tokens' %}thinking tokens learned tokens{% when 'continuous' %}continuous states{% when 'recurrent' %}recurrent stateful{% when 'beyond-sequential' %}alternative schedules beyond sequential{% when 'analysis' %}analysis evaluation limits{% endcase %} {% endfor %}{% endcapture %}
         {% assign publication = site.data.publications[paper.id] %}
-        {% capture searchable %}{{ paper.id }} {% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ publication.doi }}{% endif %} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.related_terms | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
+        {% capture searchable %}{{ paper.id }} {% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% else %}DOI:{{ paper.doi }}{% endif %} {{ paper.venue }} {{ paper.title }} {{ paper.previous_titles | join: ' ' }} {{ paper.related_terms | join: ' ' }} {{ paper.authors }} {{ paper.summary }} {{ paper.lens | join: ' ' }} {{ lens_labels }} {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}{{ category.label }} {% endfor %} {{ paper.representation | join: ' ' }} {{ paper.computation | join: ' ' }} {{ paper.training | join: ' ' }} {{ paper.questions | join: ' ' }} {{ paper.evidence | join: ' ' }} {{ paper.modality | join: ' ' }}{% endcapture %}
         <article
           id="paper-{{ paper.id | replace: '.', '-' }}"
           class="lit-paper-row"
@@ -193,7 +193,7 @@ js:
             {% if paper.html_url %}<a href="{{ paper.html_url }}">HTML ↗</a>{% endif %}
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
             <a class="lit-record-link" href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}" aria-label="Details and citations for {{ paper.title | escape }}">Details &amp; citations</a>
-            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% elsif publication.doi %}<span>DOI:{{ publication.doi }}</span>{% endif %}
+            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% elsif paper.doi %}<span>DOI:{{ paper.doi }}</span>{% endif %}
           </div>
         </article>
         {% endfor %}

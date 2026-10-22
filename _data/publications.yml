@@ -1,3 +1,16 @@
+"2602.13517":
+  title: "Think Deep, Not Just Long: Measuring LLM Reasoning Effort via Deep-Thinking Tokens"
+  author_names: ["Wei-Lin Chen", "Liqian Peng", "Tian Tan", "Chao Zhao", "Jianhang Chen", "Ziqian Lin", "Alec Go", "Yu Meng"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 43rd International Conference on Machine Learning"
+  pages: "16342-16360"
+  volume: "306"
+  publisher: "PMLR"
+  url: "https://proceedings.mlr.press/v306/chen26di.html"
+  source_url: "https://proceedings.mlr.press/v306/chen26di.html"
+  verified_at: "2026-10-22"
+
 "lei2026revisionrisk":
   title: "Question Selection and Answer Scoring Shape Revision Risk in Recurrent Language Models"
   author_names: ["Ruian Lei", "Yazhou Ren", "Zenglin Xu"]

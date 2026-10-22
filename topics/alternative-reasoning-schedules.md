@@ -7,5 +7,5 @@ permalink: /topics/alternative-reasoning-schedules/
 method_id: beyond-sequential
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-18
+last_modified_at: 2026-10-22
 ---

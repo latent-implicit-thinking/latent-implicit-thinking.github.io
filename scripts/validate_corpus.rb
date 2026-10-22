@@ -217,14 +217,17 @@ all_records.each_with_index do |paper, index|
   errors << "#{key}: CSL title or source differs" unless citation["title"] == paper["title"] && citation["URL"] == paper["paper_url"]
   errors << "#{key}: CSL authors are not lossless and ordered" unless citation["author"] == authors.map { |name| {"literal" => name} }
   publication = publications[paper["id"]]
-  preprint = AgentExports.arxiv_source?(paper)
+  preprint = AgentExports.preprint_source?(paper)
   expected_issued = preprint ? [date_parts] : [[publication.fetch("year")]]
   errors << "#{key}: CSL date differs from citation version" unless citation.dig("issued", "date-parts") == expected_issued
   errors << "#{key}: CSL collection or record URL differs" unless citation.dig("custom", "collection") == collection && citation.dig("custom", "record_url") == expected_url
   errors << "#{key}: CSL chronology differs from source" unless citation.dig("custom", "first_public") == paper["first_public"]
-  if preprint
+  if AgentExports.arxiv_source?(paper)
     errors << "#{key}: citation source is not the declared arXiv version" unless paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}" && citation["number"] == "arXiv:#{paper['id']}" && citation["archive"] == "arXiv"
     errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("eprint = {#{paper['id']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && bib_entry.include?("note = {arXiv preprint}")
+  elsif paper["preprint"]
+    errors << "#{key}: canonical citation does not identify the verified DOI preprint" unless citation["DOI"] == paper["doi"] && citation["type"] == "article" && citation["genre"] == "Preprint" && citation["archive"] == paper.dig("preprint", "repository") && !citation.key?("container-title")
+    errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("doi = {#{paper['doi']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && !bib_entry.include?("eprint =") && !bib_entry.include?("arXiv")
   else
     errors << "#{key}: canonical citation does not identify the verified publication" unless publication && citation["DOI"] == publication["doi"] && citation["type"] == publication["type"] && citation["container-title"] == publication["container_title"] && !citation.key?("archive") && citation["genre"] != "Preprint"
     errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("doi = {#{paper['doi']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && !bib_entry.include?("eprint =") && !bib_entry.include?("arXiv")
@@ -241,7 +244,7 @@ all_records.each_with_index do |paper, index|
 
   row = paper_html.match(/<article\s+id="#{Regexp.escape(anchor)}"(.*?)<\/article>/m)&.[](1).to_s
   searchable = CGI.unescapeHTML(row[/data-search="([^"]*)"/, 1].to_s)
-  source_identifier = preprint ? "arXiv:#{paper['arxiv']}" : "DOI:#{paper['doi']}"
+  source_identifier = AgentExports.arxiv_source?(paper) ? "arXiv:#{paper['arxiv']}" : "DOI:#{paper['doi']}"
   [paper["id"], source_identifier, paper["venue"], paper["title"], paper["authors"]].each do |term|
     errors << "#{key}: search index omits #{term}" unless searchable.include?(term.downcase)
   end
