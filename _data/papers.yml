@@ -1539,6 +1539,26 @@
   summary: "Uses information-theoretic analysis to study which supervision signals make latent chain-of-thought training effective."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2606.31779"
+  title: "Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers"
+  authors: "Ying Fan, Anej Svete, Kangwook Lee"
+  first_public: "2026-06-30"
+  added_at: "2026-10-23"
+  venue: "arXiv"
+  arxiv: "2606.31779"
+  paper_url: "https://arxiv.org/abs/2606.31779"
+  html_url: "https://arxiv.org/html/2606.31779v2"
+  code_url: "https://github.com/yingfan-bot/lotus"
+  lens: [internalized, continuous, recurrent, beyond-sequential]
+  representation: [continuous-state]
+  computation: [recurrent, parallel, depth-wise]
+  training: [supervised, curriculum]
+  questions: [capability, efficiency, interpretability]
+  evidence: [empirical, mechanistic]
+  modality: [language, symbolic]
+  summary: "LOTUS repeatedly refines blocks of continuous reasoning states in parallel, training each position to predict a token from a worked solution. It generates answers from those states and studies accuracy, latency and how much of the reasoning can be read back."
+  provenance: "Primary-source literature review, 2026-10-23"
+
 - id: "2607.00341"
   title: "DiscoLoop: Looping Discrete Embeddings and Continuous Hidden States for Multi-hop Reasoning"
   authors: "Hengyu Fu, Tianyu Guo, Zixuan Wang, Hanlin Zhu, Jason D. Lee, Jiantao Jiao, Stuart Russell, Song Mei"
@@ -1573,6 +1593,26 @@
   modality: [language, multimodal, vision]
   summary: "Jointly trains latent states for answer prediction and for decoding back into readable reasoning, using one model rather than a separate post-hoc explanation decoder."
   provenance: "Primary-source literature search, 2026-09-05"
+
+- id: "2607.03502"
+  title: "Reading Between the Dots: Decoding Hidden Computation across Filler Tokens"
+  authors: "Kaley Brauer, Claudio Mayrink Verdun, Samuel Marks"
+  first_public: "2026-07-03"
+  added_at: "2026-10-23"
+  venue: "NeurIPS 2026"
+  arxiv: "2607.03502"
+  paper_url: "https://arxiv.org/abs/2607.03502"
+  html_url: "https://arxiv.org/html/2607.03502v2"
+  code_url: "https://github.com/kaleybrauer/filler-token-reasoning"
+  lens: [learned-tokens, analysis]
+  representation: [discrete-token, hidden-state, cache-memory]
+  computation: [token-wise, depth-wise]
+  training: [analysis-only, inference-only]
+  questions: [interpretability, evaluation, limitations]
+  evidence: [empirical, mechanistic, probing]
+  modality: [language, symbolic]
+  summary: "Studies how models use filler tokens to compute without writing intermediate steps. Reads intermediate values from hidden states and swaps cached states between examples to test their effect on answers, then evaluates an unsupervised decoder on fact retrieval, arithmetic and string tasks."
+  provenance: "Primary-source literature review, 2026-10-23"
 
 - id: "2607.06648"
   title: "Final Checkpoints Are Not Enough: Analyzing Latent Reasoning Faithfulness Along Training Trajectories"
@@ -4192,7 +4232,8 @@
   venue: "arXiv"
   arxiv: "2610.28498"
   paper_url: "https://arxiv.org/abs/2610.28498"
-  html_url: "https://arxiv.org/html/2610.28498v1"
+  html_url: "https://arxiv.org/html/2610.28498v2"
+  code_url: "https://github.com/Aur-Shalev-Merin/present-but-hard-to-read"
   lens: [analysis]
   representation: [hidden-state]
   computation: [depth-wise, recurrent]
@@ -4286,7 +4327,8 @@
   venue: "arXiv"
   arxiv: "2610.29385"
   paper_url: "https://arxiv.org/abs/2610.29385"
-  html_url: "https://arxiv.org/html/2610.29385v1"
+  html_url: "https://arxiv.org/html/2610.29385v2"
+  code_url: "https://github.com/nshuhsn/PLRM"
   lens: [continuous]
   representation: [continuous-state]
   computation: [token-wise, parallel]
@@ -4315,3 +4357,60 @@
   modality: [language]
   summary: "Repeats a shared block inside each denoising step of a uniform diffusion language model. Studies how training-time loop counts and adaptive stopping affect language modeling quality, training cost and downstream accuracy."
   provenance: "Primary-source literature review, 2026-10-22"
+
+- id: "2610.30630"
+  title: "Interpreting Model Reasoning through Behavioral Counterfactuals"
+  authors: "Shawn Im, James Oldfield, Adel Bibi, Sharon Li"
+  first_public: "2026-10-22"
+  added_at: "2026-10-23"
+  venue: "arXiv"
+  arxiv: "2610.30630"
+  paper_url: "https://arxiv.org/abs/2610.30630"
+  html_url: "https://arxiv.org/html/2610.30630v1"
+  lens: [analysis]
+  representation: [hidden-state]
+  computation: [depth-wise, token-wise]
+  training: [analysis-only]
+  questions: [interpretability, controllability, evaluation]
+  evidence: [empirical, mechanistic]
+  modality: [language]
+  summary: "Holds a model response fixed while changing the prompt, then learns hidden-state edits that reproduce the change in token probabilities. Uses these edits and activation patching to show how suggestions can influence reasoning through question and filler-token states without being mentioned in the written response."
+  provenance: "Primary-source literature review, 2026-10-23"
+
+- id: "2610.30824"
+  title: "Loop to Look Better: Learning Adaptive Depth for Question-Guided Perception in Vision-Language Models"
+  authors: "Wencheng Ye, Anning Hu, Hongye Fang, Tianyi Wang, Junchi Yan"
+  first_public: "2026-10-22"
+  added_at: "2026-10-23"
+  venue: "arXiv"
+  arxiv: "2610.30824"
+  paper_url: "https://arxiv.org/abs/2610.30824"
+  html_url: "https://arxiv.org/html/2610.30824v1"
+  lens: [recurrent]
+  representation: [hidden-state, multimodal-latent]
+  computation: [recurrent, depth-wise]
+  training: [supervised]
+  questions: [architecture, capability, efficiency]
+  evidence: [empirical]
+  modality: [multimodal, vision, language]
+  summary: "LoopLook repeatedly refines visual features in response to a question, with a learned stopping rule and token-wise mixing of intermediate states. Adapts the vision encoder while keeping the language model frozen; the extra computation occurs before ordinary answer generation."
+  provenance: "Primary-source literature review, 2026-10-23"
+
+- id: "2610.30983"
+  title: "A Reality Check of Inference-Time Context Augmentation Methods"
+  authors: "Haeun Yu, Geert Heyman, Pepa Atanasova, Isabelle Augenstein"
+  first_public: "2026-10-22"
+  added_at: "2026-10-23"
+  venue: "arXiv"
+  arxiv: "2610.30983"
+  paper_url: "https://arxiv.org/abs/2610.30983"
+  html_url: "https://arxiv.org/html/2610.30983v1"
+  lens: [learned-tokens, analysis]
+  representation: [discrete-token]
+  computation: [token-wise]
+  training: [analysis-only, inference-only]
+  questions: [evaluation, limitations, capability]
+  evidence: [empirical]
+  modality: [language]
+  summary: "Tests inserting blank filler, repeated or rephrased sentences, and generated explanations at different points in a prompt. Tracks both corrected and newly broken answers across seven models and three datasets, showing why average accuracy alone can hide unreliable gains."
+  provenance: "Primary-source literature review, 2026-10-23"

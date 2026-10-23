@@ -1,3 +1,17 @@
+- version: "0.10.1"
+  date: "2026-10-23"
+  title: "Looped models and hidden-computation studies"
+  changes:
+    - "Added five papers on looped models, filler-token computation, and reasoning analysis. The collection now contains 246 papers plus eight background papers."
+    - "Checked two revised papers and updated their full-text and code links, preserving their original dates and summaries."
+    - "Checked the literature through October 23."
+  added_papers: ["2606.31779", "2607.03502", "2610.30630", "2610.30824", "2610.30983"]
+  updated_papers:
+    - id: "2610.28498"
+      fields: [html_url, code_url]
+    - id: "2610.29385"
+      fields: [html_url, code_url]
+
 - version: "0.10.0"
   date: "2026-10-22"
   title: "October reading-list update"
