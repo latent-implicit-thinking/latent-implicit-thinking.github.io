@@ -1,3 +1,14 @@
+"2312.03052":
+  title: "Visual Program Distillation: Distilling Tools and Programmatic Reasoning into Vision-Language Models"
+  author_names: ["Yushi Hu", "Otilia Stretcu", "Chun-Ta Lu", "Krishnamurthy Viswanathan", "Kenji Hata", "Enming Luo", "Ranjay Krishna", "Ariel Fuxman"]
+  year: 2024
+  type: "paper-conference"
+  container_title: "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+  pages: "9590-9601"
+  url: "https://openaccess.thecvf.com/content/CVPR2024/html/Hu_Visual_Program_Distillation_Distilling_Tools_and_Programmatic_Reasoning_into_Vision-Language_CVPR_2024_paper.html"
+  source_url: "https://openaccess.thecvf.com/content/CVPR2024/html/Hu_Visual_Program_Distillation_Distilling_Tools_and_Programmatic_Reasoning_into_Vision-Language_CVPR_2024_paper.html"
+  verified_at: "2026-10-26"
+
 "2602.13517":
   title: "Think Deep, Not Just Long: Measuring LLM Reasoning Effort via Deep-Thinking Tokens"
   author_names: ["Wei-Lin Chen", "Liqian Peng", "Tian Tan", "Chao Zhao", "Jianhang Chen", "Ziqian Lin", "Alec Go", "Yu Meng"]

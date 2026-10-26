@@ -1,3 +1,18 @@
+- version: "0.11.0"
+  date: "2026-10-26"
+  title: "Visual distillation, recurrent models, and diffusion reasoning"
+  changes:
+    - "Added eight papers on visual program distillation, recurrent models, and diffusion reasoning. The collection now contains 254 papers plus eight background papers."
+    - "Added a verified CVPR 2024 citation for Visual Program Distillation, preserving its December 2023 preprint date."
+    - "Checked two revised papers and linked their current full text; their summaries and original dates are unchanged."
+    - "Checked the literature through October 26."
+  added_papers: ["2312.03052", "2604.11791", "2610.22075", "2610.28543", "2610.31943", "2610.32096", "2610.32246", "2610.32492"]
+  updated_papers:
+    - id: "2610.10623"
+      fields: [html_url]
+    - id: "2610.10625"
+      fields: [html_url]
+
 - version: "0.10.1"
   date: "2026-10-23"
   title: "Looped models and hidden-computation studies"
