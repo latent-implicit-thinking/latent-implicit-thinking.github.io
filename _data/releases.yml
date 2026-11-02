@@ -1,3 +1,19 @@
+- version: "0.12.0"
+  date: "2026-11-02"
+  title: "Internalized reasoning, recurrent models, and diffusion"
+  changes:
+    - "Added 37 papers on internalized reasoning, recurrent models, diffusion, and analysis. The collection now contains 291 papers plus eight background papers."
+    - "Updated the Dual-Slot author list and linked the current full text of three revised papers, preserving their original dates and summaries."
+    - "Checked the literature through November 2."
+  added_papers: ["2505.18642", "2511.16886", "2602.08783", "2605.26014", "2605.28292", "2606.04627", "2606.05315", "2606.25013", "2607.22629", "2610.25076", "2610.31421", "2610.33062", "2610.33203", "2610.33360", "2610.34173", "2610.34427", "2610.34436", "2610.34639", "2610.35101", "2610.35201", "2610.35425", "2610.35544", "2610.35556", "2610.35804", "2610.36466", "2610.36901", "2610.38422", "2610.38822", "2610.39016", "2610.39372", "2610.39444", "2610.39853", "2610.40283", "2610.40325", "2610.41574", "2610.41720", "2610.41825"]
+  updated_papers:
+    - id: "2610.25086"
+      fields: [authors, html_url]
+    - id: "2610.16427"
+      fields: [html_url]
+    - id: "2606.12689"
+      fields: [html_url]
+
 - version: "0.11.0"
   date: "2026-10-26"
   title: "Visual distillation, recurrent models, and diffusion reasoning"
