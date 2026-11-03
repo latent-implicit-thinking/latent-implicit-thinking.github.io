@@ -1,4 +1,5 @@
 404.html
+BingSiteAuth.xml
 assets/css/beautifuljekyll-minimal.css
 assets/css/beautifuljekyll.css
 assets/css/bootstrap-social.css
