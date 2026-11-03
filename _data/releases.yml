@@ -1,3 +1,15 @@
+- version: "0.13.0"
+  date: "2026-11-03"
+  title: "Tool use, narrative reasoning, and recurrent models"
+  changes:
+    - "Added 10 papers on tool use, narrative reasoning, recurrent models, and analysis. The collection now contains 301 papers plus eight background papers."
+    - "Updated the summary of To CoT or To Loop? and added its ICML 2026 citation under the published title, A Formal Comparison Between Chain of Thought and Latent Thought. Its original preprint date is unchanged."
+    - "Checked the literature through November 3."
+  added_papers: ["2510.10089", "2512.02240", "2602.11451", "2602.16490", "2602.22441", "2604.12946", "2606.18524", "2611.01926", "2611.02333", "2611.02857"]
+  updated_papers:
+    - id: "2505.19245"
+      fields: [summary, publication]
+
 - version: "0.12.0"
   date: "2026-11-02"
   title: "Internalized reasoning, recurrent models, and diffusion"

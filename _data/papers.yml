@@ -865,7 +865,7 @@
   questions: [theory]
   evidence: [formal]
   modality: [symbolic]
-  summary: "Formally compares explicit chain-of-thought computation with repeated internal transformations in looped transformer architectures."
+  summary: "Compares explicit CoT with looped hidden-state computation on parallel and probabilistic tasks. The ICML 2026 version extends the analysis to continuous thought and approximate sampling."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2505.20674"
@@ -1131,6 +1131,26 @@
   summary: "Uses a variational autoencoder to compress textual reasoning steps into blocks of continuous states. A diffusion model repeatedly revises each block before generating the next, then produces a textual answer; diversity guidance encourages alternative reasoning trajectories."
   provenance: "Awesome-Latent-CoT; primary sources checked 2026-10-18"
 
+- id: "2510.10089"
+  title: "What Makes Looped Transformers Perform Better Than Non-Recursive Ones"
+  authors: "Zixuan Gong, Yong Liu, Jiaye Teng"
+  first_public: "2025-10-11"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2510.10089"
+  paper_url: "https://arxiv.org/abs/2510.10089"
+  html_url: "https://arxiv.org/html/2510.10089v3"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["supervised", "curriculum"]
+  questions: ["theory", "efficiency", "generalization"]
+  evidence: ["formal", "empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Studies how repeated attention changes optimization through a model of loss-landscape geometry. Proposes SHIFT, which starts with one attention pass and adds shared-weight repetitions after learning stalls, and tests the schedule on synthetic sequence tasks."
+  provenance: "Primary-source literature review, 2026-11-03"
+  previous_titles: ["What Makes Looped Transformers Perform Better Than Non-Recursive Ones (Provably)"]
+
 - id: "2510.15522"
   title: "LLM Latent Reasoning as Chain of Superposition"
   authors: "Jingcheng Deng, Liang Pang, Zihao Wei, Shicheng Xu, Zenghao Duan, Kun Xu, Yang Song, Huawei Shen, Xueqi Cheng"
@@ -1257,6 +1277,25 @@
   modality: [language, symbolic]
   summary: "Learns a stopping policy for continuous latent reasoning so the model can allocate a variable number of internal steps."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2512.02240"
+  title: "Lightweight Latent Reasoning for Narrative Tasks"
+  authors: "Alexander Gurung, Esmeralda S. Whitammer, Mirella Lapata"
+  first_public: "2025-12-01"
+  added_at: "2026-11-03"
+  venue: "TACL 2026"
+  arxiv: "2512.02240"
+  paper_url: "https://arxiv.org/abs/2512.02240"
+  html_url: "https://arxiv.org/html/2512.02240v2"
+  lens: ["internalized", "continuous"]
+  representation: ["hidden-state", "text-latent-hybrid"]
+  computation: ["token-wise"]
+  training: ["supervised", "reinforcement-learning"]
+  questions: ["capability", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Trains a small projector to replace parts of a written reasoning trace with continuous embeddings. Reinforcement learning teaches the language model when to use these latent steps for plot-hole detection and story generation."
+  provenance: "Primary-source literature review, 2026-11-03"
 
 - id: "2512.21711"
   title: "Do Latent Tokens Think? A Causal and Adversarial Analysis of Chain-of-Continuous-Thought"
@@ -1420,6 +1459,25 @@
   summary: "Treats intermediate latent steps as variables that can be replaced and recomputed. Tests Coconut and CODI to determine which steps affect answers, how changes propagate, and when the model commits to one answer."
   provenance: "Primary-source literature review, 2026-11-02"
 
+- id: "2602.11451"
+  title: "LoopFormer: Elastic-Depth Looped Transformers for Latent Reasoning via Shortcut Modulation"
+  authors: "Ahmadreza Jeddi, Marco Ciccone, Babak Taati"
+  first_public: "2026-02-11"
+  added_at: "2026-11-03"
+  venue: "ICLR 2026"
+  arxiv: "2602.11451"
+  paper_url: "https://arxiv.org/abs/2602.11451"
+  html_url: "https://arxiv.org/html/2602.11451v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["pretraining", "self-distillation"]
+  questions: ["architecture", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Trains a shared transformer stack on long and short computation paths, conditioning each pass on its location and step size. A consistency loss aligns shorter paths with the longest path so one model can run under different depth budgets."
+  provenance: "Primary-source literature review, 2026-11-03"
+
 - id: "2602.11683"
   title: "ThinkRouter: Efficient Reasoning via Routing Thinking between Latent and Discrete Spaces"
   authors: "Xin Xu, Tong Yu, Xiang Chen, Haoliang Wang, Julian McAuley, Saayan Mitra"
@@ -1455,6 +1513,44 @@
   modality: [language, symbolic]
   summary: "Measures how late in a transformer’s layers each token prediction settles, then uses this signal to score a reasoning trace. Tests early rejection of low-scoring samples on math and science questions, measuring savings in generated tokens."
   provenance: "Primary-source literature review, 2026-10-22"
+
+- id: "2602.16490"
+  title: "From Growing to Looping: A Unified View of Iterative Computation in LLMs"
+  authors: "Ferdinand Kapl, Emmanouil Angelis, Kaitlin Maile, Johannes von Oswald, Stefan Bauer"
+  first_public: "2026-02-18"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2602.16490"
+  paper_url: "https://arxiv.org/abs/2602.16490"
+  html_url: "https://arxiv.org/html/2602.16490v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["pretraining", "supervised", "analysis-only"]
+  questions: ["architecture", "interpretability", "efficiency"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["language", "symbolic"]
+  summary: "Compares depth growing and weight-tied loops using matched model budgets and interventions on intermediate layers. Finds related patterns of repeated computation and improves reasoning by adding middle-block loops to depth-grown models during inference or continued training."
+  provenance: "Primary-source literature review, 2026-11-03"
+
+- id: "2602.22441"
+  title: "How Do Latent Reasoning Methods Perform Under Weak and Strong Supervision?"
+  authors: "Yingqian Cui, Zhenwei Dai, Bing He, Zhan Shi, Hui Liu, Rui Sun, Zhiji Liu, Yue Xing, Jiliang Tang, Benoit Dumoulin"
+  first_public: "2026-02-25"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2602.22441"
+  paper_url: "https://arxiv.org/abs/2602.22441"
+  html_url: "https://arxiv.org/html/2602.22441v1"
+  lens: ["analysis", "continuous"]
+  representation: ["hidden-state", "text-latent-hybrid"]
+  computation: ["token-wise"]
+  training: ["analysis-only", "supervised"]
+  questions: ["interpretability", "evaluation"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["language", "symbolic"]
+  summary: "Tests latent reasoning on GSM8K and ProsQA by removing steps, perturbing hidden states, and sampling continuations. Finds that stronger supervision reduces shortcut use but narrows sampled solutions, and studies changes to Coconut training that increase its reliance on latent steps."
+  provenance: "Primary-source literature review, 2026-11-03"
 
 - id: "2603.02023"
   title: "PonderLM-3: Adaptive Token-Wise Pondering with Differentiable Masking"
@@ -1509,6 +1605,25 @@
   modality: [language]
   summary: "Analyzes how hidden states and attention change across repeated transformer layers. Finds that recurrent blocks often repeat the stages seen in feedforward models, while input injection and normalization affect whether those stages remain stable at greater depth."
   provenance: "Primary-source literature review, 2026-10-26"
+
+- id: "2604.12946"
+  title: "Parcae: Scaling Laws For Stable Looped Language Models"
+  authors: "Hayden Prairie, Zachary Novack, Taylor Berg-Kirkpatrick, Daniel Y. Fu"
+  first_public: "2026-04-14"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2604.12946"
+  paper_url: "https://arxiv.org/abs/2604.12946"
+  html_url: "https://arxiv.org/html/2604.12946v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["pretraining"]
+  questions: ["architecture", "scaling", "efficiency"]
+  evidence: ["empirical", "scaling"]
+  modality: ["language"]
+  summary: "Stabilizes looped language models by constraining how earlier states enter the next pass and sampling training depth separately for each sequence. Studies how to divide training compute between data and recurrence, and how additional inference loops reach a performance plateau."
+  provenance: "Primary-source literature review, 2026-11-03"
 
 - id: "2604.24881"
   title: "Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate"
@@ -1692,6 +1807,25 @@
   modality: [language, symbolic]
   summary: "Stabilizes repeated transformer layers and stops looping when the hidden state converges, allowing the model to spend different amounts of computation on different problems."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2606.18524"
+  title: "Loop-μP: Residual Scaling and Hyperparameter Transfer in Looped Transformers"
+  authors: "Shaowen Wang, Bingrui Li, Tansheng Zhu, Ge Zhang, Wenhao Huang, Shen Yan, Jian Li"
+  first_public: "2026-06-16"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2606.18524"
+  paper_url: "https://arxiv.org/abs/2606.18524"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["pretraining"]
+  questions: ["theory", "scaling", "efficiency"]
+  evidence: ["formal", "empirical"]
+  modality: ["language"]
+  summary: "Scales each residual update inversely with the number of shared-weight loops, while keeping the learning rate independent of that loop count. Derives the scaling rule and tests whether hyperparameters transfer across loop counts and model depths during language-model pretraining."
+  provenance: "Primary-source literature review, 2026-11-03"
+  previous_titles: ["On the Residual Scaling of Looped Transformers: Stability and Transferability"]
 
 - id: "2606.20075"
   title: "What Makes Effective Supervision in Latent Chain-of-Thought: An Information-Theoretic Analysis"
@@ -5272,3 +5406,60 @@
   modality: [language]
   summary: "Measures how quantizing different loop-specific keys and values changes predictions in Ouro and Huginn. Tests sensitivity-based error estimates and bit allocations, distinguishing typical-sequence behavior from large errors concentrated in a few sequences."
   provenance: "Primary-source literature review, 2026-11-02"
+
+- id: "2611.01926"
+  title: "TAC-CoT: Tool-Empowered Implicit Chain-of-Thought via Interleaving Explicit Tokens"
+  authors: "Juseon Do, Sangmin Bae, Jeesu Jung, Hwanjun Song"
+  first_public: "2026-11-01"
+  added_at: "2026-11-03"
+  venue: "EMNLP 2026"
+  arxiv: "2611.01926"
+  paper_url: "https://arxiv.org/abs/2611.01926"
+  html_url: "https://arxiv.org/html/2611.01926v1"
+  lens: ["internalized", "continuous"]
+  representation: ["hidden-state", "text-latent-hybrid"]
+  computation: ["token-wise"]
+  training: ["self-distillation", "supervised"]
+  questions: ["capability", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Interleaves continuous hidden-state reasoning with written tool calls and observations. Learns from explicit tool-use traces through reconstruction and self-distillation, and chooses when to call a tool or answer after each reasoning block."
+  provenance: "Primary-source literature review, 2026-11-03"
+
+- id: "2611.02333"
+  title: "When Does Adaptive Halting Win? Selection Rules Matter in Looped Language Models"
+  authors: "Mahesh Reddy Pagadala"
+  first_public: "2026-11-02"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2611.02333"
+  paper_url: "https://arxiv.org/abs/2611.02333"
+  html_url: "https://arxiv.org/html/2611.02333v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["analysis-only", "supervised"]
+  questions: ["efficiency", "evaluation", "limitations"]
+  evidence: ["empirical", "probing"]
+  modality: ["language"]
+  summary: "Compares learned and untrained stopping rules on a frozen looped language model. Changing how the stopping threshold is chosen reverses which method saves more loops. Finds no demonstrated advantage for a trained probe over a simple KL-based rule; savings are estimated from stored loop traces."
+  provenance: "Primary-source literature review, 2026-11-03"
+
+- id: "2611.02857"
+  title: "Solv3R: 3D Looped Transformer as a Multi-view Solver"
+  authors: "Jeong-gi Kwak, Andrea Tagliasacchi, Sho Kagami, Yuki Ono, Kwang Moo Yi"
+  first_public: "2026-11-02"
+  added_at: "2026-11-03"
+  venue: "arXiv"
+  arxiv: "2611.02857"
+  paper_url: "https://arxiv.org/abs/2611.02857"
+  html_url: "https://arxiv.org/html/2611.02857v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "stateful"]
+  training: ["supervised", "distillation"]
+  questions: ["architecture", "capability", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["vision"]
+  summary: "Reuses one transformer block to refine a multi-view geometric state. Trains stable, corrective updates so reconstruction can continue when new images arrive, with stopping based on changes in the hidden state."
+  provenance: "Primary-source literature review, 2026-11-03"

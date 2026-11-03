@@ -124,3 +124,52 @@
   url: "https://aclanthology.org/2025.emnlp-main.36/"
   source_url: "https://aclanthology.org/2025.emnlp-main.36/"
   verified_at: "2026-10-18"
+
+"2505.19245":
+  title: "A Formal Comparison Between Chain of Thought and Latent Thought"
+  author_names: ["Kevin Xu", "Issei Sato"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 43rd International Conference on Machine Learning"
+  pages: "141657-141685"
+  volume: "306"
+  publisher: "PMLR"
+  url: "https://proceedings.mlr.press/v306/xu26ar.html"
+  source_url: "https://proceedings.mlr.press/v306/xu26ar.html"
+  verified_at: "2026-11-03"
+
+"2512.02240":
+  title: "Lightweight Latent Reasoning for Narrative Tasks"
+  author_names: ["Alexander Gurung", "Esmeralda S. Whitammer", "Mirella Lapata"]
+  year: 2026
+  type: "article-journal"
+  container_title: "Transactions of the Association for Computational Linguistics"
+  pages: "2163-2186"
+  publisher: "MIT Press"
+  url: "https://aclanthology.org/2026.tacl-1.98/"
+  source_url: "https://aclanthology.org/2026.tacl-1.98/"
+  verified_at: "2026-11-03"
+  volume: "14"
+
+"2602.11451":
+  title: "LoopFormer: Elastic-Depth Looped Transformers for Latent Reasoning via Shortcut Modulation"
+  author_names: ["Ahmadreza Jeddi", "Marco Ciccone", "Babak Taati"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "International Conference on Learning Representations"
+  url: "https://arxiv.org/abs/2602.11451"
+  source_url: "https://iclr.cc/virtual/2026/poster/10009450"
+  verified_at: "2026-11-03"
+
+"2611.01926":
+  title: "TAC-CoT: Tool-Empowered Implicit Chain-of-Thought via Interleaving Explicit Tokens"
+  author_names: ["Juseon Do", "Sangmin Bae", "Jeesu Jung", "Hwanjun Song"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+  pages: "32803-32822"
+  publisher: "Association for Computational Linguistics"
+  url: "https://aclanthology.org/2026.emnlp-main.1436/"
+  source_url: "https://aclanthology.org/2026.emnlp-main.1436/"
+  verified_at: "2026-11-03"
+  doi: "10.18653/2026.emnlp-main.1436"
