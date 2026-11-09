@@ -1,3 +1,17 @@
+- version: "0.14.0"
+  date: "2026-11-09"
+  title: "Internalization, recurrent models, and parallel reasoning"
+  changes:
+    - "Added 41 papers, including earlier work newly reviewed for the list. The collection now contains 342 papers plus eight background papers."
+    - "Added six verified conference citations and checked two revised papers, preserving their original dates."
+    - "The literature-check date remains November 3 while review of the older candidate backlog continues."
+  added_papers: ["2412.01113", "2502.08482", "2503.24198", "2504.07986", "2504.20835", "2506.18233", "2509.12875", "2510.04871", "heddaya2026internalization", "2604.07822", "2604.12426", "chen2026polymorphic", "guo2026lapr", "cho2026midthink", "li2026pre2", "yan2026reasonflow", "2611.04137", "2611.04152", "2611.04663", "2611.04948", "2611.05066", "2611.05150", "2611.05234", "2611.05255", "2611.05304", "2611.05345", "2611.06108", "2611.06206", "2611.06425", "2611.06835", "2611.07211", "2611.07226", "2611.07425", "2611.07736", "2611.07783", "2611.07845", "2611.08307", "2611.08362", "2611.08741", "2611.08977", "2611.09006"]
+  updated_papers:
+    - id: "2610.25076"
+      fields: ["html_url", "provenance"]
+    - id: "2609.33270"
+      fields: ["html_url", "provenance", "summary", "training"]
+
 - version: "0.13.1"
   date: "2026-11-08"
   title: "A short reading path"

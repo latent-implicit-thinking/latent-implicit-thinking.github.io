@@ -173,3 +173,81 @@
   source_url: "https://aclanthology.org/2026.emnlp-main.1436/"
   verified_at: "2026-11-03"
   doi: "10.18653/2026.emnlp-main.1436"
+
+"heddaya2026internalization":
+  title: "When Internalization Fails: Finding Better Targets for Reasoning Compression"
+  author_names: ["Mourad Heddaya", "Manley Roberts", "Rohan Wadhawan", "Chenhao Tan"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Findings of the Association for Computational Linguistics: ACL 2026"
+  publisher: "Association for Computational Linguistics"
+  doi: "10.18653/v1/2026.findings-acl.734"
+  pages: "14935-14946"
+  url: "https://aclanthology.org/2026.findings-acl.734/"
+  source_url: "https://aclanthology.org/2026.findings-acl.734.pdf"
+  verified_at: "2026-11-09"
+
+"chen2026polymorphic":
+  title: "Polymorphic Universal Transformer"
+  author_names: ["Yilong Chen", "Zitian Gao", "Yihao Xiao", "Jason Klein Liu", "Xinyu Yang", "Yifan Luo", "Tingwen Liu", "Haoming Luo", "Zhengmao Ye", "Ran Tao", "Bryan Dai"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+  publisher: "Association for Computational Linguistics"
+  doi: "10.18653/v1/2026.acl-long.1809"
+  pages: "39001-39013"
+  url: "https://aclanthology.org/2026.acl-long.1809/"
+  source_url: "https://aclanthology.org/2026.acl-long.1809.pdf"
+  verified_at: "2026-11-09"
+
+"li2026pre2":
+  title: "Incorporating Explicit and Implicit Chain-of-Thought as Hybrid Reasoning Paradigm with Guided Latent Space Modeling"
+  author_names: ["Guangyu Li", "Zhekai Ge", "Zhuo Chen", "Zhen Zhang", "Xinyu Wang", "Yong Jiang", "Kewei Tu"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+  pages: "32329-32347"
+  publisher: "Association for Computational Linguistics"
+  url: "https://aclanthology.org/2026.emnlp-main.1416/"
+  source_url: "https://aclanthology.org/2026.emnlp-main.1416/"
+  verified_at: "2026-11-09"
+  doi: "10.18653/2026.emnlp-main.1416"
+
+"guo2026lapr":
+  title: "LaPR: Latent Preference Reasoning for Generative Personalized Retrieval"
+  author_names: ["Hanze Guo", "Shunyu Zhang", "Jiakai Tang", "Jingwei Zhuo", "Yi Zhang", "Xuanping Li", "Xiao Zhou"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+  pages: "51279-51297"
+  publisher: "Association for Computational Linguistics"
+  url: "https://aclanthology.org/2026.emnlp-main.2255/"
+  source_url: "https://aclanthology.org/2026.emnlp-main.2255/"
+  verified_at: "2026-11-09"
+  doi: "10.18653/2026.emnlp-main.2255"
+
+"cho2026midthink":
+  title: "Adaptive Latent Block Insertion via Online Reward Optimization"
+  author_names: ["Yewon Cho", "Hyeongsoon Hwang", "Yein Park", "Hyeon Hwang", "Jaewoo Kang"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing"
+  pages: "41715-41736"
+  publisher: "Association for Computational Linguistics"
+  url: "https://aclanthology.org/2026.emnlp-main.1833/"
+  source_url: "https://aclanthology.org/2026.emnlp-main.1833/"
+  verified_at: "2026-11-09"
+  doi: "10.18653/2026.emnlp-main.1833"
+
+"yan2026reasonflow":
+  title: "ReasonFlow: Flow Matching that Thinks Step by Step"
+  author_names: ["Bing Yan", "Ge Sun", "Juan J. de Pablo", "Stefano Martiniani", "Kyunghyun Cho"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "Findings of the Association for Computational Linguistics: EMNLP 2026"
+  pages: "48554-48571"
+  publisher: "Association for Computational Linguistics"
+  url: "https://aclanthology.org/2026.findings-emnlp.2268/"
+  source_url: "https://aclanthology.org/2026.findings-emnlp.2268/"
+  verified_at: "2026-11-09"
+  doi: "10.18653/2026.findings-emnlp.2268"

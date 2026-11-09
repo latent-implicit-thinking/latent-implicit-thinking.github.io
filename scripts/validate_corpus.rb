@@ -134,7 +134,7 @@ errors << "latest_included_first_public should be #{latest_date}" unless meta["l
   errors << "#{field} must be an ISO date no later than today" unless value.match?(/\A\d{4}-\d{2}-\d{2}\z/) && value <= Date.today.iso8601
 end
 errors << "literature check is newer than the website update" if meta["search_refreshed_at"] > meta["updated_at"]
-errors << "newest paper is later than literature coverage" if latest_date > meta["search_refreshed_at"]
+errors << "newest paper is later than the website update" if latest_date > meta["updated_at"]
 tracked_papers = papers.select { |paper| paper.key?("added_at") }
 tracked_papers.each do |paper|
   added = paper["added_at"].to_s
