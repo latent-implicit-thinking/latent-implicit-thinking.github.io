@@ -260,7 +260,13 @@ module Literature
     priority :normal
 
     def generate(site)
-      records = site.data.fetch("papers") + site.data.fetch("precursors")
+      papers = site.data.fetch("papers")
+      records = papers + site.data.fetch("precursors")
+      release = site.data.fetch("releases").first
+      additions = Array(release["added_papers"])
+      updates = Array(release["updated_papers"]).map { |change| change.fetch("id") }
+      changed_ids = additions | updates
+      update_hub_sitemap_dates(site, release, papers.select { |paper| additions.include?(paper["id"]) })
       publications = site.data.fetch("publications", {})
       publication_bib, publication_csl = [], []
       records.each do |paper|
@@ -272,7 +278,8 @@ module Literature
           "layout" => "paper", "permalink" => "/#{dir}", "sitemap" => true,
           "title" => paper.fetch("title"), "share-description" => paper["summary"] || paper["connection"],
           "paper" => paper, "record" => entry, "publication" => publication,
-          "show-avatar" => false, "nav-short" => true, "last_modified_at" => site.data.fetch("meta").fetch("updated_at")
+          "show-avatar" => false, "nav-short" => true,
+          "last_modified_at" => (release.fetch("date") if changed_ids.include?(paper["id"]))
         })
         {"record.json" => JSON.pretty_generate(entry) + "\n", "index.md" => Literature.markdown(site, paper),
          "citation.bib" => Literature.bib(site, paper), "citation.csl.json" => JSON.pretty_generate([Literature.csl(site, paper)]) + "\n"}.each do |file, content|
@@ -317,6 +324,29 @@ module Literature
         papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches|Demos|Method comparisons)/, '### \1') }
         site.pages << GeneratedPage.new(site, path + ".json", JSON.pretty_generate(data) + "\n")
         site.pages << GeneratedPage.new(site, path + ".md", text.join("\n\n") + "\n")
+      end
+    end
+
+    private
+
+    def update_hub_sitemap_dates(site, release, additions)
+      date = release.fetch("date").to_s
+      added_methods = additions.flat_map { |paper| paper.fetch("lens") }.uniq
+      removals = Array(release["removed_papers"])
+      site.pages.each do |page|
+        changed = case page.url
+                  when "/changelog/", "/data/" then true # Both display the release version.
+                  when "/", "/index.html", "/topics/" then additions.size != removals.size
+                  when "/papers/" then additions.any? || removals.any?
+                  when "/recent/" then additions.any?
+                  else
+                    next unless page.data["method_id"]
+                    added_methods.include?(page.data["method_id"])
+                  end
+        # A later edit to the page itself takes precedence. Otherwise publish a
+        # date only when the release records a change visible on this page.
+        next if page.data["last_modified_at"].to_s >= date
+        page.data["last_modified_at"] = changed ? date : nil
       end
     end
   end
