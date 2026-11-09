@@ -58,6 +58,7 @@ papers/index.html
 recent/index.html
 robots.txt
 schedule/index.html
+sitemap-index.xml
 sitemap.xml
 slides/index.html
 speakers/index.html
