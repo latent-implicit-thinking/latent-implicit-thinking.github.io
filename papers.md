@@ -1,12 +1,12 @@
 ---
 layout: base
 title: "Explore papers"
-seo-title: "Implicit Chain-of-Thought Papers: Searchable Research Index"
-share-description: "Search the implicit chain-of-thought literature by method family, representation, computation, training, evidence, and research question."
+seo-title: "Implicit Chain-of-Thought and Latent Reasoning Papers"
+share-description: "A chronological reading list of implicit chain-of-thought and latent reasoning papers, with summaries, method comparisons, and citations."
 permalink: /papers/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-22
+last_modified_at: 2026-11-08
 js:
   - "/assets/js/lit-hub.js"
 ---
@@ -16,8 +16,8 @@ js:
     <div class="lit-shell">
       <div class="lit-index-title-row">
         <div>
-          <h1>Browse papers</h1>
-          <p>Search by title, author, or topic. Read from oldest to newest, or sort by newest papers.</p>
+          <h1>Implicit chain-of-thought and latent reasoning papers</h1>
+          <p>Reasoning without writing every intermediate step, also called implicit CoT or latent chain-of-thought. Search by title, author, or topic; read in date order or sort by newest papers.</p>
           <p class="lit-index-freshness">Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/recent/' | relative_url }}">Recent additions</a> · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper</a></p>
         </div>
         <div class="lit-corpus-stat" aria-label="Corpus size">
@@ -25,6 +25,10 @@ js:
           <span>papers</span>
         </div>
       </div>
+      {% assign proposal = '2311.01460' | lit_paper_by_id %}
+      {% assign internalization = '2405.14838' | lit_paper_by_id %}
+      <p>Deng and colleagues first proposed this approach in <a href="{{ '/papers/' | append: proposal.id | append: '/' | relative_url }}">{{ proposal.title }}</a> (2023). It defines reasoning through continuous hidden states without emitting intermediate steps in <a href="{{ proposal.html_url }}#S2.SS3">§2.3</a>, then presents <a href="{{ proposal.html_url }}#S3">distillation</a> as one implementation. <a href="{{ '/papers/' | append: internalization.id | append: '/' | relative_url }}">{{ internalization.title }}</a> (<a href="{{ internalization.paper_url }}">2024</a>) introduces stepwise internalization.</p>
+      <p>New to the field? <a href="{{ '/topics/#reading-path' | relative_url }}">Start with five papers</a>, then explore the full list below.</p>
     </div>
   </header>
 
@@ -235,8 +239,8 @@ js:
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Implicit Chain-of-Thought Papers: Searchable Research Index",
-  "description": "A searchable, chronological index of implicit chain-of-thought research papers.",
+  "name": {{ page.seo-title | jsonify }},
+  "description": {{ page.share-description | jsonify }},
   "url": {{ page.url | absolute_url | jsonify }},
   "isPartOf": {"@type": "WebSite", "name": "Implicit Chain-of-Thought", "url": {{ '/' | absolute_url | jsonify }}},
   "mainEntity": {

@@ -24,10 +24,12 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 
 - [Overview]({{ '/' | absolute_url }})
 - [Start here]({{ '/topics/' | absolute_url }}): explanations and examples
-- [Browse papers]({{ '/papers/' | absolute_url }}): search, filters, and date order
+- [Implicit chain-of-thought and latent reasoning papers]({{ '/papers/' | absolute_url }}): search, filters, and date order
 - [Recent additions]({{ '/recent/' | absolute_url }}): papers added after the initial collection, grouped by the date they joined this list
 - [Complete Markdown reading list]({{ '/data/reading-list.md' | absolute_url }}): all papers, authors, summaries, and source links
 - [Downloads]({{ '/data/' | absolute_url }}): citation files and JSON documentation
+
+{% include reading-path.md %}
 
 ## Topics
 

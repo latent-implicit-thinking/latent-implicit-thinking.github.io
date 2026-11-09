@@ -20,6 +20,27 @@
     </div>
   </section>
 
+  <section class="lit-section" id="reading-path" aria-labelledby="reading-path-title">
+    <div class="lit-shell lit-narrow-shell">
+      <div class="lit-section-heading">
+        <h2 id="reading-path-title">A short reading path</h2>
+        <p>Five papers, in date order: the implicit-CoT proposal, stepwise internalization, recurrent continuous states, self-distillation, and a survey of the wider field.</p>
+      </div>
+      <ol class="lit-reading-list">
+        {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}
+        <li>
+          <span class="lit-paper-date">{{ paper.first_public | date: "%B %-d, %Y" }}</span>
+          <h3><a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">{{ paper.title }}</a></h3>
+          <p class="lit-paper-authors">{{ paper.authors }}</p>
+          <p>{{ paper.summary }}</p>
+          <div class="lit-paper-links"><a href="{{ paper.paper_url }}">Original paper</a><a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details and citations</a></div>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="lit-guide-note"><a href="{{ '/papers/' | relative_url }}">Browse all {{ site.data.papers | size }} papers</a>, or choose an approach below.</p>
+    </div>
+  </section>
+
   <section class="lit-section lit-start" aria-labelledby="approaches-title">
     <div class="lit-shell lit-narrow-shell">
       <div class="lit-section-heading">

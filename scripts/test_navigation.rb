@@ -209,7 +209,39 @@ module NavigationChecks
       assert(llms_visible.include?(path), "agent guide does not explicitly document #{path}", errors)
       assert(llms.include?(base + path), "agent guide does not link #{path}", errors)
     end
+    catalog = read_file(site_root, "papers/index.html", errors)
+    catalog_intro = catalog[/<header class="lit-index-hero">.*?<\/header>/m].to_s
+    %w[2311.01460 2405.14838].each do |id|
+      paper = papers.find { |item| item["id"] == id }
+      assert(paper && text(catalog_intro).include?(paper["title"]) && attributes(catalog_intro, "a").any? { |link| link["href"] == "/papers/#{id}/" || link["href"] == base + "/papers/#{id}/" }, "catalog introduction is missing the titled #{id} paper link", errors)
+    end
+    assert(HISTORY_SOURCES.all? { |url| attributes(catalog_intro, "a").any? { |link| link["href"] == url } }, "catalog introduction lost a primary source for the proposal or its implementation", errors)
     manifest = read_json(site_root, "data/navigation.json", errors)
+    reading_ids = YAML.safe_load(File.read(File.join(repo_root, "_data/reading_path.yml")), aliases: false)
+    path_records = Array(reading_ids).map { |id| papers.find { |paper| paper["id"] == id } }
+    assert(reading_ids.is_a?(Array) && reading_ids.uniq == reading_ids && path_records.all?, "reading path must contain unique, existing papers", errors)
+    if path_records.all?
+      dates = path_records.map { |paper| paper.fetch("first_public") }
+      assert(dates == dates.sort, "reading path is not chronological", errors)
+      path = manifest && manifest["reading_path"]
+      assert(path.is_a?(Hash) && path["url"] == base + "/topics/#reading-path", "reading path guide URL is missing or incorrect", errors)
+      entries = path.is_a?(Hash) ? path["papers"] : []
+      assert(Array(entries).map { |entry| entry["id"] } == reading_ids, "JSON reading path differs from the displayed selection", errors)
+      reading_html = topics[/<ol class="lit-reading-list">.*?<\/ol>/m].to_s
+      full_markdown = read_file(site_root, "data/reading-list.md", errors)
+      path_records.each_with_index do |paper, index|
+        record = read_json(site_root, "papers/#{paper['id']}/record.json", errors)
+        entry = Array(entries)[index] || {}
+        %w[id title author_names first_public summary json_url markdown_url bibtex_url csl_url].each do |key|
+          assert(record && entry[key] == record[key], "#{paper['id']}: reading path #{key} differs from the paper record", errors)
+        end
+        assert(record && entry["url"] == record["record_url"], "#{paper['id']}: reading path paper URL is incorrect", errors)
+        assert(%w[title authors summary].all? { |key| text(reading_html).include?(paper[key]) }, "#{paper['id']}: title, authors or contribution is missing from the visible reading path", errors)
+        [llms, full_markdown].each do |markdown|
+          assert(markdown.include?("[#{paper['title']}](#{base}/papers/#{paper['id']}/)") && markdown.include?("#{base}/papers/#{paper['id']}/citation.bib"), "#{paper['id']}: Markdown reading path is missing its titled entry or citation link", errors)
+        end
+      end
+    end
     validate_manifest(manifest, methods, papers, meta, site_root, errors)
     sitemap = read_file(site_root, "sitemap.xml", errors)
     begin

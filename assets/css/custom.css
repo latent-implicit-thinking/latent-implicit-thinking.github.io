@@ -1134,6 +1134,11 @@ a.lit-entry:focus {
   font: 600 0.78rem/1.5 var(--lit-sans);
 }
 
+.lit-reading-list .lit-paper-authors {
+  margin-bottom: 12px;
+  font: 600 0.78rem/1.5 var(--lit-sans);
+}
+
 .lit-paper-summary {
   max-width: 820px;
   margin: 12px 0 0;

@@ -1,3 +1,12 @@
+- version: "0.13.1"
+  date: "2026-11-08"
+  title: "A short reading path"
+  changes:
+    - "Added a five-paper reading path from the 2023 implicit-CoT proposal through internalization, continuous-state methods, and a survey."
+    - "Clarified the paper index's coverage of latent reasoning and linked both original implicit-CoT papers by title."
+    - "Added the same reading path, paper records, and citation downloads to the Markdown and JSON guides."
+  added_papers: []
+
 - version: "0.13.0"
   date: "2026-11-03"
   title: "Tool use, narrative reasoning, and recurrent models"

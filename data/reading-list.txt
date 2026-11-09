@@ -22,6 +22,8 @@ Papers are ordered by their earliest public date, usually the first arXiv submis
 - [Downloads and file details]({{ '/data/' | absolute_url }})
 - [Corrections]({{ '/contribute/' | absolute_url }})
 
+{% include reading-path.md %}
+
 ## Topics
 
 Papers can belong to more than one category. Each linked guide explains an approach and lists its papers, oldest first.

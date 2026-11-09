@@ -17,6 +17,23 @@ permalink: /data/navigation.json
     "recent_additions": {"url": {{ '/recent/' | absolute_url | jsonify }}},
     "downloads": {"url": {{ '/data/' | absolute_url | jsonify }}}
   },
+  "reading_path": {
+    "url": {{ '/topics/#reading-path' | absolute_url | jsonify }},
+    "papers": [
+      {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{
+        "id": {{ paper.id | jsonify }},
+        "title": {{ paper.title | jsonify }},
+        "author_names": {{ record.author_names | jsonify }},
+        "first_public": {{ paper.first_public | jsonify }},
+        "summary": {{ paper.summary | jsonify }},
+        "url": {{ record.record_url | jsonify }},
+        "json_url": {{ record.json_url | jsonify }},
+        "markdown_url": {{ record.markdown_url | jsonify }},
+        "bibtex_url": {{ record.bibtex_url | jsonify }},
+        "csl_url": {{ record.csl_url | jsonify }}
+      }{% unless forloop.last %},{% endunless %}{% endfor %}
+    ]
+  },
   "files": {
     "agent_guide": {{ '/llms.txt' | absolute_url | jsonify }},
     "navigation": {{ '/data/navigation.json' | absolute_url | jsonify }},

@@ -6,7 +6,7 @@ share-title: "Implicit Chain-of-Thought — Reading List and Research Guide"
 share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, method comparisons, examples, and downloadable citations."
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-22
+last_modified_at: 2026-11-08
 ---
 
 <main class="lit-home">
@@ -18,7 +18,7 @@ last_modified_at: 2026-10-22
       <p class="lit-deck lit-history">Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023</a>: training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's <a href="https://arxiv.org/html/2311.01460v1#S3">distillation method</a> is one implementation of that proposal. Their <a href="https://arxiv.org/abs/2405.14838">2024 work</a> introduced step-by-step internalization.</p>
       <div class="lit-actions" aria-label="Choose how to use the guide">
         <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">Browse {{ site.data.papers | size }} papers</a>
-        <a class="lit-button lit-button-secondary" href="{{ '/topics/' | relative_url }}">New here? Start here</a>
+        <a class="lit-button lit-button-secondary" href="{{ '/topics/#reading-path' | relative_url }}">Start with five papers</a>
       </div>
       <p class="lit-demo-shortcuts">Try an example: {% for demo in site.data.demos %}<a href="{{ demo.url }}">{{ demo.label | escape }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
       <div class="lit-status" aria-label="Resource status">
