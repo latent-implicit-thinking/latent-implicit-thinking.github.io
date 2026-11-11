@@ -1,6 +1,7 @@
 ---
 layout: null
 permalink: /llms.txt
+last_modified_at: 2026-11-11
 ---
 # Implicit Chain-of-Thought
 
@@ -22,7 +23,7 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 
 ## Read and search
 
-- [中文概览]({{ '/zh/' | absolute_url }}) · [中文阅读路线]({{ '/zh/topics/' | absolute_url }}) · [中文 Markdown 阅读指南]({{ '/data/zh/reading-guide.md' | absolute_url }}): Chinese explanations with the same original papers and citation records
+- [中文概览]({{ '/zh/' | absolute_url }}) · [中文阅读路线]({{ '/zh/topics/' | absolute_url }}) · [中文 Markdown 阅读指南]({{ '/data/zh/reading-guide.md' | absolute_url }})
 - [Overview]({{ '/' | absolute_url }})
 - [Start here]({{ '/topics/' | absolute_url }}): explanations and examples
 - [Implicit chain-of-thought and latent reasoning papers]({{ '/papers/' | absolute_url }}): search, filters, and date order
@@ -49,7 +50,7 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 
 ## Using the data
 
-Summaries and categories are written for this reading list. Papers can belong to several categories. The list includes related generation methods.
+Papers can belong to several categories. The list includes related generation methods.
 
 - `id` identifies a paper; `paper_url` links to the original source; `record_url` links to an independently fetchable entry at `/papers/{id}/`. Earlier full-list anchors still work through `legacy_record_url`.
 - For arXiv papers, `paper_url` is the abstract page and `pdf_url` is the full-text PDF. Optional `html_url` provides full-text HTML when we have checked that link. Citation URLs use the abstract page. Version-specific links in source notes and comparisons identify the exact passages being discussed.

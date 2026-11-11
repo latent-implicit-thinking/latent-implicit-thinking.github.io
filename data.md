@@ -6,14 +6,14 @@ share-description: "Download the paper list in JSON or Markdown and citations in
 permalink: /data/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-22
+last_modified_at: 2026-11-11
 ---
 
 <main class="lit-data-page">
   <header class="lit-index-hero">
     <div class="lit-shell lit-narrow-shell">
       <h1>Download the reading list</h1>
-      <p>Get citations for your reference manager, a text copy to read, or JSON for research tools and agents. Every download uses the same paper list as the website.</p>
+      <p>Get citations for your reference manager, a text copy to read, or JSON for research tools and agents.</p>
     </div>
   </header>
 
@@ -47,7 +47,7 @@ last_modified_at: 2026-10-22
           <dt>Dates</dt><dd><code>first_public</code> is the earliest dated public version we found, usually the first arXiv submission. <code>citation_date</code> dates the cited source: a preprint posting or a conference or journal publication. Earlier public versions have a separate source note.</dd>
           <dt>Following additions</dt><dd><code>added_at</code> is when a paper joined this list, not when it was published. It is tracked for additions after the initial collection; initial records have no <code>added_at</code>. Filter this field to find new entries, including older papers we previously missed. Release history also lists <code>added_papers</code> by stable ID.</dd>
           <dt>Keeping a local copy current</dt><dd>Release history can identify <code>updated_papers</code> with changed fields and <code>removed_papers</code> by ID. The current JSON file is the authority for which entries are on the list.</dd>
-          <dt>Categories and summaries</dt><dd><code>lens</code> lists approaches. Other fields describe training, computation, research questions, evidence, and modality. A paper can have several labels. Summaries and labels are written for this list.</dd>
+          <dt>Categories and summaries</dt><dd><code>lens</code> lists approaches. Other fields describe training, computation, research questions, evidence, and modality. A paper can have several labels.</dd>
           <dt>Sources</dt><dd><code>provenance</code> records where we found the paper. Use <code>paper_url</code> to check the paper itself.</dd>
         </dl>
         <p><a href="{{ '/data/ontology.json' | relative_url }}">Category definitions (ontology.json)</a> · <a href="{{ '/data/schema.json' | relative_url }}">Field types and allowed values (JSON Schema)</a> · <a href="{{ '/data/changes.json' | relative_url }}">Version history (JSON)</a></p>

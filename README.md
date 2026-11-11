@@ -20,8 +20,6 @@ The original [Latent & Implicit Thinking – Going Beyond CoT Reasoning workshop
 
 Paper entries live in `_data/papers.yml`; background papers live in `_data/precursors.yml`. The website and downloads under `/data/` are generated from those files. Each topic guide explains the approach, gives an example, and lists its papers oldest first.
 
-The Chinese edition translates the introduction, reading path, and two original implicit-CoT paper pages. It shares the English edition's paper IDs, authors, dates, source links, and citation files. The complete paper list remains in English.
-
 The current literature-check date appears on the website and in the JSON metadata. [Recent additions](https://latent-implicit-thinking.github.io/recent/) shows papers added after the initial collection, including older omissions.
 
 New records carry an `added_at` date, distinct from `first_public`. Initial-collection records omit `added_at`. Release history identifies additions by stable paper ID, and the RSS feed includes their titles and source links.

@@ -6,7 +6,7 @@ share-title: "Implicit Chain-of-Thought — Reading List and Research Guide"
 share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, method comparisons, examples, and downloadable citations."
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-08
+last_modified_at: 2026-11-11
 ---
 
 <main class="lit-home">
@@ -46,10 +46,10 @@ last_modified_at: 2026-11-08
   <section class="lit-section lit-about" aria-labelledby="about-title">
     <div class="lit-shell lit-about-grid">
       <div>
-        <h2 id="about-title">About this reading list</h2>
+        <h2 id="about-title">Workshop and acknowledgment</h2>
       </div>
       <div>
-        <p>This reading list grew out of the <a href="{{ '/workshop/2026/' | relative_url }}">Latent &amp; Implicit Thinking workshop at ICLR 2026</a>. You can still find the workshop program and event information in the archive.</p>
+        <p><a href="{{ '/workshop/2026/' | relative_url }}">Latent &amp; Implicit Thinking workshop at ICLR 2026</a>: program, talks, and event information.</p>
         <p>Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey, which helped us find many of these papers.</p>
         <p><a href="{{ '/contribute/' | relative_url }}">Suggest a paper or correction</a>.</p>
         <p class="lit-guide-note">For text readers and research tools: <a href="{{ '/llms.txt' | absolute_url }}">/llms.txt</a> (reading guide) · <a href="{{ '/data/navigation.json' | absolute_url }}">/data/navigation.json</a> (page and download URLs).</p>

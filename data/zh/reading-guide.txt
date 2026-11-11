@@ -37,8 +37,6 @@ sitemap: false
 {% endfor %}
 ## 引用与检索
 
-中英文介绍共用原论文的 ID、作者顺序、日期与引用文件。引用研究贡献时，请引用论文原文；中文介绍不是一篇新的论文。
-
 - [JSON 论文列表]({{ '/data/papers.json' | absolute_url }})：完整论文记录、摘要与来源。
 - [完整 Markdown 论文列表（英文）]({{ '/data/reading-list.md' | absolute_url }})：适合按文本检索。
 - [BibTeX]({{ '/data/papers.bib' | absolute_url }}) · [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }})：原始记录的引用文件。
