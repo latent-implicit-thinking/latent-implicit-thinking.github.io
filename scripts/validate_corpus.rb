@@ -12,6 +12,7 @@ require_relative "test_agent_exports"
 require_relative "release_history"
 require_relative "test_release_history"
 require_relative "test_navigation"
+require_relative "test_localization"
 
 def validate_against_schema(value, schema, root_schema, path, errors)
   if schema["$ref"]
@@ -370,5 +371,6 @@ end
 
 errors.concat(AgentExports.validate(repo_root, site_root))
 errors.concat(NavigationChecks.validate(repo_root, site_root))
+errors.concat(LocalizationChecks.validate(repo_root, site_root))
 abort(errors.uniq.sort.join("\n")) unless errors.empty?
 puts "Validated #{papers.length} core papers, #{precursors.length} precursors, source/export parity, preprint and publication citations, individual paper pages, topic exports, Markdown coverage, identifier search data, scholarly JSON-LD, schema, feed, ontology, and internal links."

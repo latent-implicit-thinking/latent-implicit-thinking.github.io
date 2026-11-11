@@ -1,0 +1,59 @@
+---
+layout: base
+title: "隐式思维链"
+seo-title: "隐式思维链（Implicit CoT）：入门、论文与潜在推理研究"
+share-description: "语言模型如何通过连续隐藏状态推理，而不写出每一步？从 2023 年提出的隐式思维链、2024 年的逐步内化，到潜在推理与连续状态方法。"
+language: zh-Hans
+permalink: /zh/
+show-avatar: false
+nav-short: true
+last_modified_at: 2026-11-10T22:19:24-05:00
+---
+<main class="lit-home">
+  <section class="lit-hero" aria-labelledby="lit-title">
+    <div class="lit-shell">
+      <p class="lit-eyebrow">隐式思维链 · Implicit Chain-of-Thought</p>
+      <h1 id="lit-title">语言模型能否不写出每一步，也完成推理？</h1>
+      <p class="lit-deck">显式思维链把中间步骤写成文字。隐式思维链（Implicit CoT）让模型在内部完成推理，再输出答案。相关研究也使用潜在推理（latent reasoning）、潜空间推理和 latent CoT 等名称。</p>
+      <p class="lit-deck lit-history">Yuntian Deng 等人在 <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023 年首次提出隐式思维链</a>：训练语言模型通过连续隐藏状态推理，而不写出显式中间步骤。论文中的<a href="https://arxiv.org/html/2311.01460v1#S3">知识蒸馏方法</a>是这一方向的一种实现。<a href="{{ '/zh/papers/2405.14838/' | relative_url }}">2024 年的工作</a>提出逐步内化，让模型在训练中逐渐减少对文字步骤的依赖。</p>
+      <div class="lit-actions">
+        <a class="lit-button lit-button-primary" href="{{ '/zh/topics/' | relative_url }}">从五篇论文入门</a>
+        <a class="lit-button lit-button-secondary" href="{{ '/papers/' | relative_url }}">浏览全部 {{ site.data.papers | size }} 篇论文（英文）</a>
+      </div>
+      <p class="lit-demo-shortcuts">试用逐步内化模型：{% for demo in site.data.demos %}<a href="{{ demo.url }}">{{ site.data.zh.demos[demo.id] }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
+      <div class="lit-status">
+        <span>文献核查至 <time datetime="{{ site.data.meta.search_refreshed_at }}">{{ site.data.meta.search_refreshed_at | date: '%Y-%m-%d' }}</time></span>
+        <a href="{{ '/recent/' | relative_url }}">最近收录</a>
+        <a href="{{ '/data/' | relative_url }}">数据与引用</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lit-section lit-start" aria-labelledby="reading-title">
+    <div class="lit-shell">
+      <div class="lit-section-heading"><h2 id="reading-title">先读什么？</h2><p>按时间了解研究思路，再比较不同方法如何训练、如何计算。</p></div>
+      <ol class="lit-reading-list">
+        {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign translation = site.data.zh.papers[paper.id] %}
+        <li>
+          <span class="lit-paper-date"><time datetime="{{ paper.first_public }}">{{ paper.first_public | date: '%Y-%m-%d' }}</time></span>
+          <h3><a href="{% if paper.id == '2311.01460' or paper.id == '2405.14838' %}{{ '/zh/papers/' | append: paper.id | append: '/' | relative_url }}{% else %}{{ '/papers/' | append: paper.id | append: '/' | relative_url }}{% endif %}" lang="en">{{ paper.title | escape }}</a></h3>
+          <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
+          <p>{{ translation.summary }}</p>
+          <div class="lit-paper-links"><a href="{{ paper.paper_url }}">论文原文</a><a href="{{ '/papers/' | append: paper.id | append: '/citation.bib' | relative_url }}">BibTeX</a></div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section class="lit-section lit-about">
+    <div class="lit-shell lit-about-grid">
+      <div><h2>关于这份阅读清单</h2><p>中文导读介绍基本概念与阅读顺序。完整论文目录提供方法分类、原文链接和引用下载；两种语言共用论文记录。</p></div>
+      <div>
+        <p>本站延续 <a href="{{ '/workshop/2026/' | relative_url }}">ICLR 2026 Latent and Implicit Thinking（LIT）研讨会</a>，帮助读者了解隐式思维链及相关研究。</p>
+        <p>感谢 <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT</a> 的作者与维护者。其论文目录和<a href="https://arxiv.org/abs/2505.16782">综述</a>为本站的文献整理提供了基础。</p>
+        <p><a href="{{ '/contribute/' | relative_url }}">补充论文或更正内容</a> · <a href="{{ '/data/zh/reading-guide.md' | relative_url }}">中文 Markdown 阅读指南</a> · <a href="{{ '/llms.txt' | relative_url }}">研究代理入口</a> · <a href="{{ '/data/papers.bib' | relative_url }}">完整 BibTeX</a></p>
+      </div>
+    </div>
+  </section>
+</main>

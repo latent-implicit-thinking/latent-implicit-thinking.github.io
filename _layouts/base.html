@@ -27,7 +27,7 @@ common-js:
 <body>
   {% include gtm_body.html %}
 
-  <a class="lit-skip-link" href="#main-content">Skip to main content</a>
+  <a class="lit-skip-link" href="#main-content">{{ page.lit_locale.skip | default: "Skip to main content" }}</a>
 
   {% include nav.html %}
 

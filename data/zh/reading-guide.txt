@@ -1,0 +1,55 @@
+---
+layout: null
+permalink: /data/zh/reading-guide.md
+sitemap: false
+---
+# 隐式思维链（Implicit Chain-of-Thought）阅读指南
+
+显式思维链把中间步骤写成文字。隐式思维链（Implicit CoT）让语言模型在内部完成推理，再输出答案。相关研究也使用潜在推理（latent reasoning）、潜空间推理和 latent CoT 等名称。
+
+[中文概览]({{ '/zh/' | absolute_url }}) · [中文导读与例子]({{ '/zh/topics/' | absolute_url }}) · [完整论文列表（英文）]({{ '/papers/' | absolute_url }})
+
+网站版本：{{ site.data.meta.version }}。网站更新：{{ site.data.meta.updated_at }}。文献核查至：{{ site.data.meta.search_refreshed_at }}。
+
+## 从五篇论文入门
+
+按首次公开日期阅读：隐式思维链的提出、逐步内化、循环连续状态、自蒸馏，以及领域综述。
+{% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{% assign translation = site.data.zh.papers[paper_id] %}{% assign publication = site.data.publications[paper_id] %}
+### {{ paper.first_public }} — {{ paper.title }}
+
+作者：{{ paper.authors }}。
+
+{{ translation.summary }}
+{% if translation.contribution %}
+{{ translation.contribution }}
+
+{{ translation.mechanism }}
+
+原文：{% for source in translation.sources %}[{{ source.label }}]({{ source.url }}){% unless forloop.last %} · {% endunless %}{% endfor %}
+
+[中文论文介绍]({{ '/zh/papers/' | append: paper_id | append: '/' | absolute_url }}) · {% endif %}[英文记录]({{ record.record_url }}) · [论文原文]({{ paper.paper_url }}) · [JSON 记录]({{ record.json_url }}) · [预印本 BibTeX]({{ record.bibtex_url }}) · [预印本 CSL-JSON]({{ record.csl_url }})
+{% if publication %}
+正式发表版本：{{ publication.author_names | join: ', ' }}. {{ publication.title }}. {{ publication.container_title }}, {{ publication.year }}. [原文]({{ publication.url }}) · [BibTeX]({{ record.publication_bibtex_url }}) · [CSL-JSON]({{ record.publication_csl_url }})
+{% endif %}{% endfor %}
+## 继续阅读
+{% for method in site.data.methods %}{% assign translation = site.data.zh.methods[method.id] %}
+- [{{ translation.label }}]({{ method.url | absolute_url }})：{{ translation.description }} 分类论文页为英文。
+{% endfor %}
+## 引用与检索
+
+中英文介绍共用原论文的 ID、作者顺序、日期与引用文件。引用研究贡献时，请引用论文原文；中文介绍不是一篇新的论文。
+
+- [JSON 论文列表]({{ '/data/papers.json' | absolute_url }})：完整论文记录、摘要与来源。
+- [完整 Markdown 论文列表（英文）]({{ '/data/reading-list.md' | absolute_url }})：适合按文本检索。
+- [BibTeX]({{ '/data/papers.bib' | absolute_url }}) · [CSL-JSON]({{ '/data/papers.csl.json' | absolute_url }})：原始记录的引用文件。
+- [正式发表版本 BibTeX]({{ '/data/publications.bib' | absolute_url }}) · [正式发表版本 CSL-JSON]({{ '/data/publications.csl.json' | absolute_url }})：已核实的会议或期刊版本。
+- [页面与文件目录]({{ '/data/navigation.json' | absolute_url }})：中英文页面、阅读路线与下载地址。
+- [最近收录]({{ '/recent/' | absolute_url }}) · [更新记录]({{ '/changelog/' | absolute_url }})。
+
+`first_public` 是已核实的首次公开日期；`added_at` 是本列表收录日期。`paper_url` 指向原始来源，arXiv 论文使用摘要页；`pdf_url` 指向全文 PDF。JSON 记录中的 `publication` 和相应引用下载描述正式发表版本。请引用实际使用的版本。
+
+## 致谢
+
+感谢 [Awesome-Latent-CoT 论文目录](https://github.com/EIT-NLP/Awesome-Latent-CoT)及其相关综述 [Reasoning Beyond Language](https://arxiv.org/abs/2505.16782)，帮助我们找到许多论文。
+
+本站分类、摘要与数据采用 [CC BY 4.0]({{ '/license/' | absolute_url }})；原论文与代码保留各自许可。

@@ -1,0 +1,64 @@
+---
+layout: base
+---
+{% assign paper = page.paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{% assign translation = site.data.zh.papers[paper.id] %}{% assign publication = record.publication %}
+<main class="lit-paper-detail">
+  <header class="lit-method-hero">
+    <div class="lit-shell lit-narrow-shell">
+      <nav class="lit-breadcrumb" aria-label="当前位置"><a href="{{ '/zh/' | relative_url }}">隐式思维链</a><span aria-hidden="true">/</span><a href="{{ '/zh/topics/#reading-path' | relative_url }}">入门论文</a></nav>
+      <h1 lang="en">{{ paper.title | escape }}</h1>
+      <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
+      <p>{{ translation.summary }}</p>
+      <p class="lit-detail-date">首次公开：<time datetime="{{ paper.first_public }}">{{ paper.first_public | date: '%Y-%m-%d' }}</time> · {{ paper.venue }}</p>
+      <div class="lit-actions"><a class="lit-button lit-button-primary" href="{{ paper.paper_url }}">论文摘要 ↗</a><a class="lit-button lit-button-secondary" href="{{ record.pdf_url }}">PDF ↗</a><a class="lit-button lit-button-secondary" href="{{ paper.html_url }}">HTML 全文 ↗</a><a class="lit-button lit-button-secondary" href="{{ paper.code_url }}">代码 ↗</a></div>
+    </div>
+  </header>
+
+  <section class="lit-section">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>这篇论文提出了什么？</h2>
+      <p>{{ translation.contribution }}</p>
+      <h3>如何实现</h3>
+      <p>{{ translation.mechanism }}</p>
+      <h3>实验结果</h3>
+      <p>{{ translation.evidence }}</p>
+      <p class="lit-guide-note">{% for source in translation.sources %}<a href="{{ source.url }}">{{ source.label }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
+      {{ content }}
+    </div>
+  </section>
+
+  {% if paper.id == '2405.14838' %}<section class="lit-section">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>试用模型</h2>
+      <p>这两个演示使用逐步内化：{% for demo in record.demos %}<a href="{{ demo.url }}">{{ site.data.zh.demos[demo.id] }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}。演示页面提供各自的模型与使用说明。</p>
+    </div>
+  </section>{% endif %}
+
+  <section class="lit-section" id="citations">
+    <div class="lit-shell lit-narrow-shell">
+      <h2>引用论文</h2>
+      {% if publication %}<div class="lit-citation-choice">
+        <h3>正式发表版本</h3>
+        <p><a href="{{ publication.url }}" lang="en">{{ publication.title | escape }}</a><br>{{ publication.author_names | join: ', ' | escape }}<br>{{ publication.container_title | escape }}, {{ publication.year }}{% if publication.pages %}, pp. {{ publication.pages | escape }}{% endif %}.</p>
+        <p><a href="{{ record.publication_bibtex_url }}">BibTeX</a> · <a href="{{ record.publication_csl_url }}">CSL-JSON</a></p>
+      </div>{% endif %}
+      <div class="lit-citation-choice">
+        <h3>arXiv 预印本</h3>
+        <p>{{ paper.authors | escape }}. <span lang="en">{{ paper.title | escape }}</span>. {{ record.citation_date | date: '%Y' }}. arXiv:{{ paper.arxiv }}.</p>
+        <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a> · <a href="{{ record.json_url }}">JSON 记录</a> · <a href="{{ record.record_url }}" lang="en">English</a></p>
+      </div>
+      <p><a href="{{ '/zh/topics/' | relative_url }}">返回中文导读</a> · <a href="{{ '/topics/internalized-reasoning/' | relative_url }}">推理内化（Internalized reasoning）相关论文</a></p>
+    </div>
+  </section>
+</main>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": {{ page.title | jsonify }},
+  "url": {{ page.url | absolute_url | jsonify }},
+  "inLanguage": "zh-Hans",
+  "dateModified": {{ page.last_modified_at | date_to_xmlschema | jsonify }},
+  "mainEntity": {% include scholarly-article.json paper=paper %}
+}
+</script>

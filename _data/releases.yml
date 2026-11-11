@@ -1,3 +1,11 @@
+- version: "0.15.0"
+  date: "2026-11-10"
+  title: "Chinese introduction and reading guide"
+  changes:
+    - "Added a Chinese introduction, a five-paper reading path, and Chinese pages for the 2023 and 2024 implicit-CoT papers."
+    - "Linked the English and Chinese editions and added a Chinese Markdown guide using the shared paper records and citation downloads."
+  added_papers: []
+
 - version: "0.14.0"
   date: "2026-11-09"
   title: "Internalization, recurrent models, and parallel reasoning"

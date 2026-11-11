@@ -47,6 +47,7 @@ data/publications.bib
 data/publications.csl.json
 data/reading-list.md
 data/schema.json
+data/zh/reading-guide.md
 dd148e3a0d2a5b3c8ff432434e76c99b.txt
 feed.xml
 googleb4edee92770c6007.html
@@ -73,3 +74,7 @@ topics/internalized-reasoning/index.html
 topics/recurrent-reasoning/index.html
 topics/thinking-tokens/index.html
 workshop/2026/index.html
+zh/index.html
+zh/papers/2311.01460/index.html
+zh/papers/2405.14838/index.html
+zh/topics/index.html

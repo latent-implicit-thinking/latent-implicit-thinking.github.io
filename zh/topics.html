@@ -1,0 +1,75 @@
+---
+layout: base
+title: "隐式思维链入门"
+seo-title: "什么是隐式思维链？潜在推理与推理内化入门"
+share-description: "用一个例子理解隐式思维链，再沿五篇论文了解隐式推理、逐步内化、连续状态与自蒸馏。"
+language: zh-Hans
+permalink: /zh/topics/
+show-avatar: false
+nav-short: true
+last_modified_at: 2026-11-10T22:19:24-05:00
+---
+<main class="lit-topic-page">
+  <header class="lit-index-hero">
+    <div class="lit-shell lit-narrow-shell">
+      <h1>什么是隐式思维链？</h1>
+      <p>显式思维链（Explicit CoT）先写出中间步骤，再给出答案。隐式思维链（Implicit CoT）研究如何让语言模型在内部完成这些计算，不必把每一步转换成文字。潜在推理（latent reasoning）、潜空间推理和 latent CoT 是相关文献常用的名称。</p>
+      <p class="lit-history">Yuntian Deng 等人在 <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023 年首次提出</a>通过连续隐藏状态完成隐式思维链推理，并在<a href="https://arxiv.org/html/2311.01460v1#S3">同一篇论文</a>中用知识蒸馏实现这一思路。<a href="{{ '/zh/papers/2405.14838/' | relative_url }}">2024 年的逐步内化</a>则通过逐渐移除训练中的文字步骤来学习内部推理。</p>
+    </div>
+  </header>
+
+  <section class="lit-section lit-intro-example" aria-labelledby="example-title">
+    <div class="lit-shell lit-narrow-shell">
+      <h2 id="example-title">一个例子</h2>
+      <p>三张票，每张 8 元，整笔订单另收 2 元手续费。总共多少钱？</p>
+      <div class="lit-example-pair">
+        <div><h3>写出中间步骤</h3><p class="lit-example-output">3 × 8 = 24 元，加上 2 元手续费，共 26 元。</p></div>
+        <div><h3>不写中间步骤</h3><p class="lit-example-output">共 26 元。</p></div>
+      </div>
+      <p>看到简短答案还不足以判断模型怎样算出了它。需要看模型如何训练、内部进行了哪些计算，以及改变中间状态后答案如何变化。</p>
+    </div>
+  </section>
+
+  <section class="lit-section" id="reading-path" aria-labelledby="reading-path-title">
+    <div class="lit-shell lit-narrow-shell">
+      <div class="lit-section-heading"><h2 id="reading-path-title">五篇论文的阅读顺序</h2><p>按首次公开时间排列：隐式思维链的提出、逐步内化、连续状态、自蒸馏，以及领域综述。</p></div>
+      <ol class="lit-reading-list">
+        {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign translation = site.data.zh.papers[paper.id] %}
+        <li>
+          <span class="lit-paper-date"><time datetime="{{ paper.first_public }}">{{ paper.first_public | date: '%Y-%m-%d' }}</time></span>
+          <h3><a href="{% if paper.id == '2311.01460' or paper.id == '2405.14838' %}{{ '/zh/papers/' | append: paper.id | append: '/' | relative_url }}{% else %}{{ '/papers/' | append: paper.id | append: '/' | relative_url }}{% endif %}" lang="en">{{ paper.title | escape }}</a></h3>
+          <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
+          <p>{{ translation.summary }}</p>
+          <div class="lit-paper-links"><a href="{{ paper.paper_url }}">论文原文</a><a href="{{ '/papers/' | append: paper.id | append: '/citation.bib' | relative_url }}">BibTeX</a></div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section class="lit-section lit-start" aria-labelledby="approaches-title">
+    <div class="lit-shell lit-narrow-shell">
+      <div class="lit-section-heading"><h2 id="approaches-title">主要方法</h2><p>每个链接都通向相应分类的英文介绍和论文列表。</p></div>
+      <div class="lit-taxonomy-items">
+        {% for method in site.data.methods %}{% assign translation = site.data.zh.methods[method.id] %}
+        <article><span>{{ method.number }}</span><div><h3>{{ translation.label }}</h3><p>{{ translation.description }}</p><a href="{{ method.url | relative_url }}">查看方法与论文 →</a></div></article>
+        {% endfor %}
+      </div>
+      <p class="lit-guide-note">这些分类会交叉：一个方法既能通过训练把文字步骤内化，也能在回答时反复更新连续状态。</p>
+    </div>
+  </section>
+
+  <section class="lit-section">
+    <div class="lit-shell lit-narrow-shell lit-reading-advice">
+      <h2>读论文时看什么？</h2>
+      <ul>
+        <li><strong>改了什么？</strong>区分训练方式的变化与回答时计算方式的变化。</li>
+        <li><strong>成本是多少？</strong>一起比较准确率、输出长度、模型运行次数和实际速度。</li>
+        <li><strong>证据说明什么？</strong>看新题目上的表现，以及改变内部状态的实验，检查模型用了哪些中间信息。</li>
+      </ul>
+      <a class="lit-button lit-button-primary" href="{{ '/papers/' | relative_url }}">浏览全部 {{ site.data.papers | size }} 篇论文（英文）</a>
+      <p><a href="{{ '/data/zh/reading-guide.md' | relative_url }}">中文 Markdown 阅读指南</a> · <a href="{{ '/data/' | relative_url }}">完整数据与引用下载</a></p>
+      <p class="lit-guide-note">感谢 <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT</a> 及其<a href="https://arxiv.org/abs/2505.16782">综述</a>为文献整理提供基础。</p>
+    </div>
+  </section>
+</main>

@@ -22,6 +22,7 @@ The introduction is at [/topics/]({{ '/topics/' | absolute_url }}). [/start-here
 
 ## Read and search
 
+- [中文概览]({{ '/zh/' | absolute_url }}) · [中文阅读路线]({{ '/zh/topics/' | absolute_url }}) · [中文 Markdown 阅读指南]({{ '/data/zh/reading-guide.md' | absolute_url }}): Chinese explanations with the same original papers and citation records
 - [Overview]({{ '/' | absolute_url }})
 - [Start here]({{ '/topics/' | absolute_url }}): explanations and examples
 - [Implicit chain-of-thought and latent reasoning papers]({{ '/papers/' | absolute_url }}): search, filters, and date order

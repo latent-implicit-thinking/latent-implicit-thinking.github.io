@@ -8,6 +8,30 @@ permalink: /data/navigation.json
   "version": {{ site.data.meta.version | jsonify }},
   "updated_at": {{ site.data.meta.updated_at | jsonify }},
   "canonical_url": {{ '/' | absolute_url | jsonify }},
+  "editions": {
+    "en": {
+      "name": "English",
+      "overview_url": {{ '/' | absolute_url | jsonify }},
+      "introduction_url": {{ '/topics/' | absolute_url | jsonify }},
+      "reading_guide_url": {{ '/llms.txt' | absolute_url | jsonify }}
+    },
+    "zh-Hans": {
+      "name": "中文",
+      "overview_url": {{ '/zh/' | absolute_url | jsonify }},
+      "introduction_url": {{ '/zh/topics/' | absolute_url | jsonify }},
+      "reading_guide_url": {{ '/data/zh/reading-guide.md' | absolute_url | jsonify }},
+      "paper_pages": [
+        {% assign paper_separator = '' %}{% for pair in site.data.localizations.pages %}{% if pair.en contains '/papers/' %}{% assign paper_id = pair.en | remove: '/papers/' | remove: '/' %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{{ paper_separator }}{
+          "id": {{ paper.id | jsonify }},
+          "url": {{ pair['zh-Hans'] | absolute_url | jsonify }},
+          "record_url": {{ record.record_url | jsonify }},
+          "json_url": {{ record.json_url | jsonify }},
+          "bibtex_url": {{ record.bibtex_url | jsonify }},
+          "csl_url": {{ record.csl_url | jsonify }}
+        }{% assign paper_separator = ',' %}{% endif %}{% endfor %}
+      ]
+    }
+  },
   "pages": {
     "introduction": {
       "url": {{ '/topics/' | absolute_url | jsonify }},

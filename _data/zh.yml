@@ -1,0 +1,59 @@
+papers:
+  "2311.01460":
+    summary: "首次提出隐式思维链：让语言模型通过连续隐藏状态完成中间推理，而不把这些步骤写成文字。论文先定义这一推理方式，再用知识蒸馏给出一种实现。"
+    contribution: "Yuntian Deng 等人在 2023 年首次提出隐式思维链推理。第 2.3 节定义了训练时使用中间步骤、回答时通过内部状态完成推理的方式；第 3 节给出基于知识蒸馏的实现。"
+    mechanism: "教师模型先学习显式思维链。学生模型学习利用教师的隐藏状态生成答案，另一个模型学习从题目预测这些状态，最后将两者连接并联合训练。中间计算沿模型层进行，不再逐词生成解题过程。"
+    evidence: "实验覆盖多位数乘法和 GSM8K 数学应用题。相比直接用题目与答案训练，模型在不输出步骤时的准确率提高；显式思维链仍有准确率优势。论文也讨论了对教师的依赖和内部过程的可解释性。"
+    sources:
+      - label: "2023 年原文：第 2.3 节（隐式思维链的定义）"
+        url: "https://arxiv.org/html/2311.01460v1#S2.SS3"
+      - label: "第 3 节（蒸馏实现）"
+        url: "https://arxiv.org/html/2311.01460v1#S3"
+      - label: "第 5 节（结果）"
+        url: "https://arxiv.org/html/2311.01460v1#S5"
+      - label: "第 8 节（局限）"
+        url: "https://arxiv.org/html/2311.01460v1#S8"
+  "2405.14838":
+    summary: "提出逐步内化（Stepwise Internalization）：从显式思维链模型开始，在微调中逐渐移除中间步骤，让模型学会在内部完成这些计算。"
+    contribution: "Yuntian Deng、Yejin Choi 和 Stuart Shieber 在 2024 年提出逐步内化，继续研究 2023 年提出的隐式思维链。它通过逐渐缩短训练中的解题过程来实现推理内化，无需另设隐藏状态模拟器。"
+    mechanism: "先训练模型输出完整步骤与答案，再从步骤开头逐渐移除 token，并继续微调，直到模型直接生成答案。训练用移除平滑和优化器状态重置来处理阶段切换；保留部分步骤也能在速度与准确率之间作出取舍。"
+    evidence: "论文在多位数乘法和 GSM8K 数学应用题上评测该方法。GPT-2 Small 在两个九位数相乘的任务上达到 99% 准确率；Mistral-7B 不输出中间步骤时在 GSM8K 上达到 51%，显式思维链为 68%。"
+    sources:
+      - label: "2024 年原文：第 2 节（与 2023 年工作的关系）"
+        url: "https://arxiv.org/html/2405.14838v1#S2"
+      - label: "第 3 节（逐步内化）"
+        url: "https://arxiv.org/html/2405.14838v1#S3"
+      - label: "第 5 节（结果）"
+        url: "https://arxiv.org/html/2405.14838v1#S5"
+      - label: "第 6 节（速度与准确率取舍）"
+        url: "https://arxiv.org/html/2405.14838v1#S6"
+  "2412.06769":
+    summary: "Coconut 将最后一个隐藏状态作为下一步输入，在连续空间中反复计算，完成后再生成文字答案。"
+  "2502.21074":
+    summary: "CODI 通过自蒸馏对齐显式思维链与连续推理的隐藏状态，用较少的连续步骤承载推理过程。"
+  "2505.16782":
+    summary: "综述隐式与潜在思维链的主要方法、表示方式和评测问题，并维护 Awesome-Latent-CoT 论文目录。"
+
+methods:
+  internalized:
+    label: "推理内化 · Internalized reasoning"
+    description: "训练时学习解题步骤，回答时减少或省去这些步骤的文字输出。知识蒸馏和逐步内化是两种实现。"
+  learned-tokens:
+    label: "思考 token"
+    description: "加入暂停符号或专门的 token，为模型提供额外计算位置，而不要求这些位置写出解题过程。"
+  continuous:
+    label: "连续状态推理"
+    description: "在推理步骤之间传递向量，而不是每一步都选择文字 token。"
+  recurrent:
+    label: "循环推理"
+    description: "重复运行模型层，或保留并更新中间状态，让模型对一道题进行多轮内部计算。"
+  beyond-sequential:
+    label: "其他生成方式"
+    description: "改变步骤的生成顺序，例如并行生成或反复修改。这个类别也包含输出文字思维链的方法。"
+  analysis:
+    label: "分析与评测"
+    description: "测试方法能解决什么问题，研究内部状态如何影响答案，并检查失败情形。"
+
+demos:
+  multiplication: "多位数乘法"
+  math-word-problems: "数学应用题"

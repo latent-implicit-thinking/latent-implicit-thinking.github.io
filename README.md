@@ -4,6 +4,8 @@ A reading list about reasoning without writing every intermediate step, also dis
 
 [Visit the reading list](https://latent-implicit-thinking.github.io/).
 
+[中文概览](https://latent-implicit-thinking.github.io/zh/) · [中文阅读路线](https://latent-implicit-thinking.github.io/zh/topics/) · [中文 Markdown 阅读指南](https://latent-implicit-thinking.github.io/data/zh/reading-guide.md)
+
 Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's [distillation method](https://arxiv.org/html/2311.01460v1#S3) is one implementation of that proposal. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
 
 - New to the field? [Start with explanations and concrete examples](https://latent-implicit-thinking.github.io/topics/).
@@ -17,6 +19,8 @@ The original [Latent & Implicit Thinking – Going Beyond CoT Reasoning workshop
 ## Papers and coverage
 
 Paper entries live in `_data/papers.yml`; background papers live in `_data/precursors.yml`. The website and downloads under `/data/` are generated from those files. Each topic guide explains the approach, gives an example, and lists its papers oldest first.
+
+The Chinese edition translates the introduction, reading path, and two original implicit-CoT paper pages. It shares the English edition's paper IDs, authors, dates, source links, and citation files. The complete paper list remains in English.
 
 The current literature-check date appears on the website and in the JSON metadata. [Recent additions](https://latent-implicit-thinking.github.io/recent/) shows papers added after the initial collection, including older omissions.
 

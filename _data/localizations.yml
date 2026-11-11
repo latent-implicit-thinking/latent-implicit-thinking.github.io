@@ -1,0 +1,39 @@
+languages:
+  en:
+    name: English
+    locale: en_US
+    home: /
+    skip: Skip to main content
+    toggle_navigation: Toggle navigation
+    search: Search
+    license: Content & data license
+    edit_page: Edit page
+    edit_title: Edit this page on GitHub
+    powered_by: Powered by
+  zh-Hans:
+    name: 中文
+    locale: zh_CN
+    home: /zh/
+    skip: 跳转到正文
+    toggle_navigation: 展开或收起导航
+    search: 搜索
+    license: 内容与数据许可（英文）
+    edit_page: 编辑本页
+    edit_title: 在 GitHub 编辑本页
+    powered_by: 网站主题
+    navbar:
+      概览: /zh/
+      阅读路线: /zh/topics/
+      全部论文（英文）: /papers/
+      最新收录（英文）: /recent/
+      引用与数据（英文）: /data/
+      研讨会存档（英文）: /workshop/2026/
+pages:
+  - en: /
+    zh-Hans: /zh/
+  - en: /topics/
+    zh-Hans: /zh/topics/
+  - en: /papers/2311.01460/
+    zh-Hans: /zh/papers/2311.01460/
+  - en: /papers/2405.14838/
+    zh-Hans: /zh/papers/2405.14838/
