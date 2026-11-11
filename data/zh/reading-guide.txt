@@ -3,9 +3,9 @@ layout: null
 permalink: /data/zh/reading-guide.md
 sitemap: false
 ---
-# 隐式思维链（Implicit Chain-of-Thought）阅读指南
+# 隐式思维链（Implicit CoT）阅读指南
 
-显式思维链把中间步骤写成文字。隐式思维链（Implicit CoT）让语言模型在内部完成推理，再输出答案。相关研究也使用潜在推理（latent reasoning）、潜空间推理和 latent CoT 等名称。
+显式思维链把中间步骤写成文字。隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）让语言模型在内部完成推理，再输出答案。相关研究也使用潜在推理（latent reasoning）、潜空间推理和 latent CoT 等名称。
 
 [中文概览]({{ '/zh/' | absolute_url }}) · [中文导读与例子]({{ '/zh/topics/' | absolute_url }}) · [完整论文列表（英文）]({{ '/papers/' | absolute_url }})
 
@@ -13,7 +13,7 @@ sitemap: false
 
 ## 从五篇论文入门
 
-按首次公开日期阅读：隐式思维链的提出、逐步内化、循环连续状态、自蒸馏，以及领域综述。
+按首次公开日期阅读：Implicit CoT 的提出、逐步内化、循环连续状态、自蒸馏，以及领域综述。
 {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{% assign translation = site.data.zh.papers[paper_id] %}{% assign publication = site.data.publications[paper_id] %}
 ### {{ paper.first_public }} — {{ paper.title }}
 

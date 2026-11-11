@@ -8,7 +8,7 @@ layout: base
       <nav class="lit-breadcrumb" aria-label="当前位置"><a href="{{ '/zh/' | relative_url }}">隐式思维链</a><span aria-hidden="true">/</span><a href="{{ '/zh/topics/#reading-path' | relative_url }}">入门论文</a></nav>
       <h1 lang="en">{{ paper.title | escape }}</h1>
       <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
-      <p>{{ translation.summary }}</p>
+      <p>{{ translation.lead }}</p>
       <p class="lit-detail-date">首次公开：<time datetime="{{ paper.first_public }}">{{ paper.first_public | date: '%Y-%m-%d' }}</time> · {{ paper.venue }}</p>
       <div class="lit-actions"><a class="lit-button lit-button-primary" href="{{ paper.paper_url }}">论文摘要 ↗</a><a class="lit-button lit-button-secondary" href="{{ record.pdf_url }}">PDF ↗</a><a class="lit-button lit-button-secondary" href="{{ paper.html_url }}">HTML 全文 ↗</a><a class="lit-button lit-button-secondary" href="{{ paper.code_url }}">代码 ↗</a></div>
     </div>

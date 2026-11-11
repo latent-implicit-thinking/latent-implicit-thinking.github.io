@@ -53,7 +53,7 @@ module LocalizationChecks
     manifest = JSON.parse(read(site_root, "data/navigation.json", errors))
     papers = JSON.parse(read(site_root, "data/papers.json", errors))
     guide = read(site_root, "data/zh/reading-guide.md", errors)
-    assert(guide.start_with?("# 隐式思维链（Implicit Chain-of-Thought）阅读指南\n") && !guide.match?(/<(?:html|head|body|h[1-6]|p)\b/i), "Chinese Markdown guide was converted to HTML or is missing its title", errors)
+    assert(guide.start_with?("# 隐式思维链（Implicit CoT）阅读指南\n") && !guide.match?(/<(?:html|head|body|h[1-6]|p)\b/i), "Chinese Markdown guide was converted to HTML or is missing its title", errors)
     assert(guide.include?("https://github.com/EIT-NLP/Awesome-Latent-CoT"), "Chinese Markdown guide is missing the bibliography acknowledgment", errors)
     assert(guide.include?("https://arxiv.org/html/2311.01460v1#S2.SS3") && guide.include?("https://arxiv.org/html/2311.01460v1#S3"), "Chinese Markdown guide must link the 2023 proposal and implementation separately", errors)
     editions = manifest.fetch("editions", {})

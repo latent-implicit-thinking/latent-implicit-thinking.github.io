@@ -1,3 +1,11 @@
+- version: "0.15.1"
+  date: "2026-11-10"
+  title: "Chinese terminology and paper introductions"
+  changes:
+    - "Defined Implicit CoT in Chinese and English on each Chinese introduction and paper page, while keeping the original research names in explanations and citations."
+    - "Updated the Chinese reading guide and kept Internalized reasoning and Stepwise Internalization alongside their Chinese translations."
+  added_papers: []
+
 - version: "0.15.0"
   date: "2026-11-10"
   title: "Chinese introduction and reading guide"

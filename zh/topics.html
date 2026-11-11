@@ -1,20 +1,20 @@
 ---
 layout: base
-title: "隐式思维链入门"
-seo-title: "什么是隐式思维链？潜在推理与推理内化入门"
-share-description: "用一个例子理解隐式思维链，再沿五篇论文了解隐式推理、逐步内化、连续状态与自蒸馏。"
+title: "隐式思维链（Implicit CoT）入门"
+seo-title: "隐式思维链（Implicit CoT）入门：潜在推理与推理内化"
+share-description: "用一个例子理解 Implicit CoT（隐式思维链），再沿五篇论文了解逐步内化、连续状态与自蒸馏。"
 language: zh-Hans
 permalink: /zh/topics/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-10T22:19:24-05:00
+last_modified_at: 2026-11-10T22:55:17-05:00
 ---
 <main class="lit-topic-page">
   <header class="lit-index-hero">
     <div class="lit-shell lit-narrow-shell">
-      <h1>什么是隐式思维链？</h1>
-      <p>显式思维链（Explicit CoT）先写出中间步骤，再给出答案。隐式思维链（Implicit CoT）研究如何让语言模型在内部完成这些计算，不必把每一步转换成文字。潜在推理（latent reasoning）、潜空间推理和 latent CoT 是相关文献常用的名称。</p>
-      <p class="lit-history">Yuntian Deng 等人在 <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023 年首次提出</a>通过连续隐藏状态完成隐式思维链推理，并在<a href="https://arxiv.org/html/2311.01460v1#S3">同一篇论文</a>中用知识蒸馏实现这一思路。<a href="{{ '/zh/papers/2405.14838/' | relative_url }}">2024 年的逐步内化</a>则通过逐渐移除训练中的文字步骤来学习内部推理。</p>
+      <h1>什么是隐式思维链（Implicit CoT）？</h1>
+      <p>显式思维链（Explicit CoT）先写出中间步骤，再给出答案。隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）研究如何让语言模型在内部完成这些计算，不必把每一步转换成文字。潜在推理（latent reasoning）、潜空间推理和 latent CoT 是相关文献常用的名称。</p>
+      <p class="lit-history">Yuntian Deng 等人在 <a href="https://arxiv.org/html/2311.01460v1#S2.SS3">2023 年首次提出 Implicit CoT</a>，通过连续隐藏状态完成中间推理，并在<a href="https://arxiv.org/html/2311.01460v1#S3">同一篇论文</a>中用知识蒸馏实现这一思路。<a href="{{ '/zh/papers/2405.14838/' | relative_url }}">2024 年的逐步内化（Stepwise Internalization）</a>则通过逐渐移除训练中的文字步骤来学习内部推理。</p>
     </div>
   </header>
 
@@ -32,7 +32,7 @@ last_modified_at: 2026-11-10T22:19:24-05:00
 
   <section class="lit-section" id="reading-path" aria-labelledby="reading-path-title">
     <div class="lit-shell lit-narrow-shell">
-      <div class="lit-section-heading"><h2 id="reading-path-title">五篇论文的阅读顺序</h2><p>按首次公开时间排列：隐式思维链的提出、逐步内化、连续状态、自蒸馏，以及领域综述。</p></div>
+      <div class="lit-section-heading"><h2 id="reading-path-title">五篇论文的阅读顺序</h2><p>按首次公开时间排列：Implicit CoT 的提出、逐步内化、连续状态、自蒸馏，以及领域综述。</p></div>
       <ol class="lit-reading-list">
         {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign translation = site.data.zh.papers[paper.id] %}
         <li>
