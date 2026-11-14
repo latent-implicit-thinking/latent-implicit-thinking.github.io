@@ -89,7 +89,7 @@
 
 - id: "2311.01460"
   title: "Implicit Chain of Thought Reasoning via Knowledge Distillation"
-  related_terms: ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT"]
+  related_terms: ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT", "System 1", "System One", "System 2", "System 2 to System 1", "System 2 distillation", "reasoning internalization"]
   authors: "Yuntian Deng, Kiran Prasad, Roland Fernandez, Paul Smolensky, Vishrav Chaudhary, Stuart Shieber"
   first_public: "2023-11-02"
   venue: "arXiv"
@@ -104,7 +104,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "First proposes implicit chain-of-thought reasoning: language models carry out intermediate reasoning in continuous hidden states rather than generate it as text. Defines this setting separately from its implementation, which distills an explicit-CoT teacher's hidden states into an emulator and a student that produces the answer."
+  summary: "First proposes implicit chain-of-thought reasoning: language models carry out intermediate reasoning in continuous hidden states rather than generate it as text. Frames this as compiling deliberate System 2 reasoning into intuitive System 1 responses. Defines the setting separately from its implementation, which distills an explicit-CoT teacher's hidden states into an emulator and a student that produces the answer."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2312.03052"
@@ -231,7 +231,7 @@
 
 - id: "2405.14838"
   title: "From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step"
-  related_terms: ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT"]
+  related_terms: ["implicit CoT", "latent reasoning", "latent chain-of-thought", "latent CoT", "System 1", "System One", "System 2", "System 2 to System 1", "reasoning internalization"]
   authors: "Yuntian Deng, Yejin Choi, Stuart Shieber"
   first_public: "2024-05-23"
   venue: "arXiv"
@@ -246,7 +246,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language, symbolic]
-  summary: "Uses a curriculum that progressively removes intermediate reasoning steps during fine-tuning, teaching a model to internalize an explicit chain of thought."
+  summary: "Uses a curriculum that progressively removes intermediate reasoning steps during fine-tuning, teaching a model to internalize an explicit chain of thought. This trains System 1 behavior through System 2 reasoning: the model learns from worked solutions, then produces the answer directly."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2405.15071"
@@ -290,6 +290,7 @@
   venue: "arXiv"
   arxiv: "2407.06023"
   paper_url: "https://arxiv.org/abs/2407.06023"
+  html_url: "https://arxiv.org/html/2407.06023v1"
   lens: [internalized]
   representation: [hidden-state]
   computation: [depth-wise]
@@ -297,7 +298,7 @@
   questions: [capability, efficiency]
   evidence: [empirical]
   modality: [language]
-  summary: "Uses outputs from a slower deliberative process as training data for a faster model, studying when System-2-like behavior can be compressed into direct prediction."
+  summary: "Fine-tunes a model on filtered final outputs from System 2 procedures so it responds directly as System 1. Cites the 2023 implicit-CoT paper and 2024 stepwise internalization paper, and studies final-output supervision across several deliberative procedures."
   provenance: "Awesome-Latent-CoT"
 
 - id: "2407.20311"

@@ -29,6 +29,13 @@ last_modified_at: 2026-11-14
     </div>
   </section>
 
+  <section class="lit-section" id="system-2-to-system-1" aria-labelledby="system-2-to-system-1-title">
+    <div class="lit-shell lit-narrow-shell">
+      <h2 id="system-2-to-system-1-title">{{ site.data.zh.system_transition.title | escape }}</h2>
+      {% for paragraph in site.data.zh.system_transition.paragraphs %}{{ paragraph | markdownify }}{% endfor %}
+    </div>
+  </section>
+
   <section class="lit-section" id="reading-path" aria-labelledby="reading-path-title">
     <div class="lit-shell lit-narrow-shell">
       <div class="lit-section-heading"><h2 id="reading-path-title">五篇论文的阅读顺序</h2><p>按首次公开时间排列：Implicit CoT 的提出、逐步内化、连续状态、自蒸馏，以及领域综述。</p></div>

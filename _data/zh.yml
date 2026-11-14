@@ -2,10 +2,12 @@ papers:
   "2311.01460":
     summary: "首次提出隐式思维链（Implicit CoT）：让语言模型通过连续隐藏状态完成中间推理，而不把这些步骤写成文字。论文先定义这一推理方式，再用知识蒸馏给出一种实现。"
     lead: "首次提出隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）：让语言模型通过连续隐藏状态完成中间推理，而不把这些步骤写成文字。论文先定义这一推理方式，再用知识蒸馏给出一种实现。"
-    contribution: "Yuntian Deng 等人在 2023 年首次提出 Implicit CoT。第 2.3 节定义了训练时使用中间步骤、回答时通过内部状态完成推理的方式；第 3 节给出基于知识蒸馏的实现。"
+    contribution: "Yuntian Deng 等人在 2023 年首次提出 Implicit CoT。引言明确提出，把有意识的 System 2 推理编译为自动化的 System 1 思考。第 2.3 节定义了训练时使用中间步骤、回答时通过内部状态完成推理的方式；第 3 节给出基于知识蒸馏的实现。"
     mechanism: "教师模型先学习显式思维链。学生模型学习利用教师的隐藏状态生成答案，另一个模型学习从题目预测这些状态，最后将两者连接并联合训练。中间计算沿模型层进行，不再逐词生成解题过程。"
     evidence: "实验覆盖多位数乘法和 GSM8K 数学应用题。相比直接用题目与答案训练，模型在不输出步骤时的准确率提高。"
     sources:
+      - label: "第 1 节（从 System 2 到 System 1）"
+        url: "https://arxiv.org/html/2311.01460v1#S1"
       - label: "2023 年原文：第 2.3 节（Implicit CoT 的定义）"
         url: "https://arxiv.org/html/2311.01460v1#S2.SS3"
       - label: "第 3 节（蒸馏实现）"
@@ -15,7 +17,7 @@ papers:
   "2405.14838":
     summary: "提出逐步内化（Stepwise Internalization）来实现 Implicit CoT：从显式思维链模型开始，在微调中逐渐移除中间步骤，让模型学会在内部完成这些计算。"
     lead: "论文提出逐步内化（Stepwise Internalization），用来学习隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）。从显式思维链模型开始，在微调中逐渐移除中间步骤，让模型学会在内部完成这些计算。"
-    contribution: "Yuntian Deng、Yejin Choi 和 Stuart Shieber 在 2024 年提出逐步内化，继续研究 2023 年提出的 Implicit CoT。它通过逐渐缩短训练中的解题过程来实现推理内化（Internalized reasoning），无需另设隐藏状态模拟器。"
+    contribution: "Yuntian Deng、Yejin Choi 和 Stuart Shieber 在 2024 年提出逐步内化，继续研究 2023 年提出的 Implicit CoT。它通过逐渐缩短训练中的解题过程来实现推理内化（Internalized reasoning），无需另设隐藏状态模拟器。这个过程把 System 2 的显式解题步骤内化，训练模型以 System 1 的方式直接作答。"
     mechanism: "先训练模型输出完整步骤与答案，再从步骤开头逐渐移除 token，并继续微调，直到模型直接生成答案。训练用移除平滑和优化器状态重置来处理阶段切换；保留部分步骤也能在速度与准确率之间作出取舍。"
     evidence: "论文在多位数乘法和 GSM8K 数学应用题上评测该方法。GPT-2 Small 在两个九位数相乘的任务上达到 99% 准确率；Mistral-7B 不输出中间步骤时在 GSM8K 上达到 51%。"
     sources:
@@ -34,10 +36,22 @@ papers:
   "2505.16782":
     summary: "综述 Implicit CoT 与 latent CoT 的主要方法、表示方式和评测问题，并维护 Awesome-Latent-CoT 论文目录。"
 
+system_transition:
+  title: "从 System 2 到 System 1：把推理过程学进模型"
+  paragraphs:
+    - >-
+      System 2 先展开中间步骤再回答，System 1 直接给出答案。推理内化（Internalized reasoning）研究如何通过训练完成这种转变。
+    - >-
+      [2023 年的 Implicit CoT 论文](https://arxiv.org/html/2311.01460v1#S1)明确以这一转变为目标：先定义通过连续隐藏状态推理的方式，再用教师隐藏状态的蒸馏给出实现。[2024 年 5 月的逐步内化](https://arxiv.org/html/2405.14838v1#S3)则从显式 CoT 模型开始，逐渐移除训练中的中间步骤，直到模型直接生成答案。
+    - >-
+      Meta FAIR 在 2024 年 7 月发表的 [Distilling System 2 into System 1](https://arxiv.org/html/2407.06023v1) 在[相关工作中引用了这两篇论文](https://arxiv.org/html/2407.06023v1#S2.SS3)。它的[训练目标是筛选后的最终回答](https://arxiv.org/html/2407.06023v1#S3.SS2)：先运行 System 2 方法生成并筛选答案，再训练同一个模型直接作答。
+    - >-
+      Jev 的[官方文档](https://docs.typesafe.ai/introduction)称它为 System One 模型：输入状态和带类型的问题，直接返回结构化结果和概率分布。Implicit CoT 与逐步内化研究如何训练内部推理；Jev 提供软件直接使用的决策接口。
+
 methods:
   internalized:
     label: "推理内化（Internalized reasoning）"
-    description: "训练时学习解题步骤，回答时减少或省去这些步骤的文字输出。知识蒸馏和逐步内化是两种实现。"
+    description: "训练模型把 System 2 的显式解题过程内化为 System 1 的直接作答。训练时学习中间步骤，回答时减少或省去步骤的文字输出。知识蒸馏和逐步内化是两种实现。"
   learned-tokens:
     label: "思考 token"
     description: "加入暂停符号或专门的 token，为模型提供额外计算位置，而不要求这些位置写出解题过程。"

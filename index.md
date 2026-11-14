@@ -34,6 +34,7 @@ last_modified_at: 2026-11-14
       <div class="lit-section-heading">
         <h2 id="map-title">How do these methods work?</h2>
         <p>Some learn to skip written steps. Others add computation between words or reuse model layers. The list also covers related generation methods and studies of when these approaches work or fail.</p>
+        <p><a href="{{ '/topics/internalized-reasoning/#method-comparisons' | relative_url }}">From System 2 reasoning to System 1 models</a>: distillation, stepwise internalization, and direct decisions.</p>
       </div>
       <div class="lit-route-grid">
         {% for method in site.data.methods %}

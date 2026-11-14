@@ -1,3 +1,18 @@
+- version: "0.16.0"
+  date: "2026-11-14"
+  title: "From System 2 reasoning to System 1 models"
+  changes:
+    - "Connected implicit CoT and stepwise internalization to System 2 and System 1 in the English and Chinese guides and paper downloads."
+    - "Compared hidden-state supervision, stepwise internalization, and Meta's output distillation using the original papers, and linked System One decision interfaces."
+  added_papers: []
+  updated_papers:
+    - id: "2311.01460"
+      fields: ["summary", "related_terms"]
+    - id: "2405.14838"
+      fields: ["summary", "related_terms"]
+    - id: "2407.06023"
+      fields: ["summary", "html_url"]
+
 - version: "0.15.5"
   date: "2026-11-14"
   title: "English and Chinese guide updates"

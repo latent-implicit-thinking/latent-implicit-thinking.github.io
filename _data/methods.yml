@@ -15,6 +15,11 @@
     - "implicit chain-of-thought"
     - "internalized chain-of-thought"
     - "reasoning distillation"
+    - "System 1"
+    - "System One"
+    - "System 2 to System 1"
+    - "System 2 distillation"
+    - "reasoning internalization"
 
 - id: "learned-tokens"
   number: "02"

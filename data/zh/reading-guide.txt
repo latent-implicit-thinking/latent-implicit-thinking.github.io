@@ -11,7 +11,11 @@ sitemap: false
 
 网站版本：{{ site.data.meta.version }}。网站更新：{{ site.data.meta.updated_at }}。文献核查至：{{ site.data.meta.search_refreshed_at }}。
 
-## 从五篇论文入门
+## {{ site.data.zh.system_transition.title }}
+
+{% for paragraph in site.data.zh.system_transition.paragraphs %}{{ paragraph }}
+
+{% endfor %}## 从五篇论文入门
 
 按首次公开日期阅读：Implicit CoT 的提出、逐步内化、循环连续状态、自蒸馏，以及领域综述。
 {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{% assign translation = site.data.zh.papers[paper_id] %}{% assign publication = site.data.publications[paper_id] %}

@@ -28,6 +28,8 @@ Every paper has a permanent page at `/papers/{id}/`, an individual JSON and Mark
 
 Method comparisons explain technical differences and connections, with links to the papers. The same notes appear on the papers they discuss and in the JSON and Markdown downloads.
 
+[From System 2 reasoning to System 1 models](https://latent-implicit-thinking.github.io/topics/internalized-reasoning/#method-comparisons) connects the 2023 implicit-CoT proposal, May 2024 stepwise internalization, and Meta's July 2024 output distillation. It also explains the connection to System One decision interfaces such as Jev.
+
 The complete citation downloads describe each entry's linked source: an arXiv or DOI preprint, or a conference or journal publication. Non-arXiv preprints carry separate `preprint` metadata and remain labeled as preprints. Publication records in `_data/publications.yml` provide the published title, ordered authors, year and DOI where available. The published-version downloads contain the available conference and journal records. Release history records additions, metadata updates and removals by ID.
 
 ## Contributing

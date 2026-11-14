@@ -1,21 +1,44 @@
 internalized:
-  - title: "Distillation and stepwise internalization"
+  - title: "From System 2 reasoning to System 1 models"
     text: >-
-      Deng et al. (2023) introduced implicit CoT as reasoning through hidden
-      states rather than written steps; distillation is the paper's
-      implementation of that proposal. It learns to predict a
-      teacher's intermediate hidden states, which help a student produce the
-      answer. Stepwise Internalization instead repeatedly shortens the written
-      solution and fine-tunes the same model on what remains. Both use worked
-      solutions during training; neither requires writing the removed steps at
-      inference. Their experiments cover multiplication and
-      grade-school math.
-    source_ids: ["2311.01460", "2405.14838"]
+      The November 2023 implicit CoT paper explicitly frames its goal as
+      compiling deliberate System 2 reasoning into an intuitive System 1 model
+      that answers directly. It proposes reasoning through continuous hidden
+      states and implements this through distillation: an emulator learns to
+      predict a teacher's intermediate hidden states, which a student uses to
+      produce the answer. The May 2024 Stepwise Internalization paper develops
+      another route to learning System 1 behavior from System 2 reasoning:
+      progressively remove written reasoning steps and fine-tune the model
+      until it answers directly. Meta's July 2024 paper, Distilling System 2
+      into System 1, cites both works. It trains on filtered final outputs from
+      deliberative procedures. The three methods transfer reasoning through
+      hidden-state supervision, a curriculum of shortened solutions, and
+      final-answer supervision, respectively.
+    source_ids: ["2311.01460", "2405.14838", "2407.06023"]
     source_urls:
+      - "https://arxiv.org/html/2311.01460v1#S1"
       - "https://arxiv.org/html/2311.01460v1#S2.SS3"
       - "https://arxiv.org/html/2311.01460v1#S3"
       - "https://arxiv.org/html/2405.14838v1#S3"
-    source_labels: ["Implicit CoT proposal, §2.3", "Distillation implementation, §3", "Stepwise internalization, §3"]
+      - "https://arxiv.org/html/2407.06023v1#S2.SS3"
+      - "https://arxiv.org/html/2407.06023v1#S3.SS2"
+    source_labels: ["2023 System 2 / System 1 motivation, §1", "Implicit CoT proposal, §2.3", "Hidden-state distillation, §3", "Stepwise internalization, §3", "Meta's related work, §2.3", "Meta's output distillation, §3.2"]
+  - title: "System One decision models"
+    text: >-
+      System 1, also written System One, describes direct responses in this
+      line of work. Implicit CoT studies how to train models to do the reasoning
+      internally before producing an answer. Current decision models apply
+      the direct-response idea to software: TypeSafe describes Jev as a System
+      One model that takes state and typed questions and returns structured
+      values and probabilities. The implicit CoT papers study training methods
+      for internalizing reasoning; Jev's documentation describes a decision
+      interface that software consumes directly.
+    source_ids: ["2311.01460", "2405.14838"]
+    source_urls:
+      - "https://arxiv.org/html/2311.01460v1#S1"
+      - "https://arxiv.org/html/2405.14838v1#S3"
+      - "https://docs.typesafe.ai/introduction"
+    source_labels: ["Implicit CoT, §1", "Stepwise internalization, §3", "Jev documentation"]
   - title: "Hidden-state distillation: the 2023 method and CODI"
     text: >-
       The 2023 implicit CoT paper proposes reasoning through hidden states and
