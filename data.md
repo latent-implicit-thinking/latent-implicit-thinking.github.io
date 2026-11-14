@@ -6,7 +6,7 @@ share-description: "Download the paper list in JSON or Markdown and citations in
 permalink: /data/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-11
+last_modified_at: 2026-11-14
 ---
 
 <main class="lit-data-page">
@@ -64,7 +64,7 @@ last_modified_at: 2026-11-11
       <div>
         <p>The complete <code>papers.bib</code> and <code>papers.csl.json</code> downloads cite each entry’s linked source: an arXiv or DOI preprint, or a conference or journal publication. DOI preprints stay labeled as preprints. A separate <a href="{{ '/data/publications.bib' | relative_url }}">BibTeX file</a> and <a href="{{ '/data/publications.csl.json' | relative_url }}">CSL-JSON file</a> contain the available published-version records. Individual paper pages offer both choices where available. Cite the version you used.</p>
         <p>If you reuse our categories, summaries, or data, credit <em>Implicit Chain-of-Thought</em>, version {{ site.data.meta.version }} ({{ site.data.meta.updated_at | date: "%Y" }}), {{ site.data.meta.canonical_url }}, with your access date. Our original text and annotations are available under <a href="{{ '/license/' | relative_url }}">CC BY 4.0</a>. Papers, code, and other third-party material keep their own licenses.</p>
-        <details class="lit-file-details"><summary>Date and citation-format details</summary><p>Dates usually refer to the first arXiv submission. Where an earlier presentation is documented, its date is shown separately from the linked arXiv submission date.</p><p>Source links are not pinned to an arXiv revision. Author names are kept in full and in order. CSL-JSON stores each full name as a literal string.</p></details>
+        <details class="lit-file-details"><summary>Date and citation-format details</summary><p>Dates usually refer to the first arXiv submission. Where an earlier presentation is documented, its date is shown separately from the linked arXiv submission date.</p><p>Author names are kept in full and in order. CSL-JSON stores each full name as a literal string.</p></details>
         <p>Thanks to the <a href="https://github.com/EIT-NLP/Awesome-Latent-CoT">Awesome-Latent-CoT bibliography</a> and its associated survey, <a href="https://arxiv.org/abs/2505.16782"><em>Reasoning Beyond Language</em></a>, which helped us find many of these papers.</p>
         <p><a class="lit-text-link" href="{{ '/contribute/' | relative_url }}">Suggest a paper or report a correction →</a></p>
       </div>

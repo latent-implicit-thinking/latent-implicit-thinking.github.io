@@ -1,7 +1,7 @@
 ---
 layout: null
 permalink: /llms.txt
-last_modified_at: 2026-11-11
+last_modified_at: 2026-11-14
 ---
 # Implicit Chain-of-Thought
 
@@ -60,11 +60,11 @@ Papers can belong to several categories. The list includes related generation me
 - Optional `method_comparisons` contains the comparisons shown on a paper's page, with the papers discussed in `source_ids`, primary-source links in `source_urls`, and readable `source_labels`. Each comparison identifies its topic guide. Comparisons explain technical differences and connections between methods.
 - `added_at` is when a paper was added to this list, not its publication date. Tracking began {{ site.data.meta.addition_tracking_started_at }}; initial-collection records omit this field. Release history lists `added_papers` IDs. A new addition may be an older paper.
 - `first_public` is the earliest public date we have verified, usually the first arXiv submission. An earlier public version has a source note.
-- `citation_date` dates the cited source: a preprint posting or a conference or journal publication. The complete BibTeX and CSL-JSON files cite that source. Source landing pages may serve revised versions.
-- `preprint` identifies a verified non-arXiv DOI preprint, with its repository and version when available. A DOI does not imply journal or conference publication.
+- `citation_date` dates the cited source: a preprint posting or a conference or journal publication. The complete BibTeX and CSL-JSON files cite that source.
+- `preprint` identifies a verified non-arXiv DOI preprint, with its repository and version when available.
 - `publication` metadata describes a conference or journal version. When a preprint is also listed, its title, author list and year may differ; use `publication_bibtex_url` or `publication_csl_url` for the published version. Entries with no preprint use this metadata in their default citations too.
 - Optional `demos` link to interactive examples and model details. Each demo's `paper_relationships` distinguishes `implementation` from `related_method`; `relationship` gives its connection to the current paper. Topic downloads also list the demos shown in the guide.
-- Release entries can list `updated_papers` (IDs and changed fields) and `removed_papers` (IDs). Refresh cached records using the current corpus; do not treat a historical release as the current membership list.
+- Release entries can list `updated_papers` (IDs and changed fields) and `removed_papers` (IDs). Refresh cached records using the current corpus.
 - `provenance` says where we first found a paper.
 - Category IDs and filter values are defined in the category file.
 

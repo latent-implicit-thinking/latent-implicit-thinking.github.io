@@ -17,7 +17,7 @@ papers:
     lead: "论文提出逐步内化（Stepwise Internalization），用来学习隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）。从显式思维链模型开始，在微调中逐渐移除中间步骤，让模型学会在内部完成这些计算。"
     contribution: "Yuntian Deng、Yejin Choi 和 Stuart Shieber 在 2024 年提出逐步内化，继续研究 2023 年提出的 Implicit CoT。它通过逐渐缩短训练中的解题过程来实现推理内化（Internalized reasoning），无需另设隐藏状态模拟器。"
     mechanism: "先训练模型输出完整步骤与答案，再从步骤开头逐渐移除 token，并继续微调，直到模型直接生成答案。训练用移除平滑和优化器状态重置来处理阶段切换；保留部分步骤也能在速度与准确率之间作出取舍。"
-    evidence: "论文在多位数乘法和 GSM8K 数学应用题上评测该方法。GPT-2 Small 在两个九位数相乘的任务上达到 99% 准确率；Mistral-7B 不输出中间步骤时在 GSM8K 上达到 51%，显式思维链为 68%。"
+    evidence: "论文在多位数乘法和 GSM8K 数学应用题上评测该方法。GPT-2 Small 在两个九位数相乘的任务上达到 99% 准确率；Mistral-7B 不输出中间步骤时在 GSM8K 上达到 51%。"
     sources:
       - label: "2024 年原文：第 2 节（与 2023 年工作的关系）"
         url: "https://arxiv.org/html/2405.14838v1#S2"

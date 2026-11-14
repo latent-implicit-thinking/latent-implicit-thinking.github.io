@@ -4,7 +4,7 @@
   slug: "internalized-reasoning"
   url: "/topics/internalized-reasoning/"
   short_description: "Learn from worked solutions, then answer with fewer or no written intermediate steps."
-  definition: "Learn from worked solutions so that some or all of the reasoning can later happen without writing those steps. Training may use a separate teacher model or progressively remove written steps from the model being trained."
+  definition: "Learn from worked solutions so that the reasoning can later happen without writing those steps. Training may use a separate teacher model or progressively remove written steps from the model being trained."
   example: "A teacher model solves a problem in several written steps. A student model learns to produce the answer directly, using information from the teacher's intermediate reasoning during training."
   question: "How can an explicit chain of thought be distilled or progressively removed?"
   questions:

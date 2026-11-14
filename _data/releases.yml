@@ -1,3 +1,10 @@
+- version: "0.15.5"
+  date: "2026-11-14"
+  title: "English and Chinese guide updates"
+  changes:
+    - "Updated the English and Chinese introductions, Internalized reasoning definition, Chinese 2024 paper summary, and download guidance."
+  added_papers: []
+
 - version: "0.15.4"
   date: "2026-11-14"
   title: "Chinese 2023 paper summary"
