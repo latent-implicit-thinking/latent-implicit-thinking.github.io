@@ -4,7 +4,7 @@ papers:
     lead: "首次提出隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）：让语言模型通过连续隐藏状态完成中间推理，而不把这些步骤写成文字。论文先定义这一推理方式，再用知识蒸馏给出一种实现。"
     contribution: "Yuntian Deng 等人在 2023 年首次提出 Implicit CoT。第 2.3 节定义了训练时使用中间步骤、回答时通过内部状态完成推理的方式；第 3 节给出基于知识蒸馏的实现。"
     mechanism: "教师模型先学习显式思维链。学生模型学习利用教师的隐藏状态生成答案，另一个模型学习从题目预测这些状态，最后将两者连接并联合训练。中间计算沿模型层进行，不再逐词生成解题过程。"
-    evidence: "实验覆盖多位数乘法和 GSM8K 数学应用题。相比直接用题目与答案训练，模型在不输出步骤时的准确率提高；显式思维链仍有准确率优势。"
+    evidence: "实验覆盖多位数乘法和 GSM8K 数学应用题。相比直接用题目与答案训练，模型在不输出步骤时的准确率提高。"
     sources:
       - label: "2023 年原文：第 2.3 节（Implicit CoT 的定义）"
         url: "https://arxiv.org/html/2311.01460v1#S2.SS3"
@@ -12,8 +12,6 @@ papers:
         url: "https://arxiv.org/html/2311.01460v1#S3"
       - label: "第 5 节（结果）"
         url: "https://arxiv.org/html/2311.01460v1#S5"
-      - label: "第 8 节（局限）"
-        url: "https://arxiv.org/html/2311.01460v1#S8"
   "2405.14838":
     summary: "提出逐步内化（Stepwise Internalization）来实现 Implicit CoT：从显式思维链模型开始，在微调中逐渐移除中间步骤，让模型学会在内部完成这些计算。"
     lead: "论文提出逐步内化（Stepwise Internalization），用来学习隐式思维链（Implicit Chain-of-Thought，简称 Implicit CoT）。从显式思维链模型开始，在微调中逐渐移除中间步骤，让模型学会在内部完成这些计算。"
