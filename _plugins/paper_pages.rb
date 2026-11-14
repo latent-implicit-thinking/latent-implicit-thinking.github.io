@@ -70,7 +70,7 @@ module Literature
   def demo_markdown(site, demo)
     label = demo["relationship"] == "related_method" ? "Related-method demo" : "Demo"
     lines = ["#{label}: [#{demo.fetch('title')}](#{demo.fetch('url')})", demo.fetch("description"),
-             demo.fetch("limitations"), "[Model details](#{demo.fetch('model_url')})"]
+             demo["limitations"], "[Model details](#{demo.fetch('model_url')})"].compact
     demo.fetch("paper_relationships").each do |link|
       paper = (site.data.fetch("papers") + site.data.fetch("precursors")).find { |item| item.fetch("id") == link.fetch("paper_id") }
       relationship = link.fetch("relationship") == "implementation" ? "Implements" : "Related method"

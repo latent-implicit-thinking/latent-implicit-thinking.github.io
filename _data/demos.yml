@@ -17,7 +17,6 @@
   title: "Math word problems without written steps"
   label: "Math word problems"
   description: "Try a Mistral-7B model trained with stepwise internalization on grade-school math word problems."
-  limitations: "The model generates its answer token by token."
   model: "Mistral-7B"
   url: "https://huggingface.co/spaces/yuntian-deng/implicit-cot-math"
   model_url: "https://huggingface.co/yuntian-deng/implicit-cot-math-mistral7b"

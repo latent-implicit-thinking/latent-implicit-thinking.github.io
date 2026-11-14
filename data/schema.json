@@ -148,8 +148,8 @@ permalink: /data/schema.json
     },
     "demo": {
       "type": "object",
-      "description": "An interactive example. An implementation uses a paper's method; a related_method example does not implement that paper. Demo outputs are not benchmark evidence.",
-      "required": ["id", "title", "label", "description", "limitations", "model", "url", "model_url", "topic_ids", "paper_relationships", "relationship"],
+      "description": "An interactive example. An implementation uses a paper's method; a related_method example does not implement that paper.",
+      "required": ["id", "title", "label", "description", "model", "url", "model_url", "topic_ids", "paper_relationships", "relationship"],
       "properties": {
         "id": {"type": "string"},
         "title": {"type": "string"},

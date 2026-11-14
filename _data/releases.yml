@@ -1,3 +1,10 @@
+- version: "0.15.3"
+  date: "2026-11-14"
+  title: "Demo and Chinese paper summary update"
+  changes:
+    - "Updated the math demo card and Chinese 2023 paper summary."
+  added_papers: []
+
 - version: "0.15.2"
   date: "2026-11-11"
   title: "Shorter introductions and download guidance"

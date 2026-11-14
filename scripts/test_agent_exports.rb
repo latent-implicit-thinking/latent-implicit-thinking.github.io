@@ -727,7 +727,7 @@ module AgentExports
           assert(linked?(html, demo.fetch(field), canonical) && markdown.include?(demo.fetch(field)), "#{id}: demo #{field} is not available in HTML and Markdown", errors)
         end
         assert(markdown.include?("#{label}: [#{demo['title']}]"), "#{id}: Markdown omits demo relationship", errors)
-        assert(markdown.include?(demo["description"]) && markdown.include?(demo["limitations"]), "#{id}: Markdown omits demo description or limitations", errors)
+        assert([demo["description"], demo["limitations"]].compact.all? { |text| markdown.include?(text) }, "#{id}: Markdown omits demo description or note", errors)
         if demo["relationship"] == "related_method"
           assert(visible.include?("These demos use stepwise internalization") && linked?(html, "#{canonical}papers/2405.14838/", canonical), "#{id}: related demo must name and link its implemented method", errors)
         end
@@ -858,7 +858,7 @@ module AgentExports
     topic_ids = methods.map { |method| method["id"] }
     demos.each do |demo|
       id = demo["id"]
-      %w[id title label description limitations model url model_url].each do |field|
+      (%w[id title label description model url model_url] + (demo.key?("limitations") ? ["limitations"] : [])).each do |field|
         assert(demo[field].is_a?(String) && !demo[field].strip.empty?, "#{id}: demo lacks #{field}", errors)
       end
       %w[url model_url].each do |field|
@@ -900,7 +900,7 @@ module AgentExports
     end
     reading_list = read_file(site_root, "data/reading-list.md", errors)
     demos.each do |demo|
-      [demo["title"], demo["url"], demo["model_url"], demo["description"], demo["limitations"]].each do |text|
+      [demo["title"], demo["url"], demo["model_url"], demo["description"], demo["limitations"]].compact.each do |text|
         assert(reading_list.include?(text), "full Markdown list omits demo #{demo['id']} metadata", errors)
       end
     end
@@ -966,7 +966,7 @@ module AgentExports
     expected_demos = demos.select { |demo| demo.fetch("topic_ids").include?(id) }
     assert(json.is_a?(Hash) && json["demos"] == expected_demos, "#{id}: topic demos differ from source", errors)
     expected_demos.each do |demo|
-      [demo["title"], demo["description"], demo["limitations"]].each do |text|
+      [demo["title"], demo["description"], demo["limitations"]].compact.each do |text|
         assert(visible_text(html).include?(text) && markdown.include?(text), "#{id}: demo content differs between HTML and Markdown", errors)
       end
       %w[url model_url].each do |field|
