@@ -1,0 +1,52 @@
+- id: baoyu-implicit-cot-2023
+  title: "Implicit CoT: Chinese translation of the 2023 paper"
+  original_title: "通过知识蒸馏实现的隐式思维链推理 [译]"
+  url: "https://www.baoyu.ai/translations/ai-paper/implicit-chain-of-thought-reasoning-via-knowledge-distillation"
+  date: "2023-11-02"
+  source_type: translation
+  source_label: "Chinese translation"
+  publisher: "宝玉的分享"
+  language: zh-Hans
+  description: "The paper in Chinese, including its hidden-state reasoning proposal and System 2 to System 1 framing."
+  paper_ids: ["2311.01460"]
+  topic_ids: [internalized]
+  zh:
+    title: "通过知识蒸馏实现的隐式思维链推理"
+    source_label: "中文译文"
+    description: "介绍 2023 年论文的隐藏状态推理思路，以及从 System 2 到 System 1 的目标。"
+
+- id: marktechpost-internalization-2024
+  title: "Stepwise Internalization explained"
+  original_title: "From Explicit to Implicit: Stepwise Internalization Ushers in a New Era of Natural Language Processing Reasoning"
+  url: "https://www.marktechpost.com/2024/05/31/from-explicit-to-implicit-stepwise-internalization-ushers-in-a-new-era-of-natural-language-processing-reasoning/"
+  date: "2024-05-31"
+  source_type: media_article
+  source_label: "Media article"
+  publisher: "MarkTechPost"
+  author: "Nikhil"
+  language: en
+  description: "An introduction to gradually removing written reasoning steps during training, with the paper's multiplication and GSM8K results."
+  paper_ids: ["2405.14838"]
+  topic_ids: [internalized]
+  zh:
+    title: "Stepwise Internalization：逐步内化的训练方法"
+    source_label: "英文报道"
+    description: "介绍逐渐移除训练中的文字推理步骤，以及论文中的乘法和 GSM8K 实验。"
+
+- id: ntu-internalization-2025
+  title: "Shorter reasoning: lecture slides"
+  original_title: "別讓「推理」大型語言模型想太多"
+  url: "https://speech.ee.ntu.edu.tw/~hylee/ml/ml2025-course-data/reason_shorter.pdf"
+  date: "2025-05-02"
+  source_type: lecture_material
+  source_label: "Lecture slides in Chinese"
+  publisher: "National Taiwan University"
+  author: "Hung-yi Lee"
+  language: zh-Hant
+  description: "Slide 10 of Hung-yi Lee's lecture illustrates stepwise internalization and links to the 2024 paper."
+  paper_ids: ["2405.14838"]
+  topic_ids: [internalized]
+  zh:
+    title: "别让大型语言模型想太多"
+    source_label: "中文课程讲义"
+    description: "李宏毅的课程讲义，第 10 页用图示解释逐步内化，并链接到 2024 年论文。"

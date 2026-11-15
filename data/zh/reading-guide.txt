@@ -35,6 +35,10 @@ sitemap: false
 {% if publication %}
 正式发表版本：{{ publication.author_names | join: ', ' }}. {{ publication.title }}. {{ publication.container_title }}, {{ publication.year }}. [原文]({{ publication.url }}) · [BibTeX]({{ record.publication_bibtex_url }}) · [CSL-JSON]({{ record.publication_csl_url }})
 {% endif %}{% endfor %}
+## 讲解与讨论
+
+{% for resource in site.data.explanations %}{{ resource | lit_explanation_markdown: 'zh' }}
+{% endfor %}
 ## 继续阅读
 {% for method in site.data.methods %}{% assign translation = site.data.zh.methods[method.id] %}
 - [{{ translation.label }}]({{ method.url | absolute_url }})：{{ translation.description }} 分类论文页为英文。

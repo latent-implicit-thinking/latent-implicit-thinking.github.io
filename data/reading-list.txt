@@ -52,6 +52,11 @@ Summary: {{ paper.summary }}
 {% for comparison in record.method_comparisons %}
 {{ comparison | lit_comparison_markdown }}
 {% endfor %}
+{% if record.explanations_and_discussion %}
+#### Explanations and discussion
+
+{% for resource in record.explanations_and_discussion %}{{ resource | lit_explanation_markdown }}
+{% endfor %}{% endif %}
 {% if paper.added_at %}Added to this list: {{ paper.added_at }}.
 {% endif %}
 {% if paper.first_public_note %}Date note: {{ paper.first_public_note }} [Date source]({{ paper.first_public_source }}).{% if paper.arxiv %} Linked arXiv version: {{ paper.citation_date }}.{% endif %}

@@ -1,0 +1,12 @@
+{% if include.resources.size > 0 %}
+<section class="lit-section" id="explanations-and-discussion" aria-labelledby="explanations-title">
+  <div class="lit-shell lit-narrow-shell">
+    <h2 id="explanations-title">{% if include.language == 'zh' %}讲解与讨论{% else %}Explanations and discussion{% endif %}</h2>
+    <ul>
+      {% for resource in include.resources %}{% assign wording = resource %}{% if include.language == 'zh' %}{% assign wording = resource.zh %}{% endif %}
+      <li><p><a href="{{ resource.url | escape }}">{{ wording.title | escape }}</a> — {{ wording.source_label | escape }} · {{ resource.publisher | escape }} · <time datetime="{{ resource.date }}">{{ resource.date }}</time><br>{{ wording.description | escape }}</p></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}

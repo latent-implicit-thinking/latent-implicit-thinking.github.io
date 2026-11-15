@@ -1,3 +1,15 @@
+- version: "0.16.1"
+  date: "2026-11-14"
+  title: "Explanations and discussion"
+  changes:
+    - "Added a Chinese translation, a media article, and lecture slides to the relevant paper pages, English and Chinese guides, and Markdown and JSON downloads."
+  added_papers: []
+  updated_papers:
+    - id: "2311.01460"
+      fields: ["explanations_and_discussion"]
+    - id: "2405.14838"
+      fields: ["explanations_and_discussion"]
+
 - version: "0.16.0"
   date: "2026-11-14"
   title: "From System 2 reasoning to System 1 models"

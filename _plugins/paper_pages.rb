@@ -34,7 +34,14 @@ module Literature
     result["demos"] = demos unless demos.empty?
     comparisons = comparisons_for_paper(site, paper)
     result["method_comparisons"] = comparisons unless comparisons.empty?
+    explanations = site.data.fetch("explanations", []).select { |item| item.fetch("paper_ids").include?(paper.fetch("id")) }
+    result["explanations_and_discussion"] = explanations unless explanations.empty?
     result
+  end
+
+  def explanation_markdown(resource, language = "en")
+    wording = language == "zh" ? resource.fetch("zh") : resource
+    "- [#{wording.fetch('title')}](#{resource.fetch('url')}) — #{wording.fetch('source_label')} · #{resource.fetch('publisher')} · #{resource.fetch('date')}. #{wording.fetch('description')}"
   end
 
   def comparisons_for_paper(site, paper)
@@ -201,6 +208,10 @@ module Literature
       lines += ["", "## Demos", ""]
       entry.fetch("demos").each { |demo| lines += [demo_markdown(site, demo), ""] }
     end
+    unless entry.fetch("explanations_and_discussion", []).empty?
+      lines += ["", "## Explanations and discussion", ""]
+      entry.fetch("explanations_and_discussion").each { |resource| lines << explanation_markdown(resource) }
+    end
     lines << "\nDate note: #{paper['first_public_note']} [Source](#{paper['first_public_source']})." if paper["first_public_note"]
     if entry["publication"]
       pub = entry["publication"]
@@ -244,6 +255,10 @@ module Literature
 
     def lit_comparison_markdown(comparison)
       Literature.comparison_markdown(@context.registers[:site], comparison)
+    end
+
+    def lit_explanation_markdown(resource, language = "en")
+      Literature.explanation_markdown(resource, language)
     end
   end
 
@@ -305,7 +320,9 @@ module Literature
           "source_url" => Literature.absolute(site, "/data/papers.json"))
         comparisons = site.data.fetch("comparisons", {}).fetch(method["id"], [])
         demos = site.data.fetch("demos", []).select { |demo| demo.fetch("topic_ids").include?(method.fetch("id")) }
-        data = {"metadata" => metadata, "comparisons" => comparisons, "demos" => demos, "papers" => papers.map { |paper| Literature.record(site, paper) }}
+        explanations = site.data.fetch("explanations", []).select { |item| item.fetch("topic_ids").include?(method.fetch("id")) }
+        data = {"metadata" => metadata, "comparisons" => comparisons, "demos" => demos,
+                "explanations_and_discussion" => explanations, "papers" => papers.map { |paper| Literature.record(site, paper) }}
         text = ["# #{method['label']}", method.fetch("definition"), "Papers are ordered by first public date.",
                 "For example: #{method.fetch('example')}",
                 "Version #{metadata['version']}; literature checked through #{metadata['search_refreshed_at']}.",
@@ -320,8 +337,12 @@ module Literature
             text << Literature.comparison_markdown(site, comparison)
           end
         end
+        unless explanations.empty?
+          text << "## Explanations and discussion"
+          text << explanations.map { |resource| Literature.explanation_markdown(resource) }.join("\n")
+        end
         text << "## Papers — oldest first"
-        papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches|Demos|Method comparisons)/, '### \1') }
+        papers.each { |paper| text << Literature.markdown(site, paper).sub(/^# /, "## ").gsub(/^## (Published version|Approaches|Demos|Method comparisons|Explanations and discussion)/, '### \1') }
         site.pages << GeneratedPage.new(site, path + ".json", JSON.pretty_generate(data) + "\n")
         site.pages << GeneratedPage.new(site, path + ".md", text.join("\n\n") + "\n")
       end
