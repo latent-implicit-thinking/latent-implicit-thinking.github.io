@@ -64,6 +64,7 @@ permalink: /data/schema.json
         "explanations_and_discussion": {"type": "array", "items": {"$ref": "#/$defs/explanation"}, "minItems": 1},
         "added_at": {"type": "string", "format": "date", "description": "Date added to this reading list, not the paper's publication date. Tracked for additions after the initial collection; absent on initial-collection records."},
         "authors": {"type": "string"},
+        "organization_authors": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
         "author_names": {"type": "array", "items": {"type": "string"}, "minItems": 1},
         "record_url": {"type": "string", "format": "uri"},
         "legacy_record_url": {"type": "string", "format": "uri"},
@@ -81,11 +82,12 @@ permalink: /data/schema.json
         "first_public_note": {"type": "string"},
         "citation_date": {"type": "string", "format": "date", "description": "Date of the cited source: preprint posting or publication, distinct from earlier public history."},
         "venue": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["web-publication"]},
         "arxiv": {"type": "string", "pattern": "^[0-9]{4}\\.[0-9]{4,5}$"},
         "doi": {"type": "string", "pattern": "^10\\.[0-9]{4,9}/\\S+$"},
         "paper_url": {"type": "string", "format": "uri", "description": "Primary source landing page: preprint repository or verified publication."},
         "pdf_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/pdf/[0-9]{4}\\.[0-9]{4,5}$", "description": "Direct arXiv PDF, separate from the source landing page and citation URL."},
-        "html_url": {"type": "string", "format": "uri", "pattern": "^https://arxiv\\.org/html/[0-9]{4}\\.[0-9]{4,5}(?:v[0-9]+)?$", "description": "Full-text HTML linked by the paper's arXiv abstract page, when checked."},
+        "html_url": {"type": "string", "format": "uri", "description": "Verified full-text HTML: arXiv paper HTML or the original web publication."},
         "code_url": {"type": "string", "format": "uri"},
         "lens": {"$ref": "#/$defs/lensValues"},
         "representation": {"$ref": "#/$defs/representationValues"},
@@ -101,7 +103,8 @@ permalink: /data/schema.json
       "anyOf": [
         {"type": "object", "required": ["arxiv"]},
         {"type": "object", "required": ["doi", "publication"], "properties": {"publication": {"type": "object", "required": ["doi"]}}},
-        {"type": "object", "required": ["doi", "preprint"]}
+        {"type": "object", "required": ["doi", "preprint"]},
+        {"type": "object", "required": ["source_type"], "properties": {"source_type": {"enum": ["web-publication"]}}}
       ]
     },
     "precursor": {

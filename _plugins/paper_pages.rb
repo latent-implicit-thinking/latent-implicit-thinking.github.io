@@ -98,7 +98,7 @@ module Literature
   end
 
   def canonical_publication(site, paper)
-    return nil if preprint?(paper)
+    return nil if preprint?(paper) || web_publication?(paper)
 
     publication = site.data.fetch("publications", {})[paper.fetch("id")]
     raise "#{paper['id']}: non-arXiv paper requires verified DOI publication metadata" unless publication && publication["doi"].to_s.match?(%r{\A10\.\d{4,9}/\S+\z})
@@ -108,6 +108,10 @@ module Literature
 
   def preprint?(paper)
     !!(arxiv_id(paper) || paper["preprint"])
+  end
+
+  def web_publication?(paper)
+    paper["source_type"] == "web-publication"
   end
 
   def csl(site, paper, publication = nil)
@@ -129,6 +133,12 @@ module Literature
       value["issue"] = publication["issue"] if publication["issue"]
       value["page"] = publication["article_number"] if publication["article_number"] && !publication["pages"]
       value
+    elsif web_publication?(paper)
+      {"id" => key(site, paper), "type" => "webpage", "title" => paper.fetch("title"),
+       "author" => entry.fetch("author_names").map { |name| {"literal" => name} },
+       "issued" => {"date-parts" => [entry.fetch("citation_date").split("-").map(&:to_i)]},
+       "container-title" => paper.fetch("venue"), "URL" => paper.fetch("paper_url"),
+       "custom" => custom}
     elsif paper["preprint"]
       preprint = paper.fetch("preprint")
       value = {"id" => key(site, paper), "type" => "article", "title" => paper.fetch("title"),
@@ -153,31 +163,42 @@ module Literature
     value.to_s.gsub(/[&%_#$]/) { |char| "\\#{char}" }
   end
 
+  def bib_authors(names, paper)
+    organizations = Array(paper["organization_authors"])
+    names.map { |name| organizations.include?(name) ? "{#{tex(name)}}" : tex(name) }.join(" and ")
+  end
+
   def bib(site, paper, publication = nil)
     canonical = publication.nil?
     publication ||= canonical_publication(site, paper)
     if publication
       kind = publication.fetch("type") == "paper-conference" ? "inproceedings" : "article"
       container = kind == "inproceedings" ? "booktitle" : "journal"
-      fields = {"title" => " {#{tex(publication.fetch('title'))}} ", "author" => publication.fetch("author_names").map { |name| tex(name) }.join(" and "),
+      fields = {"title" => " {#{tex(publication.fetch('title'))}} ", "author" => bib_authors(publication.fetch("author_names"), paper),
                 "year" => publication.fetch("year"), container => tex(publication.fetch("container_title"))}
       %w[publisher volume pages doi].each { |field| fields[field] = tex(publication[field]) if publication[field] }
       fields["number"] = tex(publication["issue"]) if publication["issue"]
       fields["pages"] = tex(publication["article_number"]) if publication["article_number"] && !publication["pages"]
       fields["url"] = publication.fetch("url")
       citation_key = key(site, paper) + (canonical ? "" : "_published")
+    elsif web_publication?(paper)
+      kind = "misc"
+      fields = {"title" => " {#{tex(paper.fetch('title'))}} ", "author" => bib_authors(paper.fetch("authors").split(", "), paper),
+                "year" => paper.fetch("citation_date", paper.fetch("first_public"))[0, 4],
+                "howpublished" => tex(paper.fetch("venue")), "url" => paper.fetch("paper_url")}
+      citation_key = key(site, paper)
     elsif paper["preprint"]
       preprint = paper.fetch("preprint")
       note = "#{preprint.fetch('repository')} preprint"
       note += ", version #{preprint['version']}" if preprint["version"]
       kind = "misc"
-      fields = {"title" => " {#{tex(paper.fetch('title'))}} ", "author" => paper.fetch("authors").split(", ").map { |name| tex(name) }.join(" and "),
+      fields = {"title" => " {#{tex(paper.fetch('title'))}} ", "author" => bib_authors(paper.fetch("authors").split(", "), paper),
                 "year" => paper.fetch("citation_date", paper.fetch("first_public"))[0, 4],
                 "note" => tex(note), "doi" => tex(paper.fetch("doi")), "url" => paper.fetch("paper_url")}
       citation_key = key(site, paper)
     else
       kind = "misc"
-      fields = {"title" => " {#{tex(paper.fetch('title'))}} ", "author" => paper.fetch("authors").split(", ").map { |name| tex(name) }.join(" and "),
+      fields = {"title" => " {#{tex(paper.fetch('title'))}} ", "author" => bib_authors(paper.fetch("authors").split(", "), paper),
                 "year" => paper.fetch("citation_date", paper.fetch("first_public"))[0, 4], "note" => "arXiv preprint",
                 "eprint" => paper.fetch("id"), "archivePrefix" => "arXiv", "url" => paper.fetch("paper_url")}
       citation_key = key(site, paper)
@@ -194,6 +215,7 @@ module Literature
     source_links << "[Reading-list entry](#{entry.fetch('record_url')})"
     lines = ["# #{paper.fetch('title')}", "", "Authors: #{paper.fetch('authors')}.", "",
              paper["summary"] || paper.fetch("connection"), "", "First public: #{paper.fetch('first_public')}.",
+             *(web_publication?(paper) ? ["Published in #{paper.fetch('venue')}: #{entry.fetch('citation_date')}."] : []),
              *(arxiv_id(paper) ? ["ArXiv initial submission: #{entry.fetch('citation_date')}."] : []),
              *(paper["preprint"] ? ["#{paper['preprint'].fetch('repository')} preprint#{paper['preprint']['version'] ? ', version ' + paper['preprint']['version'] : ''}: #{entry.fetch('citation_date')}.", "DOI: #{paper.fetch('doi')}."] : []), "",
              source_links.join(" · "),

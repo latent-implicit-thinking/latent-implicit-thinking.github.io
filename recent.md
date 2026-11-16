@@ -49,7 +49,7 @@ last_modified_at: 2026-10-22
             {% if paper.html_url %}<a href="{{ paper.html_url }}">HTML ↗</a>{% endif %}
             {% if paper.code_url %}<a href="{{ paper.code_url }}">Code ↗</a>{% endif %}
             <a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a>
-            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% else %}<span>DOI:{{ site.data.publications[paper.id].doi }}</span>{% endif %}
+            {% if paper.arxiv %}<span>arXiv:{{ paper.arxiv }}</span>{% elsif paper.source_type == 'web-publication' %}<span>{{ paper.venue | escape }}</span>{% else %}<span>DOI:{{ site.data.publications[paper.id].doi }}</span>{% endif %}
           </div>
         </article>
         {% endfor %}

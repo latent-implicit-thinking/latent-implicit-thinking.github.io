@@ -1,3 +1,11 @@
+- version: "0.17.0"
+  date: "2026-11-16"
+  title: "Reasoning compression, recurrent models, and diffusion"
+  changes: ["Added 47 papers on reasoning compression, continuous-state methods, recurrent models, diffusion, and analysis. The collection now contains 388 papers plus eight background papers.", "Updated the title of Copied, Mixed or Computed? and the author order of Large Language Continuous Diffusion Models. Removed one entry.", "Added citations and source details for On the Biology of a Large Language Model."]
+  added_papers: ["2410.23123", "2412.11664", "2502.12067", "2502.14829", "lindsey2025biology", "2506.02678", "2506.21093", "2507.02663", "2509.22131", "2509.23178", "2510.09544", "2510.12603", "2510.13908", "2510.24824", "2511.08653", "2511.09865", "2512.12777", "2512.14693", "2601.02996", "2601.14750", "2601.19657", "2602.07035", "2602.20094", "2603.03475", "2603.12554", "2604.08299", "2604.16565", "2604.26283", "2604.26760", "2607.08196", "2605.26733", "2607.01170", "2607.04428", "2608.24136", "2609.11801", "2611.17495", "2611.10486", "2611.10737", "2611.10822", "2611.11532", "2611.11892", "2611.13378", "2611.13594", "2611.14387", "2611.16265", "2611.17309", "2611.17320"]
+  updated_papers: [{"id": "2610.28498", "fields": ["title", "previous_titles", "html_url"]}, {"id": "2610.02665", "fields": ["authors", "html_url"]}]
+  removed_papers: ["2609.37351"]
+
 - version: "0.16.1"
   date: "2026-11-14"
   title: "Explanations and discussion"

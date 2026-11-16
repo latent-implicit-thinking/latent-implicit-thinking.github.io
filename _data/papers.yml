@@ -386,6 +386,25 @@
   summary: "Uses the sequence of hidden states produced during inference to estimate whether an answer is correct, without extra training or labeled correctness examples."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2410.23123"
+  title: "On Memorization of Large Language Models in Logical Reasoning"
+  authors: "Chulin Xie, Yangsibo Huang, Chiyuan Zhang, Da Yu, Xinyun Chen, Bill Yuchen Lin, Bo Li, Badih Ghazi, Ravi Kumar"
+  first_public: "2024-10-30"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2410.23123"
+  paper_url: "https://arxiv.org/abs/2410.23123"
+  html_url: "https://arxiv.org/html/2410.23123v2"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise"]
+  training: ["supervised", "analysis-only"]
+  questions: ["evaluation", "generalization", "interpretability"]
+  evidence: ["empirical", "probing"]
+  modality: ["language", "symbolic"]
+  summary: "Uses perturbed Knights and Knaves puzzles to separate memorization from reasoning. Probes models trained on answers alone and finds internal representations that distinguish valid from invalid statements."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2411.15862"
   title: "Do LLMs Really Think Step-by-step In Implicit Reasoning?"
   authors: "Yijiong Yu"
@@ -456,6 +475,25 @@
   modality: [multimodal]
   summary: "Encodes continuous data such as images as vectors, then generates those vectors with diffusion inside a causal transformer."
   provenance: "Awesome-Latent-CoT"
+
+- id: "2412.11664"
+  title: "C3oT: Generating Shorter Chain-of-Thought without Compromising Effectiveness"
+  authors: "Yu Kang, Xianghui Sun, Liangyu Chen, Wei Zou"
+  first_public: "2024-12-16"
+  added_at: "2026-11-16"
+  venue: "AAAI 2025"
+  arxiv: "2412.11664"
+  paper_url: "https://arxiv.org/abs/2412.11664"
+  lens: ["internalized"]
+  representation: ["discrete-token"]
+  computation: ["token-wise"]
+  training: ["supervised"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Conditions a model on full and compressed worked solutions during training, then generates shorter reasoning at inference. Tests arithmetic and commonsense tasks."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2412.11664v1"
 
 - id: "2412.13171"
   title: "Compressed Chain of Thought: Efficient Reasoning Through Dense Representations"
@@ -580,6 +618,25 @@
   summary: "Interleaves continuous concept representations with text during pretraining so language models learn to compute over concepts as well as tokens."
   provenance: "Awesome-Latent-CoT"
 
+- id: "2502.12067"
+  title: "TokenSkip: Controllable Chain-of-Thought Compression in LLMs"
+  authors: "Heming Xia, Chak Tou Leong, Wenjie Wang, Yongqi Li, Wenjie Li"
+  first_public: "2025-02-17"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2502.12067"
+  paper_url: "https://arxiv.org/abs/2502.12067"
+  html_url: "https://arxiv.org/html/2502.12067v3"
+  lens: ["internalized"]
+  representation: ["discrete-token"]
+  computation: ["token-wise"]
+  training: ["supervised"]
+  questions: ["capability", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Trains on reasoning traces pruned by token importance, with a requested compression ratio. Produces shorter written chains of thought while retaining the answer."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2502.13842"
   title: "Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking"
   authors: "Yilong Chen, Junyuan Shang, Zhenyu Zhang, Yanxi Xie, Jiawei Sheng, Tingwen Liu, Shuohuan Wang, Yu Sun, Hua Wu, Haifeng Wang"
@@ -596,6 +653,25 @@
   modality: [language]
   summary: "Routes selected tokens through extra computation while reusing model parameters. Marks successive thinking steps so the model can distinguish one pass from the next."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2502.14829"
+  title: "Measuring Chain of Thought Faithfulness by Unlearning Reasoning Steps"
+  authors: "Martin Tutek, Fateme Hashemi Chaleshtori, Ana Marasović, Yonatan Belinkov"
+  first_public: "2025-02-20"
+  added_at: "2026-11-16"
+  venue: "EMNLP 2025"
+  arxiv: "2502.14829"
+  paper_url: "https://arxiv.org/abs/2502.14829"
+  lens: ["analysis"]
+  representation: ["discrete-token", "hidden-state"]
+  computation: ["token-wise"]
+  training: ["analysis-only"]
+  questions: ["interpretability", "evaluation"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["language"]
+  summary: "Unlearns individual reasoning steps from model parameters, then measures changes in answers and generated explanations. Uses these interventions to test whether written reasoning reflects the model’s stored knowledge."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2502.14829v4"
 
 - id: "2502.15589"
   title: "LightThinker: Thinking Step-by-Step Compression"
@@ -664,6 +740,25 @@
   modality: [symbolic]
   summary: "Tests whether apparent implicit multi-step reasoning reflects compositional algorithms or learned shortcuts, emphasizing failure modes under distribution shift."
   provenance: "Awesome-Latent-CoT"
+
+- id: "lindsey2025biology"
+  title: "On the Biology of a Large Language Model"
+  authors: "Jack Lindsey, Wes Gurnee, Emmanuel Ameisen, Brian Chen, Adam Pearce, Nicholas L. Turner, Craig Citro, David Abrahams, Shan Carter, Basil Hosmer, Jonathan Marcus, Michael Sklar, Adly Templeton, Trenton Bricken, Callum McDougall, Hoagy Cunningham, Thomas Henighan, Adam Jermyn, Andy Jones, Andrew Persic, Zhenyi Qi, T. Ben Thompson, Sam Zimmerman, Kelley Rivoire, Thomas Conerly, Chris Olah, Joshua Batson"
+  first_public: "2025-03-27"
+  added_at: "2026-11-16"
+  venue: "Transformer Circuits"
+  paper_url: "https://transformer-circuits.pub/2025/attribution-graphs/biology.html"
+  html_url: "https://transformer-circuits.pub/2025/attribution-graphs/biology.html"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise"]
+  training: ["analysis-only"]
+  questions: ["interpretability", "evaluation"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["language", "symbolic"]
+  summary: "Uses attribution graphs and activation interventions to trace unwritten multi-step reasoning and planning in Claude 3.5 Haiku. Compares internal computation with written chains of thought to test when the text reflects the reasoning that produced an answer."
+  provenance: "Primary-source literature review, 2026-11-16"
+  source_type: "web-publication"
 
 - id: "2503.24198"
   title: "TwT: Thinking without Tokens by Habitual Reasoning Distillation with Multi-Teachers' Guidance"
@@ -998,6 +1093,25 @@
   summary: "Analyzes and demonstrates how continuous intermediate states can explore several candidate reasoning paths in parallel."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2506.02678"
+  title: "TL;DR: Too Long, Do Re-weighting for Efficient LLM Reasoning Compression"
+  authors: "Zhong-Zhi Li, Xiao Liang, Zihao Tang, Lei Ji, Peijie Wang, Haotian Xu, Xing W, Haizhen Huang, Weiwei Deng, Yeyun Gong, Zhijiang Guo, Xiao Liu, Fei Yin, Cheng-Lin Liu"
+  first_public: "2025-06-03"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2506.02678"
+  paper_url: "https://arxiv.org/abs/2506.02678"
+  html_url: "https://arxiv.org/html/2506.02678v3"
+  lens: ["internalized"]
+  representation: ["discrete-token"]
+  computation: ["token-wise"]
+  training: ["supervised", "distillation"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Trains on short and long worked solutions while adapting their sampling weights to the model’s accuracy and output length. Uses the mixture to reduce written reasoning while retaining the long-reasoning model’s problem-solving ability."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2506.11752"
   title: "DART: Distilling Autoregressive Reasoning to Silent Thought"
   authors: "Nan Jiang, Ziming Wu, De-Chuan Zhan, Fuming Lai, Shaobing Lian"
@@ -1068,6 +1182,25 @@
   summary: "Applies Jacobi-style iteration to update continuous reasoning states in parallel rather than strictly one step at a time."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2506.21093"
+  title: "Chain-of-Thought Enhanced Shallow Transformers for Wireless Symbol Detection"
+  authors: "Li Fan, Peng Wang, Jing Yang, Cong Shen"
+  first_public: "2025-06-26"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2506.21093"
+  paper_url: "https://arxiv.org/abs/2506.21093"
+  lens: ["continuous"]
+  representation: ["hidden-state"]
+  computation: ["token-wise"]
+  training: ["supervised"]
+  questions: ["capability", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["symbolic"]
+  summary: "Adds autoregressive hidden-state reasoning steps to shallow transformers for wireless symbol detection. Uses pilot signals as context and compares detection accuracy and computation with deeper transformers."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2506.21093v1"
+
 - id: "2506.21734"
   title: "Hierarchical Reasoning Model"
   authors: "Guan Wang, Jin Li, Yuhao Sun, Xing Chen, Changling Liu, Yue Wu, Meng Lu, Sen Song, Yasin Abbasi Yadkori"
@@ -1103,6 +1236,25 @@
   modality: [language]
   summary: "Probes a depth-recurrent transformer to test what its repeated hidden-state computation represents and whether it behaves like a latent chain of thought."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2507.02663"
+  title: "Think How to Think: Mitigating Overthinking with Autonomous Difficulty Cognition in Large Reasoning Models"
+  authors: "Yongjiang Liu, Haoxi Li, Xiaosong Ma, Jie Zhang, Song Guo"
+  first_public: "2025-07-03"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2507.02663"
+  paper_url: "https://arxiv.org/abs/2507.02663"
+  lens: ["internalized"]
+  representation: ["discrete-token"]
+  computation: ["token-wise"]
+  training: ["supervised", "curriculum"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Trains short worked solutions for easy problems and longer solutions for hard ones. A second stage trains on traces with redundant and looping steps removed."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2507.02663v3"
 
 - id: "2507.06203"
   title: "A Survey on Latent Reasoning"
@@ -1247,6 +1399,44 @@
   summary: "Trains continuous intermediate states with explicit supervision so reasoning can proceed without emitting a full textual trace."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2509.22131"
+  title: "R-Capsule: Compressing High-Level Plans for Efficient Large Language Model Reasoning"
+  authors: "Hongyu Shan, Mingyang Song, Chang Dai, Di Liang, Han Chen"
+  first_public: "2025-09-26"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2509.22131"
+  paper_url: "https://arxiv.org/abs/2509.22131"
+  lens: ["internalized", "continuous"]
+  representation: ["text-latent-hybrid"]
+  computation: ["token-wise"]
+  training: ["supervised"]
+  questions: ["efficiency", "interpretability", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Compresses high-level plans into continuous reasoning capsules, then generates execution steps conditioned on them. Trains capsules with answer supervision and reconstruction of the original plan."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2509.22131v2"
+
+- id: "2509.23178"
+  title: "Limit Analysis for Symbolic Multi-step Reasoning Tasks with Information Propagation Rules Based on Transformers"
+  authors: "Qin Tian, Yuhan Chen, Zhiwei Wang, Zhi-Qin John Xu"
+  first_public: "2025-09-27"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2509.23178"
+  paper_url: "https://arxiv.org/abs/2509.23178"
+  html_url: "https://arxiv.org/html/2509.23178v2"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise", "parallel"]
+  training: ["analysis-only"]
+  questions: ["theory", "capability"]
+  evidence: ["formal", "empirical"]
+  modality: ["symbolic"]
+  summary: "Derives bounds on how many symbolic reasoning steps a transformer can perform in one forward pass under specified information-propagation rules. Tests how layer depth and input order affect these bounds."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2510.04573"
   title: "LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning"
   authors: "Haoqiang Kang, Yizhe Zhang, Nikki Lijing Kuang, Nicklas Majamaki, Navdeep Jaitly, Yi-An Ma, Lianhui Qin"
@@ -1284,6 +1474,25 @@
   modality: ["symbolic"]
   summary: "Uses one small network to repeatedly update a reasoning state and a proposed answer. Trains these updates with deep supervision and a learned halting score, evaluating the approach on Sudoku, mazes, and ARC-AGI puzzles."
 
+- id: "2510.09544"
+  title: "Beyond Surface Reasoning: Unveiling the True Long Chain-of-Thought Capacity of Diffusion Large Language Models"
+  authors: "Qiguang Chen, Hanjing Li, Libo Qin, Dengyun Peng, Jinhao Liu, Jiangyi Wang, Chengyue Wu, Xie Chen, Yantao Du, Wanxiang Che"
+  first_public: "2025-10-10"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2510.09544"
+  paper_url: "https://arxiv.org/abs/2510.09544"
+  html_url: "https://arxiv.org/html/2510.09544v1"
+  lens: ["beyond-sequential", "analysis"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["analysis-only"]
+  questions: ["scaling", "efficiency", "evaluation", "limitations"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Studies why diffusion language models generate long reasoning traces sequentially despite supporting parallel decoding. Separates parallel decoding, iterative refinement, and sequential reasoning length when testing mathematical problem solving."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2510.10089"
   title: "What Makes Looped Transformers Perform Better Than Non-Recursive Ones"
   authors: "Zixuan Gong, Yong Liu, Jiaye Teng"
@@ -1304,6 +1513,44 @@
   provenance: "Primary-source literature review, 2026-11-03"
   previous_titles: ["What Makes Looped Transformers Perform Better Than Non-Recursive Ones (Provably)"]
 
+- id: "2510.12603"
+  title: "Reasoning in the Dark: Interleaved Vision-Text Reasoning in Latent Space"
+  authors: "Chao Chen, Zhixin Ma, Yongqi Li, Yupeng Hu, Yinwei Wei, Wenjie Li, Liqiang Nie"
+  first_public: "2025-10-14"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2510.12603"
+  paper_url: "https://arxiv.org/abs/2510.12603"
+  html_url: "https://arxiv.org/html/2510.12603v2"
+  lens: ["continuous", "internalized"]
+  representation: ["multimodal-latent"]
+  computation: ["token-wise"]
+  training: ["curriculum", "supervised"]
+  questions: ["capability", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["multimodal", "vision", "language"]
+  summary: "Interleaves continuous text reasoning states with image features selected by attention. Progressively removes written reasoning steps during training so the model answers visual questions through interleaved visual and text states."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2510.13908"
+  title: "Interpreting the Latent Structure of Operator Precedence in Language Models"
+  authors: "Dharunish Yugeswardeenoo, Harshil Nukala, Ved Shah, Cole Blondin, Sean O’Brien, Vasu Sharma, Kevin Zhu"
+  first_public: "2025-10-14"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2510.13908"
+  paper_url: "https://arxiv.org/abs/2510.13908"
+  html_url: "https://arxiv.org/html/2510.13908v2"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise"]
+  training: ["analysis-only"]
+  questions: ["interpretability", "evaluation"]
+  evidence: ["empirical", "mechanistic", "probing"]
+  modality: ["language", "symbolic"]
+  summary: "Probes arithmetic intermediates and operator order in Llama models. Uses attention ablations and changes to operator embeddings to test how hidden representations affect the calculation performed."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2510.15522"
   title: "LLM Latent Reasoning as Chain of Superposition"
   authors: "Jingcheng Deng, Liang Pang, Zihao Wei, Shicheng Xu, Zenghao Duan, Kun Xu, Yang Song, Huawei Shen, Xueqi Cheng"
@@ -1321,6 +1568,25 @@
   modality: [language]
   summary: "Models latent reasoning as a sequence of superposed token distributions and trains the process with supervised fine-tuning."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2510.24824"
+  title: "Parallel Loop Transformer for Efficient Test-Time Computation Scaling"
+  authors: "Bohong Wu, Mengzhao Chen, Xiang Luo, Shen Yan, Qifan Yu, Fan Xia, Tianqi Zhang, Hongrui Zhan, Zheng Zhong, Xun Zhou, Siyuan Qiao, Xingyan Bin"
+  first_public: "2025-10-28"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2510.24824"
+  paper_url: "https://arxiv.org/abs/2510.24824"
+  html_url: "https://arxiv.org/html/2510.24824v1"
+  lens: ["recurrent", "beyond-sequential"]
+  representation: ["hidden-state", "cache-memory"]
+  computation: ["recurrent", "parallel"]
+  training: ["pretraining"]
+  questions: ["architecture", "efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Processes different tokens at different loop depths in parallel. Shares the first loop’s KV cache and combines it with gated local attention to reduce the latency and memory cost of repeated transformer computation."
+  provenance: "Primary-source literature review, 2026-11-16"
 
 - id: "2510.24940"
   title: "SemCoT: Accelerating Chain-of-Thought Reasoning through Semantically-Aligned Implicit Tokens"
@@ -1394,6 +1660,44 @@
   summary: "Uses dynamic looping to vary internal depth with problem difficulty and studies the resulting reasoning and efficiency trade-offs."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2511.08653"
+  title: "Accelerating Training Speed of Tiny Recursive Models with Curriculum Guided Adaptive Recursion"
+  authors: "Kaleem Ullah Qasim, Jiashu Zhang"
+  first_public: "2025-11-11"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2511.08653"
+  paper_url: "https://arxiv.org/abs/2511.08653"
+  html_url: "https://arxiv.org/html/2511.08653v3"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["curriculum", "supervised"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["symbolic"]
+  summary: "Increases recursion depth over training and gives earlier intermediate predictions more weight. Tests the curriculum and supervision weights on Tiny Recursive Models for Sudoku."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2511.09865"
+  title: "In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback"
+  authors: "Mingye Zhu, Yi Liu, Zheren Fu, Quan Wang, Yongdong Zhang"
+  first_public: "2025-11-13"
+  added_at: "2026-11-16"
+  venue: "AAAI 2026"
+  arxiv: "2511.09865"
+  paper_url: "https://arxiv.org/abs/2511.09865"
+  html_url: "https://arxiv.org/html/2511.09865v1"
+  lens: ["internalized"]
+  representation: ["discrete-token"]
+  computation: ["token-wise"]
+  training: ["self-distillation", "self-training"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Uses the model’s answer-conditioned reasoning as a teacher for its ordinary reasoning policy. Samples alternative tokens and weights them by the teacher’s feedback, training the model to produce accurate, shorter rationales."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2511.16886"
   title: "Latent Reasoning in TRMs is Secretly a Policy Improvement Operator"
   authors: "Arip Asadulaev, Rayan Banerjee, Fakhri Karray, Martin Takac"
@@ -1450,6 +1754,44 @@
   summary: "Trains a small projector to replace parts of a written reasoning trace with continuous embeddings. Reinforcement learning teaches the language model when to use these latent steps for plot-hole detection and story generation."
   provenance: "Primary-source literature review, 2026-11-03"
 
+- id: "2512.12777"
+  title: "State over Tokens: Characterizing the Role of Reasoning Tokens"
+  authors: "Mosh Levy, Zohar Elyoseph, Shauli Ravfogel, Yoav Goldberg"
+  first_public: "2025-12-14"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2512.12777"
+  paper_url: "https://arxiv.org/abs/2512.12777"
+  lens: ["analysis"]
+  representation: ["discrete-token"]
+  computation: ["token-wise", "stateful"]
+  training: ["analysis-only"]
+  questions: ["theory", "interpretability"]
+  evidence: ["boundary"]
+  modality: ["language"]
+  summary: "Models reasoning tokens as an evolving computational state passed between generation steps. Uses this framework to examine why readable reasoning and causal explanations of model behavior differ."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2512.12777v1"
+
+- id: "2512.14693"
+  title: "Universal Reasoning Model"
+  authors: "Zitian Gao, Lynx Chen, Yihao Xiao, He Xing, Ran Tao, Haoming Luo, Joey Zhou, Bryan Dai"
+  first_public: "2025-12-16"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2512.14693"
+  paper_url: "https://arxiv.org/abs/2512.14693"
+  html_url: "https://arxiv.org/html/2512.14693v3"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["supervised"]
+  questions: ["architecture", "capability", "generalization"]
+  evidence: ["empirical"]
+  modality: ["symbolic", "vision"]
+  summary: "Reuses a transformer block across reasoning iterations and adds short convolutions across depth to its gated feed-forward layers. Trains with truncated backpropagation and evaluates the resulting recurrent model on ARC and Sudoku."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2512.21711"
   title: "Do Latent Tokens Think? A Causal and Adversarial Analysis of Chain-of-Continuous-Thought"
   authors: "Yuyi Zhang, Boyu Tang, Tianjie Ju, Sufeng Duan, Gongshen Liu"
@@ -1467,6 +1809,63 @@
   modality: ["language"]
   summary: "Tests COCONUT with latent-state interventions and deliberately biased examples on MMLU and HotpotQA. Finds weak sensitivity to latent-state steering and dependence on dataset shortcuts."
   provenance: "Awesome-Latent-CoT; primary sources checked 2026-10-18"
+
+- id: "2601.02996"
+  title: "Large Reasoning Models Are (Not Yet) Multilingual Latent Reasoners"
+  authors: "Yihong Liu, Raoyuan Zhao, Hinrich Schütze, Michael A. Hedderich"
+  first_public: "2026-01-06"
+  added_at: "2026-11-16"
+  venue: "ACL 2026 Findings"
+  arxiv: "2601.02996"
+  paper_url: "https://arxiv.org/abs/2601.02996"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise", "token-wise"]
+  training: ["analysis-only"]
+  questions: ["evaluation", "generalization", "interpretability"]
+  evidence: ["empirical", "probing"]
+  modality: ["language", "symbolic"]
+  summary: "Truncates reasoning traces across 11 languages to measure when correct answers become recoverable. Compares these results with the evolution of internal representations across languages."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2601.02996v2"
+
+- id: "2601.14750"
+  title: "Render-of-Thought: Rendering Textual Chain-of-Thought as Images for Visual Latent Reasoning"
+  authors: "Yifan Wang, Shiyu Li, Peiming Li, Xiaochen Yang, Zheng Wei, Yang Tang"
+  first_public: "2026-01-21"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2601.14750"
+  paper_url: "https://arxiv.org/abs/2601.14750"
+  html_url: "https://arxiv.org/html/2601.14750v4"
+  lens: ["internalized", "continuous"]
+  representation: ["multimodal-latent"]
+  computation: ["token-wise"]
+  training: ["distillation", "supervised"]
+  questions: ["capability", "efficiency", "interpretability"]
+  evidence: ["empirical"]
+  modality: ["language", "vision", "symbolic"]
+  summary: "Renders written reasoning traces as images and trains a language model to match their visual features. At inference, the model reasons through continuous vectors without invoking the vision encoder or generating the written trace."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2601.19657"
+  title: "One Token Is Enough: Improving Diffusion Language Models with a Sink Token"
+  authors: "Zihou Zhang, Zheyong Xie, Li Zhong, Haifeng Liu, Yao Hu, Shaosheng Cao"
+  first_public: "2026-01-27"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2601.19657"
+  paper_url: "https://arxiv.org/abs/2601.19657"
+  html_url: "https://arxiv.org/html/2601.19657v4"
+  lens: ["beyond-sequential", "analysis"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["pretraining"]
+  questions: ["architecture", "capability"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["language", "symbolic"]
+  summary: "Adds a dedicated sink token that other positions can attend to while the token attends only to itself. Tests how this stabilizes attention and improves diffusion language modeling."
+  provenance: "Primary-source literature review, 2026-11-16"
 
 - id: "2601.21358"
   title: "Latent Chain-of-Thought as Planning: Decoupling Reasoning from Verbalization"
@@ -1577,6 +1976,25 @@
   modality: [symbolic]
   summary: "Characterizes tasks that latent chain-of-thought can express and identifies theoretical and empirical limits of the approach."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2602.07035"
+  title: "DLLM-Searcher: Adapting Diffusion Large Language Models for Search Agents"
+  authors: "Jiahao Zhao, Shaoxuan Xu, Zhongxiang Sun, Fengqi Zhu, Jingyang Ou, Yuling Shi, Chongxuan Li, Jun Xu, Xiao Zhang"
+  first_public: "2026-02-03"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2602.07035"
+  paper_url: "https://arxiv.org/abs/2602.07035"
+  lens: ["beyond-sequential"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["supervised", "reinforcement-learning"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Post-trains diffusion language models for search and tool use. Prioritizes tool-call decoding so the model can generate reasoning while waiting for search results."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2602.07035v1"
 
 - id: "2602.04925"
   title: "Internalizing LLM Reasoning via Discovery and Replay of Latent Actions"
@@ -1707,6 +2125,25 @@
   summary: "Compares depth growing and weight-tied loops using matched model budgets and interventions on intermediate layers. Finds related patterns of repeated computation and improves reasoning by adding middle-block loops to depth-grown models during inference or continued training."
   provenance: "Primary-source literature review, 2026-11-03"
 
+- id: "2602.20094"
+  title: "CausalFlip: A Benchmark for LLM Causal Judgment Beyond Semantic Matching"
+  authors: "Yuzhe Wang, Yaochen Zhu, Jundong Li"
+  first_public: "2026-02-23"
+  added_at: "2026-11-16"
+  venue: "KDD 2026"
+  arxiv: "2602.20094"
+  paper_url: "https://arxiv.org/abs/2602.20094"
+  lens: ["internalized", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["token-wise", "depth-wise"]
+  training: ["curriculum", "supervised"]
+  questions: ["evaluation", "generalization", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Builds paired causal questions with similar wording and opposite answers. Compares explicit reasoning with stepwise internalization and tests their resistance to irrelevant prefixes."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2602.20094v2"
+
 - id: "2602.22441"
   title: "How Do Latent Reasoning Methods Perform Under Weak and Strong Supervision?"
   authors: "Yingqian Cui, Zhenwei Dai, Bing He, Zhan Shi, Hui Liu, Rui Sun, Zhiji Liu, Yue Xing, Jiliang Tang, Benoit Dumoulin"
@@ -1743,6 +2180,44 @@
   summary: "Uses differentiable masks to allocate a variable number of recurrent pondering steps to different token positions."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2603.03475"
+  title: "When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning"
+  authors: "Subramanyam Sahoo, Aman Chadha, Vinija Jain, Divya Chaudhary"
+  first_public: "2026-03-03"
+  added_at: "2026-11-16"
+  venue: "LIT Workshop at ICLR 2026"
+  arxiv: "2603.03475"
+  paper_url: "https://arxiv.org/abs/2603.03475"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise"]
+  training: ["analysis-only"]
+  questions: ["evaluation", "interpretability", "limitations"]
+  evidence: ["empirical", "probing"]
+  modality: ["language", "symbolic"]
+  summary: "Compares answer accuracy with activation stability, reasoning-hop alignment, and sensitivity to hidden-state perturbations in mathematical reasoning models. Tests whether these measures identify confident errors."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2603.03475v1"
+
+- id: "2603.12554"
+  title: "Reinforcement Learning for Diffusion LLMs with Entropy-Guided Step Selection and Stepwise Advantages"
+  authors: "Vishnu Teja Kunde, Fatemeh Doudi, Mahdi Farahbakhsh, Dileep Kalathil, Krishna Narayanan, Jean-Francois Chamberland"
+  first_public: "2026-03-13"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2603.12554"
+  paper_url: "https://arxiv.org/abs/2603.12554"
+  html_url: "https://arxiv.org/html/2603.12554v3"
+  lens: ["beyond-sequential"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["reinforcement-learning"]
+  questions: ["capability", "efficiency", "theory"]
+  evidence: ["empirical", "formal"]
+  modality: ["language", "symbolic"]
+  summary: "Treats diffusion denoising steps as decisions in a reinforcement-learning process. Uses stepwise advantages and entropy-guided step selection to train reasoning models without computing the full output-sequence likelihood."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2604.02371"
   title: "Internalized Reasoning for Long-Context Visual Document Understanding"
   authors: "Austin Veselka"
@@ -1778,6 +2253,25 @@
   evidence: ["empirical", "mechanistic"]
   modality: ["language", "symbolic"]
   summary: "Trains transformers to answer multi-hop knowledge queries without writing intermediate steps. Tests whether repeated shared layers help combine unfamiliar facts and solve longer chains, and examines when extra inference loops help or cause overthinking."
+
+- id: "2604.08299"
+  title: "SeLaR: Selective Latent Reasoning in Large Language Models"
+  authors: "Renyu Fu, Guibo Luo"
+  first_public: "2026-04-09"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2604.08299"
+  paper_url: "https://arxiv.org/abs/2604.08299"
+  html_url: "https://arxiv.org/html/2604.08299v2"
+  lens: ["continuous"]
+  representation: ["continuous-state", "text-latent-hybrid"]
+  computation: ["token-wise"]
+  training: ["inference-only"]
+  questions: ["capability", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Uses discrete tokens for confident predictions and weighted token embeddings for uncertain predictions. Adds a contrastive adjustment to keep uncertain continuous steps from collapsing onto the highest-probability token, without additional training."
+  provenance: "Primary-source literature review, 2026-11-16"
 
 - id: "2604.11791"
   title: "A Mechanistic Analysis of Looped Reasoning Language Models"
@@ -1835,6 +2329,25 @@
   summary: "Stabilizes looped language models by constraining how earlier states enter the next pass and sampling training depth separately for each sequence. Studies how to divide training compute between data and recurrence, and how additional inference loops reach a performance plateau."
   provenance: "Primary-source literature review, 2026-11-03"
 
+- id: "2604.16565"
+  title: "Reasoning on the Manifold: Bidirectional Consistency for Self-Verification in Diffusion Language Models"
+  authors: "Jiaoyang Ruan, Xin Gao, Yinda Chen, Hengyu Zeng, Liang Du, Guanghao Li, Jie Fu, Jian Pu"
+  first_public: "2026-04-17"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2604.16565"
+  paper_url: "https://arxiv.org/abs/2604.16565"
+  html_url: "https://arxiv.org/html/2604.16565v4"
+  lens: ["beyond-sequential", "analysis"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["inference-only", "reinforcement-learning"]
+  questions: ["capability", "efficiency", "evaluation"]
+  evidence: ["empirical", "formal"]
+  modality: ["language", "symbolic"]
+  summary: "Remasks and reconstructs reasoning traces to score whether a diffusion language model can recover its own intermediate steps. Uses this consistency score for answer selection and reinforcement learning on mathematical and coding tasks."
+  provenance: "Primary-source literature review, 2026-11-16"
+
 - id: "2604.24881"
   title: "Latent Agents: A Post-Training Procedure for Internalized Multi-Agent Debate"
   authors: "John Seon Keun Yi, Aaron Mueller, Dokyun Lee"
@@ -1852,6 +2365,66 @@
   modality: [language]
   summary: "Post-trains a single model to internalize the computation of a multi-agent debate rather than emitting the debate as text."
   provenance: "Primary-source literature search, 2026-09-04"
+
+- id: "2604.26283"
+  title: "MedSynapse-V: Bridging Visual Perception and Clinical Intuition via Latent Memory Evolution"
+  authors: "Chunzheng Zhu, Jiaqi Zeng, Junyu Jiang, Jianxin Lin, Yijun Wang"
+  first_public: "2026-04-29"
+  added_at: "2026-11-16"
+  venue: "ECCV 2026"
+  arxiv: "2604.26283"
+  paper_url: "https://arxiv.org/abs/2604.26283"
+  html_url: "https://arxiv.org/html/2604.26283v4"
+  lens: ["continuous", "internalized"]
+  representation: ["multimodal-latent", "continuous-state"]
+  computation: ["token-wise"]
+  training: ["distillation", "supervised", "reinforcement-learning"]
+  questions: ["capability", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["multimodal", "vision"]
+  summary: "Builds continuous diagnostic memory from an anatomical image encoder, refines its use with counterfactual region masking, and distills it into a model that generates the memory from its own visual features."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2604.26760"
+  title: "Factorized Latent Reasoning for LLM-based Recommendation"
+  authors: "Tianqi Gao, Chengkai Huang, Zihan Wang, Cao Liu, Ke Zeng, Lina Yao"
+  first_public: "2026-04-29"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2604.26760"
+  paper_url: "https://arxiv.org/abs/2604.26760"
+  lens: ["continuous", "recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent"]
+  training: ["supervised", "reinforcement-learning"]
+  questions: ["capability", "interpretability", "generalization"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Refines several latent preference factors before recommending an item. Regularizes the factors to capture different interests and trains the reasoning process with group-relative reinforcement learning."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2604.26760v2"
+
+- id: "2607.08196"
+  title: "A First-Principles Theory of Slow Thinking and Active Perception"
+  authors: "Hongkang Yang, Zhi-Qin John Xu, Feiyu Xiong, Weinan E"
+  first_public: "2026-05-11"
+  added_at: "2026-11-16"
+  venue: "Journal of Machine Learning 2026"
+  arxiv: "2607.08196"
+  paper_url: "https://arxiv.org/abs/2607.08196"
+  lens: ["analysis"]
+  representation: ["continuous-state", "discrete-token"]
+  computation: ["search", "token-wise"]
+  training: ["analysis-only"]
+  questions: ["theory", "scaling"]
+  evidence: ["formal"]
+  modality: ["language", "vision"]
+  summary: "Develops a mathematical account of slow thinking through latent sampling and projection back to observable sequences. Derives representation and sampler hierarchies and connects them to active perception."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2607.08196v1"
+  first_public_source: "https://www.global-sci.com/jml/article/view/24168"
+  first_public_note: "Journal publication date."
+  citation_date: "2026-07-09"
 
 - id: "2605.26014"
   title: "STORM: Internalized Modeling for Spatial-Temporal Reasoning in Video-Language Models"
@@ -1871,6 +2444,25 @@
   modality: [multimodal, vision]
   summary: "Trains a video-language model to answer through a bounded sequence of continuous hidden states. First aligns these states with features from generated thought videos, then trains with answer-only supervision; inference uses the latent sequence without generating intermediate videos."
   provenance: "Primary-source literature review, 2026-11-02"
+
+- id: "2605.26733"
+  title: "Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped Language Models"
+  authors: "Xiao-Wen Yang, Zi-Yu Han, Xi-Hua Zhang, Wen-Da Wei, Jie-Jing Shao, Lan-Zhe Guo, Yu-Feng Li"
+  first_public: "2026-05-26"
+  venue: "arXiv"
+  arxiv: "2605.26733"
+  paper_url: "https://arxiv.org/abs/2605.26733"
+  html_url: "https://arxiv.org/html/2605.26733v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["supervised"]
+  questions: ["capability", "evaluation"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["language", "symbolic"]
+  summary: "Trains looped language models with a penalty on unstable hidden-state updates and varied recurrence depths. Tests how this changes accuracy as the model takes more recurrent steps on arithmetic and math problems."
+  provenance: "Primary-source literature review, 2026-11-16"
+  added_at: "2026-11-16"
 
 - id: "2605.28292"
   title: "CIRF: Tokenizing Chain-of-Thoughts into Reusable Functional Units for Efficient Latent Reasoning in Large Language Models"
@@ -2151,6 +2743,25 @@
   summary: "Feeds both token embeddings and hidden states back through repeated transformer layers to connect successive steps of multi-hop reasoning."
   provenance: "Primary-source literature search, 2026-09-05"
 
+- id: "2607.01170"
+  title: "Diffusion-GR2: Diffusion Generative Reasoning Re-ranker"
+  authors: "Zhuoxuan Zhang, Kangqi Ni, Yuhang Chen, Mingfu Liang, Xiaohan Wei, Yunchen Pu, Fei Tian, Chonglin Sun, Frank Shyu, Adam (Yang) Song, Sandeep Pandey, Luke Simon, Tianlong Chen, Xi Liu"
+  first_public: "2026-07-01"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2607.01170"
+  paper_url: "https://arxiv.org/abs/2607.01170"
+  lens: ["beyond-sequential"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["supervised", "distillation", "reinforcement-learning"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Converts an autoregressive reasoning re-ranker into a block-diffusion model. Uses conversion training, on-policy distillation, and reinforcement learning to retain valid rankings while generating reasoning in parallel."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2607.01170v4"
+
 - id: "2608.13570"
   title: "Think in Latent, Explain in Language: Self-Explainable Latent Reasoning"
   authors: "Dayuan Zhao, Shengcao Cao, Yu-Xiong Wang, Liang-Yan Gui"
@@ -2188,6 +2799,25 @@
   modality: [language, symbolic]
   summary: "Studies how models use filler tokens to compute without writing intermediate steps. Reads intermediate values from hidden states and swaps cached states between examples to test their effect on answers, then evaluates an unsupervised decoder on fact retrieval, arithmetic and string tasks."
   provenance: "Primary-source literature review, 2026-10-23"
+
+- id: "2607.04428"
+  title: "dOPSD: On-Policy Self-Distillation for Diffusion Language Models"
+  authors: "Phuong Tuan Dat, Qi Li, Xinchao Wang"
+  first_public: "2026-07-05"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2607.04428"
+  paper_url: "https://arxiv.org/abs/2607.04428"
+  html_url: "https://arxiv.org/html/2607.04428v1"
+  lens: ["beyond-sequential"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["self-distillation"]
+  questions: ["capability", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Uses later, more complete denoising states as teacher targets for earlier states from the same sampled trajectory. Self-distills diffusion language models for math reasoning and code generation."
+  provenance: "Primary-source literature review, 2026-11-16"
 
 - id: "2607.06648"
   title: "Final Checkpoints Are Not Enough: Analyzing Latent Reasoning Faithfulness Along Training Trajectories"
@@ -2344,6 +2974,25 @@
   modality: [language]
   summary: "Studies which transformer components should recur and introduces MixerLoop, which repeats the sequence mixer while applying the dense feed-forward component once."
   provenance: "Primary-source literature search, 2026-09-05"
+
+- id: "2608.24136"
+  title: "Steering Recurrent Reasoners at Inference Time with Readout Feedback"
+  authors: "Shunsuke Kamiya, Masanori Koyama, Seongcheol Jeong, Fumiya Uchiyama, Kenji Kubo, Kohei Hayashi, Masahiro Suzuki, Yutaka Matsuo"
+  first_public: "2026-08-25"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2608.24136"
+  paper_url: "https://arxiv.org/abs/2608.24136"
+  lens: ["recurrent"]
+  representation: ["continuous-state"]
+  computation: ["recurrent"]
+  training: ["inference-only"]
+  questions: ["capability", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["symbolic"]
+  summary: "Feeds intermediate readout probabilities back into recurrent puzzle models to steer their hidden states. Tests whether this improves Sudoku and maze solving without retraining or extending the inference budget."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2608.24136v2"
 
 - id: "2608.29956"
   title: "Detecting Hidden Chain-of-Thought in Large Language Models with Linguistic, Behavioral, and Mechanistic Indicators"
@@ -2575,6 +3224,47 @@
   modality: [language, symbolic]
   summary: "Aligns continuous thoughts with written reasoning through shared, learnable prototypes, allowing several text steps to supervise several latent states. A positional alignment constraint is gradually relaxed during training."
   provenance: "Primary-source literature search, 2026-10-18"
+
+- id: "2609.11801"
+  title: "Thinking with Looped Flows"
+  authors: "Ayhan Suleymanzade, Chanhyuk Lee, Floor Eijkelboom, Nicholas M. Boffi, İsmail İlkan Ceylan, Jinwoo Kim"
+  first_public: "2026-09-10"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2609.11801"
+  paper_url: "https://arxiv.org/abs/2609.11801"
+  html_url: "https://arxiv.org/html/2609.11801v1"
+  lens: ["recurrent", "beyond-sequential"]
+  representation: ["hidden-state", "continuous-state"]
+  computation: ["recurrent", "diffusion"]
+  training: ["supervised"]
+  questions: ["capability", "scaling"]
+  evidence: ["empirical"]
+  modality: ["symbolic", "vision"]
+  summary: "Trains a recurrent denoiser with local losses at decreasing noise levels. Integrates the resulting flow together with recurrent hidden states to solve puzzles, using finer inference steps for additional computation."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.17495"
+  title: "An Operationalization of Opaque Serial Depth"
+  authors: "Nathan Sheffield, Alek Westover, Lukas Finnveden, Alexa Pan, Julian Stastny, Ryan Greenblatt"
+  first_public: "2026-09-10"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.17495"
+  paper_url: "https://arxiv.org/abs/2611.17495"
+  html_url: "https://arxiv.org/html/2611.17495v1"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise", "recurrent"]
+  training: ["analysis-only"]
+  questions: ["theory", "evaluation", "limitations"]
+  evidence: ["formal", "boundary"]
+  modality: ["language"]
+  summary: "Defines a measure of serial computation that occurs between interpretable language outputs. Applies it to transformer and latent-reasoning architectures to study changes that affect chain-of-thought monitoring."
+  provenance: "Primary-source literature review, 2026-11-16"
+  first_public_source: "https://www.redwoodresearch.org/blog/an-operationalization-of-opaque-serial-depth"
+  first_public_note: "First published on the Redwood Research blog on September 10, 2026."
+  citation_date: "2026-11-12"
 
 - id: "2609.13060"
   title: "CanvasAnneal: Curriculum Reinforcement Learning for Diffusion Language Models"
@@ -3300,24 +3990,6 @@
   modality: ["symbolic"]
   provenance: "Primary-source literature search, 2026-10-18"
 
-- id: "2609.37351"
-  title: "Port-Hamiltonian Latent Deliberation: Mitigating the Deliberation Drift Cliff in Test-Time Compute Scaling"
-  authors: "Zeyu Jia"
-  first_public: "2026-09-29"
-  added_at: "2026-10-18"
-  venue: "arXiv"
-  arxiv: "2609.37351"
-  paper_url: "https://arxiv.org/abs/2609.37351"
-  summary: "Separates hidden-state updates into attracting and rotating components to reduce errors from running a recurrent reasoner for more steps. Tests a tensor-based implementation on logical and multi-hop reasoning tasks."
-  lens: ["recurrent","continuous"]
-  representation: ["continuous-state"]
-  computation: ["recurrent"]
-  training: ["supervised"]
-  questions: ["theory","generalization","limitations","efficiency"]
-  evidence: ["formal","empirical"]
-  modality: ["language","symbolic"]
-  provenance: "Primary-source literature search, 2026-10-18"
-
 - id: "2609.37379"
   title: "Looped Transformers as Optimizers"
   authors: "Yulong Huang, Chen Jiang, Zhanpeng Zhou, Hongtao Zhang, Tianyu Li, Tianyu He, Xiangyu Zhang, Bojun Cheng"
@@ -3608,21 +4280,22 @@
 
 - id: "2610.02665"
   title: "Large Language Continuous Diffusion Models"
-  authors: "Zhihan Yang, Wei Guo, Jean-Marie Lemercier, Simon Welker, Yonggan Fu, Mohammad Mahdi Kamani, Sajad Norouzi, Julius Berner, Tomas Geffner, Karsten Kreis, Yongxin Chen, Molei Tao, John Thickstun, Pavlo Molchanov, Ante Jukić, Arash Vahdat, Morteza Mardani"
+  authors: "Zhihan Yang, Wei Guo, Jean-Marie Lemercier, Simon Welker, Mohammad Mahdi Kamani, Yonggan Fu, Sajad Norouzi, Julius Berner, Tomas Geffner, Karsten Kreis, Yongxin Chen, Molei Tao, John Thickstun, Pavlo Molchanov, Ante Jukić, Arash Vahdat, Morteza Mardani"
   first_public: "2026-10-02"
-  lens: ["continuous","beyond-sequential"]
+  lens: ["continuous", "beyond-sequential"]
   representation: ["continuous-state"]
-  training: ["pretraining","supervised"]
-  questions: ["architecture","capability","efficiency","controllability"]
+  training: ["pretraining", "supervised"]
+  questions: ["architecture", "capability", "efficiency", "controllability"]
   evidence: ["empirical"]
-  modality: ["language","symbolic"]
+  modality: ["language", "symbolic"]
   summary: "Sigma denoises learned continuous token embeddings in blocks, starting from autoregressive pretrained weights. Studies how guidance and temperature affect mathematical reasoning, coding, output diversity, and performance when fewer refinement steps are used."
-  computation: ["diffusion","parallel"]
+  computation: ["diffusion", "parallel"]
   venue: "arXiv"
   arxiv: "2610.02665"
   paper_url: "https://arxiv.org/abs/2610.02665"
   provenance: "Primary-source literature search, 2026-10-18"
   added_at: "2026-10-18"
+  html_url: "https://arxiv.org/html/2610.02665v2"
 
 - id: "2610.02741"
   title: "On the Chain-of-Thought Monitorability of Looped Language Models"
@@ -4881,24 +5554,25 @@
   provenance: "Primary-source literature review, 2026-10-22"
 
 - id: "2610.28498"
-  title: "Present but Hard to Read: Probing Latent Reasoning with Minimal Pairs"
+  title: "Copied, Mixed or Computed? Testing Latent Intermediate Values with Minimal Pairs"
   authors: "Aur Shalev Merin"
   first_public: "2026-10-20"
   added_at: "2026-10-22"
   venue: "arXiv"
   arxiv: "2610.28498"
   paper_url: "https://arxiv.org/abs/2610.28498"
-  html_url: "https://arxiv.org/html/2610.28498v2"
+  html_url: "https://arxiv.org/html/2610.28498v3"
   code_url: "https://github.com/Aur-Shalev-Merin/present-but-hard-to-read"
-  lens: [analysis]
-  representation: [hidden-state]
-  computation: [depth-wise, recurrent]
-  training: [analysis-only]
-  questions: [interpretability, evaluation, limitations]
-  evidence: [empirical, mechanistic, probing]
-  modality: [language, symbolic]
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise", "recurrent"]
+  training: ["analysis-only"]
+  questions: ["interpretability", "evaluation", "limitations"]
+  evidence: ["empirical", "mechanistic", "probing"]
+  modality: ["language", "symbolic"]
   summary: "Uses controlled prompt changes and interventions to separate information present in hidden states from what a probe can read and what a model actually uses. Tests copied digits and unwritten arithmetic intermediates in a looped model and a standard transformer."
   provenance: "Primary-source literature review, 2026-10-22"
+  previous_titles: ["Present but Hard to Read: Probing Latent Reasoning with Minimal Pairs"]
 
 - id: "2610.28540"
   title: "Predictive Latents for Autoregressive Language Models: Possibility, Gauge, and Obstruction"
@@ -6250,3 +6924,212 @@
   modality: ["language"]
   summary: "Adds learned thought tokens between a user’s item history and the next-item prediction. Trains their hidden states to represent keywords from past items, then processes all thought tokens in one prompt pass without generating a written reasoning trace."
   provenance: "Primary-source literature review, 2026-11-09"
+
+- id: "2611.10486"
+  title: "Test-Time Scaling for Diffusion Language Models with Frequency-Aware Remasking"
+  authors: "Bowen Zuo, Yue Yu, Dongruo Zhou, Yinglun Zhu"
+  first_public: "2026-11-07"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.10486"
+  paper_url: "https://arxiv.org/abs/2611.10486"
+  html_url: "https://arxiv.org/html/2611.10486v1"
+  lens: ["beyond-sequential"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel", "search"]
+  training: ["inference-only"]
+  questions: ["capability", "efficiency", "scaling"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Tracks how often each token prediction changes during diffusion decoding. Commits frequently changing positions to explore alternative reasoning paths, and applies this sampler to questions left unsolved by a base sampler."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.10737"
+  title: "The Lagrangian Brain: A Constraint Mechanics of Mind and Machine"
+  authors: "Yuhang He, Si Wu"
+  first_public: "2026-11-07"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.10737"
+  paper_url: "https://arxiv.org/abs/2611.10737"
+  html_url: "https://arxiv.org/html/2611.10737v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["continuous-state"]
+  computation: ["recurrent", "stateful"]
+  training: ["supervised"]
+  questions: ["architecture", "capability", "theory", "generalization"]
+  evidence: ["empirical", "formal"]
+  modality: ["symbolic"]
+  summary: "Builds a recurrent constraint-based machine whose multipliers accumulate violations and revise its state. Learns constraints from solved examples and tests the resulting dynamics on Sudoku, maze planning, and permutation tracking."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.10822"
+  title: "Learning When to Think: Adaptive Internal Computation for Reinforcement Learning"
+  authors: "Rohit Kumar Salla, Simon Stepputtis"
+  first_public: "2026-11-07"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.10822"
+  paper_url: "https://arxiv.org/abs/2611.10822"
+  html_url: "https://arxiv.org/html/2611.10822v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["reinforcement-learning"]
+  questions: ["efficiency", "capability", "controllability"]
+  evidence: ["empirical", "formal"]
+  modality: ["language", "symbolic"]
+  summary: "Learns a policy that repeatedly updates an internal state before choosing an external action. Jointly trains the action, value, and halting heads with a cost for extra computation, testing adaptive depth across control, navigation, and language tasks."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.11532"
+  title: "DriveFoundry: Co-Evolving Data and Model for Efficient Closed-Loop Iteration in Autonomous Driving"
+  authors: "Xiaomi EV"
+  organization_authors: ["Xiaomi EV"]
+  first_public: "2026-11-08"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.11532"
+  paper_url: "https://arxiv.org/abs/2611.11532"
+  lens: ["continuous", "recurrent"]
+  representation: ["multimodal-latent"]
+  computation: ["stateful", "hierarchical"]
+  training: ["supervised", "reinforcement-learning"]
+  questions: ["capability", "efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["multimodal"]
+  summary: "Passes latent task outputs between perception, causal reasoning, action, world prediction, and value estimation in a driving model. Learns which tasks and latent-token budgets to use for each decision."
+  provenance: "Primary-source literature search, 2026-11-16"
+
+- id: "2611.11892"
+  title: "When Answer Decodability Is Not a Decision: Separating Final-Answer and Imminent-Emission Signals in Chain-of-Thought"
+  authors: "Hyojung Han, Jongmin Kim, Seung-Hun Jeon"
+  first_public: "2026-11-09"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.11892"
+  paper_url: "https://arxiv.org/abs/2611.11892"
+  lens: ["analysis"]
+  representation: ["hidden-state"]
+  computation: ["token-wise", "depth-wise"]
+  training: ["analysis-only"]
+  questions: ["interpretability", "evaluation"]
+  evidence: ["empirical", "probing"]
+  modality: ["language", "symbolic"]
+  summary: "Trains separate probes for the next answer candidate mentioned and the final answer at the same reasoning positions. Tests whether answer decodability reflects upcoming text or a settled decision."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2611.11892v1"
+
+- id: "2611.13378"
+  title: "Looping Deeper Without Growing the KV Cache: Recurrent Depth for Causal Encoder-Decoders"
+  authors: "Jiaqi Leng, Minshen Zhang, Zhaofeng Sun, Yu-Yang Qian, Peng Zhao, Hao Zhang"
+  first_public: "2026-11-09"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.13378"
+  paper_url: "https://arxiv.org/abs/2611.13378"
+  html_url: "https://arxiv.org/html/2611.13378v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state", "cache-memory"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["pretraining"]
+  questions: ["architecture", "efficiency", "scaling"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Places recurrence in the encoder of a causal encoder-decoder and trains with varying loop depth. Reuses the final round’s key-value states across rounds to reduce inference memory."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.13594"
+  title: "Transformers Provably Learn Graph Search: Training Dynamics and the Exponential Power of Depth"
+  authors: "Xutao Ma, Somayeh Sojoudi"
+  first_public: "2026-11-10"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.13594"
+  paper_url: "https://arxiv.org/abs/2611.13594"
+  lens: ["analysis"]
+  representation: ["hidden-state", "discrete-token"]
+  computation: ["depth-wise", "token-wise"]
+  training: ["analysis-only"]
+  questions: ["theory", "capability", "generalization"]
+  evidence: ["formal", "empirical"]
+  modality: ["symbolic"]
+  summary: "Studies how transformers implement and learn depth-first graph search. Proves depth-versus-width bounds and shows how additional layers expand the reachability horizon."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2611.13594v1"
+
+- id: "2611.14387"
+  title: "Blurring the Block Boundaries: Overlapping Block Denoising for Efficient Diffusion Language Models"
+  authors: "Amir Mann, Jonathan Fhima, Shaked Brody, Or Avitan, Asif Zamir, Shahar Tsiper, Niv Nayman"
+  first_public: "2026-11-10"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.14387"
+  paper_url: "https://arxiv.org/abs/2611.14387"
+  lens: ["beyond-sequential"]
+  representation: ["discrete-token"]
+  computation: ["diffusion", "parallel"]
+  training: ["inference-only"]
+  questions: ["efficiency", "capability"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Starts denoising the next block before the current block finishes, refining both in one forward pass. Tests the resulting speed and output quality across reasoning and generation benchmarks."
+  provenance: "Primary-source literature search, 2026-11-16"
+  html_url: "https://arxiv.org/html/2611.14387v1"
+
+- id: "2611.16265"
+  title: "Rectified Looped Transformer"
+  authors: "Musheng Li, Jiawei Zhang, Ziyuan Liu, Yuantao Gu"
+  first_public: "2026-11-12"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.16265"
+  paper_url: "https://arxiv.org/abs/2611.16265"
+  html_url: "https://arxiv.org/html/2611.16265v2"
+  lens: ["recurrent"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["pretraining"]
+  questions: ["architecture", "efficiency", "generalization"]
+  evidence: ["empirical", "formal"]
+  modality: ["language"]
+  summary: "Interpolates between a recurrent transformer’s current state and its proposed update at each loop. Studies how this update rule controls hidden-state growth, robustness to perturbations, and performance as the number of loops changes."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.17309"
+  title: "Classical Energies Learn to Reason 1,000× Faster than Looped Models"
+  authors: "Benjamin Hoover, Hugh Blayney, James C. R. Whittington"
+  first_public: "2026-11-12"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.17309"
+  paper_url: "https://arxiv.org/abs/2611.17309"
+  html_url: "https://arxiv.org/html/2611.17309v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["continuous-state"]
+  computation: ["recurrent", "search"]
+  training: ["supervised", "test-time-optimization"]
+  questions: ["efficiency", "evaluation", "interpretability"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["symbolic"]
+  summary: "Learns pairwise puzzle energies from solved examples and searches for solutions with Gibbs sampling. Compares training and inference costs with looped models on Sudoku and maze tasks."
+  provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.17320"
+  title: "Learning When Diffusion Language Models Should Regenerate"
+  authors: "Minhae Oh, Jeonghye Kim, Jinwoo Koo, Yeongoon Kim, Jimin Seo, Minsik Seol, Jungwoo Lee"
+  first_public: "2026-11-12"
+  added_at: "2026-11-16"
+  venue: "arXiv"
+  arxiv: "2611.17320"
+  paper_url: "https://arxiv.org/abs/2611.17320"
+  html_url: "https://arxiv.org/html/2611.17320v1"
+  lens: ["beyond-sequential", "analysis"]
+  representation: ["hidden-state", "discrete-token"]
+  computation: ["diffusion", "search"]
+  training: ["supervised", "inference-only"]
+  questions: ["capability", "efficiency"]
+  evidence: ["empirical", "probing"]
+  modality: ["language", "symbolic"]
+  summary: "Trains a verifier on partially denoised sequences to predict whether they will yield a correct answer. Uses its scores to choose when to regenerate a block and which alternative to keep."
+  provenance: "Primary-source literature review, 2026-11-16"

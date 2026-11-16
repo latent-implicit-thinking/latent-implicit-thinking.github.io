@@ -366,6 +366,91 @@ module AgentExports
     arxiv_source?(paper) || paper.key?("preprint")
   end
 
+  def web_publication?(paper)
+    paper["source_type"] == "web-publication"
+  end
+
+  def source_identifier(paper)
+    kind, value = if arxiv_source?(paper)
+                    ["arXiv", paper.fetch("id")]
+                  elsif web_publication?(paper)
+                    ["URL", paper.fetch("paper_url")]
+                  else
+                    ["DOI", paper["doi"]]
+                  end
+    {"@type" => "PropertyValue", "propertyID" => kind, "value" => value}
+  end
+
+  def scholarly_authors(paper)
+    organizations = Array(paper["organization_authors"])
+    paper.fetch("authors", "").split(", ").map do |name|
+      {"@type" => organizations.include?(name) ? "Organization" : "Person", "name" => name}
+    end
+  end
+
+  def validate_scholarly_authors(paper, authors, errors)
+    if paper.key?("organization_authors")
+      organizations = paper["organization_authors"]
+      names = paper.fetch("authors").split(", ")
+      assert(organizations.is_a?(Array) && !organizations.empty? && organizations.uniq == organizations && (organizations - names).empty?, "#{paper['id']}: organization authors must identify distinct listed authors", errors)
+    end
+    assert(authors == scholarly_authors(paper), "#{paper['id']}: structured article authors differ from their names or types", errors)
+  end
+
+  def validate_organization_author_regressions(papers, errors)
+    paper = papers.find { |entry| entry["id"] == "2611.11532" }
+    return unless paper
+
+    require "jekyll"
+    require_relative "../_plugins/paper_pages"
+    site = Struct.new(:config, :data).new({"url" => "https://example.org"}, {"precursors" => [], "methods" => []})
+    bib = Literature.bib(site, paper)
+    assert(bib.include?("author = {{Xiaomi EV}}"), "DriveFoundry regression: BibTeX must preserve the collective author", errors)
+    template = File.read(File.expand_path("../_includes/scholarly-article.json", __dir__))
+    article = JSON.parse(Liquid::Template.parse(template).render!({"include" => {"paper" => paper}}, filters: [Jekyll::Filters, Literature::Filters]))
+    validate_scholarly_authors(paper, article["author"], errors)
+    organization = {"@type" => "Organization", "name" => "Xiaomi EV"}
+    validate_scholarly_authors(paper, [organization], errors)
+    person = {"@type" => "Person", "name" => "Xiaomi EV"}
+    observed = []
+    validate_scholarly_authors(paper, [person], observed)
+    assert(!observed.empty?, "DriveFoundry regression: collective author accepted as a person", errors)
+    mixed = paper.merge("authors" => "Xiaomi EV, A. Author")
+    validate_scholarly_authors(mixed, [organization, {"@type" => "Person", "name" => "A. Author"}], errors)
+    observed = []
+    validate_scholarly_authors(paper.merge("organization_authors" => ["Unlisted author"]), [person], observed)
+    assert(!observed.empty?, "DriveFoundry regression: unlisted organization accepted", errors)
+  end
+
+  def validate_web_publication(paper, publication, errors)
+    id = paper.fetch("id")
+    %w[title authors venue first_public paper_url].each do |field|
+      assert(paper[field].is_a?(String) && !paper[field].strip.empty?, "#{id}: web publication lacks #{field}", errors)
+    end
+    assert(!arxiv_source?(paper) && !paper.key?("doi") && !paper.key?("preprint") && publication.nil?, "#{id}: web publication cannot mix arXiv, DOI or separate publication identities", errors)
+    begin
+      url = URI.parse(paper["paper_url"].to_s)
+      assert(url.scheme == "https" && url.host && !url.host.empty?, "#{id}: web publication needs its HTTPS primary source", errors)
+      date = Date.iso8601(paper.fetch("citation_date", paper["first_public"]).to_s)
+      assert(date <= Date.today, "#{id}: web publication date is in the future", errors)
+    rescue URI::InvalidURIError, ArgumentError
+      errors << "Agent exports: #{id}: invalid web publication URL or date"
+    end
+  end
+
+  def validate_web_publication_artifacts(paper, record, citation, bib, visible, markdown, errors)
+    id = paper.fetch("id")
+    date = paper.fetch("citation_date", paper.fetch("first_public"))
+    assert(record["source_type"] == "web-publication", "#{id}: JSON loses web publication source type", errors)
+    assert(citation["type"] == "webpage" && citation["URL"] == paper["paper_url"] && citation["container-title"] == paper["venue"], "#{id}: CSL loses web publication source", errors)
+    assert(citation.dig("issued", "date-parts") == [date.split("-").map(&:to_i)], "#{id}: web publication citation date differs", errors)
+    assert((%w[DOI archive number genre] & citation.keys).empty? && !record.key?("doi") && !record.key?("arxiv"), "#{id}: web publication invents an identifier or preprint", errors)
+    assert(bib.start_with?("@misc{") && bib.include?("howpublished = {#{paper['venue']}}") && bib.include?("url = {#{paper['paper_url']}}"), "#{id}: BibTeX loses web publication source", errors)
+    assert(!bib.match?(/\b(?:doi|eprint|archivePrefix)\s*=/), "#{id}: web publication BibTeX invents a persistent identifier", errors)
+    assert(visible.include?(paper["venue"]) && visible.include?("Published: #{date}"), "#{id}: web publication source and date must be visible", errors)
+    assert(markdown.include?("Published in #{paper['venue']}: #{date}.") && markdown.include?("[BibTeX]"), "#{id}: Markdown loses web publication source or citation", errors)
+  end
+
   def validate_preprint_source(paper, errors)
     id, preprint = paper.values_at("id", "preprint")
     assert(preprint.is_a?(Hash), "#{id}: preprint metadata must be an object", errors)
@@ -435,7 +520,8 @@ module AgentExports
       end
     end
     if paper["html_url"]
-      assert(arxiv_source?(paper) && paper["html_url"].match?(%r{\Ahttps://arxiv\.org/html/#{Regexp.escape(paper.fetch('id'))}(?:v[1-9]\d*)?\z}), "#{context}: HTML link must identify this arXiv paper", errors)
+      valid_html = web_publication?(paper) ? paper["html_url"] == paper["paper_url"] : arxiv_source?(paper) && paper["html_url"].match?(%r{\Ahttps://arxiv\.org/html/#{Regexp.escape(paper.fetch('id'))}(?:v[1-9]\d*)?\z})
+      assert(valid_html, "#{context}: HTML link must identify this paper's verified full text", errors)
     end
   end
 
@@ -494,6 +580,11 @@ module AgentExports
   def validate_canonical_source(paper, publication, errors)
     id = paper.fetch("id")
     assert(PublicFiles.safe_paper_id?(id), "#{id}: unsafe record identifier", errors)
+    if paper.key?("source_type")
+      assert(web_publication?(paper), "#{id}: unknown paper source type", errors)
+      validate_web_publication(paper, publication, errors) if web_publication?(paper)
+      return
+    end
     if arxiv_source?(paper)
       assert(paper["paper_url"] == "https://arxiv.org/abs/#{id}" && (!paper.key?("arxiv") || paper["arxiv"] == id), "#{id}: arXiv identifier and source URL must agree", errors)
       assert(!paper.key?("preprint"), "#{id}: arXiv source cannot also declare non-arXiv preprint metadata", errors)
@@ -578,14 +669,60 @@ module AgentExports
     end
   end
 
+  def validate_web_publication_regressions(errors)
+    require "jekyll"
+    require_relative "../_plugins/paper_pages"
+    paper = {"id" => "web2026example", "source_type" => "web-publication", "title" => "A Research Article", "authors" => "A. Author, B. Author", "venue" => "Research Series", "first_public" => "2026-01-02", "paper_url" => "https://example.org/research", "html_url" => "https://example.org/research", "summary" => "A study of internal computation."}
+    {
+      "web source without DOI" => [paper, nil, true],
+      "missing source type" => [paper.reject { |key, _| key == "source_type" }, nil, false],
+      "unknown source type" => [paper.merge("source_type" => "website"), nil, false],
+      "missing venue" => [paper.reject { |key, _| key == "venue" }, nil, false],
+      "invalid date" => [paper.merge("first_public" => "2026-02-30"), nil, false],
+      "non-HTTPS source" => [paper.merge("paper_url" => "file:///article"), nil, false],
+      "invented DOI" => [paper.merge("doi" => "10.1234/example"), nil, false],
+      "conflicting preprint" => [paper.merge("preprint" => {}), nil, false],
+      "conflicting publication" => [paper, {}, false],
+      "conflicting arXiv" => [paper.merge("arxiv" => "2601.00001"), nil, false]
+    }.each do |name, (source, publication, accepted)|
+      observed = []
+      validate_canonical_source(source, publication, observed)
+      assert(observed.empty? == accepted, "web-publication regression #{name}: unexpected validation result", errors)
+    end
+    site = Struct.new(:config, :data).new({"url" => "https://example.org"}, {"precursors" => [], "methods" => [], "meta" => {"version" => "test", "search_refreshed_at" => "2026-01-02"}})
+    record = Literature.record(site, paper)
+    citation = Literature.csl(site, paper)
+    bib = Literature.bib(site, paper)
+    markdown = Literature.markdown(site, paper)
+    visible = "Research Series Published: 2026-01-02"
+    validate_web_publication_artifacts(paper, record, citation, bib, visible, markdown, errors)
+    validate_full_text_record(paper, record, "web publication", errors)
+    assert(citation["author"] == [{"literal" => "A. Author"}, {"literal" => "B. Author"}] && citation["title"] == paper["title"], "web-publication generator lost ordered authors or title", errors)
+    assert(source_identifier(paper) == {"@type" => "PropertyValue", "propertyID" => "URL", "value" => paper["paper_url"]}, "web publication must use its source URL as identifier", errors)
+    {
+      "lost source type" => [record.reject { |key, _| key == "source_type" }, citation, bib, visible, markdown],
+      "invented CSL DOI" => [record, citation.merge("DOI" => "10.1234/example"), bib, visible, markdown],
+      "wrong citation date" => [record, citation.merge("issued" => {"date-parts" => [[2026]]}), bib, visible, markdown],
+      "invented BibTeX arXiv" => [record, citation, bib + "eprint = {2601.00001}", visible, markdown],
+      "missing visible date" => [record, citation, bib, "Research Series", markdown],
+      "missing Markdown source" => [record, citation, bib, visible, markdown.sub("Published in Research Series: 2026-01-02.", "")]
+    }.each do |name, artifacts|
+      observed = []
+      validate_web_publication_artifacts(paper, *artifacts, observed)
+      assert(!observed.empty?, "web-publication regression #{name}: broken artifact accepted", errors)
+    end
+  end
+
   def validate(repo_root, site_root)
     errors = []
     validate_comparison_regressions(errors)
     validate_dataset_regressions(errors)
     validate_citation_source_regressions(errors)
     validate_doi_preprint_regressions(errors)
+    validate_web_publication_regressions(errors)
     validate_full_text_regressions(errors)
     papers = load_yaml(repo_root, "papers")
+    validate_organization_author_regressions(papers, errors)
     precursors = load_yaml(repo_root, "precursors")
     methods = load_yaml(repo_root, "methods")
     meta = load_yaml(repo_root, "meta")
@@ -679,7 +816,9 @@ module AgentExports
       assert(csl.length == 1 && csl.first["title"] == paper["title"], "#{id}: citation title must remain the original paper title", errors)
       entries = bib_entries(bib)
       assert(entries.keys == [citation_key] && entries[citation_key] == aggregate_bib[citation_key], "#{id}: standalone BibTeX differs from aggregate citation", errors)
-      if paper["preprint"]
+      if web_publication?(paper)
+        validate_web_publication_artifacts(paper, record, csl.first || {}, bib, visible, markdown, errors)
+      elsif paper["preprint"]
         validate_doi_preprint_artifacts(paper, record, csl.first || {}, bib, visible, markdown, errors)
       elsif !preprint
         published = publication_csl.find { |item| item["id"] == citation_key + "_published" }
@@ -743,9 +882,12 @@ module AgentExports
       assert(!article.nil?, "#{id}: paper page lacks scholarly structured data", errors)
       if article
         assert(article["@type"] == "ScholarlyArticle" && article["name"] == paper["title"] && article["description"] == summary, "#{id}: structured article differs from visible title or summary", errors)
-        assert(article["author"] == authors.map { |name| {"@type" => "Person", "name" => name} }, "#{id}: structured article authors differ from visible authors", errors)
-        identifier = {"@type" => "PropertyValue", "propertyID" => arxiv_source?(paper) ? "arXiv" : "DOI", "value" => arxiv_source?(paper) ? id : paper["doi"]}
+        validate_scholarly_authors(paper, article["author"], errors)
+        identifier = source_identifier(paper)
         assert(article["identifier"] == identifier, "#{id}: structured article identifier differs", errors)
+        if web_publication?(paper)
+          assert(article["datePublished"] == paper.fetch("citation_date", paper["first_public"]) && article.dig("isPartOf", "name") == paper["venue"], "#{id}: structured web publication loses date or source", errors)
+        end
         assert([paper["paper_url"], url].include?(article["url"]), "#{id}: structured article URL points at another work", errors)
         assert(article.fetch("keywords", []) == related_terms, "#{id}: scholarly keywords differ from the visible related terms", errors)
       end

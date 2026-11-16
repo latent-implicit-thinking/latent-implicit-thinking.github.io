@@ -220,13 +220,16 @@ all_records.each_with_index do |paper, index|
   errors << "#{key}: CSL authors are not lossless and ordered" unless citation["author"] == authors.map { |name| {"literal" => name} }
   publication = publications[paper["id"]]
   preprint = AgentExports.preprint_source?(paper)
-  expected_issued = preprint ? [date_parts] : [[publication.fetch("year")]]
+  expected_issued = preprint || AgentExports.web_publication?(paper) ? [date_parts] : [[publication.fetch("year")]]
   errors << "#{key}: CSL date differs from citation version" unless citation.dig("issued", "date-parts") == expected_issued
   errors << "#{key}: CSL collection or record URL differs" unless citation.dig("custom", "collection") == collection && citation.dig("custom", "record_url") == expected_url
   errors << "#{key}: CSL chronology differs from source" unless citation.dig("custom", "first_public") == paper["first_public"]
   if AgentExports.arxiv_source?(paper)
     errors << "#{key}: citation source is not the declared arXiv version" unless paper["paper_url"] == "https://arxiv.org/abs/#{paper['id']}" && citation["number"] == "arXiv:#{paper['id']}" && citation["archive"] == "arXiv"
     errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("eprint = {#{paper['id']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && bib_entry.include?("note = {arXiv preprint}")
+  elsif AgentExports.web_publication?(paper)
+    errors << "#{key}: canonical citation does not identify the web publication" unless citation["type"] == "webpage" && citation["container-title"] == paper["venue"] && !citation.key?("DOI") && !citation.key?("archive")
+    errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("howpublished = {#{paper['venue']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && !bib_entry.match?(/\b(?:doi|eprint|archivePrefix)\s*=/)
   elsif paper["preprint"]
     errors << "#{key}: canonical citation does not identify the verified DOI preprint" unless citation["DOI"] == paper["doi"] && citation["type"] == "article" && citation["genre"] == "Preprint" && citation["archive"] == paper.dig("preprint", "repository") && !citation.key?("container-title")
     errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("doi = {#{paper['doi']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && !bib_entry.include?("eprint =") && !bib_entry.include?("arXiv")
@@ -235,7 +238,8 @@ all_records.each_with_index do |paper, index|
     errors << "#{key}: BibTeX source identity differs" unless bib_entry.include?("doi = {#{paper['doi']}}") && bib_entry.include?("url = {#{paper['paper_url']}}") && !bib_entry.include?("eprint =") && !bib_entry.include?("arXiv")
   end
   errors << "#{key}: BibTeX year differs from citation version" unless bib_entry.match?(/year\s*=\s*\{\s*#{date_parts.first}\s*\}/)
-  errors << "#{key}: BibTeX authors differ" unless bib_entry.include?("author = {#{authors.join(' and ')}}")
+  expected_bib_authors = authors.map { |name| Array(paper["organization_authors"]).include?(name) ? "{#{name}}" : name }.join(" and ")
+  errors << "#{key}: BibTeX authors differ" unless bib_entry.include?("author = {#{expected_bib_authors}}")
   escaped_title = paper.fetch("title").gsub(/[&%_#$]/) { |char| "\\#{char}" }
   errors << "#{key}: BibTeX title or capitalization protection differs" unless bib_entry.include?("title = { {#{escaped_title}} }")
 
@@ -246,7 +250,7 @@ all_records.each_with_index do |paper, index|
 
   row = paper_html.match(/<article\s+id="#{Regexp.escape(anchor)}"(.*?)<\/article>/m)&.[](1).to_s
   searchable = CGI.unescapeHTML(row[/data-search="([^"]*)"/, 1].to_s)
-  source_identifier = AgentExports.arxiv_source?(paper) ? "arXiv:#{paper['arxiv']}" : "DOI:#{paper['doi']}"
+  source_identifier = AgentExports.web_publication?(paper) ? paper["paper_url"] : (AgentExports.arxiv_source?(paper) ? "arXiv:#{paper['arxiv']}" : "DOI:#{paper['doi']}")
   [paper["id"], source_identifier, paper["venue"], paper["title"], paper["authors"]].each do |term|
     errors << "#{key}: search index omits #{term}" unless searchable.include?(term.downcase)
   end
@@ -332,8 +336,8 @@ Dir[File.join(site_root, "**", "*.html")].each do |html_file|
     items.each_with_index do |item, index|
       source = expected_records[index] || {}
       scholarly = item["item"] || {}
-      expected_authors = source.fetch("authors", "").split(", ").map { |name| {"@type" => "Person", "name" => name} }
-      identifier = source["arxiv"] ? {"@type" => "PropertyValue", "propertyID" => "arXiv", "value" => source["arxiv"]} : {"@type" => "PropertyValue", "propertyID" => "DOI", "value" => source["doi"]}
+      expected_authors = AgentExports.scholarly_authors(source)
+      identifier = AgentExports.source_identifier(source)
       errors << "#{relative_path}: scholarly record #{index} differs from visible source" unless item["position"] == index + 1 && scholarly["@type"] == "ScholarlyArticle" && scholarly["name"] == source["title"] && scholarly["url"] == source["paper_url"] && scholarly["@id"] == source["paper_url"] && scholarly["author"] == expected_authors && scholarly["description"] == source["summary"] && scholarly["identifier"] == identifier
     end
     errors << "#{relative_path}: related concepts are incorrectly marked as synonyms" if collection.dig("about", "alternateName")

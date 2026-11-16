@@ -37,6 +37,12 @@ layout: base
         <p>arXiv:{{ arxiv_id }} · Initial submission: {{ record.citation_date }}</p>
         <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a></p>
       </div>
+      {% elsif paper.source_type == 'web-publication' %}
+      <div class="lit-citation-choice">
+        <h3>{{ paper.venue | escape }}</h3>
+        <p>Published: {{ record.citation_date }}</p>
+        <p><a href="{{ record.bibtex_url }}">BibTeX</a> · <a href="{{ record.csl_url }}">CSL-JSON</a></p>
+      </div>
       {% elsif paper.preprint %}
       <div class="lit-citation-choice">
         <h3>{{ paper.preprint.repository | escape }} preprint</h3>
