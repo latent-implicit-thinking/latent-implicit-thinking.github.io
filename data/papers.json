@@ -7,6 +7,7 @@ permalink: /data/papers.json
     "name": {{ site.data.meta.name | jsonify }},
     "version": {{ site.data.meta.version | jsonify }},
     "updated_at": {{ site.data.meta.updated_at | jsonify }},
+    "last_additions_at": {{ site.data.releases | lit_last_additions_at | jsonify }},
     "search_refreshed_at": {{ site.data.meta.search_refreshed_at | jsonify }},
     "latest_included_first_public": {{ site.data.meta.latest_included_first_public | jsonify }},
     "core_record_count": {{ site.data.papers | size }},

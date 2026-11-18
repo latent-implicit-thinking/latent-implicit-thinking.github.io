@@ -7,6 +7,7 @@ permalink: /data/navigation.json
   "name": {{ site.data.meta.name | jsonify }},
   "version": {{ site.data.meta.version | jsonify }},
   "updated_at": {{ site.data.meta.updated_at | jsonify }},
+  "last_additions_at": {{ site.data.releases | lit_last_additions_at | jsonify }},
   "canonical_url": {{ '/' | absolute_url | jsonify }},
   "editions": {
     "en": {

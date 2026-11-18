@@ -6,7 +6,7 @@ share-description: "Download the paper list in JSON or Markdown and citations in
 permalink: /data/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-14
+last_modified_at: 2026-11-18
 ---
 
 <main class="lit-data-page">
@@ -22,7 +22,8 @@ last_modified_at: 2026-11-14
       <div>
         <p class="lit-eyebrow">Version</p>
         <div class="lit-release-number">v{{ site.data.meta.version }}</div>
-        <p>{{ site.data.papers | size }} papers + {{ site.data.precursors | size }} background papers<br>Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</p>
+        <p>{{ site.data.papers | size }} papers + {{ site.data.precursors | size }} background papers<br>Last additions: {{ site.data.releases | lit_last_additions_at | date: "%B %-d, %Y" }}</p>
+        <p class="lit-index-freshness">Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</p>
       </div>
       <div class="lit-download-list">
         <a href="{{ '/data/papers.bib' | relative_url }}"><span><strong>Citations for LaTeX and reference managers</strong><small>papers.bib · Includes all papers and background papers</small></span><span>BibTeX ↗</span></a>

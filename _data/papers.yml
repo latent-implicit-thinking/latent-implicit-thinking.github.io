@@ -2278,19 +2278,19 @@
   authors: "Hugh Blayney, Álvaro Arroyo, Johan Obando-Ceron, Pablo Samuel Castro, Aaron Courville, Michael M. Bronstein, Xiaowen Dong"
   first_public: "2026-04-13"
   added_at: "2026-10-26"
-  venue: "arXiv"
+  venue: "NeurIPS 2026"
   arxiv: "2604.11791"
   paper_url: "https://arxiv.org/abs/2604.11791"
-  html_url: "https://arxiv.org/html/2604.11791v1"
-  lens: [recurrent, analysis]
-  representation: [hidden-state]
-  computation: [recurrent, depth-wise]
-  training: [analysis-only, pretraining]
-  questions: [architecture, interpretability, generalization]
-  evidence: [empirical, mechanistic, formal]
-  modality: [language]
-  summary: "Analyzes how hidden states and attention change across repeated transformer layers. Finds that recurrent blocks often repeat the stages seen in feedforward models, while input injection and normalization affect whether those stages remain stable at greater depth."
-  provenance: "Primary-source literature review, 2026-10-26"
+  html_url: "https://arxiv.org/html/2604.11791v2"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["analysis-only", "pretraining"]
+  questions: ["architecture", "interpretability", "generalization"]
+  evidence: ["empirical", "mechanistic", "formal"]
+  modality: ["language"]
+  summary: "Analyzes hidden-state cycles, attention patterns, and layer functions in looped language models. Tests how input injection and normalization affect stability, and uses a controlled recurrent model to connect stable hidden states with performance at greater inference depth."
+  provenance: "Primary-source revision review, 2026-11-18"
 
 - id: "2604.12426"
   title: "Do Transformers Use their Depth Adaptively? Evidence from a Relational Reasoning Task"
@@ -5214,23 +5214,24 @@
   provenance: "Primary-source literature review, 2026-10-22"
 
 - id: "2610.24135"
-  title: "Inside the Loop: A Mechanistic Study of Weight-Tied Transformers on Depth-Bound Algorithmic Tasks"
+  title: "Inside the Loop: A Mechanistic Study of Looped Transformers on Permutation Traversal"
   authors: "Magnus Sesodia, Juil Sock, Philip Torr, Christian Schroeder de Witt"
   first_public: "2026-10-16"
   added_at: "2026-10-22"
-  venue: "arXiv"
+  venue: "NeurIPS 2026"
   arxiv: "2610.24135"
   paper_url: "https://arxiv.org/abs/2610.24135"
-  html_url: "https://arxiv.org/html/2610.24135v1"
-  lens: [recurrent, analysis]
-  representation: [hidden-state]
-  computation: [recurrent, depth-wise]
-  training: [supervised, curriculum, analysis-only]
-  questions: [interpretability, architecture, limitations]
-  evidence: [empirical, probing, mechanistic]
-  modality: [symbolic]
+  html_url: "https://arxiv.org/html/2610.24135v2"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["supervised", "curriculum", "analysis-only"]
+  questions: ["interpretability", "architecture", "limitations"]
+  evidence: ["empirical", "probing", "mechanistic"]
+  modality: ["symbolic"]
   summary: "Trains looped and untied transformers to follow paths through a shuffled permutation graph without writing intermediate hops. Uses probes and activation patching to test when intermediate nodes become available and whether later computation uses them."
-  provenance: "Primary-source literature review, 2026-10-22"
+  provenance: "Primary-source revision review, 2026-11-18"
+  previous_titles: ["Inside the Loop: A Mechanistic Study of Weight-Tied Transformers on Depth-Bound Algorithmic Tasks"]
 
 - id: "2610.24929"
   title: "What Can't Jev Decide? Probing the Limits of One-Pass Decision Models"
@@ -7133,3 +7134,192 @@
   modality: ["language", "symbolic"]
   summary: "Trains a verifier on partially denoised sequences to predict whether they will yield a correct answer. Uses its scores to choose when to regenerate a block and which alternative to keep."
   provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2611.19131"
+  title: "Wireless Edge-Assisted Adaptive Latent Reasoning for Vision-Language-Action Models in Physical AI"
+  authors: "Fatih Temiz, Melike Erol-Kantarci"
+  first_public: "2026-11-14"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.19131"
+  paper_url: "https://arxiv.org/abs/2611.19131"
+  html_url: "https://arxiv.org/html/2611.19131v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state", "multimodal-latent"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["reinforcement-learning", "inference-only"]
+  questions: ["efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["multimodal"]
+  summary: "Trains a controller to choose local or edge execution and the stopping threshold for a recurrent vision-language-action model. Evaluates task success, energy use, and latency using LIBERO rollout profiles and simulated wireless links."
+  provenance: "Primary-source literature review, 2026-11-18"
+
+- id: "2611.19446"
+  title: "Architectures and KV Replay for Depth-Recurrent Language Models"
+  authors: "Lucia Licakova, Niklas Schmidinger, Lukas Hauzenberger, Sebastian Böck, Sepp Hochreiter"
+  first_public: "2026-11-14"
+  added_at: "2026-11-18"
+  venue: "NeurIPS 2026 LIGHT Workshop"
+  arxiv: "2611.19446"
+  paper_url: "https://arxiv.org/abs/2611.19446"
+  provenance: "Primary-source literature review, 2026-11-18"
+  html_url: "https://arxiv.org/html/2611.19446v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state", "cache-memory"]
+  computation: ["recurrent", "depth-wise", "stateful"]
+  training: ["pretraining"]
+  questions: ["architecture", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Studies looped hybrids with recurrent sequence mixers and trains looped transformers to share key–value states across iterations. Selected loops write new keys and values; later loops reuse them, reducing the number of stored caches."
+
+- id: "2611.19649"
+  title: "LoopFill: Pipelined Multi-Token Speculative Decoding for Looped Transformers"
+  authors: "Siqi Zhu, Suozhi Huang, Yi Zhao, Jiaxuan You"
+  first_public: "2026-11-14"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.19649"
+  paper_url: "https://arxiv.org/abs/2611.19649"
+  html_url: "https://arxiv.org/html/2611.19649v1"
+  lens: ["recurrent", "beyond-sequential"]
+  representation: ["hidden-state", "cache-memory"]
+  computation: ["recurrent", "depth-wise", "parallel"]
+  training: ["inference-only"]
+  questions: ["efficiency", "architecture"]
+  evidence: ["empirical", "formal"]
+  modality: ["language"]
+  summary: "Combines suffix-retrieval drafts and shallow-loop predictions in one speculative token tree. Batches candidates at different recurrent depths, reuses their completed work after verification, and evaluates decoding speed on Ouro and Huginn."
+  provenance: "Primary-source literature review, 2026-11-18"
+
+- id: "2611.19827"
+  title: "When Does Reusing Layers Help Multimodal Embeddings?"
+  authors: "Zhizhang Hu, Yue Zhang"
+  first_public: "2026-11-15"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.19827"
+  paper_url: "https://arxiv.org/abs/2611.19827"
+  html_url: "https://arxiv.org/html/2611.19827v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state", "multimodal-latent"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["supervised"]
+  questions: ["architecture", "evaluation", "interpretability"]
+  evidence: ["empirical", "formal", "mechanistic"]
+  modality: ["multimodal"]
+  summary: "Tests when repeated layers improve multimodal retrieval embeddings. Separates query-dependent visual-state changes from useful retrieval updates, comparing added loops, altered information flow, and a model pretrained with recurrence."
+  provenance: "Primary-source literature review, 2026-11-18"
+
+- id: "2611.19896"
+  title: "LoopSkim: Lossless Multi-Depth Speculative Decoding for Looped Language Models"
+  authors: "Muhan Xiao, Shijian Li"
+  first_public: "2026-11-15"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.19896"
+  paper_url: "https://arxiv.org/abs/2611.19896"
+  html_url: "https://arxiv.org/html/2611.19896v1"
+  lens: ["recurrent", "beyond-sequential"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "depth-wise", "parallel"]
+  training: ["inference-only", "distillation"]
+  questions: ["efficiency", "architecture"]
+  evidence: ["empirical", "formal"]
+  modality: ["language"]
+  summary: "Pipelines copied token drafts through a looped language model and checks them at several depths before full-depth verification. Shares random draws across checks to preserve the target sampling distribution and evaluates decoding speed on Ouro and Raven models."
+  provenance: "Primary-source literature review, 2026-11-18"
+
+- id: "2611.20399"
+  title: "Implicit-Reasoning-Enabled Elastic Semantic Communications for AI-Agent Networks"
+  authors: "Kaiwen Yu, Gang Wu, Jiancun Fan, Saviour Zammit"
+  first_public: "2026-11-16"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.20399"
+  paper_url: "https://arxiv.org/abs/2611.20399"
+  html_url: "https://arxiv.org/html/2611.20399v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state", "continuous-state"]
+  computation: ["recurrent", "stateful"]
+  training: ["inference-only", "supervised"]
+  questions: ["efficiency", "controllability"]
+  evidence: ["empirical"]
+  modality: ["symbolic"]
+  summary: "Continues a frozen equilibrium reasoner’s hidden-state updates across a device and an edge server. Uses local prediction statistics and wireless channel quality to decide when extra iterations improve Sudoku solutions."
+  provenance: "Primary-source literature review, 2026-11-18"
+
+- id: "2611.21608"
+  title: "Latent Lattice Language Models"
+  authors: "Shivam Duggal, Zongze Wu, William T. Freeman, Antonio Torralba, Richard Zhang, Eli Shechtman"
+  first_public: "2026-11-16"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.21608"
+  paper_url: "https://arxiv.org/abs/2611.21608"
+  html_url: "https://arxiv.org/html/2611.21608v1"
+  lens: ["recurrent"]
+  representation: ["hidden-state", "cache-memory"]
+  computation: ["recurrent", "stateful", "depth-wise"]
+  training: ["pretraining"]
+  questions: ["architecture", "capability", "efficiency"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Adds persistent states at individual layers that evolve across tokens and control attention, memory updates, and feed-forward computation. Tests this architecture through language-model pretraining with Transformers, Mamba2, Gated DeltaNet, and hybrid backbones."
+  provenance: "Primary-source literature review, 2026-11-18"
+
+- id: "2611.21921"
+  title: "Latent Fact Composition under Next-Token Training"
+  authors: "Tianyi Zhang, Feiying Chen"
+  first_public: "2026-11-16"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.21921"
+  paper_url: "https://arxiv.org/abs/2611.21921"
+  provenance: "Primary-source literature review, 2026-11-18"
+  lens: ["continuous", "recurrent", "analysis"]
+  representation: ["continuous-state", "hidden-state"]
+  computation: ["recurrent", "depth-wise"]
+  training: ["supervised", "pretraining", "analysis-only"]
+  questions: ["architecture", "generalization", "limitations"]
+  evidence: ["empirical", "mechanistic"]
+  modality: ["symbolic"]
+  summary: "Passes a predicted intermediate entity between transformer loops as a token embedding to compose two facts without writing the bridge entity. Compares answer-only training with next-token training and traces the loss of generalization to the second hop."
+
+- id: "2611.22426"
+  title: "InfuseLoop: Cross-Trajectory Latent Injection for Scalable Parallel Looped Transformers"
+  authors: "Zhaofeng Sun, Lanxiang Hu, Yu-Yang Qian, Jiaqi Leng, Yuanbo Yang, Chi Zhang, Youyou Lu, Peng Zhao, Hao Zhang"
+  first_public: "2026-11-17"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.22426"
+  paper_url: "https://arxiv.org/abs/2611.22426"
+  provenance: "Primary-source literature review, 2026-11-18"
+  html_url: "https://arxiv.org/html/2611.22426v1"
+  lens: ["recurrent", "beyond-sequential"]
+  representation: ["hidden-state", "cache-memory"]
+  computation: ["recurrent", "parallel"]
+  training: ["pretraining"]
+  questions: ["architecture", "efficiency", "scaling"]
+  evidence: ["empirical"]
+  modality: ["language"]
+  summary: "Connects parallel transformer loops by passing already computed hidden states between prediction trajectories. Uses attention to combine those states while preserving parallel decoding, and tests training stability and model quality up to eight loops."
+
+- id: "2611.22737"
+  title: "Proximal Targets: Training Looped Refiners on Problems with Many Correct Answers"
+  authors: "Syed Affan Daimi"
+  first_public: "2026-11-17"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2611.22737"
+  paper_url: "https://arxiv.org/abs/2611.22737"
+  provenance: "Primary-source literature review, 2026-11-18"
+  html_url: "https://arxiv.org/html/2611.22737v1"
+  lens: ["recurrent", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["recurrent", "stateful"]
+  training: ["supervised"]
+  questions: ["capability", "generalization", "controllability", "theory"]
+  evidence: ["empirical", "formal"]
+  modality: ["symbolic"]
+  summary: "Trains a recurrent puzzle solver toward a correct answer chosen from its current draft. Tests nearest-answer and solver-generated targets on Sudoku, graph coloring, and Scrabble, and derives conditions under which repeated updates converge."

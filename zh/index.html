@@ -7,7 +7,7 @@ language: zh-Hans
 permalink: /zh/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-14
+last_modified_at: 2026-11-18
 ---
 <main class="lit-home">
   <section class="lit-hero" aria-labelledby="lit-title">
@@ -23,7 +23,7 @@ last_modified_at: 2026-11-14
       <p class="lit-demo-shortcuts">试用逐步内化模型：{% for demo in site.data.demos %}<a href="{{ demo.url }}">{{ site.data.zh.demos[demo.id] }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
       <p><a href="{{ '/zh/topics/#system-2-to-system-1' | relative_url }}">从 System 2 到 System 1：把推理过程学进模型 →</a></p>
       <div class="lit-status">
-        <span>文献核查至 <time datetime="{{ site.data.meta.search_refreshed_at }}">{{ site.data.meta.search_refreshed_at | date: '%Y-%m-%d' }}</time></span>
+        <span>最近收录：<time datetime="{{ site.data.releases | lit_last_additions_at }}">{{ site.data.releases | lit_last_additions_at | date: '%Y-%m-%d' }}</time></span>
         <a href="{{ '/recent/' | relative_url }}">最近收录</a>
         <a href="{{ '/data/' | relative_url }}">数据与引用</a>
       </div>

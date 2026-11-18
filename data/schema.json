@@ -12,11 +12,12 @@ permalink: /data/schema.json
   "properties": {
     "metadata": {
       "type": "object",
-      "required": ["name", "version", "updated_at", "search_refreshed_at", "latest_included_first_public", "core_record_count", "precursor_record_count", "scope_url", "contribute_url", "schema_url", "ontology_url", "repository_url", "citation_url", "license_name", "license_url", "license_scope", "record_url_prefix", "record_id_transform", "provenance_note"],
+      "required": ["name", "version", "updated_at", "last_additions_at", "search_refreshed_at", "latest_included_first_public", "core_record_count", "precursor_record_count", "scope_url", "contribute_url", "schema_url", "ontology_url", "repository_url", "citation_url", "license_name", "license_url", "license_scope", "record_url_prefix", "record_id_transform", "provenance_note"],
       "properties": {
         "name": {"type": "string"},
         "version": {"type": "string"},
         "updated_at": {"type": "string", "format": "date"},
+        "last_additions_at": {"type": "string", "format": "date", "description": "Latest release date with papers added to the reading list."},
         "search_refreshed_at": {"type": "string", "format": "date"},
         "latest_included_first_public": {"type": "string", "format": "date"},
         "core_record_count": {"type": "integer", "minimum": 0},

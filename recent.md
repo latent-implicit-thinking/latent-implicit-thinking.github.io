@@ -6,7 +6,7 @@ share-description: "See which papers have joined the implicit chain-of-thought r
 permalink: /recent/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-10-22
+last_modified_at: 2026-11-18
 ---
 
 {% assign tracked_papers = site.data.papers | where_exp: "paper", "paper.added_at" | reverse %}
@@ -16,7 +16,7 @@ last_modified_at: 2026-10-22
     <div class="lit-shell">
       <h1>Recent additions</h1>
       <p>Papers added to this reading list since the initial collection. Some are new research; others are older work we missed.</p>
-      <p class="lit-index-freshness">Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/papers/?sort=date-desc' | relative_url }}">Sort all papers by publication date</a> · <a href="{{ '/feed.xml' | relative_url }}">Follow by RSS</a></p>
+      <p class="lit-index-freshness">Last additions: {{ site.data.releases | lit_last_additions_at | date: "%B %-d, %Y" }} · <a href="{{ '/papers/?sort=date-desc' | relative_url }}">Sort all papers by publication date</a> · <a href="{{ '/feed.xml' | relative_url }}">Follow by RSS</a></p>
     </div>
   </header>
 

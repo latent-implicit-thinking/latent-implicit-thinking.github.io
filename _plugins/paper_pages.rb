@@ -5,6 +5,10 @@ require "json"
 module Literature
   module_function
 
+  def last_additions_at(releases)
+    Array(releases).select { |release| !Array(release["added_papers"]).empty? }.map { |release| release.fetch("date").to_s }.max
+  end
+
   def absolute(site, path)
     site.config.fetch("url").sub(%r{/$}, "") + site.config["baseurl"].to_s.sub(%r{/$}, "") + path
   end
@@ -245,11 +249,17 @@ module Literature
     unless methods.empty?
       lines += ["", "## Approaches", ""] + methods.map { |method| "- [#{method['label']}](#{absolute(site, method['url'])}): #{method['definition']}" }
     end
-    lines += ["", "Reading-list version #{site.data.fetch('meta').fetch('version')}; literature checked through #{site.data.fetch('meta').fetch('search_refreshed_at')}.\n"]
+    additions_date = last_additions_at(site.data.fetch("releases", []))
+    additions_text = additions_date ? "; last additions #{additions_date}" : ""
+    lines += ["", "Reading-list version #{site.data.fetch('meta').fetch('version')}#{additions_text}; literature checked through #{site.data.fetch('meta').fetch('search_refreshed_at')}.\n"]
     lines.join("\n")
   end
 
   module Filters
+    def lit_last_additions_at(releases)
+      Literature.last_additions_at(releases)
+    end
+
     def lit_arxiv_id(paper)
       Literature.arxiv_id(paper)
     end
@@ -337,6 +347,7 @@ module Literature
         papers = site.data.fetch("papers").select { |paper| paper.fetch("lens").include?(method["id"]) }
         path = "data/topics/#{method.fetch('slug')}"
         metadata = site.data.fetch("meta").slice("version", "updated_at", "search_refreshed_at").merge(
+          "last_additions_at" => Literature.last_additions_at(site.data.fetch("releases")),
           "topic_id" => method.fetch("id"), "name" => method.fetch("label"), "definition" => method.fetch("definition"),
           "record_count" => papers.length, "topic_url" => Literature.absolute(site, method.fetch("url")),
           "source_url" => Literature.absolute(site, "/data/papers.json"))
@@ -347,7 +358,7 @@ module Literature
                 "explanations_and_discussion" => explanations, "papers" => papers.map { |paper| Literature.record(site, paper) }}
         text = ["# #{method['label']}", method.fetch("definition"), "Papers are ordered by first public date.",
                 "For example: #{method.fetch('example')}",
-                "Version #{metadata['version']}; literature checked through #{metadata['search_refreshed_at']}.",
+                "Version #{metadata['version']}; last additions #{metadata['last_additions_at']}; literature checked through #{metadata['search_refreshed_at']}.",
                 "[Topic guide](#{metadata['topic_url']}) · [JSON](#{Literature.absolute(site, '/' + path + '.json')})"]
         unless demos.empty?
           text << "## Try it"

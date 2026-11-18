@@ -6,7 +6,7 @@ share-title: "Implicit Chain-of-Thought — Reading List and Research Guide"
 share-description: "A reading guide and bibliography for implicit chain-of-thought and latent reasoning: papers by approach, method comparisons, examples, and downloadable citations."
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-14
+last_modified_at: 2026-11-18
 ---
 
 <main class="lit-home">
@@ -22,7 +22,7 @@ last_modified_at: 2026-11-14
       </div>
       <p class="lit-demo-shortcuts">Try an example: {% for demo in site.data.demos %}<a href="{{ demo.url }}">{{ demo.label | escape }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>
       <div class="lit-status" aria-label="Resource status">
-        <span>Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }}</span>
+        <span>Last additions: {{ site.data.releases | lit_last_additions_at | date: "%B %-d, %Y" }}</span>
         <a href="{{ '/recent/' | relative_url }}">Recent additions</a>
         <a href="{{ '/data/' | relative_url }}">Download the list and citations</a>
       </div>

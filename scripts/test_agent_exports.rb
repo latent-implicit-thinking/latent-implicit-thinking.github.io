@@ -713,6 +713,47 @@ module AgentExports
     end
   end
 
+  def validate_freshness(repo_root, site_root, errors)
+    require "jekyll"
+    require_relative "../_plugins/paper_pages"
+    releases = load_yaml(repo_root, "releases")
+    expected = releases.select { |release| !Array(release["added_papers"]).empty? }.map { |release| release.fetch("date").to_s }.max
+    # A later site edit or removal must not announce a new addition.
+    older = {"date" => "2026-10-01", "added_papers" => ["2301.00001"]}
+    edits = [{"date" => "2026-10-03", "added_papers" => [], "updated_papers" => [{"id" => "2301.00001"}]},
+             {"date" => "2026-10-02", "removed_papers" => ["2301.00002"]}]
+    assert(Literature.last_additions_at(edits + [older]) == "2026-10-01", "last additions advanced on an edit-only release", errors)
+    assert(Literature.last_additions_at([older] + edits) == "2026-10-01", "last additions depends on release order", errors)
+    assert(Literature.last_additions_at(edits).nil?, "a release without additions invented an additions date", errors)
+    newer = {"date" => "2026-10-04", "added_papers" => ["2301.00003"]}
+    assert(Literature.last_additions_at([newer] + edits + [older]) == "2026-10-04", "a paper addition did not advance the date", errors)
+    return unless expected
+
+    long_date = Date.iso8601(expected).strftime("%B %-d, %Y")
+    %w[index.html papers/index.html recent/index.html data/index.html].each do |path|
+      html = read_file(site_root, path, errors)
+      assert(visible_text(html).include?("Last additions: #{long_date}"), "#{path}: latest additions date is missing or stale", errors)
+    end
+    chinese = read_file(site_root, "zh/index.html", errors)
+    assert(visible_text(chinese).match?(/最近收录：\s*#{Regexp.escape(expected)}/), "Chinese overview: latest additions date is missing or stale", errors)
+    {"data/papers.json" => "metadata", "data/navigation.json" => nil, "data/changes.json" => nil}.each do |path, section|
+      data = read_json(site_root, path, errors)
+      metadata = section && data.is_a?(Hash) ? data[section] : data
+      assert(metadata.is_a?(Hash) && metadata["last_additions_at"] == expected, "#{path}: additions date differs from release history", errors)
+    end
+    %w[llms.txt data/reading-list.md].each do |path|
+      text = read_file(site_root, path, errors)
+      assert(text.match?(/Last additions:? #{Regexp.escape(expected)}/), "#{path}: additions date is missing or stale", errors)
+    end
+    assert(read_file(site_root, "data/zh/reading-guide.md", errors).include?("最近收录：#{expected}"), "Chinese reading guide: additions date is missing or stale", errors)
+    load_yaml(repo_root, "methods").each do |method|
+      path = "data/topics/#{method.fetch('slug')}"
+      data = read_json(site_root, path + ".json", errors)
+      assert(data.is_a?(Hash) && data.dig("metadata", "last_additions_at") == expected, "#{path}: topic JSON additions date differs from release history", errors)
+      assert(read_file(site_root, path + ".md", errors).include?("last additions #{expected}"), "#{path}: topic Markdown additions date differs from release history", errors)
+    end
+  end
+
   def validate(repo_root, site_root)
     errors = []
     validate_comparison_regressions(errors)
@@ -721,6 +762,7 @@ module AgentExports
     validate_doi_preprint_regressions(errors)
     validate_web_publication_regressions(errors)
     validate_full_text_regressions(errors)
+    validate_freshness(repo_root, site_root, errors)
     papers = load_yaml(repo_root, "papers")
     validate_organization_author_regressions(papers, errors)
     precursors = load_yaml(repo_root, "precursors")

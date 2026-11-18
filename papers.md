@@ -6,7 +6,7 @@ share-description: "A chronological reading list of implicit chain-of-thought an
 permalink: /papers/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-08
+last_modified_at: 2026-11-18
 js:
   - "/assets/js/lit-hub.js"
 ---
@@ -18,7 +18,7 @@ js:
         <div>
           <h1>Implicit chain-of-thought and latent reasoning papers</h1>
           <p>Reasoning without writing every intermediate step, also called implicit CoT or latent chain-of-thought. Search by title, author, or topic; read in date order or sort by newest papers.</p>
-          <p class="lit-index-freshness">Literature checked through {{ site.data.meta.search_refreshed_at | date: "%B %-d, %Y" }} · <a href="{{ '/recent/' | relative_url }}">Recent additions</a> · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper</a></p>
+          <p class="lit-index-freshness">Last additions: {{ site.data.releases | lit_last_additions_at | date: "%B %-d, %Y" }} · <a href="{{ '/recent/' | relative_url }}">Recent additions</a> · <a href="{{ '/contribute/' | relative_url }}">Suggest a paper</a></p>
         </div>
         <div class="lit-corpus-stat" aria-label="Corpus size">
           <strong>{{ site.data.papers | size }}</strong>

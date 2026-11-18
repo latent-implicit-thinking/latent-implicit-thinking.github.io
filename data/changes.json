@@ -6,5 +6,6 @@ permalink: /data/changes.json
   "dataset": {{ site.data.meta.name | jsonify }},
   "current_version": {{ site.data.meta.version | jsonify }},
   "updated_at": {{ site.data.meta.updated_at | jsonify }},
+  "last_additions_at": {{ site.data.releases | lit_last_additions_at | jsonify }},
   "releases": {{ site.data.releases | jsonify }}
 }

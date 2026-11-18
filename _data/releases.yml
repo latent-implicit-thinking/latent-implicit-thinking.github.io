@@ -1,3 +1,10 @@
+- version: "0.18.0"
+  date: "2026-11-18"
+  title: "Recurrent models, decoding, and recent additions"
+  changes: ["Added 10 papers on recurrent architectures, decoding, hidden-state fact composition, and compute allocation. The collection now contains 398 papers plus eight background papers.", "Updated two mechanistic studies for their revised papers and NeurIPS 2026 venues.", "Show the last additions date on the English and Chinese overview, paper list, recent additions, and downloads."]
+  added_papers: ["2611.19131", "2611.19446", "2611.19649", "2611.19827", "2611.19896", "2611.20399", "2611.21608", "2611.21921", "2611.22426", "2611.22737"]
+  updated_papers: [{"id": "2610.24135", "fields": ["title", "venue", "html_url", "provenance", "previous_titles"]}, {"id": "2604.11791", "fields": ["venue", "html_url", "summary", "provenance"]}]
+
 - version: "0.17.0"
   date: "2026-11-16"
   title: "Reasoning compression, recurrent models, and diffusion"

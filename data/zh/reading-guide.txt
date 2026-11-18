@@ -9,7 +9,7 @@ sitemap: false
 
 [中文概览]({{ '/zh/' | absolute_url }}) · [中文导读与例子]({{ '/zh/topics/' | absolute_url }}) · [完整论文列表（英文）]({{ '/papers/' | absolute_url }})
 
-网站版本：{{ site.data.meta.version }}。网站更新：{{ site.data.meta.updated_at }}。文献核查至：{{ site.data.meta.search_refreshed_at }}。
+最近收录：{{ site.data.releases | lit_last_additions_at }}。网站版本：{{ site.data.meta.version }}。网站更新：{{ site.data.meta.updated_at }}。文献核查至：{{ site.data.meta.search_refreshed_at }}。
 
 ## {{ site.data.zh.system_transition.title }}
 
