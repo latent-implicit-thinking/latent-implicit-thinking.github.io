@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "cgi"
 
 module Literature
   module_function
@@ -11,6 +12,54 @@ module Literature
 
   def absolute(site, path)
     site.config.fetch("url").sub(%r{/$}, "") + site.config["baseurl"].to_s.sub(%r{/$}, "") + path
+  end
+
+  def author_names(value)
+    value.is_a?(Array) ? value : value.to_s.split(", ")
+  end
+
+  def author_profile(site, name)
+    profile = site.data.fetch("authors", {})[name]
+    {"name" => name}.merge(profile) if profile
+  end
+
+  def author_profiles(site, paper)
+    author_names(paper.fetch("authors")).each_with_object([]) do |name, profiles|
+      next if Array(paper["organization_authors"]).include?(name)
+      profile = author_profile(site, name)
+      profiles << profile if profile
+    end
+  end
+
+  def author_html(site, name)
+    label = CGI.escapeHTML(name.to_s)
+    profile = author_profile(site, name)
+    profile ? %(<a href="#{CGI.escapeHTML(profile.fetch('url'))}">#{label}</a>) : label
+  end
+
+  def authors_html(site, names)
+    author_names(names).map { |name| author_html(site, name) }.join(", ")
+  end
+
+  def authors_markdown(site, names)
+    author_names(names).map do |name|
+      label = name.gsub(/[\\\[\]]/) { |char| "\\#{char}" }
+      profile = author_profile(site, name)
+      profile ? "[#{label}](#{profile.fetch('url')})" : label
+    end.join(", ")
+  end
+
+  def scholarly_authors(site, paper)
+    author_names(paper.fetch("authors")).map do |name|
+      organization = Array(paper["organization_authors"]).include?(name)
+      author = {"@type" => organization ? "Organization" : "Person", "name" => name}
+      profile = organization ? nil : author_profile(site, name)
+      if profile
+        author["url"] = profile.fetch("url")
+        author["sameAs"] = profile["same_as"] if profile["same_as"]
+      end
+      author
+    end
   end
 
   def record(site, paper)
@@ -27,6 +76,8 @@ module Literature
       "bibtex_url" => absolute(site, path + "citation.bib"),
       "csl_url" => absolute(site, path + "citation.csl.json")
     )
+    profiles = author_profiles(site, paper)
+    result["author_profiles"] = profiles unless profiles.empty?
     result["pdf_url"] = "https://arxiv.org/pdf/#{arxiv_id(paper)}" if arxiv_id(paper)
     publication = site.data.fetch("publications", {})[paper["id"]]
     if publication
@@ -217,7 +268,7 @@ module Literature
     source_links << "[PDF](#{entry.fetch('pdf_url')})" if entry["pdf_url"]
     source_links << "[HTML](#{entry.fetch('html_url')})" if entry["html_url"]
     source_links << "[Reading-list entry](#{entry.fetch('record_url')})"
-    lines = ["# #{paper.fetch('title')}", "", "Authors: #{paper.fetch('authors')}.", "",
+    lines = ["# #{paper.fetch('title')}", "", "Authors: #{authors_markdown(site, paper.fetch('authors'))}.", "",
              paper["summary"] || paper.fetch("connection"), "", "First public: #{paper.fetch('first_public')}.",
              *(web_publication?(paper) ? ["Published in #{paper.fetch('venue')}: #{entry.fetch('citation_date')}."] : []),
              *(arxiv_id(paper) ? ["ArXiv initial submission: #{entry.fetch('citation_date')}."] : []),
@@ -256,6 +307,22 @@ module Literature
   end
 
   module Filters
+    def lit_author_html(name)
+      Literature.author_html(@context.registers[:site], name)
+    end
+
+    def lit_authors_html(names)
+      Literature.authors_html(@context.registers[:site], names)
+    end
+
+    def lit_authors_markdown(names)
+      Literature.authors_markdown(@context.registers[:site], names)
+    end
+
+    def lit_scholarly_authors(paper)
+      Literature.scholarly_authors(@context.registers[:site], paper)
+    end
+
     def lit_last_additions_at(releases)
       Literature.last_additions_at(releases)
     end

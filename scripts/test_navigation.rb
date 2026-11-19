@@ -135,7 +135,12 @@ module NavigationChecks
        "json_url" => "#{base}/data/topics/#{method.fetch('slug')}.json"}
     end
     assert(manifest["topics"] == expected_topics, "navigation manifest topics differ from the canonical guides and downloads", errors)
-    each_url(manifest) { |url, path| resolve_url(url, canonical, site_root, errors, path) }
+    each_url(manifest) do |url, path|
+      # Author profiles are external identities; their exact values are checked
+      # against the corresponding paper record below.
+      next if path.match?(/\A\$\.reading_path\.papers\[\d+\]\.author_profiles\[\d+\]\.(?:url|same_as\[\d+\])\z/)
+      resolve_url(url, canonical, site_root, errors, path)
+    end
     methods.each do |method|
       prefix = "data/topics/#{method.fetch('slug')}"
       topic = read_json(site_root, prefix + ".json", errors)
@@ -232,7 +237,7 @@ module NavigationChecks
       path_records.each_with_index do |paper, index|
         record = read_json(site_root, "papers/#{paper['id']}/record.json", errors)
         entry = Array(entries)[index] || {}
-        %w[id title author_names first_public summary json_url markdown_url bibtex_url csl_url].each do |key|
+        %w[id title author_names author_profiles first_public summary json_url markdown_url bibtex_url csl_url].each do |key|
           assert(record && entry[key] == record[key], "#{paper['id']}: reading path #{key} differs from the paper record", errors)
         end
         assert(record && entry["url"] == record["record_url"], "#{paper['id']}: reading path paper URL is incorrect", errors)

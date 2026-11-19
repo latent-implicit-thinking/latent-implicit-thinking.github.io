@@ -6,7 +6,7 @@ The 2023 paper describes compiling deliberate System 2 reasoning into System 1 r
 {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}
 ### {{ paper.first_public }} — [{{ paper.title }}]({{ record.record_url }})
 
-Authors: {{ paper.authors }}.
+Authors: {{ paper.authors | lit_authors_markdown }}.
 
 {{ paper.summary }}
 

@@ -85,6 +85,7 @@ end
 repo_root = File.expand_path("..", __dir__)
 site_root = File.expand_path(ARGV.fetch(0, "_site"), repo_root)
 errors = []
+author_profiles = AgentExports.load_yaml(repo_root, "authors")
 
 allowed_files = PublicFiles.expected(repo_root).sort
 actual_files = Dir.glob(File.join(site_root, "**", "*"), File::FNM_DOTMATCH).select { |path| File.file?(path) || File.symlink?(path) }
@@ -215,7 +216,7 @@ all_records.each_with_index do |paper, index|
   errors << "#{key}: generated legacy record URL is incorrect" unless generated["legacy_record_url"] == legacy_url
   errors << "#{key}: generated citation date is incorrect" unless generated["citation_date"] == citation_date
   errors << "#{key}: map record anchor missing" unless paper_html.include?("id=\"#{anchor}\"")
-  errors << "#{key}: Markdown reading list omits title, authors, source or record" unless [paper["title"], paper["authors"], paper["paper_url"], expected_url].all? { |value| reading_list.include?(value) }
+  errors << "#{key}: Markdown reading list omits title, authors, source or record" unless [paper["title"], paper["paper_url"], expected_url].all? { |value| reading_list.include?(value) } && reading_list.gsub(/\[([^\]]+)\]\([^)]+\)/, '\1').include?(paper["authors"])
   errors << "#{key}: CSL title or source differs" unless citation["title"] == paper["title"] && citation["URL"] == paper["paper_url"]
   errors << "#{key}: CSL authors are not lossless and ordered" unless citation["author"] == authors.map { |name| {"literal" => name} }
   publication = publications[paper["id"]]
@@ -336,7 +337,7 @@ Dir[File.join(site_root, "**", "*.html")].each do |html_file|
     items.each_with_index do |item, index|
       source = expected_records[index] || {}
       scholarly = item["item"] || {}
-      expected_authors = AgentExports.scholarly_authors(source)
+      expected_authors = AgentExports.scholarly_authors(source, author_profiles)
       identifier = AgentExports.source_identifier(source)
       errors << "#{relative_path}: scholarly record #{index} differs from visible source" unless item["position"] == index + 1 && scholarly["@type"] == "ScholarlyArticle" && scholarly["name"] == source["title"] && scholarly["url"] == source["paper_url"] && scholarly["@id"] == source["paper_url"] && scholarly["author"] == expected_authors && scholarly["description"] == source["summary"] && scholarly["identifier"] == identifier
     end

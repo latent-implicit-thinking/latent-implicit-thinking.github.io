@@ -6,7 +6,7 @@ share-description: "A chronological reading list of implicit chain-of-thought an
 permalink: /papers/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-18
+last_modified_at: 2026-11-19
 js:
   - "/assets/js/lit-hub.js"
 ---
@@ -27,7 +27,7 @@ js:
       </div>
       {% assign proposal = '2311.01460' | lit_paper_by_id %}
       {% assign internalization = '2405.14838' | lit_paper_by_id %}
-      <p>Deng and colleagues first proposed this approach in <a href="{{ '/papers/' | append: proposal.id | append: '/' | relative_url }}">{{ proposal.title }}</a> (2023). It defines reasoning through continuous hidden states without emitting intermediate steps in <a href="{{ proposal.html_url }}#S2.SS3">§2.3</a>, then presents <a href="{{ proposal.html_url }}#S3">distillation</a> as one implementation. <a href="{{ '/papers/' | append: internalization.id | append: '/' | relative_url }}">{{ internalization.title }}</a> (<a href="{{ internalization.paper_url }}">2024</a>) introduces stepwise internalization.</p>
+      <p>{{ "Yuntian Deng" | lit_author_html }} and colleagues first proposed this approach in <a href="{{ '/papers/' | append: proposal.id | append: '/' | relative_url }}">{{ proposal.title }}</a> (2023). It defines reasoning through continuous hidden states without emitting intermediate steps in <a href="{{ proposal.html_url }}#S2.SS3">§2.3</a>, then presents <a href="{{ proposal.html_url }}#S3">distillation</a> as one implementation. <a href="{{ '/papers/' | append: internalization.id | append: '/' | relative_url }}">{{ internalization.title }}</a> (<a href="{{ internalization.paper_url }}">2024</a>) introduces stepwise internalization.</p>
       <p>New to the field? <a href="{{ '/topics/#reading-path' | relative_url }}">Start with five papers</a>, then explore the full list below.</p>
     </div>
   </header>
@@ -183,7 +183,7 @@ js:
           </div>
           <div class="lit-paper-main">
             <h2><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h2>
-            <p class="lit-paper-authors">{{ paper.authors }}</p>
+            <p class="lit-paper-authors">{{ paper.authors | lit_authors_html }}</p>
             <p class="lit-paper-summary">{{ paper.summary }}</p>
             {% if paper.related_terms %}<p class="lit-guide-note">Related terms: {{ paper.related_terms | join: ', ' | escape }}.</p>{% endif %}
             {% if paper.first_public_note %}<details class="lit-date-details"><summary>About this date</summary><p><a href="{{ paper.first_public_source }}">Date source</a>: {{ paper.first_public_note }}{% if paper.arxiv %} Linked arXiv version: {{ paper.citation_date | date: "%B %-d, %Y" }}.{% endif %}</p></details>{% endif %}
@@ -227,7 +227,7 @@ js:
         {% for paper in site.data.precursors %}
         <article id="precursor-{{ paper.id | replace: '.', '-' }}">
           <div><time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%Y" }}</time><span>Context</span></div>
-          <div><h3><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h3><p class="lit-paper-authors">{{ paper.authors }}</p><p>{{ paper.connection }}</p>{% assign precursor_arxiv_id = paper | lit_arxiv_id %}{% if precursor_arxiv_id %}<a href="https://arxiv.org/pdf/{{ precursor_arxiv_id }}">PDF ↗</a> · {% endif %}<a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a></div>
+          <div><h3><a href="{{ paper.paper_url }}">{{ paper.title }}</a></h3><p class="lit-paper-authors">{{ paper.authors | lit_authors_html }}</p><p>{{ paper.connection }}</p>{% assign precursor_arxiv_id = paper | lit_arxiv_id %}{% if precursor_arxiv_id %}<a href="https://arxiv.org/pdf/{{ precursor_arxiv_id }}">PDF ↗</a> · {% endif %}<a href="{{ '/papers/' | append: paper.id | append: '/' | relative_url }}">Details &amp; citations</a></div>
         </article>
         {% endfor %}
       </div>

@@ -381,20 +381,26 @@ module AgentExports
     {"@type" => "PropertyValue", "propertyID" => kind, "value" => value}
   end
 
-  def scholarly_authors(paper)
+  def scholarly_authors(paper, profiles = {})
     organizations = Array(paper["organization_authors"])
     paper.fetch("authors", "").split(", ").map do |name|
-      {"@type" => organizations.include?(name) ? "Organization" : "Person", "name" => name}
+      author = {"@type" => organizations.include?(name) ? "Organization" : "Person", "name" => name}
+      profile = organizations.include?(name) ? nil : profiles[name]
+      if profile
+        author["url"] = profile.fetch("url")
+        author["sameAs"] = profile["same_as"] if profile["same_as"]
+      end
+      author
     end
   end
 
-  def validate_scholarly_authors(paper, authors, errors)
+  def validate_scholarly_authors(paper, authors, errors, profiles = {})
     if paper.key?("organization_authors")
       organizations = paper["organization_authors"]
       names = paper.fetch("authors").split(", ")
       assert(organizations.is_a?(Array) && !organizations.empty? && organizations.uniq == organizations && (organizations - names).empty?, "#{paper['id']}: organization authors must identify distinct listed authors", errors)
     end
-    assert(authors == scholarly_authors(paper), "#{paper['id']}: structured article authors differ from their names or types", errors)
+    assert(authors == scholarly_authors(paper, profiles), "#{paper['id']}: structured article authors differ from their names, types or profiles", errors)
   end
 
   def validate_organization_author_regressions(papers, errors)
@@ -769,9 +775,22 @@ module AgentExports
     methods = load_yaml(repo_root, "methods")
     meta = load_yaml(repo_root, "meta")
     publications = load_yaml(repo_root, "publications") || {}
+    author_profiles = load_yaml(repo_root, "authors")
     comparisons = load_yaml(repo_root, "comparisons") || {}
     demos = load_yaml(repo_root, "demos") || []
     records = papers + precursors
+    author_profiles.each do |name, profile|
+      assert(records.any? { |paper| paper.fetch("authors").split(", ").include?(name) }, "author profile #{name}: no exact paper author match", errors)
+      assert((profile.keys - %w[url same_as]).empty?, "author profile #{name}: unexpected fields", errors)
+      ([profile["url"]] + Array(profile["same_as"])).each do |url|
+        assert(url.is_a?(String) && url.match?(%r{\Ahttps://[^\s<>\"]+\z}), "author profile #{name}: invalid public URL", errors)
+      end
+    end
+    profile_site = Struct.new(:data).new({"authors" => author_profiles})
+    ["Deng", "Yiyun Deng", "Yuntian Deng Jr."].each do |name|
+      assert(Literature.author_html(profile_site, name) == name, "surname or partial author name was linked", errors)
+    end
+    assert(Literature.author_html(profile_site, "A & B <C>") == "A &amp; B &lt;C&gt;", "unlinked author text was not escaped", errors)
     source_by_id = records.each_with_object({}) { |paper, hash| hash[paper.fetch("id")] = paper }
     canonical = meta.fetch("canonical_url")
     validate_dataset_discovery(site_root, meta, errors)
@@ -830,6 +849,15 @@ module AgentExports
       assert(record == generated_by_id[id], "#{id}: standalone record differs from aggregate corpus", errors)
       assert(record.is_a?(Hash) && record["record_url"] == url && record["legacy_record_url"] == expected_legacy, "#{id}: new or legacy record address is incorrect", errors)
       next unless record.is_a?(Hash)
+
+      expected_profiles = authors.select { |name| author_profiles.key?(name) && !Array(paper["organization_authors"]).include?(name) }.map { |name| {"name" => name}.merge(author_profiles.fetch(name)) }
+      assert(record.fetch("author_profiles", []) == expected_profiles, "#{id}: author profile identity or order differs", errors)
+      byline = html[/<p class="lit-paper-authors">(.*?)<\/p>/m, 1].to_s
+      expected_links = expected_profiles.map { |profile| profile.fetch("url") }
+      assert(attributes(byline, "a").map { |link| link["href"] } == expected_links, "#{id}: visible byline profile links differ", errors)
+      expected_profiles.each do |profile|
+        assert(markdown.include?("[#{profile['name']}](#{profile['url']})"), "#{id}: Markdown author profile is missing", errors)
+      end
 
       validate_full_text_record(paper, record, id, errors)
       validate_full_text_html(paper, html, id, errors)
@@ -924,7 +952,7 @@ module AgentExports
       assert(!article.nil?, "#{id}: paper page lacks scholarly structured data", errors)
       if article
         assert(article["@type"] == "ScholarlyArticle" && article["name"] == paper["title"] && article["description"] == summary, "#{id}: structured article differs from visible title or summary", errors)
-        validate_scholarly_authors(paper, article["author"], errors)
+        validate_scholarly_authors(paper, article["author"], errors, author_profiles)
         identifier = source_identifier(paper)
         assert(article["identifier"] == identifier, "#{id}: structured article identifier differs", errors)
         if web_publication?(paper)
@@ -972,9 +1000,10 @@ module AgentExports
     end
     {"llms.txt" => site_root, "data/reading-list.md" => site_root, "README.md" => repo_root}.each do |path, root|
       text = read_file(root, path, errors)
-      paragraph = text.split(/\n\s*\n/).find { |part| part.start_with?("Yuntian Deng and colleagues") }.to_s
+      paragraph = text.split(/\n\s*\n/).find { |part| part.gsub(/\[([^\]]+)\]\([^)]+\)/, '\1').start_with?("Yuntian Deng and colleagues") }.to_s
       plain_text = paragraph.gsub(/\[([^\]]+)\]\([^)]+\)/, '\1')
       assert(plain_text == history, "#{path}: history differs from the visible introduction", errors)
+      assert(paragraph.include?("[Yuntian Deng](https://yuntiandeng.com/)"), "#{path}: introduction omits the author profile link", errors)
       %w[latent\ reasoning latent\ chain-of-thought].each do |term|
         assert(text.include?(term), "#{path}: guide omits related term #{term}", errors)
       end

@@ -49,6 +49,7 @@ permalink: /data/navigation.json
         "id": {{ paper.id | jsonify }},
         "title": {{ paper.title | jsonify }},
         "author_names": {{ record.author_names | jsonify }},
+        {% if record.author_profiles %}"author_profiles": {{ record.author_profiles | jsonify }},{% endif %}
         "first_public": {{ paper.first_public | jsonify }},
         "summary": {{ paper.summary | jsonify }},
         "url": {{ record.record_url | jsonify }},

@@ -6,7 +6,7 @@ share-description: "See which papers have joined the implicit chain-of-thought r
 permalink: /recent/
 show-avatar: false
 nav-short: true
-last_modified_at: 2026-11-18
+last_modified_at: 2026-11-19
 ---
 
 {% assign tracked_papers = site.data.papers | where_exp: "paper", "paper.added_at" | reverse %}
@@ -37,7 +37,7 @@ last_modified_at: 2026-11-18
           </div>
           <div class="lit-paper-main">
             <h3><a href="{{ paper.paper_url }}">{{ paper.title | escape }}</a></h3>
-            <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
+            <p class="lit-paper-authors">{{ paper.authors | lit_authors_html }}</p>
             <p class="lit-paper-summary">{{ paper.summary | escape }}</p>
             <div class="lit-paper-tags" aria-label="Approaches">
               {% for value in paper.lens %}{% assign category = site.data.methods | where: "id", value | first %}<span>{{ category.label }}</span>{% endfor %}

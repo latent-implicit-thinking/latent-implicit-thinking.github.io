@@ -1,3 +1,18 @@
+- version: "0.18.2"
+  date: "2026-11-19"
+  title: "Author profiles"
+  changes: ["Linked author names to their profiles in the English and Chinese pages, reading guides, and paper downloads."]
+  added_papers: []
+  updated_papers:
+    - id: "2311.01460"
+      fields: ["author_profiles"]
+    - id: "2405.14838"
+      fields: ["author_profiles"]
+    - id: "2505.15612"
+      fields: ["author_profiles"]
+    - id: "2510.00184"
+      fields: ["author_profiles"]
+
 - version: "0.18.1"
   date: "2026-11-18"
   title: "Multiplication and reasoning compression"

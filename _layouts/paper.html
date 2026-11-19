@@ -7,7 +7,7 @@ layout: base
     <div class="lit-shell lit-narrow-shell">
       <nav class="lit-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/papers/' | relative_url }}">Browse papers</a><span aria-hidden="true">/</span><span>Paper details</span></nav>
       <h1>{{ paper.title | escape }}</h1>
-      <p class="lit-paper-authors">{{ paper.authors | escape }}</p>
+      <p class="lit-paper-authors">{{ paper.authors | lit_authors_html }}</p>
       <p>{{ paper.summary | default: paper.connection | escape }}</p>
       {% if paper.related_terms %}<p class="lit-guide-note">Related terms: {{ paper.related_terms | join: ', ' | escape }}.</p>{% endif %}
       <p class="lit-detail-date">First public: <time datetime="{{ paper.first_public }}">{{ paper.first_public | date: "%B %-d, %Y" }}</time>{% if paper.added_at %} · Added to this list: {{ paper.added_at | date: "%B %-d, %Y" }}{% endif %}</p>

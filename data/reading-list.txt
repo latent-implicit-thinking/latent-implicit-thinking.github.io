@@ -7,7 +7,7 @@ sitemap: false
 
 Implicit chain-of-thought (implicit CoT) studies intermediate reasoning that is not fully written out as natural language. This research is also discussed as latent reasoning or latent chain-of-thought.
 
-Yuntian Deng and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's [distillation method](https://arxiv.org/html/2311.01460v1#S3) is one implementation of that proposal. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
+[Yuntian Deng](https://yuntiandeng.com/) and colleagues first proposed implicit chain-of-thought reasoning in [2023](https://arxiv.org/html/2311.01460v1#S2.SS3): training language models to reason through continuous hidden states rather than write out explicit intermediate steps. The paper's [distillation method](https://arxiv.org/html/2311.01460v1#S3) is one implementation of that proposal. Their [2024 work](https://arxiv.org/abs/2405.14838) introduced step-by-step internalization.
 
 Version {{ site.data.meta.version }}. Last additions {{ site.data.releases | lit_last_additions_at }}. Website updated {{ site.data.meta.updated_at }}; literature checked through {{ site.data.meta.search_refreshed_at }}. {{ site.data.papers | size }} papers and {{ site.data.precursors | size }} related background papers.
 
@@ -38,7 +38,7 @@ For example: {{ method.example }}
 {% for paper in site.data.papers %}
 ### {{ paper.first_public }} — {{ paper.title }}
 
-Authors: {{ paper.authors }}.
+Authors: {{ paper.authors | lit_authors_markdown }}.
 Source: [{% if paper.arxiv %}arXiv:{{ paper.arxiv }}{% elsif paper.source_type == 'web-publication' %}{{ paper.venue }}{% else %}DOI:{{ paper.doi }}{% endif %}]({{ paper.paper_url }}).{% if paper.arxiv %} [PDF](https://arxiv.org/pdf/{{ paper.arxiv }}).{% endif %}{% if paper.html_url %} [HTML]({{ paper.html_url }}).{% endif %} [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).{% if paper.code_url %} [Code]({{ paper.code_url }}).{% endif %}
 {% if paper.preprint %}{{ paper.preprint.repository }} preprint{% if paper.preprint.version %}, version {{ paper.preprint.version }}{% endif %}: {{ paper.citation_date }}.
 {% endif %}
@@ -65,7 +65,7 @@ Summary: {{ paper.summary }}
 {% for paper in site.data.precursors %}
 ### {{ paper.first_public }} — {{ paper.title }}
 
-Authors: {{ paper.authors }}.
+Authors: {{ paper.authors | lit_authors_markdown }}.
 Source: [Original paper]({{ paper.paper_url }}).{% assign precursor_arxiv_id = paper | lit_arxiv_id %}{% if precursor_arxiv_id %} [PDF](https://arxiv.org/pdf/{{ precursor_arxiv_id }}).{% endif %} [Entry and citations]({{ '/papers/' | append: paper.id | append: '/' | absolute_url }}).
 Why it is relevant: {{ paper.connection }}
 {% assign record = paper | lit_record %}{% for comparison in record.method_comparisons %}

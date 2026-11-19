@@ -21,7 +21,7 @@ sitemap: false
 {% for paper_id in site.data.reading_path %}{% assign paper = paper_id | lit_paper_by_id %}{% assign record = paper | lit_record %}{% assign translation = site.data.zh.papers[paper_id] %}{% assign publication = site.data.publications[paper_id] %}
 ### {{ paper.first_public }} — {{ paper.title }}
 
-作者：{{ paper.authors }}。
+作者：{{ paper.authors | lit_authors_markdown }}。
 
 {{ translation.summary }}
 {% if translation.contribution %}

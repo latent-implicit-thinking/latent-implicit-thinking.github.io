@@ -1,0 +1,16 @@
+Paul Smolensky:
+  url: "https://www.microsoft.com/en-us/research/people/psmo/"
+
+Roland Fernandez:
+  url: "https://www.edx.org/bio/roland-fernandez"
+
+Stuart Shieber:
+  url: "https://www.eecs.harvard.edu/shieber/"
+
+Yejin Choi:
+  url: "https://yejinc.github.io/"
+
+Yuntian Deng:
+  url: "https://yuntiandeng.com/"
+  same_as:
+    - "https://orcid.org/0000-0001-5280-8974"
