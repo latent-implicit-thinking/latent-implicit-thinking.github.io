@@ -251,3 +251,13 @@
   source_url: "https://aclanthology.org/2026.findings-emnlp.2268/"
   verified_at: "2026-11-09"
   doi: "10.18653/2026.findings-emnlp.2268"
+
+"2505.15612":
+  title: "Learn to Reason Efficiently with Adaptive Length-based Reward Shaping"
+  author_names: ["Wei Liu", "Ruochen Zhou", "Yiyun Deng", "Yuzhen Huang", "Junteng Liu", "Yuntian Deng", "Yizhe Zhang", "Junxian He"]
+  year: 2026
+  type: "paper-conference"
+  container_title: "International Conference on Learning Representations"
+  url: "https://proceedings.iclr.cc/paper_files/paper/2026/hash/47795c4ae2f7d07ea2fb0d11fa2c3c90-Abstract-Conference.html"
+  source_url: "https://proceedings.iclr.cc/paper_files/paper/2026/hash/47795c4ae2f7d07ea2fb0d11fa2c3c90-Abstract-Conference.html"
+  verified_at: "2026-11-18"

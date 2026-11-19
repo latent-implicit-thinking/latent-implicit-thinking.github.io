@@ -937,6 +937,25 @@
   summary: "Feeds posterior expectations back into a language model so intermediate generation can remain continuous instead of sampling discrete tokens."
   provenance: "Primary-source literature search, 2026-09-04"
 
+- id: "2505.15612"
+  title: "Learn to Reason Efficiently with Adaptive Length-based Reward Shaping"
+  authors: "Wei Liu, Ruochen Zhou, Yiyun Deng, Yuzhen Huang, Junteng Liu, Yuntian Deng, Yizhe Zhang, Junxian He"
+  first_public: "2025-05-21"
+  added_at: "2026-11-18"
+  venue: "ICLR 2026"
+  arxiv: "2505.15612"
+  paper_url: "https://arxiv.org/abs/2505.15612"
+  html_url: "https://arxiv.org/html/2505.15612v1"
+  lens: ["internalized"]
+  representation: ["discrete-token"]
+  computation: ["token-wise"]
+  training: ["reinforcement-learning"]
+  questions: ["capability", "efficiency", "controllability", "generalization"]
+  evidence: ["empirical"]
+  modality: ["language", "symbolic"]
+  summary: "Trains reasoning models with rewards for correct answers that fit a target length, reducing written chains of thought. LASER-D adjusts the target lengths during training for easy, medium, and hard questions, improving the balance between accuracy and token use."
+  provenance: "Primary-source literature review, 2026-11-18"
+
 - id: "2505.16552"
   title: "Think Silently, Think Fast: Dynamic Latent Compression of LLM Reasoning Chains"
   authors: "Wenhui Tan, Jiaze Li, Jianzhong Ju, Zhenbo Luo, Ruihua Song, Jian Luan"
@@ -1436,6 +1455,25 @@
   modality: ["symbolic"]
   summary: "Derives bounds on how many symbolic reasoning steps a transformer can perform in one forward pass under specified information-propagation rules. Tests how layer depth and input order affect these bounds."
   provenance: "Primary-source literature review, 2026-11-16"
+
+- id: "2510.00184"
+  title: "Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls"
+  authors: "Xiaoyan Bai, Itamar Pres, Yuntian Deng, Chenhao Tan, Stuart Shieber, Fernanda Viégas, Martin Wattenberg, Andrew Lee"
+  first_public: "2025-09-30"
+  added_at: "2026-11-18"
+  venue: "arXiv"
+  arxiv: "2510.00184"
+  paper_url: "https://arxiv.org/abs/2510.00184"
+  html_url: "https://arxiv.org/html/2510.00184v1"
+  lens: ["internalized", "analysis"]
+  representation: ["hidden-state"]
+  computation: ["depth-wise"]
+  training: ["curriculum", "supervised"]
+  questions: ["capability", "interpretability", "limitations"]
+  evidence: ["empirical", "mechanistic", "probing"]
+  modality: ["symbolic"]
+  summary: "Reverse-engineers an implicit-CoT multiplication model, showing how attention stores and retrieves partial products and how digits are represented in a Fourier basis. Adds an auxiliary running-sum prediction loss that teaches the long-range dependencies needed for multi-digit multiplication."
+  provenance: "Primary-source literature review, 2026-11-18"
 
 - id: "2510.04573"
   title: "LaDiR: Latent Diffusion Enhances LLMs for Text Reasoning"

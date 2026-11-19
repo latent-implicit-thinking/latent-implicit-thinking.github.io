@@ -1,3 +1,9 @@
+- version: "0.18.1"
+  date: "2026-11-18"
+  title: "Multiplication and reasoning compression"
+  changes: ["Added a mechanistic study of implicit-CoT multiplication and LASER, a method for compressing written reasoning. The collection now contains 400 papers plus eight background papers."]
+  added_papers: ["2505.15612", "2510.00184"]
+
 - version: "0.18.0"
   date: "2026-11-18"
   title: "Recurrent models, decoding, and recent additions"
