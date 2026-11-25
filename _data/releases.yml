@@ -1,3 +1,10 @@
+- version: "0.19.0"
+  date: "2026-11-25"
+  title: "Recurrent models, thinking tokens, and reasoning analysis"
+  changes: ["Added 56 papers on recurrent models, thinking tokens, reasoning compression, diffusion decoding, and analysis of internal computation. The collection now contains 456 papers plus eight background papers.", "Updated Noise Your Prompt for its revised paper and TMLR publication."]
+  added_papers: ["2405.18512", "2406.06467", "2410.13779", "2410.13821", "2411.16679", "2501.06751", "2503.03961", "2504.09762", "2504.15466", "2505.10518", "2505.21024", "2506.11274", "2511.08667", "2511.10381", "2512.09182", "2601.03093", "2601.20467", "2602.18419", "2602.23225", "2604.14501", "2604.23318", "2605.00226", "2605.11936", "2605.17811", "2605.23605", "2605.28214", "2605.29888", "2606.00739", "2606.20662", "2606.14672", "2606.16620", "2607.01218", "2608.12385", "2609.25039", "2608.30692", "2609.04753", "2609.07474", "2609.37391", "2609.38107", "2609.39394", "2610.06031", "2610.11765", "2610.12545", "2610.16837", "2610.25760", "2610.31439", "2611.25314", "2611.31094", "2611.31481", "2611.31513", "2611.31939", "2611.31977", "2611.31990", "2611.32143", "2611.32175", "2611.32452"]
+  updated_papers: [{"id": "2610.09145", "fields": ["author_names", "html_url", "provenance", "venue"]}]
+
 - version: "0.18.2"
   date: "2026-11-19"
   title: "Author profiles"
